@@ -43,7 +43,8 @@ Temporary Items
 .apdisk
 
 # Visual Studio clientside files
-*/Stratego.v12.suo
-*/Stratego/bin/Debug/Stratego.vshost.exe.manifest
-*/obj/Debug/DesignTimeResolveAssemblyReferencesInput.caches
-*/obj/Debug/Stratego.csproj.FileListAbsolute.txt
+Stratego/bin/Debug/Stratego.vshost.exe.manifest
+Stratego/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+Stratego/obj/Debug/Stratego.csproj.FileListAbsolute.txt
+Stratego.v12.suo
+Stratego.v12.suo

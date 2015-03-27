@@ -41,3 +41,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Visual Studio clientside files
+*/Stratego.v12.suo
+*/Stratego/bin/Debug/Stratego.vshost.exe.manifest
+*/obj/Debug/DesignTimeResolveAssemblyReferencesInput.caches
+*/obj/Debug/Stratego.csproj.FileListAbsolute.txt

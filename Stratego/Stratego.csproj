@@ -80,13 +80,34 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Stratego-logo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\no-1.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\no.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BattleDramatic.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stratego-logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AniFire.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stratego-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Captu4re.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stratego-logo1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StartButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StartButtonClick.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

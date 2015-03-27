@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stratego", "Stratego\Stratego.csproj", "{6A2BB4E6-1530-416F-881E-CA9B04DC9D9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrategoTest", "StrategoTest\StrategoTest.csproj", "{AE76F5E4-3094-4B1B-A55D-F98926666330}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6A2BB4E6-1530-416F-881E-CA9B04DC9D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A2BB4E6-1530-416F-881E-CA9B04DC9D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A2BB4E6-1530-416F-881E-CA9B04DC9D9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE76F5E4-3094-4B1B-A55D-F98926666330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE76F5E4-3094-4B1B-A55D-F98926666330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE76F5E4-3094-4B1B-A55D-F98926666330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE76F5E4-3094-4B1B-A55D-F98926666330}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

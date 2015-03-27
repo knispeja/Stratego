@@ -1,0 +1,2 @@
+c:\users\tiefenaw\documents\visual studio 2013\Projects\Stratego\Stratego\bin\Debug\Stratego.exe.config
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\bin\Debug\Stratego.exe.config

@@ -1,2 +1,10 @@
 c:\users\tiefenaw\documents\visual studio 2013\Projects\Stratego\Stratego\bin\Debug\Stratego.exe.config
 C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\bin\Debug\Stratego.exe.config
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\bin\Debug\Stratego.exe
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\bin\Debug\Stratego.pdb
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\obj\Debug\Stratego.csprojResolveAssemblyReference.cache
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\obj\Debug\Stratego.StrategoWin.resources
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\obj\Debug\Stratego.Properties.Resources.resources
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\obj\Debug\Stratego.csproj.GenerateResource.Cache
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\obj\Debug\Stratego.exe
+C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\Stratego\obj\Debug\Stratego.pdb

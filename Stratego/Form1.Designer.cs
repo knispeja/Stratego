@@ -48,10 +48,11 @@
             // FireBox
             // 
             this.FireBox.BackColor = System.Drawing.Color.Transparent;
+            this.FireBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.FireBox.Image = global::Stratego.Properties.Resources.AniFire;
-            this.FireBox.Location = new System.Drawing.Point(3, 2);
+            this.FireBox.Location = new System.Drawing.Point(0, 0);
             this.FireBox.Name = "FireBox";
-            this.FireBox.Size = new System.Drawing.Size(487, 445);
+            this.FireBox.Size = new System.Drawing.Size(493, 455);
             this.FireBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.FireBox.TabIndex = 3;
             this.FireBox.TabStop = false;
@@ -94,7 +95,7 @@
             this.panel1.Controls.Add(this.FireBox);
             this.panel1.Location = new System.Drawing.Point(-2, -2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(493, 450);
+            this.panel1.Size = new System.Drawing.Size(496, 458);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 

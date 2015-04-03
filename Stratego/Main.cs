@@ -14,12 +14,14 @@ namespace Stratego
 {
     public partial class StrategoWin : Form
     {
+        public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+
         int piecePlacing = 0;
         int ticks = 0;
         int panelWidth;
         int panelHeight;
         int[,] boardState;
-        int[] placements = new int[13];
+        int[] placements;
         bool gameStarted;
 
         public StrategoWin()
@@ -48,6 +50,7 @@ namespace Stratego
             this.panelWidth = windowWidth;
             this.panelHeight = windowHeight;
             this.boardState = boardState;
+            this.placements = (int[]) this.defaults.Clone();
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -58,9 +61,6 @@ namespace Stratego
             sound.Play();
             this.FireBox.Dispose();
             this.gameStarted = true;
-
-            // Load default max numbers of pieces
-            this.placements = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
         }
 
         private void startTimer_Tick(object sender, EventArgs e)
@@ -182,6 +182,7 @@ namespace Stratego
             if (this.boardState[x / scaleX, y / scaleY] == 0)
             {
                 this.boardState[x / scaleX, y / scaleY] = piece;
+                this.placements[Math.Abs(piece)] -= 1;
                 return true;
             }
             return false;

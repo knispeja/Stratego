@@ -110,6 +110,15 @@
   <ItemGroup>
     <None Include="Resources\StartButtonClick.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OptionsButton.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stregm.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -48,7 +48,7 @@ namespace Stratego
 
         public static string toString(int pieceNumber)
         {
-            return names[pieceNumber];
+            return names[Math.Abs(pieceNumber)];
         }
     }
 }

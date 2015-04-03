@@ -15,6 +15,8 @@ namespace Stratego
     public partial class StrategoWin : Form
     {
         int ticks = 0;
+        int w;
+        int h;
         int[,] boardState;
         int[] placements = new int[13];
         bool gameStarted;
@@ -35,8 +37,10 @@ namespace Stratego
             boardState = new int[10, 10];
         }
 
-        public StrategoWin(int scale, int[,] boardState)
+        public StrategoWin(int windowWidth, int windowHeight, int[,] boardState)
         {
+            this.w = windowWidth;
+            this.h = windowHeight;
             this.boardState = boardState;
         }
 
@@ -120,6 +124,7 @@ namespace Stratego
         {
             if (x == 100)
                 return false;
+            this.boardState[x / 100, y / 100]=1;
             return true;
         }
 

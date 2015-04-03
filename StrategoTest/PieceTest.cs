@@ -118,5 +118,11 @@ namespace StrategoTest
         {
             return Piece.attack(a, b).Value;
         }
+
+        [TestCase(1,Result ="Marshall")]
+        public string TestPieceToString(int pieceNumber)
+        {
+            return Piece.toString(pieceNumber);
+        }
     }
 }

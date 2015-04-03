@@ -16,6 +16,8 @@ namespace Stratego
 {
     public class Piece
     {
+        private readonly string[] names= new string[] {"Empty", "Marshall", "General", "Colonel", "Major", "Captain", "Lieutenant",
+                                    "Sergeant", "Miner", "Scout", "Spy", "Bomb", "Flag"};
         public static int? attack(int? first, int? second)
         {
      
@@ -42,6 +44,11 @@ namespace Stratego
             else if (Math.Abs(first.Value) > Math.Abs(second.Value))
                 return second;
             else return 0;
+        }
+
+        public static string toString(int pieceNumber)
+        {
+            return "";
         }
     }
 }

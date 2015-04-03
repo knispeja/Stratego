@@ -144,12 +144,12 @@ namespace StrategoTest
         [TestCase(1, 400, 400, Result = false)]
         [TestCase(1, 600, 600, Result = false)]
         [TestCase(1, 800, 800, Result = false)]
-        public bool? TestThatNothingCanBePlacedInFilledSpace(int piece, int x, int y)
+        public bool? TestThatNothingCanBePlacedInFilledSpaceV2(int piece, int x, int y)
         {
             int[,] map = new int[10, 10];
-            map[x / 100, y / 100] = 1;
+            map[x / 200, y / 200] = 1;
 
-            StrategoWin game = new StrategoWin(1000, 1000, map);
+            StrategoWin game = new StrategoWin(2000, 2000, map);
             return game.placePiece(piece, x, y);
         }
 
@@ -157,11 +157,12 @@ namespace StrategoTest
         [TestCase(1, 400, 400)]
         [TestCase(1, 600, 600)]
         [TestCase(1, 800, 800)]
-        public void TestThatPieceIsPlacedIntoEmptySpace(int piece, int x, int y)
+
+        public void TestThatPieceIsPlacedIntoEmptySpaceV2(int piece, int x, int y)
         {
-            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            StrategoWin game = new StrategoWin(2000, 2000, new int[10, 10]);
             bool? result = game.placePiece(piece, x, y);
-            Assert.AreEqual(game.getPiece(x / 100, y / 100), piece);
+            Assert.AreEqual(game.getPiece(x / 200, y / 200), piece);
             Assert.IsTrue(result.Value);
         }
 

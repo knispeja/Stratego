@@ -47,9 +47,6 @@
             // 
             // FireBox
             // 
-            this.FireBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.FireBox.BackColor = System.Drawing.Color.Transparent;
             this.FireBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.FireBox.Image = global::Stratego.Properties.Resources.AniFire;
@@ -86,7 +83,7 @@
             this.StartButton.TabStop = false;
             this.StartButton.UseVisualStyleBackColor = true;
             this.StartButton.Visible = false;
-            this.StartButton.Click += new System.EventHandler(this.button1_Click);
+            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
             this.StartButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.StartButton_MouseDown);
             this.StartButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.StartButton_MouseUp);
             // 

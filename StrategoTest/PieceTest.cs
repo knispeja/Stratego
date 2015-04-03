@@ -10,31 +10,31 @@ namespace StrategoTest
         [Test()]
         public void TestThatMarshallBeatsGeneral()
         {
-            Assert.AreEqual(1, Piece.attack(1, 2));
+            Assert.AreEqual(1, Piece.attack(1, -2));
         }
 
         [Test()]
         public void TestThatMajorBeatsSergeant()
         {
-            Assert.AreEqual(4, Piece.attack(4, 7));
+            Assert.AreEqual(4, Piece.attack(-4, 7));
         }
 
         [Test()]
         public void TestThatMinerBeatsBomb()
         {
-            Assert.AreEqual(8, Piece.attack(8, 12));
+            Assert.AreEqual(8, Piece.attack(8, -11));
         }
 
         [Test()]
         public void TestThatBombBeatsNonMinerAttacker()
         {
-            Assert.AreEqual(12, Piece.attack(3, 12));
+            Assert.AreEqual(12, Piece.attack(-3, 11));
         }
 
         [Test()]
         public void TestThatScoutLosesToCaptain()
         {
-            Assert.AreEqual(5, Piece.attack(9, 5));
+            Assert.AreEqual(5, Piece.attack(9, -5));
         }
     }
 }

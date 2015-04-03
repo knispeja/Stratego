@@ -32,8 +32,11 @@ namespace Stratego
                 this.StartButton.FlatAppearance.BorderSize = 0;
                 this.StartButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, Color.Red);
                 Timer t = new Timer();
+                this.w = this.backPanel.Width;
+                this.h = this.backPanel.Height;
                 t.Start();
             }
+
             boardState = new int[10, 10];
         }
 
@@ -102,13 +105,24 @@ namespace Stratego
                 int col_inc = width / num_cols;
                 int row_inc = height / num_rows;
 
-                for (int i = 0; i < num_cols; i++)
+                for (int i = 0; i < num_cols + 1; i++)
                 {
                     g.DrawLine(pen, col_inc*i, 0, col_inc*i, height);
                 }
-                for (int j = 0; j < num_rows; j++)
+                for (int j = 0; j < num_rows + 1; j++)
                 {
                     g.DrawLine(pen, 0, row_inc*j, width, row_inc*j);
+                }
+
+                int radius = Math.Min(col_inc,row_inc);
+                int paddingx = (col_inc - radius) / 2;
+                int paddingy = (row_inc - radius) / 2;
+
+                for (int x = 0; x < this.boardState.GetLength(0); x++){
+                    for(int y = 0; y < this.boardState.GetLength(1); y++){
+                        if(this.boardState[x,y] != 0)
+                            g.DrawEllipse(pen, x*col_inc + paddingx, y*row_inc + paddingy, radius, radius);
+                    }
                 }
 
                 g.Dispose();
@@ -122,9 +136,11 @@ namespace Stratego
 
         public bool? placePiece(int piece, int x, int y)
         {
-            if (this.boardState[x / 100, y / 100] == 0)
+            int scalex = this.w / this.boardState.GetLength(0);
+            int scaley = this.h / this.boardState.GetLength(1);
+            if (this.boardState[x / scalex, y / scaley] == 0)
             {
-                this.boardState[x / 100, y / 100] = piece;
+                this.boardState[x / scalex, y / scaley] = piece;
                 return true;
             }
             return false;

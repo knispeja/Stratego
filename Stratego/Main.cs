@@ -153,7 +153,7 @@ namespace Stratego
                                 string drawString = Piece.toString(piece);
                                 System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
                                 System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-                                g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 4, cornerY + diameter / 4);
+                                g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 8, cornerY + diameter / 4);
                                 drawFont.Dispose();
                                 drawBrush.Dispose();
                             }

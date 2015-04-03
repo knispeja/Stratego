@@ -69,7 +69,7 @@
             this.StartButton.ForeColor = System.Drawing.Color.Black;
             this.StartButton.Image = global::Stratego.Properties.Resources.StartButton;
             this.StartButton.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.StartButton.Location = new System.Drawing.Point(433, 99);
+            this.StartButton.Location = new System.Drawing.Point(782, 419);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(216, 91);
             this.StartButton.TabIndex = 2;

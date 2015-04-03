@@ -136,10 +136,11 @@ namespace Stratego
 
         public bool? placePiece(int piece, int x, int y)
         {
-            int scale = this.h / this.boardState.GetLength(0);
-            if (this.boardState[x / scale, y / scale] == 0)
+            int scalex = this.w / this.boardState.GetLength(0);
+            int scaley = this.h / this.boardState.GetLength(1);
+            if (this.boardState[x / scalex, y / scaley] == 0)
             {
-                this.boardState[x / scale, y / scale] = piece;
+                this.boardState[x / scalex, y / scaley] = piece;
                 return true;
             }
             return false;

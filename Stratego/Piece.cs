@@ -14,10 +14,31 @@ using System.Threading.Tasks;
  */
 namespace Stratego
 {
-    class Piece
+    public class Piece
     {
         public static int? attack(int? first, int? second)
         {
+            if (Math.Abs(first.Value) == 11 || Math.Abs(second.Value) == 11)
+            {
+                if (Math.Abs(first.Value) == 11)
+                {
+                    if (Math.Abs(second.Value) != 8)
+                        return first;
+                    else
+                        return second;
+                }
+                else
+                {
+                    if (Math.Abs(first.Value) != 8)
+                        return second;
+                    else
+                        return first;
+                }
+            }
+            if (Math.Abs(first.Value) < Math.Abs(second.Value))
+                return first;
+            else if (Math.Abs(first.Value) > Math.Abs(second.Value))
+                    return second;
             return null;
         }
     }

@@ -7,34 +7,16 @@ namespace StrategoTest
     [TestFixture()]
     public class PieceTest
     {
-        [Test()]
-        public void TestThatMarshallBeatsGeneral()
-        {
-            Assert.AreEqual(1, Piece.attack(1, -2));
-        }
+        //static int Marshal = 1, General = 2, Colonel = 3, Major = 4, Captain = 5, Lieutenant = 6, Sergeant = 7, Miner = 8, Cout = 9, Spy = 10, Bomb = 11, Flag = 12;
 
-        [Test()]
-        public void TestThatMajorBeatsSergeant()
+        [TestCase(1, -2, Result = 1)]
+        [TestCase(-4, 7, Result = -4)]
+        [TestCase(8, -11, Result = 8)]
+        [TestCase(-3, 11, Result = 11)]
+        [TestCase(9, -5, Result = -5)]
+        public int SuperTest2(int a, int b)
         {
-            Assert.AreEqual(4, Piece.attack(-4, 7));
-        }
-
-        [Test()]
-        public void TestThatMinerBeatsBomb()
-        {
-            Assert.AreEqual(8, Piece.attack(8, -11));
-        }
-
-        [Test()]
-        public void TestThatBombBeatsNonMinerAttacker()
-        {
-            Assert.AreEqual(12, Piece.attack(-3, 11));
-        }
-
-        [Test()]
-        public void TestThatScoutLosesToCaptain()
-        {
-            Assert.AreEqual(5, Piece.attack(9, -5));
+            return Piece.attack(a, b).Value;
         }
     }
 }

@@ -105,21 +105,25 @@ namespace Stratego
                 int col_inc = width / num_cols;
                 int row_inc = height / num_rows;
 
-                for (int i = 0; i < num_cols; i++)
+                for (int i = 0; i < num_cols + 1; i++)
                 {
                     g.DrawLine(pen, col_inc*i, 0, col_inc*i, height);
                 }
-                for (int j = 0; j < num_rows; j++)
+                for (int j = 0; j < num_rows + 1; j++)
                 {
                     g.DrawLine(pen, 0, row_inc*j, width, row_inc*j);
                 }
 
-                int radius = col_inc;
+                int radius = Math.Min(col_inc,row_inc);
+                int paddingx = (col_inc - radius) / 2;
+                int paddingy = (row_inc - radius) / 2;
 
-                //for (int k = 0; k < this.boardState[,0].length){
-                //    for(int l = 0; l < this.boardState.)
-                //}
-                //g.DrawEllipse(pen, x, y, radius, radius);
+                for (int x = 0; x < this.boardState.GetLength(0); x++){
+                    for(int y = 0; y < this.boardState.GetLength(1); y++){
+                        if(this.boardState[x,y] != 0)
+                            g.DrawEllipse(pen, x*col_inc + paddingx, y*row_inc + paddingy, radius, radius);
+                    }
+                }
 
                 g.Dispose();
             }

@@ -60,6 +60,7 @@ namespace Stratego
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
+            this.placements = (int[])this.defaults.Clone();
             this.gameStarted = true;
         }
 
@@ -149,10 +150,10 @@ namespace Stratego
                                 g.FillEllipse(b, cornerX, cornerY, diameter, diameter);
                                 g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
 
-                                string drawString = Math.Abs(piece).ToString();
+                                string drawString = Piece.toString(piece);
                                 System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
                                 System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-                                g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 2, cornerY + diameter / 2);
+                                g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 4, cornerY + diameter / 4);
                                 drawFont.Dispose();
                                 drawBrush.Dispose();
                             }
@@ -222,7 +223,6 @@ namespace Stratego
                 }
                 else
                 {
-                    System.Console.WriteLine(keyChar);
                     if (keyChar == "S")
                         this.piecePlacing = 10;
                     else if (keyChar == "B")

@@ -180,7 +180,7 @@ namespace Stratego
         {
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY= this.panelHeight / this.boardState.GetLength(1);
-            if (this.boardState[x / scaleX, y / scaleY] == 0)
+            if (this.boardState[x / scaleX, y / scaleY] == 0 && this.placements[Math.Abs(piece)] > 0)
             {
                 this.boardState[x / scaleX, y / scaleY] = piece;
                 this.placements[Math.Abs(piece)] -= 1;

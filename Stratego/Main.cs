@@ -106,10 +106,10 @@ namespace Stratego
                 {
                     g.DrawLine(pen, col_inc*i, 0, col_inc*i, height);
                 }
-               for (int j = 0; j < num_rows; j++)
-               {
+                for (int j = 0; j < num_rows; j++)
+                {
                     g.DrawLine(pen, 0, row_inc*j, width, row_inc*j);
-               }
+                }
 
                 g.Dispose();
             }
@@ -122,10 +122,12 @@ namespace Stratego
 
         public bool? placePiece(int piece, int x, int y)
         {
-            if (x == 100)
-                return false;
-            this.boardState[x / 100, y / 100]=1;
-            return true;
+            if (this.boardState[x / 100, y / 100] == 0)
+            {
+                this.boardState[x / 100, y / 100] = 1;
+                return true;
+            }
+            return false;
         }
 
         private void TitlePictureBox_Click(object sender, EventArgs e)

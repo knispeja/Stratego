@@ -32,8 +32,11 @@ namespace Stratego
                 this.StartButton.FlatAppearance.BorderSize = 0;
                 this.StartButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, Color.Red);
                 Timer t = new Timer();
+                this.w = this.backPanel.Width;
+                this.h = this.backPanel.Height;
                 t.Start();
             }
+
             boardState = new int[10, 10];
         }
 
@@ -111,6 +114,13 @@ namespace Stratego
                     g.DrawLine(pen, 0, row_inc*j, width, row_inc*j);
                 }
 
+                int radius = col_inc;
+
+                //for (int k = 0; k < this.boardState[,0].length){
+                //    for(int l = 0; l < this.boardState.)
+                //}
+                //g.DrawEllipse(pen, x, y, radius, radius);
+
                 g.Dispose();
             }
         }
@@ -122,9 +132,10 @@ namespace Stratego
 
         public bool? placePiece(int piece, int x, int y)
         {
-            if (this.boardState[x / 100, y / 100] == 0)
+            int scale = this.h / this.boardState.GetLength(0);
+            if (this.boardState[x / scale, y / scale] == 0)
             {
-                this.boardState[x / 100, y / 100] = piece;
+                this.boardState[x / scale, y / scale] = piece;
                 return true;
             }
             return false;

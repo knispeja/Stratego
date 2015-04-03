@@ -40,6 +40,8 @@ namespace Stratego
 
         private void StartButton_Click(object sender, EventArgs e)
         {
+            if (ticks < 40)
+                return;
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
@@ -51,14 +53,16 @@ namespace Stratego
             ticks++;
             if (ticks == 25)
             {
-                this.StartButton.Visible = true;
+                //this.StartButton.Visible = true;
                 this.TitlePictureBox.Visible = true;
             }
             else if (ticks == 40)
             {
                 this.TitlePictureBox.Parent = this.FireBox;
                 this.StartButton.Parent = this.FireBox;
-                this.FormBorderStyle = FormBorderStyle.FixedSingle;
+                //this.FormBorderStyle = FormBorderStyle.FixedSingle;
+                //this.FormBorderStyle = FormBorderStyle.Sizable;
+                this.StartButton.Visible = true;
                 this.FireBox.Visible = true;
                 this.startTimer.Dispose();
             }
@@ -113,6 +117,11 @@ namespace Stratego
         public bool? placePiece(int piece, int x, int y)
         {
             return null;
+        }
+
+        private void TitlePictureBox_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

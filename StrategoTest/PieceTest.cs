@@ -13,7 +13,7 @@ namespace StrategoTest
         [TestCase(8, -11, Result = 8)]
         [TestCase(-3, 11, Result = 11)]
         [TestCase(9, -5, Result = -5)]
-        [TestCase(1, -10, Result = -10)]
+        [TestCase(1, -10, Result = 1)]
         [TestCase(8, -12, Result = 8)]
         [TestCase(6, -6, Result = 0)]
         [TestCase(10, -1, Result = 10)]

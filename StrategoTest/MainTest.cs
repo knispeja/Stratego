@@ -214,6 +214,10 @@ namespace StrategoTest
         }
 
         [TestCase(1, 200, 100)]
+        [TestCase(1, 200, 200)]
+        [TestCase(1, 400, 200)]
+        [TestCase(1, 600, 300)]
+        [TestCase(1, 0, 200)]
         public void TestThatPieceIsPlacedIntoEmptySpaceV3(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 1000, new int[10, 10]);
@@ -223,6 +227,10 @@ namespace StrategoTest
         }
 
         [TestCase(1, 200, 100, Result = false)]
+        [TestCase(1, 200, 200, Result = false)]
+        [TestCase(1, 400, 200, Result = false)]
+        [TestCase(1, 600, 300, Result = false)]
+        [TestCase(1, 0, 200, Result = false)]
         public bool? TestThatNothingCanBePlacedInFilledSpaceV3(int piece, int x, int y)
         {
             int[,] map = new int[10, 10];
@@ -233,6 +241,10 @@ namespace StrategoTest
         }
 
         [TestCase(1, 200, 100, Result = false)]
+        [TestCase(1, 200, 200, Result = false)]
+        [TestCase(1, 400, 200, Result = false)]
+        [TestCase(1, 600, 300, Result = false)]
+        [TestCase(1, 0, 200, Result = false)]
         public bool? TestThatNothingCanBePlacedOnObstacleV3(int piece, int x, int y)
         {
             int[,] map = new int[10, 10];
@@ -241,5 +253,41 @@ namespace StrategoTest
             StrategoWin game = new StrategoWin(2000, 1000, map);
             return game.placePiece(piece, x, y);
         }
+
+        [TestCase(1,123,254, Result = false)]
+        [TestCase(1, 246, 508, Result = false)]
+        [TestCase(1, 369, 762, Result = false)]
+        public bool? TestThatNothingCanBePlacedOnObstacleV4(int piece, int x, int y)
+        {
+            int[,] map = new int[10, 10];
+            map[x / 123, y / 254] = 42;
+
+            StrategoWin game = new StrategoWin(1230, 2540, map);
+            return game.placePiece(piece, x, y);
+        }
+
+        [TestCase(1, 123, 254, Result = false)]
+        [TestCase(1, 246, 508, Result = false)]
+        [TestCase(1, 369, 762, Result = false)]
+        public bool? TestThatNothingCanBePlacedInFilledSpaceV4(int piece, int x, int y)
+        {
+            int[,] map = new int[10, 10];
+            map[x / 123, y / 254] = 42;
+
+            StrategoWin game = new StrategoWin(1230, 2540, map);
+            return game.placePiece(piece, x, y);
+        }
+
+        [TestCase(1, 123, 254)]
+        [TestCase(1, 246, 508)]
+        [TestCase(1, 369, 762)]
+        public void TestThatPieceIsPlacedIntoEmptySpaceV4(int piece, int x, int y)
+        {
+            StrategoWin game = new StrategoWin(1230, 2540, new int[10, 10]);
+            bool? result = game.placePiece(piece, x, y);
+            Assert.AreEqual(game.getPiece(x / 123, y / 254), piece);
+            Assert.IsTrue(result.Value);
+        }
+
     }
 }

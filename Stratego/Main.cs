@@ -32,6 +32,7 @@ namespace Stratego
                 Timer t = new Timer();
                 t.Start();
             }
+            boardState = new int[10, 10];
         }
 
         public StrategoWin(int scale, int[,] boardState)
@@ -41,8 +42,8 @@ namespace Stratego
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            if (ticks < 40)
-                return;
+            //if (ticks < 40)
+            //    return;
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
@@ -117,7 +118,9 @@ namespace Stratego
 
         public bool? placePiece(int piece, int x, int y)
         {
-            return null;
+            if (x == 100)
+                return false;
+            return true;
         }
 
         private void TitlePictureBox_Click(object sender, EventArgs e)

@@ -1,13 +1,3 @@
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll.config
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.pdb
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\nunit.framework.dll
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\Stratego.exe
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\Stratego.pdb
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\nunit.framework.xml
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.csprojResolveAssemblyReference.cache
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.dll
-C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.pdb
 C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll.config
 C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll
 C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.pdb
@@ -18,3 +8,13 @@ C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-T
 C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.csprojResolveAssemblyReference.cache
 C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.dll
 C:\Users\tiefenaw\Documents\Visual Studio 2013\Projects\Stratego\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.pdb
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll.config
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.pdb
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\nunit.framework.dll
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\Stratego.exe
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\Stratego.pdb
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\nunit.framework.xml
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.csprojResolveAssemblyReference.cache
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.dll
+C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\obj\Debug\StrategoTest.pdb

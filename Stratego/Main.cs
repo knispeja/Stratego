@@ -95,7 +95,6 @@ namespace Stratego
 
                 this.panelWidth = this.backPanel.Width;
                 this.panelHeight = this.backPanel.Height;
-                System.Console.WriteLine(this.panelWidth);
 
                 Pen pen = new Pen(Color.White, 1);
                 Graphics g = e.Graphics;

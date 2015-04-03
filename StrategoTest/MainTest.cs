@@ -35,7 +35,10 @@ namespace StrategoTest
         [TestCase(-12, 200, 200, Result = false)]
         [TestCase(-12, 300, 300, Result = false)]
         [TestCase(-12, 400, 400, Result = false)]
-        
+        [TestCase(-12, 101, 101, Result = false)]
+        [TestCase(-12, 201, 201, Result = false)]
+        [TestCase(-12, 301, 301, Result = false)]
+        [TestCase(-12, 401, 401, Result = false)]
         public bool? TestThatNothingCanBePlacedOnObstacle(int piece, int x, int y)
         {
             int[,] map = new int[10, 10];
@@ -72,6 +75,10 @@ namespace StrategoTest
         [TestCase(-12, 200, 200)]
         [TestCase(-12, 300, 300)]
         [TestCase(-12, 400, 400)]
+        [TestCase(-12, 101, 101)]
+        [TestCase(-12, 201, 201)]
+        [TestCase(-12, 301, 301)]
+        [TestCase(-12, 401, 401)]
         public void TestThatPieceIsPlacedIntoEmptySpace(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
@@ -107,6 +114,10 @@ namespace StrategoTest
         [TestCase(-12, 200, 200, Result = false)]
         [TestCase(-12, 300, 300, Result = false)]
         [TestCase(-12, 400, 400, Result = false)]
+        [TestCase(-12, 101, 101, Result = false)]
+        [TestCase(-12, 201, 201, Result = false)]
+        [TestCase(-12, 301, 301, Result = false)]
+        [TestCase(-12, 401, 401, Result = false)]
         public bool? TestThatNothingCanBePlacedInFilledSpace(int piece, int x, int y)
         {
             int[,] map = new int[10, 10];

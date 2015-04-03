@@ -15,18 +15,27 @@ namespace Stratego
     public partial class StrategoWin : Form
     {
         int ticks = 0;
-        Boolean gameStarted;
-        public StrategoWin()
+        int[,] boardState;
+        bool gameStarted;
+
+        public StrategoWin(bool noGUI)
         {
-            InitializeComponent();
-            SoundPlayer sound = new SoundPlayer(Properties.Resources.BattleDramatic);
-            sound.PlayLooping();
-            this.StartButton.FlatStyle = FlatStyle.Flat;
-            this.StartButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, Color.Red);
-            this.StartButton.FlatAppearance.BorderSize = 0;
-            this.StartButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, Color.Red);
-            Timer t = new Timer();
-            t.Start();
+            if(!noGUI){
+                InitializeComponent();
+                SoundPlayer sound = new SoundPlayer(Properties.Resources.BattleDramatic);
+                sound.PlayLooping();
+                this.StartButton.FlatStyle = FlatStyle.Flat;
+                this.StartButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, Color.Red);
+                this.StartButton.FlatAppearance.BorderSize = 0;
+                this.StartButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, Color.Red);
+                Timer t = new Timer();
+                t.Start();
+            }
+        }
+
+        public StrategoWin(int[,] boardState)
+        {
+            this.boardState = boardState;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -94,6 +103,11 @@ namespace Stratego
 
                 g.Dispose();
             }
+        }
+
+        public bool? placePiece(int piece, int x, int y)
+        {
+            return null;
         }
     }
 }

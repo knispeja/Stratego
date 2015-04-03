@@ -123,6 +123,17 @@ namespace StrategoTest
         [TestCase(2, Result = "General")]
         [TestCase(3, Result = "Colonel")]
         [TestCase(4, Result = "Major")]
+        [TestCase(5, Result = "Captain")]
+        [TestCase(6, Result = "Lieutenant")]
+        [TestCase(7, Result = "Sergeant")]
+        [TestCase(8, Result = "Miner")]
+        [TestCase(9, Result = "Scout")]
+        [TestCase(10, Result = "Spy")]
+        [TestCase(11, Result = "Bomb")]
+        [TestCase(12, Result = "Flag")]
+        [TestCase(-4, Result = "Major")]
+        [TestCase(-5, Result = "Captain")]
+        [TestCase(-8, Result = "Miner")]
         public string TestPieceToString(int pieceNumber)
         {
             return Piece.toString(pieceNumber);

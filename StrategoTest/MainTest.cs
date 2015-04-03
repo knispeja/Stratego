@@ -328,8 +328,24 @@ namespace StrategoTest
             int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
             StrategoWin game = new StrategoWin(1230, 2540, new int[10, 10]);
             bool? result = game.placePiece(piece, x, y);
-            Assert.AreEqual(defaults[piece]-1, game.getPiecesLeft(piece));
+            Assert.AreEqual(defaults[Math.Abs(piece)]-1, game.getPiecesLeft(Math.Abs(piece)));
             Assert.IsTrue(result.Value);
+        }
+
+        [TestCase(1, 50, 50)]
+        [TestCase(2, 150, 50)]
+        [TestCase(3, 250, 50)]
+        public void TestThatPiecesCantBePlacedIfArrayIsEmpty(int piece, int x, int y)
+        {
+            int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            bool? result = true;
+            for (int i = 0; i <= defaults[Math.Abs(piece)]; i++)
+            {
+                result = game.placePiece(piece, x, y+100*i);
+            }
+            Assert.IsFalse(result.Value);
+            Assert.AreEqual(0, game.getPiecesLeft(Math.Abs(piece)));
         }
 
     }

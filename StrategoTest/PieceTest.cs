@@ -119,7 +119,10 @@ namespace StrategoTest
             return Piece.attack(a, b).Value;
         }
 
-        [TestCase(1,Result ="Marshall")]
+        [TestCase(1, Result ="Marshall")]
+        [TestCase(2, Result = "General")]
+        [TestCase(3, Result = "Colonel")]
+        [TestCase(4, Result = "Major")]
         public string TestPieceToString(int pieceNumber)
         {
             return Piece.toString(pieceNumber);

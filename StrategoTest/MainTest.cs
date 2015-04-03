@@ -319,5 +319,18 @@ namespace StrategoTest
             Assert.IsTrue(result.Value);
         }
 
+        [TestCase(1, 123, 254)]
+        [TestCase(2, 246, 508)]
+        [TestCase(3, 369, 762)]
+        // This tests that pieces are actually removed from the proper array after single placements
+        public void TestThatPieceReducesNumberofPiecesLeft(int piece, int x, int y)
+        {
+            int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+            StrategoWin game = new StrategoWin(1230, 2540, new int[10, 10]);
+            bool? result = game.placePiece(piece, x, y);
+            Assert.AreEqual(defaults[piece]-1, game.getPiecesLeft(piece));
+            Assert.IsTrue(result.Value);
+        }
+
     }
 }

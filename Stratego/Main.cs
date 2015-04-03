@@ -45,8 +45,8 @@ namespace Stratego
 
         public StrategoWin(int windowWidth, int windowHeight, int[,] boardState)
         {
-            //this.panelWidth = windowWidth;
-            //this.panelHeight = windowHeight;
+            this.panelWidth = windowWidth;
+            this.panelHeight = windowHeight;
             this.boardState = boardState;
         }
 
@@ -170,6 +170,11 @@ namespace Stratego
             return this.boardState[x,y];
         }
 
+        public int getPiecesLeft(int piece)
+        {
+            return this.placements[piece];
+        }
+
         public bool? placePiece(int piece, int x, int y)
         {
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
@@ -199,7 +204,7 @@ namespace Stratego
                 placePiece(this.piecePlacing, e.X, e.Y);
                 backPanel.Focus();
             }
-            backPanel.Refresh();
+            backPanel.Invalidate();
         }
 
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

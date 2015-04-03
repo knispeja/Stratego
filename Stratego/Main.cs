@@ -15,35 +15,32 @@ namespace Stratego
     public partial class StrategoWin : Form
     {
         int ticks = 0;
-        int w;
-        int h;
+        int panelWidth;
+        int panelHeight;
         int[,] boardState;
         int[] placements = new int[13];
         bool gameStarted;
 
-        public StrategoWin(bool noGUI)
+        public StrategoWin()
         {
-            if(!noGUI){
-                InitializeComponent();
-                SoundPlayer sound = new SoundPlayer(Properties.Resources.BattleDramatic);
-                sound.PlayLooping();
-                this.StartButton.FlatStyle = FlatStyle.Flat;
-                this.StartButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, Color.Red);
-                this.StartButton.FlatAppearance.BorderSize = 0;
-                this.StartButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, Color.Red);
-                Timer t = new Timer();
-                this.w = this.backPanel.Width;
-                this.h = this.backPanel.Height;
-                t.Start();
-            }
-
+            InitializeComponent();
+            SoundPlayer sound = new SoundPlayer(Properties.Resources.BattleDramatic);
+            sound.PlayLooping();
+            this.StartButton.FlatStyle = FlatStyle.Flat;
+            this.StartButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, Color.Red);
+            this.StartButton.FlatAppearance.BorderSize = 0;
+            this.StartButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, Color.Red);
+            Timer t = new Timer();
+            this.panelWidth = this.backPanel.Width;
+            this.panelHeight = this.backPanel.Height;
+            t.Start();
             boardState = new int[10, 10];
         }
 
         public StrategoWin(int windowWidth, int windowHeight, int[,] boardState)
         {
-            this.w = windowWidth;
-            this.h = windowHeight;
+            //this.panelWidth = windowWidth;
+            //this.panelHeight = windowHeight;
             this.boardState = boardState;
         }
 
@@ -95,23 +92,26 @@ namespace Stratego
         {
             if (this.gameStarted)
             {
+
+                this.panelWidth = this.backPanel.Width;
+                this.panelHeight = this.backPanel.Height;
+                System.Console.WriteLine(this.panelWidth);
+
                 Pen pen = new Pen(Color.White, 1);
                 Graphics g = e.Graphics;
 
                 int num_cols = 10;
                 int num_rows = 10;
-                int height = backPanel.Height;
-                int width = backPanel.Width;
-                int col_inc = width / num_cols;
-                int row_inc = height / num_rows;
+                int col_inc = panelWidth / num_cols;
+                int row_inc = panelHeight / num_rows;
 
                 for (int i = 0; i < num_cols + 1; i++)
                 {
-                    g.DrawLine(pen, col_inc*i, 0, col_inc*i, height);
+                    g.DrawLine(pen, col_inc*i, 0, col_inc*i, panelHeight);
                 }
                 for (int j = 0; j < num_rows + 1; j++)
                 {
-                    g.DrawLine(pen, 0, row_inc*j, width, row_inc*j);
+                    g.DrawLine(pen, 0, row_inc*j, panelWidth, row_inc*j);
                 }
 
                 int radius = Math.Min(col_inc,row_inc);
@@ -136,11 +136,11 @@ namespace Stratego
 
         public bool? placePiece(int piece, int x, int y)
         {
-            int scalex = this.w / this.boardState.GetLength(0);
-            int scaley = this.h / this.boardState.GetLength(1);
-            if (this.boardState[x / scalex, y / scaley] == 0)
+            int scaleX = this.panelWidth / this.boardState.GetLength(0);
+            int scaleY= this.panelHeight / this.boardState.GetLength(1);
+            if (this.boardState[x / scaleX, y / scaleY] == 0)
             {
-                this.boardState[x / scalex, y / scaley] = piece;
+                this.boardState[x / scaleX, y / scaleY] = piece;
                 return true;
             }
             return false;

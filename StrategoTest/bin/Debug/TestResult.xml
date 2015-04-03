@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll" total="156" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-04-03" time="02:35:40">
+<test-results name="C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll" total="156" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-04-03" time="03:06:08">
   <environment nunit-version="2.6.4.14350" clr-version="2.0.50727.5485" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.6.4\bin" machine-name="KNISPEJA-1" user="knispeja" user-domain="KNISPEJA-1" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll" executed="True" result="Success" success="True" time="5.451" asserts="0">
+  <test-suite type="Assembly" name="C:\Users\knispeja\Documents\GitHub\CSSE376---The-Tunnel-Snakes\StrategoTest\bin\Debug\StrategoTest.dll" executed="True" result="Success" success="True" time="5.048" asserts="0">
     <results>
-      <test-suite type="Namespace" name="StrategoTest" executed="True" result="Success" success="True" time="5.436" asserts="0">
+      <test-suite type="Namespace" name="StrategoTest" executed="True" result="Success" success="True" time="5.033" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="MainTest" executed="True" result="Success" success="True" time="5.434" asserts="0">
+          <test-suite type="TestFixture" name="MainTest" executed="True" result="Success" success="True" time="5.032" asserts="0">
             <results>
-              <test-suite type="ParameterizedTest" name="TestThatNothingCanBePlacedInFilledSpace" executed="True" result="Success" success="True" time="5.225" asserts="0">
+              <test-suite type="ParameterizedTest" name="TestThatNothingCanBePlacedInFilledSpace" executed="True" result="Success" success="True" time="4.813" asserts="0">
                 <results>
-                  <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpace(12,100,100)" executed="True" result="Success" success="True" time="5.181" asserts="1" />
+                  <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpace(12,100,100)" executed="True" result="Success" success="True" time="4.770" asserts="1" />
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpace(-3,100,100)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpace(-5,100,100)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpace(-6,100,100)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
@@ -44,9 +44,9 @@
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpace(-1,100,100)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="TestThatNothingCanBePlacedInFilledSpaceV2" executed="True" result="Success" success="True" time="0.026" asserts="0">
+              <test-suite type="ParameterizedTest" name="TestThatNothingCanBePlacedInFilledSpaceV2" executed="True" result="Success" success="True" time="0.034" asserts="0">
                 <results>
-                  <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpaceV2(1,801,800)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpaceV2(1,801,800)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpaceV2(1,0,201)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpaceV2(1,0,401)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpaceV2(1,0,601)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
@@ -73,7 +73,7 @@
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedInFilledSpaceV3(1,200,100)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="TestThatNothingCanBePlacedOnObstacle" executed="True" result="Success" success="True" time="0.041" asserts="0">
+              <test-suite type="ParameterizedTest" name="TestThatNothingCanBePlacedOnObstacle" executed="True" result="Success" success="True" time="0.046" asserts="0">
                 <results>
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedOnObstacle(-10,100,100)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedOnObstacle(-12,401,401)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
@@ -108,7 +108,7 @@
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedOnObstacle(-12,301,301)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="TestThatNothingCanBePlacedOnObstacleV2" executed="True" result="Success" success="True" time="0.027" asserts="0">
+              <test-suite type="ParameterizedTest" name="TestThatNothingCanBePlacedOnObstacleV2" executed="True" result="Success" success="True" time="0.028" asserts="0">
                 <results>
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedOnObstacleV2(1,0,801)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedOnObstacleV2(1,801,800)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
@@ -137,7 +137,7 @@
                   <test-case name="StrategoTest.MainTest.TestThatNothingCanBePlacedOnObstacleV3(1,200,100)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="TestThatPieceIsPlacedIntoEmptySpace" executed="True" result="Success" success="True" time="0.045" asserts="0">
+              <test-suite type="ParameterizedTest" name="TestThatPieceIsPlacedIntoEmptySpace" executed="True" result="Success" success="True" time="0.046" asserts="0">
                 <results>
                   <test-case name="StrategoTest.MainTest.TestThatPieceIsPlacedIntoEmptySpace(7,100,100)" executed="True" result="Success" success="True" time="0.005" asserts="2" />
                   <test-case name="StrategoTest.MainTest.TestThatPieceIsPlacedIntoEmptySpace(-3,100,100)" executed="True" result="Success" success="True" time="0.000" asserts="2" />
@@ -172,7 +172,7 @@
                   <test-case name="StrategoTest.MainTest.TestThatPieceIsPlacedIntoEmptySpace(-1,100,100)" executed="True" result="Success" success="True" time="0.000" asserts="2" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="TestThatPieceIsPlacedIntoEmptySpaceV2" executed="True" result="Success" success="True" time="0.028" asserts="0">
+              <test-suite type="ParameterizedTest" name="TestThatPieceIsPlacedIntoEmptySpaceV2" executed="True" result="Success" success="True" time="0.030" asserts="0">
                 <results>
                   <test-case name="StrategoTest.MainTest.TestThatPieceIsPlacedIntoEmptySpaceV2(1,201,201)" executed="True" result="Success" success="True" time="0.000" asserts="2" />
                   <test-case name="StrategoTest.MainTest.TestThatPieceIsPlacedIntoEmptySpaceV2(1,801,800)" executed="True" result="Success" success="True" time="0.000" asserts="2" />
@@ -196,9 +196,9 @@
                   <test-case name="StrategoTest.MainTest.TestThatPieceIsPlacedIntoEmptySpaceV2(1,201,200)" executed="True" result="Success" success="True" time="0.000" asserts="2" />
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="TestThatPieceIsPlacedIntoEmptySpaceV3" executed="True" result="Success" success="True" time="0.002" asserts="0">
+              <test-suite type="ParameterizedTest" name="TestThatPieceIsPlacedIntoEmptySpaceV3" executed="True" result="Success" success="True" time="0.001" asserts="0">
                 <results>
-                  <test-case name="StrategoTest.MainTest.TestThatPieceIsPlacedIntoEmptySpaceV3(1,200,100)" executed="True" result="Success" success="True" time="0.001" asserts="2" />
+                  <test-case name="StrategoTest.MainTest.TestThatPieceIsPlacedIntoEmptySpaceV3(1,200,100)" executed="True" result="Success" success="True" time="0.000" asserts="2" />
                 </results>
               </test-suite>
             </results>

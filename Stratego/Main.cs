@@ -116,11 +116,26 @@ namespace Stratego
                 int radius = Math.Min(col_inc,row_inc);
                 int paddingx = (col_inc - radius) / 2;
                 int paddingy = (row_inc - radius) / 2;
-
                 for (int x = 0; x < this.boardState.GetLength(0); x++){
                     for(int y = 0; y < this.boardState.GetLength(1); y++){
-                        if(this.boardState[x,y] != 0)
-                            g.DrawEllipse(pen, x*col_inc + paddingx, y*row_inc + paddingy, radius, radius);
+                        int piece = this.boardState[x, y];
+                        if (piece != 0)
+                        {
+                            Brush b;
+                            if (piece > 0)
+                            {
+                                b = new SolidBrush(Color.FromArgb(25, 25, 15 * Math.Abs(piece)));
+                                pen.Color = Color.FromArgb(200, 200, 255);
+                            }
+                            else
+                            {
+                                b = new SolidBrush(Color.FromArgb(15 * Math.Abs(piece), 25, 25));
+                                pen.Color = Color.FromArgb(255, 200, 200);
+                            }
+
+                            g.FillEllipse(b, x * col_inc + paddingx, y * row_inc + paddingy, radius, radius);
+                            g.DrawEllipse(pen, x * col_inc + paddingx, y * row_inc + paddingy, radius, radius);
+                        }
                     }
                 }
 

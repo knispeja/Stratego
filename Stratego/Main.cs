@@ -16,6 +16,7 @@ namespace Stratego
     {
         int ticks = 0;
         int[,] boardState;
+        int[] placements = int[13];
         bool gameStarted;
 
         public StrategoWin(bool noGUI)
@@ -33,7 +34,7 @@ namespace Stratego
             }
         }
 
-        public StrategoWin(int[,] boardState)
+        public StrategoWin(int scale, int[,] boardState)
         {
             this.boardState = boardState;
         }

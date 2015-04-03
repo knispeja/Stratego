@@ -18,28 +18,32 @@ namespace Stratego
     {
         public static int? attack(int? first, int? second)
         {
-            if (Math.Abs(first.Value) == 11 || Math.Abs(second.Value) == 11)
+     
+            if (Math.Abs(first.Value) == 11)
             {
-                if (Math.Abs(first.Value) == 11)
-                {
-                    if (Math.Abs(second.Value) != 8)
-                        return first;
-                    else
-                        return second;
-                }
+            if (Math.Abs(second.Value) != 8)
+                return first;
+            else
+                return second;
+            }
+            else if (Math.Abs(second.Value) == 11)
+            {
+                if (Math.Abs(first.Value) != 8)
+                    return second;
                 else
-                {
-                    if (Math.Abs(first.Value) != 8)
-                        return second;
-                    else
-                        return first;
-                }
+                    return first;
+            }
+            if ((Math.Abs(first.Value) == 1 || Math.Abs(second.Value) == 1) && (Math.Abs(first.Value) == 10 || Math.Abs(second.Value) == 10))
+            {
+                if (Math.Abs(second.Value) == 10)
+                    return second;
+                else return first;
             }
             if (Math.Abs(first.Value) < Math.Abs(second.Value))
                 return first;
             else if (Math.Abs(first.Value) > Math.Abs(second.Value))
-                    return second;
-            return null;
+                return second;
+            else return 0;
         }
     }
 }

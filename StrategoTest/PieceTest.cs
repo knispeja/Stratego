@@ -17,6 +17,7 @@ namespace StrategoTest
         [TestCase(1, -10, Result = -10)]
         [TestCase(8, -12, Result = 8)]
         [TestCase(6, -6, Result = 0)]
+        [TestCase(10, -1, Result = 10)]
         public int SuperTest2(int a, int b)
         {
             return Piece.attack(a, b).Value;

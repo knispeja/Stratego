@@ -9,6 +9,7 @@ namespace StrategoTest
     class MainTest
     {
         [TestCase(1, 100, 100, Result = false)]
+        public bool? TestThatNothingCanBePlacedOnObstacle(int piece, int x, int y)
         {
             int[,] map = new int[10, 10];
             map[x/100, y/100] = 42;

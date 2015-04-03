@@ -25,7 +25,7 @@ namespace StrategoTest
                                                                      {0,0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0,0}});
             bool? result = game.placePiece(piece, x, y);
             Assert.IsTrue(game.getPiece(x/100, y/100)==piece);
-            Assert.IsTrue(result==true); 
+            Assert.IsTrue(result.Value); 
         }
 
         [TestCase(1, 100, 100, Result = false)]

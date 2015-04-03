@@ -35,9 +35,7 @@ namespace Stratego
             }
             if ((Math.Abs(first.Value) == 1 || Math.Abs(second.Value) == 1) && (Math.Abs(first.Value) == 10 || Math.Abs(second.Value) == 10))
             {
-                if (Math.Abs(second.Value) == 10)
-                    return second;
-                else return first;
+                return first;
             }
             if (Math.Abs(first.Value) < Math.Abs(second.Value))
                 return first;

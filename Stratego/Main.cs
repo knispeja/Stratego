@@ -16,7 +16,7 @@ namespace Stratego
     {
         int ticks = 0;
         int[,] boardState;
-        int[] placements = int[13];
+        int[] placements = new int[13];
         bool gameStarted;
 
         public StrategoWin(bool noGUI)

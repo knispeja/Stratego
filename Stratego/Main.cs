@@ -15,7 +15,7 @@ namespace Stratego
     public partial class StrategoWin : Form
     {
         int ticks = 0;
-        ArrayList Piece { get; set; }
+        Boolean gameStarted;
         public StrategoWin()
         {
             InitializeComponent();
@@ -27,18 +27,14 @@ namespace Stratego
             this.StartButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, Color.Red);
             Timer t = new Timer();
             t.Start();
-
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void StartButton_Click(object sender, EventArgs e)
         {
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
+            this.FireBox.Dispose();
+            this.gameStarted = true;
         }
 
         private void startTimer_Tick(object sender, EventArgs e)
@@ -70,6 +66,38 @@ namespace Stratego
         }
 
         private void StrategoWin_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void backPanel_Paint(object sender, PaintEventArgs e)
+        {
+            if (this.gameStarted)
+            {
+                Pen pen = new Pen(Color.White, 1);
+                Graphics g = e.Graphics;
+
+                int num_cols = 10;
+                int num_rows = 10;
+                int height = backPanel.Height;
+                int width = backPanel.Width;
+                int col_inc = width / num_cols;
+                int row_inc = height / num_rows;
+
+                for (int i = 0; i < num_cols; i++)
+                {
+                    g.DrawLine(pen, col_inc*i, 0, col_inc*i, height);
+                }
+               for (int j = 0; j < num_rows; j++)
+               {
+                    g.DrawLine(pen, 0, row_inc*j, width, row_inc*j);
+               }
+
+                g.Dispose();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

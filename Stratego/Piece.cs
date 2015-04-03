@@ -16,7 +16,7 @@ namespace Stratego
 {
     public class Piece
     {
-        private readonly string[] names= new string[] {"Empty", "Marshall", "General", "Colonel", "Major", "Captain", "Lieutenant",
+        private static readonly string[] names= new string[] {"Empty", "Marshall", "General", "Colonel", "Major", "Captain", "Lieutenant",
                                     "Sergeant", "Miner", "Scout", "Spy", "Bomb", "Flag"};
         public static int? attack(int? first, int? second)
         {
@@ -48,7 +48,7 @@ namespace Stratego
 
         public static string toString(int pieceNumber)
         {
-            return "Marshall";
+            return names[pieceNumber];
         }
     }
 }

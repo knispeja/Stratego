@@ -213,5 +213,33 @@ namespace StrategoTest
             Assert.IsTrue(result.Value);
         }
 
+        [TestCase(1, 200, 100)]
+        public void TestThatPieceIsPlacedIntoEmptySpaceV3(int piece, int x, int y)
+        {
+            StrategoWin game = new StrategoWin(2000, 1000, new int[10, 10]);
+            bool? result = game.placePiece(piece, x, y);
+            Assert.AreEqual(game.getPiece(x / 200, y / 100), piece);
+            Assert.IsTrue(result.Value);
+        }
+
+        [TestCase(1, 200, 100, Result = false)]
+        public bool? TestThatNothingCanBePlacedInFilledSpaceV3(int piece, int x, int y)
+        {
+            int[,] map = new int[10, 10];
+            map[x / 200, y / 100] = 1;
+
+            StrategoWin game = new StrategoWin(2000, 1000, map);
+            return game.placePiece(piece, x, y);
+        }
+
+        [TestCase(1, 200, 100, Result = false)]
+        public bool? TestThatNothingCanBePlacedOnObstacleV3(int piece, int x, int y)
+        {
+            int[,] map = new int[10, 10];
+            map[x / 200, y / 100] = 42;
+
+            StrategoWin game = new StrategoWin(2000, 1000, map);
+            return game.placePiece(piece, x, y);
+        }
     }
 }

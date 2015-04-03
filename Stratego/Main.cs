@@ -124,7 +124,7 @@ namespace Stratego
         {
             if (this.boardState[x / 100, y / 100] == 0)
             {
-                this.boardState[x / 100, y / 100] = 1;
+                this.boardState[x / 100, y / 100] = piece;
                 return true;
             }
             return false;

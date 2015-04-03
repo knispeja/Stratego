@@ -105,6 +105,11 @@ namespace Stratego
             }
         }
 
+        public int getPiece(int x, int y) 
+        {
+            return this.boardState[x,y];
+        }
+
         public bool? placePiece(int piece, int x, int y)
         {
             return null;

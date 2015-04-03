@@ -60,6 +60,8 @@
             this.backPanel.Size = new System.Drawing.Size(1120, 630);
             this.backPanel.TabIndex = 0;
             this.backPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.backPanel_Paint);
+            this.backPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.backPanel_MouseClick);
+            this.backPanel.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.backPanel_PreviewKeyDown);
             // 
             // StartButton
             // 

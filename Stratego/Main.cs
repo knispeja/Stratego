@@ -14,6 +14,7 @@ namespace Stratego
 {
     public partial class StrategoWin : Form
     {
+        int piecePlacing = 0;
         int ticks = 0;
         int panelWidth;
         int panelHeight;
@@ -35,6 +36,11 @@ namespace Stratego
             this.panelHeight = this.backPanel.Height;
             t.Start();
             boardState = new int[10, 10];
+            for (int x = 0; x < boardState.GetLength(0); x++ )
+            {
+                for (int y = 0; y < 6; y++)
+                    boardState[x, y] = 42;
+            }
         }
 
         public StrategoWin(int windowWidth, int windowHeight, int[,] boardState)
@@ -52,6 +58,9 @@ namespace Stratego
             sound.Play();
             this.FireBox.Dispose();
             this.gameStarted = true;
+
+            // Load default max numbers of pieces
+            this.placements = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
         }
 
         private void startTimer_Tick(object sender, EventArgs e)
@@ -92,7 +101,6 @@ namespace Stratego
         {
             if (this.gameStarted)
             {
-
                 this.panelWidth = this.backPanel.Width;
                 this.panelHeight = this.backPanel.Height;
 
@@ -113,32 +121,46 @@ namespace Stratego
                     g.DrawLine(pen, 0, row_inc*j, panelWidth, row_inc*j);
                 }
 
-                int radius = Math.Min(col_inc,row_inc);
-                int paddingx = (col_inc - radius) / 2;
-                int paddingy = (row_inc - radius) / 2;
+                int diameter = Math.Min(col_inc,row_inc);
+                int paddingX = (col_inc - diameter) / 2;
+                int paddingY = (row_inc - diameter) / 2;
                 for (int x = 0; x < this.boardState.GetLength(0); x++){
                     for(int y = 0; y < this.boardState.GetLength(1); y++){
                         int piece = this.boardState[x, y];
                         if (piece != 0)
                         {
                             Brush b;
-                            if (piece > 0)
+                            if (piece != 42)
                             {
-                                b = new SolidBrush(Color.FromArgb(25, 25, 15 * Math.Abs(piece)));
-                                pen.Color = Color.FromArgb(200, 200, 255);
-                            }
-                            else
-                            {
-                                b = new SolidBrush(Color.FromArgb(15 * Math.Abs(piece), 25, 25));
-                                pen.Color = Color.FromArgb(255, 200, 200);
-                            }
+                                if (piece > 0)
+                                {
+                                    b = new SolidBrush(Color.FromArgb(25, 25, 15 * Math.Abs(piece)));
+                                    pen.Color = Color.FromArgb(200, 200, 255);
+                                }
+                                else
+                                {
+                                    b = new SolidBrush(Color.FromArgb(15 * Math.Abs(piece), 25, 25));
+                                    pen.Color = Color.FromArgb(255, 200, 200);
+                                }
 
-                            g.FillEllipse(b, x * col_inc + paddingx, y * row_inc + paddingy, radius, radius);
-                            g.DrawEllipse(pen, x * col_inc + paddingx, y * row_inc + paddingy, radius, radius);
+                                int cornerX = x * col_inc + paddingX;
+                                int cornerY = y * row_inc + paddingY;
+
+                                g.FillEllipse(b, cornerX, cornerY, diameter, diameter);
+                                g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
+
+                                string drawString = Math.Abs(piece).ToString();
+                                System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
+                                System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+                                g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 2, cornerY + diameter / 2);
+                                drawFont.Dispose();
+                                drawBrush.Dispose();
+                            }
                         }
                     }
                 }
 
+                pen.Dispose();
                 g.Dispose();
             }
         }
@@ -163,6 +185,46 @@ namespace Stratego
         private void TitlePictureBox_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void backPanel_KeyPress(object sender, KeyPressEventArgs e)
+        {
+          
+        }
+
+        private void backPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (gameStarted)
+            {
+                placePiece(this.piecePlacing, e.X, e.Y);
+                backPanel.Focus();
+            }
+            backPanel.Refresh();
+        }
+
+        private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (gameStarted)
+            {
+                KeysConverter kc = new KeysConverter();
+                string keyChar = kc.ConvertToString(e.KeyCode);
+
+                double num;
+                if (double.TryParse(keyChar, out num))
+                {
+                    this.piecePlacing = (int) num;
+                }
+                else
+                {
+                    System.Console.WriteLine(keyChar);
+                    if (keyChar == "S")
+                        this.piecePlacing = 10;
+                    else if (keyChar == "B")
+                        this.piecePlacing = 11;
+                    else if (keyChar == "F")
+                        this.piecePlacing = 12;
+                }
+            }
         }
     }
 }

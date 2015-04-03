@@ -138,5 +138,13 @@ namespace StrategoTest
         {
             return Piece.toString(pieceNumber);
         }
+
+        [TestCase(0)]
+        [TestCase(42)]
+        [TestCase(-100)]
+        public void TestToStringThrowsException(int invalidPiece)
+        {
+            Assert.Throws<ArgumentException>(()=>Piece.toString(invalidPiece));
+        }
     }
 }

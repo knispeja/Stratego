@@ -48,6 +48,10 @@ namespace Stratego
 
         public static string toString(int pieceNumber)
         {
+            if (pieceNumber > 12 || pieceNumber < -12||(pieceNumber>-1&&pieceNumber<1))
+            {
+                throw new ArgumentException();
+            }
             return names[Math.Abs(pieceNumber)];
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Stratego;
 using NUnit.Framework;
+using System.Windows.Forms;
 
 namespace StrategoTest
 {
@@ -16,7 +17,7 @@ namespace StrategoTest
         }
 
         [TestCase(1, 100, 100)]
-        public bool? TestThatPieceIsPlacedIntoEmptySpace(int piece, int x, int y)
+        public void TestThatPieceIsPlacedIntoEmptySpace(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(100, new int[10, 10] {{0,0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0,0},
                                                                      {0,0,0,0,0,0,0,0,0,0}, {0,0,0,0,0,0,0,0,0,0},

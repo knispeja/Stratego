@@ -50,7 +50,6 @@
             this.backPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.backPanel.AutoSize = true;
             this.backPanel.BackColor = System.Drawing.Color.Transparent;
             this.backPanel.Controls.Add(this.StartButton);
             this.backPanel.Controls.Add(this.TitlePictureBox);
@@ -58,7 +57,7 @@
             this.backPanel.Location = new System.Drawing.Point(0, 0);
             this.backPanel.Margin = new System.Windows.Forms.Padding(0);
             this.backPanel.Name = "backPanel";
-            this.backPanel.Size = new System.Drawing.Size(2226, 641);
+            this.backPanel.Size = new System.Drawing.Size(1120, 630);
             this.backPanel.TabIndex = 0;
             this.backPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.backPanel_Paint);
             // 
@@ -70,7 +69,7 @@
             this.StartButton.ForeColor = System.Drawing.Color.Black;
             this.StartButton.Image = global::Stratego.Properties.Resources.StartButton;
             this.StartButton.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.StartButton.Location = new System.Drawing.Point(827, 481);
+            this.StartButton.Location = new System.Drawing.Point(433, 99);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(216, 91);
             this.StartButton.TabIndex = 2;
@@ -87,7 +86,7 @@
             this.TitlePictureBox.BackColor = System.Drawing.Color.Transparent;
             this.TitlePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.TitlePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("TitlePictureBox.Image")));
-            this.TitlePictureBox.Location = new System.Drawing.Point(722, 123);
+            this.TitlePictureBox.Location = new System.Drawing.Point(677, 114);
             this.TitlePictureBox.Name = "TitlePictureBox";
             this.TitlePictureBox.Size = new System.Drawing.Size(321, 95);
             this.TitlePictureBox.TabIndex = 1;
@@ -107,7 +106,7 @@
             this.FireBox.Location = new System.Drawing.Point(-4, -3);
             this.FireBox.Margin = new System.Windows.Forms.Padding(0);
             this.FireBox.Name = "FireBox";
-            this.FireBox.Size = new System.Drawing.Size(1131, 638);
+            this.FireBox.Size = new System.Drawing.Size(1130, 630);
             this.FireBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.FireBox.TabIndex = 3;
             this.FireBox.TabStop = false;
@@ -131,7 +130,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FireBox)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

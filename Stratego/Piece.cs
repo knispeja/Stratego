@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 /*
  * 0 - Blank
- * 1-9 Normal Peieces
+ * 1-9 Normal Pieces
  * 10 - Spy
  * 11 - Bomb
  * 12 - Flag

@@ -27,6 +27,7 @@ namespace Stratego
         public StrategoWin()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             SoundPlayer sound = new SoundPlayer(Properties.Resources.BattleDramatic);
             sound.PlayLooping();
             this.StartButton.FlatStyle = FlatStyle.Flat;
@@ -62,6 +63,15 @@ namespace Stratego
             this.FireBox.Dispose();
             this.placements = (int[])this.defaults.Clone();
             this.gameStarted = true;
+
+            this.SidePanelOpenButton.Visible = true;
+            foreach (var button in this.SidePanel.Controls.OfType<Button>())
+                button.Click += SidePanelButtonClick;
+        }
+
+        private void SidePanelButtonClick(object sender, EventArgs e)
+        {
+            this.piecePlacing = Convert.ToInt32(((Button)sender).Text);
         }
 
         private void startTimer_Tick(object sender, EventArgs e)
@@ -182,6 +192,7 @@ namespace Stratego
             int scaleY= this.panelHeight / this.boardState.GetLength(1);
             if (this.boardState[x / scaleX, y / scaleY] == 0 && this.placements[Math.Abs(piece)] > 0)
             {
+                Rectangle r = new Rectangle((int)(x / scaleX) * scaleX, (int)(y / scaleY) * scaleY, scaleX, scaleY);
                 this.boardState[x / scaleX, y / scaleY] = piece;
                 this.placements[Math.Abs(piece)] -= 1;
                 return true;
@@ -201,12 +212,20 @@ namespace Stratego
 
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
+            bool? piecePlaced = false;
             if (gameStarted)
             {
-                placePiece(this.piecePlacing, e.X, e.Y);
+                piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
                 backPanel.Focus();
             }
-            backPanel.Invalidate();
+            if (piecePlaced.Value)
+            {
+                int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY); //This makes it so iy only repaints the rectangle where the piece is placed
+                backPanel.Invalidate(r);
+            }
+            //backPanel.Invalidate();
         }
 
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -215,7 +234,11 @@ namespace Stratego
             {
                 KeysConverter kc = new KeysConverter();
                 string keyChar = kc.ConvertToString(e.KeyCode);
-
+                if(e.KeyCode==Keys.Escape)
+                {
+                    this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
+                    //Make the escape/pause/whatever panel visible
+                }
                 double num;
                 if (double.TryParse(keyChar, out num))
                 {
@@ -231,6 +254,19 @@ namespace Stratego
                         this.piecePlacing = 12;
                 }
             }
+        }
+
+        private void SidePanelOpenButton_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (this.SidePanel.Visible)
+                this.backPanel.Focus();
+            this.SidePanel.Visible = !this.SidePanel.Visible;
+        }
+
+        private void PauseMenuExitButton_Click(object sender, EventArgs e)
+        {
+            if (Application.MessageLoop)
+                Application.Exit();
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Stratego
         public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
 
         int piecePlacing = 0;
+        int activeSidePanelButton = 0; //Placeholder for which button on the placement side panel is being used
         int ticks = 0;
         int panelWidth;
         int panelHeight;
@@ -77,7 +78,13 @@ namespace Stratego
         private void SidePanelButtonClick(object sender, EventArgs e)
         {
            // this.piecePlacing = Convert.ToInt32(((Button)sender).Text); No longer used, as I use the Tag text of the buttons instead.
-            this.piecePlacing = Convert.ToInt32(((Button)sender).Tag);
+            if (!this.removeCheckBox.Checked)
+            {
+                foreach (var button in this.SidePanel.Controls.OfType<Button>())
+                    button.UseVisualStyleBackColor = true;
+                this.piecePlacing = Convert.ToInt32(((Button)sender).Tag);
+                ((Button)sender).UseVisualStyleBackColor = false;
+            }
         }
 
         private void startTimer_Tick(object sender, EventArgs e)
@@ -167,7 +174,7 @@ namespace Stratego
                                 {
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
-                                    Rectangle r = new Rectangle(x * scaleX + (scaleX / 10), y * scaleY + (scaleY / 10), scaleX - (scaleX / 10), scaleY - (scaleY / 10));
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX / 10), y * scaleY + (scaleY / 10), scaleX - 2*(scaleX / 10), scaleY - 2*(scaleY / 10));
                                     Image imag = Properties.Resources.BlueScout;
                                     e.Graphics.DrawImage(imag, r);
                                 }
@@ -206,12 +213,20 @@ namespace Stratego
 
         public bool? placePiece(int piece, int x, int y)
         {
+            if (this.removeCheckBox.Checked)
+                this.piecePlacing = 0;
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY= this.panelHeight / this.boardState.GetLength(1);
             if (this.boardState[x / scaleX, y / scaleY] == 0 && this.placements[Math.Abs(piece)] > 0)
             {
                 this.boardState[x / scaleX, y / scaleY] = piece;
                 this.placements[Math.Abs(piece)] -= 1;
+                return true;
+            }
+            else if (this.boardState[x / scaleX, y / scaleY] >= 0 && this.boardState[x / scaleX, y / scaleY] != 42 && this.piecePlacing == 0)
+            {
+                this.placements[Math.Abs(this.boardState[x / scaleX, y / scaleY])] += 1;
+                this.boardState[x / scaleX, y / scaleY] = 0;
                 return true;
             }
             return false;
@@ -229,6 +244,8 @@ namespace Stratego
 
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
+            if (this.removeCheckBox.Checked)
+                this.piecePlacing = 0;
             bool? piecePlaced = false;
             if (gameStarted)
             {
@@ -295,6 +312,17 @@ namespace Stratego
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
             this.Location = new Point(this.panelWidth / 2 - ((Button)sender).Width / 2, this.panelHeight / 2 - ((Button)sender).Height / 2);
+        }
+
+        private void removeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.removeCheckBox.Checked)
+            {
+                this.activeSidePanelButton = this.piecePlacing;
+                this.piecePlacing = 0;
+            } 
+            else
+                this.piecePlacing = this.activeSidePanelButton;
         }
     }
 }

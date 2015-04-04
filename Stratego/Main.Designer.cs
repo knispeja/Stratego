@@ -34,6 +34,7 @@
             this.backPanel = new System.Windows.Forms.Panel();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
+            this.removeCheckBox = new System.Windows.Forms.CheckBox();
             this.place12Button = new System.Windows.Forms.Button();
             this.place11Button = new System.Windows.Forms.Button();
             this.place10Button = new System.Windows.Forms.Button();
@@ -97,6 +98,7 @@
             // SidePanel
             // 
             this.SidePanel.BackColor = System.Drawing.Color.DimGray;
+            this.SidePanel.Controls.Add(this.removeCheckBox);
             this.SidePanel.Controls.Add(this.place12Button);
             this.SidePanel.Controls.Add(this.place11Button);
             this.SidePanel.Controls.Add(this.place10Button);
@@ -111,9 +113,20 @@
             this.SidePanel.Controls.Add(this.place1Button);
             this.SidePanel.Location = new System.Drawing.Point(0, 29);
             this.SidePanel.Name = "SidePanel";
-            this.SidePanel.Size = new System.Drawing.Size(107, 511);
+            this.SidePanel.Size = new System.Drawing.Size(107, 532);
             this.SidePanel.TabIndex = 4;
             this.SidePanel.Visible = false;
+            // 
+            // removeCheckBox
+            // 
+            this.removeCheckBox.AutoSize = true;
+            this.removeCheckBox.Location = new System.Drawing.Point(12, 507);
+            this.removeCheckBox.Name = "removeCheckBox";
+            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
+            this.removeCheckBox.TabIndex = 12;
+            this.removeCheckBox.Text = "Remove";
+            this.removeCheckBox.UseVisualStyleBackColor = true;
+            this.removeCheckBox.CheckedChanged += new System.EventHandler(this.removeCheckBox_CheckedChanged);
             // 
             // place12Button
             // 
@@ -227,6 +240,7 @@
             // 
             // place1Button
             // 
+            this.place1Button.BackColor = System.Drawing.Color.DimGray;
             this.place1Button.Location = new System.Drawing.Point(3, 3);
             this.place1Button.Name = "place1Button";
             this.place1Button.Size = new System.Drawing.Size(96, 36);
@@ -315,6 +329,7 @@
             this.Load += new System.EventHandler(this.StrategoWin_Load);
             this.backPanel.ResumeLayout(false);
             this.SidePanel.ResumeLayout(false);
+            this.SidePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FireBox)).EndInit();
             this.ResumeLayout(false);
@@ -343,6 +358,7 @@
         private System.Windows.Forms.Button place3Button;
         private System.Windows.Forms.Button place2Button;
         private System.Windows.Forms.Button PauseMenuExitButton;
+        private System.Windows.Forms.CheckBox removeCheckBox;
     }
 }
 

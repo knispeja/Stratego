@@ -142,4 +142,14 @@
   <data name="Board" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stregm.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BlueScout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueScout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Scout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Scout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScoutVlaue" xml:space="preserve">
+    <value>1</value>
+    <comment>Numeric value for a scout piece</comment>
+  </data>
 </root>

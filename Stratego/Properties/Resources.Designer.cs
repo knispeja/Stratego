@@ -82,6 +82,16 @@ namespace Stratego.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BlueScout {
+            get {
+                object obj = ResourceManager.GetObject("BlueScout", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Board {
             get {
                 object obj = ResourceManager.GetObject("Board", resourceCulture);
@@ -105,6 +115,25 @@ namespace Stratego.Properties {
         internal static System.IO.UnmanagedMemoryStream no {
             get {
                 return ResourceManager.GetStream("no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Scout {
+            get {
+                object obj = ResourceManager.GetObject("Scout", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.
+        /// </summary>
+        internal static string ScoutVlaue {
+            get {
+                return ResourceManager.GetString("ScoutVlaue", resourceCulture);
             }
         }
         

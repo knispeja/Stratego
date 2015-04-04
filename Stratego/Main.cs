@@ -69,9 +69,15 @@ namespace Stratego
                 button.Click += SidePanelButtonClick;
         }
 
+        /// <summary>
+        /// Event that handles button presses in the side panel, where the user selects the kind of piece to place.
+        /// </summary>
+        /// <param name="sender">Button that was pressed</param>
+        /// <param name="e"></param>
         private void SidePanelButtonClick(object sender, EventArgs e)
         {
-            this.piecePlacing = Convert.ToInt32(((Button)sender).Text);
+           // this.piecePlacing = Convert.ToInt32(((Button)sender).Text); No longer used, as I use the Tag text of the buttons instead.
+            this.piecePlacing = Convert.ToInt32(((Button)sender).Tag);
         }
 
         private void startTimer_Tick(object sender, EventArgs e)
@@ -157,15 +163,27 @@ namespace Stratego
                                 int cornerX = x * col_inc + paddingX;
                                 int cornerY = y * row_inc + paddingY;
 
-                                g.FillEllipse(b, cornerX, cornerY, diameter, diameter);
-                                g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
+                                if (piece == 9)
+                                {
+                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX / 10), y * scaleY + (scaleY / 10), scaleX - (scaleX / 10), scaleY - (scaleY / 10));
+                                    Image imag = Properties.Resources.BlueScout;
+                                    e.Graphics.DrawImage(imag, r);
+                                }
+                                else
+                                {
+                                    g.FillEllipse(b, cornerX, cornerY, diameter, diameter);
+                                    g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
 
-                                string drawString = Piece.toString(piece);
-                                System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
-                                System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-                                g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 8, cornerY + diameter / 4);
-                                drawFont.Dispose();
-                                drawBrush.Dispose();
+                                    string drawString = Piece.toString(piece);
+                                    System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
+                                    System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+                                    g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 8, cornerY + diameter / 4);
+                                    drawFont.Dispose();
+                                    drawBrush.Dispose();
+                                }
+                                b.Dispose();
                             }
                         }
                     }
@@ -192,7 +210,6 @@ namespace Stratego
             int scaleY= this.panelHeight / this.boardState.GetLength(1);
             if (this.boardState[x / scaleX, y / scaleY] == 0 && this.placements[Math.Abs(piece)] > 0)
             {
-                Rectangle r = new Rectangle((int)(x / scaleX) * scaleX, (int)(y / scaleY) * scaleY, scaleX, scaleY);
                 this.boardState[x / scaleX, y / scaleY] = piece;
                 this.placements[Math.Abs(piece)] -= 1;
                 return true;
@@ -222,7 +239,8 @@ namespace Stratego
             {
                 int scaleX = this.panelWidth / this.boardState.GetLength(0);
                 int scaleY = this.panelHeight / this.boardState.GetLength(1);
-                Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY); //This makes it so iy only repaints the rectangle where the piece is placed
+                //This makes it so iy only repaints the rectangle where the piece is placed
+                Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY); 
                 backPanel.Invalidate(r);
             }
             //backPanel.Invalidate();
@@ -258,6 +276,7 @@ namespace Stratego
 
         private void SidePanelOpenButton_MouseClick(object sender, MouseEventArgs e)
         {
+            //Makes the side panel open when the button is clicked
             if (this.SidePanel.Visible)
                 this.backPanel.Focus();
             this.SidePanel.Visible = !this.SidePanel.Visible;
@@ -265,8 +284,17 @@ namespace Stratego
 
         private void PauseMenuExitButton_Click(object sender, EventArgs e)
         {
+            //Makes the program close if the exit button is pressed
             if (Application.MessageLoop)
                 Application.Exit();
+        }
+
+        private void PauseMenuExitButton_VisibleChanged(object sender, EventArgs e)
+        {
+            //Sets the exit button to be in the center of the panel whenever it is made visible/not
+            int scaleX = this.panelWidth / this.boardState.GetLength(0);
+            int scaleY = this.panelHeight / this.boardState.GetLength(1);
+            this.Location = new Point(this.panelWidth / 2 - ((Button)sender).Width / 2, this.panelHeight / 2 - ((Button)sender).Height / 2);
         }
     }
 }

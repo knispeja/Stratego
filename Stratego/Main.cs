@@ -326,6 +326,8 @@ namespace Stratego
                 this.pieceIsSelected = false;
                 return false;
             }
+            if (this.boardState[x / scaleX, y / scaleY] == 11)
+                return false;
             this.pieceSelectedCoords = new Point(x/scaleX, y/scaleY);
             this.pieceIsSelected = true;
             return true;

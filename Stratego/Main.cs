@@ -292,7 +292,7 @@ namespace Stratego
             int scaleY= this.panelHeight / this.boardState.GetLength(1);
             int pieceAtPos = this.boardState[x / scaleX, y / scaleY];
 
-            if (piece == 0)
+            if (piece == 0 && pieceAtPos != 42)
             {
                 // We are trying to remove
                 if (pieceAtPos == 0) retVal = false;

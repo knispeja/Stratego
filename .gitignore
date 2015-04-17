@@ -46,5 +46,5 @@ Temporary Items
 *.suo
 *.user
 _ReSharper.*
-bin
-obj
+Stratego\bin
+Stratego\obj

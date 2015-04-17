@@ -322,6 +322,8 @@ namespace Stratego
             //int scaleY = this.panelHeight / this.boardState.GetLength(1);
             //this.pieceSelectedCoords = new Point(this.panelWidth / x, this.panelHeight / y);
             //Oops, forgot to do minimal code. No sense in deleting it though.
+            if (this.pieceSelectedCoords == new Point(5,9))
+                return false;
             this.pieceSelectedCoords = new Point(5, 9);
             return true;
         }

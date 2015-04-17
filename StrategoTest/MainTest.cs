@@ -432,30 +432,10 @@ namespace StrategoTest
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.placePiece(piece, x, y);
             game.turn = 1;
-            Assert.True(game.SelectPiece(x,y).Value);
+            Assert.True(game.SelectPiece(x, y).Value);
             Assert.AreEqual(new Point(x/100, y/100), game.pieceSelectedCoords);
             Assert.AreEqual(piece, game.boardState[game.pieceSelectedCoords.X, game.pieceSelectedCoords.Y]);
             Assert.AreEqual(false, game.SelectPiece(x, y).Value);
-            //int[] defaults = game.defaults;
-
-        //    for (int p = 1; p < defaults.Length; p++)
-        //    {
-        //        for (int num = 0; num < defaults[p]; num++)
-        //        {
-        //            int piecesLeft = game.getPiecesLeft(p);
-        //            game.placePiece(p, x, y);
-        //            bool? result = game.placePiece(piece, x, y);
-
-        //            // Make sure remove actually removed the piece
-        //            Assert.AreEqual(piece, game.getPiece(x / 200, y / 220));
-
-        //            // Make sure remove is returning true when you try to remove a valid piece
-        //            Assert.IsTrue(result.Value);
-
-        //            // Make sure remove is resetting the number of pieces left
-        //            Assert.AreEqual(piecesLeft, game.getPiecesLeft(p));
-        //        }
-        //    }
         }
     }
 }

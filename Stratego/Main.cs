@@ -26,6 +26,7 @@ namespace Stratego
         bool preGameStarted;                      // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
         public Point pieceSelectedCoords { get; set; }                // Coordinates of the piece that is currently selceted in the array
+        public Boolean pieceIsSelected { get; set; }
         /// <summary>
         /// Initializer for normal play (initializes GUI).
         /// Not to be used for testing!
@@ -320,9 +321,13 @@ namespace Stratego
         {
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
-            if (this.pieceSelectedCoords == new Point(x/scaleX,y/scaleY))
+            if (this.pieceSelectedCoords == new Point(x / scaleX, y / scaleY))
+            {
+                this.pieceIsSelected = false;
                 return false;
+            }
             this.pieceSelectedCoords = new Point(x/scaleX, y/scaleY);
+            this.pieceIsSelected = true;
             return true;
         }
 

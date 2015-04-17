@@ -438,5 +438,14 @@ namespace StrategoTest
             Assert.AreEqual(piece, game.boardState[game.pieceSelectedCoords.X, game.pieceSelectedCoords.Y]);
             Assert.AreEqual(false, game.SelectPiece(x, y).Value);
         }
+
+        [TestCase(11, 650, 950)]
+        public void TestThaOrSelectnWorksForBombsAndFlags(int piece, int x, int y)
+        {
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.placePiece(piece, x, y);
+            game.turn = 1;
+            Assert.False(game.SelectPiece(x, y).Value);
+        }
     }
 }

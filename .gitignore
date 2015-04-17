@@ -48,3 +48,7 @@ Temporary Items
 _ReSharper.*
 Stratego\bin
 Stratego\obj
+bin
+obj
+StrategoTest\bin
+StrategoTest\obj

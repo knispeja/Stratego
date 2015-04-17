@@ -384,9 +384,25 @@ namespace StrategoTest
         [TestCase(0, 369, 762)]
         [TestCase(0, 220, 900)]
         [TestCase(0, 500, 750)]
+        //This tests that you cannot remove (place 0) on a space that is empty
         public void TestThatPieceCannotBeRemovedFromEmpty(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);
+            bool? result = game.placePiece(piece, x, y);
+            Assert.IsFalse(result.Value);
+        }
+
+        [TestCase(0, 123, 254)]
+        [TestCase(0, 246, 508)]
+        [TestCase(0, 369, 762)]
+        [TestCase(0, 220, 900)]
+        [TestCase(0, 500, 750)]
+        //This tests that you cannot remove (place 0) on a space that is an obstacle
+        public void TestThatObstacleCannotBeRemoved(int piece, int x, int y)
+        {
+            int[,] map = new int[10, 10];
+            map[x / 200, y / 220] = 42;
+            StrategoWin game = new StrategoWin(2000, 2200, map);
             bool? result = game.placePiece(piece, x, y);
             Assert.IsFalse(result.Value);
         }
@@ -401,6 +417,7 @@ namespace StrategoTest
         [TestCase(-8, 200, -1)]
         [TestCase(8, 2001, 200)]
         [TestCase(-8, 200, 2201)]
+        //Tests that "piece" must be a valid piece and that "x" and "y" cannot be outside the bounds of the window
         public void TestThatPlacePieceThrowsException(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);

@@ -311,13 +311,18 @@ namespace Stratego
         }
 
         /// <summary>
-        /// Moves a peiece if a piece is selected, or selects a piece if no piece is selected.
+        /// Selects a piece if no piece is selected.
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
         public bool? SelectPiece(int x, int y)
         {
+            //int scaleX = this.panelWidth / this.boardState.GetLength(0);
+            //int scaleY = this.panelHeight / this.boardState.GetLength(1);
+            //this.pieceSelectedCoords = new Point(this.panelWidth / x, this.panelHeight / y);
+            //Oops, forgot to do minimal code. No sense in deleting it though.
+            this.pieceSelectedCoords = new Point(5, 9);
             return true;
         }
 

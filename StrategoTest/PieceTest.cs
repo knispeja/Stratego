@@ -130,7 +130,7 @@ namespace StrategoTest
         [TestCase(8, 11)]
         [TestCase(-8, -11)]
         [TestCase(7, 3)]
-        [TestCase(-7, 3)]
+        [TestCase(-7, -3)]
         // Tests that attack throws exception for two pieces of the same team
         public void TestThatAttackThrowsException(int a, int b)
         {

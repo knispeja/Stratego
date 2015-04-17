@@ -20,7 +20,8 @@ namespace Stratego
                                     "Sergeant", "Miner", "Scout", "Spy", "Bomb", "Flag"};
         public static int? attack(int? first, int? second)
         {
-     
+            if(Math.Sign(first.Value) == Math.Sign(second.Value)) throw new ArgumentException();
+
             if (Math.Abs(first.Value) == 11)
             {
             if (Math.Abs(second.Value) != 8)

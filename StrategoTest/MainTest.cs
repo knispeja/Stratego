@@ -313,9 +313,9 @@ namespace StrategoTest
         // This tests that pieces can be placed in an empty space on a 1230 x 2540 pixel board.
         public void TestThatPieceIsPlacedIntoEmptySpaceV4(int piece, int x, int y)
         {
-            StrategoWin game = new StrategoWin(1230, 2540, new int[10, 10]);
+            StrategoWin game = new StrategoWin(1240, 2540, new int[10, 10]);
             bool? result = game.placePiece(piece, x, y);
-            Assert.AreEqual(game.getPiece(x / 123, y / 254), piece);
+            Assert.AreEqual(game.getPiece(x / 124, y / 254), piece);
             Assert.IsTrue(result.Value);
         }
 
@@ -337,8 +337,9 @@ namespace StrategoTest
         [TestCase(3, 250, 50)]
         public void TestThatPiecesCantBePlacedIfArrayIsEmpty(int piece, int x, int y)
         {
-            int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+            //int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            int[] defaults = game.defaults;
             bool? result = true;
             for (int i = 0; i <= defaults[Math.Abs(piece)]; i++)
             {
@@ -346,6 +347,37 @@ namespace StrategoTest
             }
             Assert.IsFalse(result.Value);
             Assert.AreEqual(0, game.getPiecesLeft(Math.Abs(piece)));
+        }
+
+        [TestCase(0, 123, 254)]
+        [TestCase(0, 246, 508)]
+        [TestCase(0, 369, 762)]
+        [TestCase(0, 220, 900)]
+        [TestCase(0, 500, 750)]
+        // This tests that you can remove pieces with placePiece(0, ...) as intended
+        public void TestThatRemoveActuallyRemovesPiecesAndUpdatesPiecesLeft(int piece, int x, int y)
+        {
+            StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);
+            int[] defaults = game.defaults;
+            
+            for(int p=1; p<defaults.Length; p++)
+            {
+                for(int num=0; num<defaults[p]; num++)
+                {
+                    int piecesLeft = game.getPiecesLeft(p);
+                    game.placePiece(p, x, y);
+                    bool? result = game.placePiece(piece, x, y);
+
+                    // Make sure remove actually removed the piece
+                    Assert.AreEqual(piece, game.getPiece(x / 200, y / 220));
+
+                    // Make sure remove is returning true when you try to remove a valid piece
+                    Assert.IsTrue(result.Value);
+
+                    // Make sure remove is resetting the number of pieces left
+                    Assert.AreEqual(piecesLeft, game.getPiecesLeft(p));
+                }
+            }
         }
 
     }

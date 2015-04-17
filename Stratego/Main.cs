@@ -311,6 +311,8 @@ namespace Stratego
                 piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
                 backPanel.Focus();
             }
+
+            // Only run if the placement succeeded
             if (piecePlaced.Value)
             {
                 int scaleX = this.panelWidth / this.boardState.GetLength(0);

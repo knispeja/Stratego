@@ -318,7 +318,7 @@ namespace Stratego
         /// <returns></returns>
         public bool? SelectPiece(int x, int y)
         {
-            return null;
+            return true;
         }
 
         /// <summary>

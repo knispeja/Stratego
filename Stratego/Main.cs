@@ -286,7 +286,7 @@ namespace Stratego
         /// <returns>Whether or not the placement was successful</returns>
         public bool? placePiece(int piece, int x, int y)
         {
-            if (Math.Abs(piece) > 12) throw new ArgumentException();
+            if (Math.Abs(piece) > 12 || x<0 || y<0) throw new ArgumentException();
             Boolean retVal = true;
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY= this.panelHeight / this.boardState.GetLength(1);

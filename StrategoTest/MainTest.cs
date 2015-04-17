@@ -379,6 +379,15 @@ namespace StrategoTest
                 }
             }
         }
+        [TestCase(13, 200, 200)]
+        [TestCase(-13, 200, 200)]
+        [TestCase(42, 200, 200)]
+        [TestCase(-42, 200, 200)]
 
+        public void TestThatPlacePieceThrowsException(int piece, int x, int y)
+        {
+            StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);
+            Assert.Throws<ArgumentException>(() => game.placePiece(piece, x, y));
+        }
     }
 }

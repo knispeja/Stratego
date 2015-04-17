@@ -318,13 +318,11 @@ namespace Stratego
         /// <returns></returns>
         public bool? SelectPiece(int x, int y)
         {
-            //int scaleX = this.panelWidth / this.boardState.GetLength(0);
-            //int scaleY = this.panelHeight / this.boardState.GetLength(1);
-            //this.pieceSelectedCoords = new Point(this.panelWidth / x, this.panelHeight / y);
-            //Oops, forgot to do minimal code. No sense in deleting it though.
-            if (this.pieceSelectedCoords == new Point(5,9))
+            int scaleX = this.panelWidth / this.boardState.GetLength(0);
+            int scaleY = this.panelHeight / this.boardState.GetLength(1);
+            if (this.pieceSelectedCoords == new Point(x/scaleX,y/scaleY))
                 return false;
-            this.pieceSelectedCoords = new Point(5, 9);
+            this.pieceSelectedCoords = new Point(x/scaleX, y/scaleY);
             return true;
         }
 

@@ -379,6 +379,18 @@ namespace StrategoTest
                 }
             }
         }
+        [TestCase(0, 123, 254)]
+        [TestCase(0, 246, 508)]
+        [TestCase(0, 369, 762)]
+        [TestCase(0, 220, 900)]
+        [TestCase(0, 500, 750)]
+        public void TestThatPieceCannotBeRemovedFromEmpty(int piece, int x, int y)
+        {
+            StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);
+            bool? result = game.placePiece(piece, x, y);
+            Assert.IsFalse(result.Value);
+        }
+
         [TestCase(13, 200, 200)]
         [TestCase(-13, 200, 200)]
         [TestCase(42, 200, 200)]
@@ -387,7 +399,8 @@ namespace StrategoTest
         [TestCase(-43, 200, 200)]
         [TestCase(8, -1, 200)]
         [TestCase(-8, 200, -1)]
-
+        [TestCase(8, 2001, 200)]
+        [TestCase(-8, 200, 2201)]
         public void TestThatPlacePieceThrowsException(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);

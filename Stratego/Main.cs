@@ -21,7 +21,7 @@ namespace Stratego
         int ticks = 0;                            // Used by the timer to keep track of the title screen's music & sounds
         int panelWidth;                           // Width of the enclosing panel   
         int panelHeight;                          // Height of the enclosing panel
-        int[,] boardState { get; set; }                // The 2DArray full of all pieces on the board
+        public int[,] boardState { get; set; }                // The 2DArray full of all pieces on the board
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
         bool preGameStarted;                      // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started

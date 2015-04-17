@@ -434,7 +434,8 @@ namespace StrategoTest
             game.turn = 1;
             Assert.True(game.SelectPiece(x,y).Value);
             Assert.AreEqual(new Point(x/100, y/100), game.pieceSelectedCoords);
-
+            Assert.AreEqual(piece, game.boardState[game.pieceSelectedCoords.X, game.pieceSelectedCoords.Y]);
+            Assert.AreEqual(false, game.SelectPiece(x, y).Value);
             //int[] defaults = game.defaults;
 
         //    for (int p = 1; p < defaults.Length; p++)

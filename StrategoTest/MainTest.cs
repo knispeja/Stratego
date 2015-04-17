@@ -442,6 +442,7 @@ namespace StrategoTest
         [TestCase(11, 650, 950)]
         [TestCase(12, 650, 950)]
         [TestCase(-11, 650, 950)]
+        [TestCase(-12, 650, 950)]
         public void TestThaOrSelectnWorksForBombsAndFlags(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);

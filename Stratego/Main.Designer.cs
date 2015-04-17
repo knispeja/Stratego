@@ -281,7 +281,6 @@
             this.TitlePictureBox.TabStop = false;
             this.TitlePictureBox.Visible = false;
             this.TitlePictureBox.WaitOnLoad = true;
-            this.TitlePictureBox.Click += new System.EventHandler(this.TitlePictureBox_Click);
             // 
             // FireBox
             // 

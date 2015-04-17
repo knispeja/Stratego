@@ -25,7 +25,7 @@ namespace Stratego
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
         bool preGameStarted;                      // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
-        Point pieceSelectedCoords;                // Coordinates of the piece that is currently selceted in the array
+        public Point pieceSelectedCoords { get; set; }                // Coordinates of the piece that is currently selceted in the array
         /// <summary>
         /// Initializer for normal play (initializes GUI).
         /// Not to be used for testing!

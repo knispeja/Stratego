@@ -427,6 +427,8 @@ namespace StrategoTest
 
         [TestCase(1, 650, 950)]
         [TestCase(1, 550, 950)]
+        [TestCase(-1, 650, 950)]
+        [TestCase(-1, 550, 950)]
         //Tests that the SelectPiece function properly selects a piece
         public void TestThaOrSelectnWorks(int piece, int x, int y)
         {

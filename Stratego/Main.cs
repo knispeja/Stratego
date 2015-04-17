@@ -87,6 +87,11 @@ namespace Stratego
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void startTimer_Tick(object sender, EventArgs e)
         {
             ticks++;
@@ -213,8 +218,6 @@ namespace Stratego
 
         public bool? placePiece(int piece, int x, int y)
         {
-            if (this.removeCheckBox.Checked)
-                this.piecePlacing = 0;
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY= this.panelHeight / this.boardState.GetLength(1);
             if (this.boardState[x / scaleX, y / scaleY] == 0 && this.placements[Math.Abs(piece)] > 0)
@@ -223,12 +226,7 @@ namespace Stratego
                 this.placements[Math.Abs(piece)] -= 1;
                 return true;
             }
-            else if (this.boardState[x / scaleX, y / scaleY] >= 0 && this.boardState[x / scaleX, y / scaleY] != 42 && this.piecePlacing == 0)
-            {
-                this.placements[Math.Abs(this.boardState[x / scaleX, y / scaleY])] += 1;
-                this.boardState[x / scaleX, y / scaleY] = 0;
-                return true;
-            }
+
             return false;
         }
 
@@ -244,8 +242,6 @@ namespace Stratego
 
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            if (this.removeCheckBox.Checked)
-                this.piecePlacing = 0;
             bool? piecePlaced = false;
             if (gameStarted)
             {

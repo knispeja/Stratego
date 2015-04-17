@@ -383,6 +383,10 @@ namespace StrategoTest
         [TestCase(-13, 200, 200)]
         [TestCase(42, 200, 200)]
         [TestCase(-42, 200, 200)]
+        [TestCase(43, 200, 200)]
+        [TestCase(-43, 200, 200)]
+        [TestCase(8, -1, 200)]
+        [TestCase(-8, 200, -1)]
 
         public void TestThatPlacePieceThrowsException(int piece, int x, int y)
         {

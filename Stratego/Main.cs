@@ -286,16 +286,25 @@ namespace Stratego
         /// <returns>Whether or not the placement was successful</returns>
         public bool? placePiece(int piece, int x, int y)
         {
+            Boolean retVal = true;
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY= this.panelHeight / this.boardState.GetLength(1);
-            if (this.boardState[x / scaleX, y / scaleY] == 0 && this.placements[Math.Abs(piece)] > 0)
-            {
-                this.boardState[x / scaleX, y / scaleY] = piece;
-                this.placements[Math.Abs(piece)] -= 1;
-                return true;
-            }
+            int pieceAtPos = this.boardState[x / scaleX, y / scaleY];
 
-            return false;
+            if (piece == 0 && pieceAtPos != 42)
+            {
+                // We are trying to remove
+                this.placements[pieceAtPos]++;
+            }
+            else if (pieceAtPos == 0 && this.placements[Math.Abs(piece)] > 0)
+            {
+                // We are trying to add
+                this.placements[Math.Abs(piece)] -= 1;
+            }
+            else retVal = false;
+
+            if (retVal) this.boardState[x / scaleX, y / scaleY] = piece;
+            return retVal;
         }
 
         /// <summary>

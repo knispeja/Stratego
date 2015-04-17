@@ -21,10 +21,11 @@ namespace Stratego
         int ticks = 0;                            // Used by the timer to keep track of the title screen's music & sounds
         int panelWidth;                           // Width of the enclosing panel   
         int panelHeight;                          // Height of the enclosing panel
-        int[,] boardState;                        // The 2DArray full of all pieces on the board
+        int[,] boardState { get; set; }                // The 2DArray full of all pieces on the board
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
-        bool gameStarted;                         // Whether or not the actual game has begun
-
+        bool preGameStarted;                      // Whether or not the pre game has begun
+        public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
+        Point pieceSelectedCoords;                // Coordinates of the piece that is currently selceted in the array
         /// <summary>
         /// Initializer for normal play (initializes GUI).
         /// Not to be used for testing!
@@ -82,7 +83,7 @@ namespace Stratego
             sound.Play();
             this.FireBox.Dispose();
             this.placements = (int[])this.defaults.Clone();
-            this.gameStarted = true;
+            this.preGameStarted = true;
 
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -165,7 +166,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_Paint(object sender, PaintEventArgs e)
         {
-            if (this.gameStarted)
+            if (this.preGameStarted)
             {
                 this.panelWidth = this.backPanel.Width;
                 this.panelHeight = this.backPanel.Height;
@@ -310,6 +311,17 @@ namespace Stratego
         }
 
         /// <summary>
+        /// Moves a peiece if a piece is selected, or selects a piece if no piece is selected.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public bool? SelectPiece(int x, int y)
+        {
+            return null;
+        }
+
+        /// <summary>
         /// Receives clicks on the back panel and directs them to the game as needed
         /// </summary>
         /// <param name="sender"></param>
@@ -317,7 +329,7 @@ namespace Stratego
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
             bool? piecePlaced = false;
-            if (gameStarted)
+            if (preGameStarted && turn == 0)
             {
                 piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
                 backPanel.Focus();
@@ -342,7 +354,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (gameStarted)
+            if (preGameStarted)
             {
                 KeysConverter kc = new KeysConverter();
                 string keyChar = kc.ConvertToString(e.KeyCode);

@@ -345,6 +345,7 @@ namespace Stratego
         /// <returns>true if a piece was moved, false otherwise</returns>
         public bool MovePiece(int x, int y)
         {
+            this.boardState[x / 100, y / 100] = 1;
             return true;
         }
 

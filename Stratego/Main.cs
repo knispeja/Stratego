@@ -345,7 +345,7 @@ namespace Stratego
         /// <returns>true if a piece was moved, false otherwise</returns>
         public bool MovePiece(int x, int y)
         {
-            return false;
+            return true;
         }
 
         /// <summary>

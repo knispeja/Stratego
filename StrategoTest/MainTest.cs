@@ -462,6 +462,7 @@ namespace StrategoTest
             game.turn = 1;
             Assert.True(game.SelectPiece(x, y).Value);
             Assert.True(game.MovePiece(x,y+100));
+            Assert.AreEqual(game.boardState[x / 100, (y+100) / 100], piece);
         }
     }
 }

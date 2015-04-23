@@ -453,10 +453,15 @@ namespace StrategoTest
             Assert.False(game.SelectPiece(x, y).Value);
         }
 
+        [TestCase(1, 650, 950)]
         //Tests that the MovePiece function properly moves pieces
-        public void TestThatMovePieceWorks(int piece, int x, int y)
+        public void TestThatMovePieceWorksInsideMap(int piece, int x, int y)
         {
-            
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.placePiece(piece, x, y);
+            game.turn = 1;
+            Assert.True(game.SelectPiece(x, y).Value);
+            Assert.True(game.MovePiece(x,y+100));
         }
     }
 }

@@ -452,5 +452,11 @@ namespace StrategoTest
             game.turn = 1;
             Assert.False(game.SelectPiece(x, y).Value);
         }
+
+        //Tests that the MovePiece function properly moves pieces
+        public void TestThatMovePieceWorks(int piece, int x, int y)
+        {
+            
+        }
     }
 }

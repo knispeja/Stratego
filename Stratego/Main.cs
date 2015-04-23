@@ -25,8 +25,8 @@ namespace Stratego
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
         bool preGameStarted;                      // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
-        public Point pieceSelectedCoords { get; set; }                // Coordinates of the piece that is currently selceted in the array
-        public Boolean pieceIsSelected { get; set; }
+        public Point pieceSelectedCoords { get; set; }        // Coordinates of the piece that is currently selceted in the array
+        public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
         /// <summary>
         /// Initializer for normal play (initializes GUI).
         /// Not to be used for testing!
@@ -209,6 +209,10 @@ namespace Stratego
                                     // Piece is on the blue team, so we change the brush color to blue
                                     b = new SolidBrush(Color.FromArgb(25, 25, 15 * Math.Abs(piece)));
                                     pen.Color = Color.FromArgb(200, 200, 255);
+                                    //if(this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                    //{
+                                    //    pen.Color = Color.FromArgb(10, 255, 10);
+                                    //}
                                 }
                                 else
                                 {
@@ -331,6 +335,17 @@ namespace Stratego
             this.pieceSelectedCoords = new Point(x/scaleX, y/scaleY);
             this.pieceIsSelected = true;
             return true;
+        }
+
+        /// <summary>
+        /// Moves the selected piece(if there is one) to the tile tile which corresponds to the x,y coords (if valid)
+        /// </summary>
+        /// <param name="x">x coordinate of the mouse click of where to move (pixels)</param>
+        /// <param name="y">y coordinate of the mouse click of where to move (pixels)</param>
+        /// <returns>true if a piece was moved, false otherwise</returns>
+        public bool MovePiece(int x, int y)
+        {
+            return false;
         }
 
         /// <summary>

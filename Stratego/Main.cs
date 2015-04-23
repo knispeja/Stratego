@@ -346,6 +346,7 @@ namespace Stratego
         public bool MovePiece(int x, int y)
         {
             this.boardState[x / 100, y / 100] = 1;
+            this.boardState[x / 100, (y + 100) / 100] = 0;
             this.pieceIsSelected = false;
             return true;
         }

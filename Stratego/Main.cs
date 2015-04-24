@@ -14,8 +14,8 @@ namespace Stratego
 {
     public partial class StrategoWin : Form
     {
-        public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
-        //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+        //public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+        public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
         int piecePlacing = 0;                     // The piece currently being placed by the user
         int activeSidePanelButton = 0;            // Placeholder for which button on the placement side panel is being used
@@ -169,7 +169,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_Paint(object sender, PaintEventArgs e)
         {
-            if (this.preGameActive)
+            if (this.turn != 0)
             {
                 this.panelWidth = this.backPanel.Width;
                 this.panelHeight = this.backPanel.Height;
@@ -311,7 +311,7 @@ namespace Stratego
                 // We are trying to remove
                 if (Math.Sign(pieceAtPos) != Math.Sign(this.turn)) return false;
                 if (pieceAtPos == 0) retVal = false;
-                this.placements[pieceAtPos]++;
+                this.placements[Math.Abs(pieceAtPos)]++;
             }
             else if (pieceAtPos == 0 && this.placements[Math.Abs(piece)] > 0)
             {
@@ -482,7 +482,17 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (this.preGameActive)
+            if(this.turn != 0 && !this.preGameActive)
+            {
+                KeysConverter kc = new KeysConverter();
+                string keyChar = kc.ConvertToString(e.KeyCode);
+                if (e.KeyCode == Keys.Escape)
+                {
+                    this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
+                    //Make the escape/pause/whatever panel visible
+                }
+            }
+            else if (this.preGameActive)
             {
                 KeysConverter kc = new KeysConverter();
                 string keyChar = kc.ConvertToString(e.KeyCode);
@@ -549,10 +559,17 @@ namespace Stratego
         /// <param name="e"></param>
         private void donePlacingButton_click(object sender, EventArgs e)
         {
-            nextTurn();
+            //nextTurn();
             this.piecePlacing *= -1;
-            if (turn == -1) for (int row = 6; row < boardState.GetLength(1); row++) fillRow(0, row);
-            else if (turn == 1) for (int row = 4; row < 6; row++) fillRow(0, row);
+            //Booooo Jacob. Your code is shit.
+            //if (turn == -1) for (int row = 6; row < boardState.GetLength(1); row++) fillRow(0, row);
+            //if (turn == 1) for (int row = 4; row < 6; row++) fillRow(0, row);
+            if (turn == 1)
+                for (int i = 0; i < 4; i++)
+                    for (int x = 0; x < 10; x++)
+                        this.boardState[x, i] = 0;
+            nextTurn();
+            //for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
             // if it's P2's turn now, fill rows up there with 0s so he/she can place pieces
         }
     }

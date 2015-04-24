@@ -324,6 +324,7 @@ namespace Stratego
             else
             {
                 this.turn = 1;
+                this.preGameActive = true;
             }
         }
 

@@ -331,6 +331,7 @@ namespace Stratego
             if (this.turn == 1)
             {
                 this.turn = -1;
+                if (this.preGameActive) this.placements = this.defaults;
             }
             else
             {

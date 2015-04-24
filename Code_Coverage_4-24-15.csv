@@ -1,1 +1,12 @@
-
+Name,Code Coverage %,Compiled Lines,Covered Lines,Uncovered Lines,Code Lines,Excluded Lines
+Entire Solution,20.30%,734,149,585,"1,332",365
+Entire Solution\Stratego,20.30%,734,149,585,"1,332",0
+Entire Solution\Stratego\Main.cs,30.81%,383,118,265,621,0
+Entire Solution\Stratego\Main.Designer.cs,1.97%,254,5,249,378,0
+Entire Solution\Stratego\Piece.cs,83.87%,31,26,5,63,0
+Entire Solution\Stratego\Program.cs,0.00%,5,0,5,23,0
+Entire Solution\Stratego\Properties,0.00%,61,0,61,247,0
+Entire Solution\Stratego\Properties\AssemblyInfo.cs,,0,0,0,37,0
+Entire Solution\Stratego\Properties\Resources.Designer.cs,0.00%,57,0,57,171,0
+Entire Solution\Stratego\Properties\Settings.Designer.cs,0.00%,4,0,4,31,0
+Entire Solution\Stratego\Properties\Settings.settings,,0,0,0,8,0

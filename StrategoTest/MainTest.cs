@@ -430,7 +430,7 @@ namespace StrategoTest
         [TestCase(-1, 650, 950)]
         [TestCase(-1, 550, 950)]
         //Tests that the SelectPiece function properly selects a piece
-        public void TestThaOrSelectnWorks(int piece, int x, int y)
+        public void TestThatSelectWorks(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.placePiece(piece, x, y);
@@ -445,7 +445,7 @@ namespace StrategoTest
         [TestCase(12, 650, 950)]
         [TestCase(-11, 650, 950)]
         [TestCase(-12, 650, 950)]
-        public void TestThaOrSelectnWorksForBombsAndFlags(int piece, int x, int y)
+        public void TestThatSelectWorksForBombsAndFlags(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.placePiece(piece, x, y);
@@ -455,49 +455,80 @@ namespace StrategoTest
 
         [TestCase(1, 650, 950)]
         [TestCase(2, 650, 950)]
+        [TestCase(-10, 650, 950)]
+        [TestCase(-8, 650, 950)]
         //Tests that the MovePiece function properly moves pieces up down left right, no special cases.
         //Except for the case where you try to move and nothing is selected.
         public void TestThatMovePieceWorksInsideMap(int piece, int x, int y)
         {
+            int turn = 0; //Note these lines of code don't really do anything right now
+            if (piece > 0) //Someone else is going to make some other test thing that will test for it
+                turn = 1;
+            else if (piece < 0)
+                turn = -1;
+            else Assert.Fail("Invalid piece argument for this test");
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.placePiece(piece, x, y);
-            game.turn = 1;
+            game.turn = turn;
             Assert.True(game.SelectPiece(x, y).Value);
             y -= 100;
             Assert.True(game.MovePiece(x,y));
             Assert.AreEqual(game.boardState[x / 100, y / 100], piece);
-            Assert.AreEqual(game.pieceIsSelected, false);
+            Assert.False(game.pieceIsSelected);
             Assert.AreEqual(game.boardState[x / 100, (y + 100) / 100], 0);
 
             game.SelectPiece(x, y);
             x -= 100;
             Assert.True(game.MovePiece(x, y));
             Assert.AreEqual(game.boardState[x / 100, y / 100], piece);
-            Assert.AreEqual(game.pieceIsSelected, false);
+            Assert.False(game.pieceIsSelected);
             Assert.AreEqual(game.boardState[(x + 100) / 100, y / 100], 0);
 
             Assert.True(game.SelectPiece(x, y).Value);
             y += 100;
             Assert.True(game.MovePiece(x, y));
             Assert.AreEqual(game.boardState[x / 100, y / 100], piece);
-            Assert.AreEqual(game.pieceIsSelected, false);
+            Assert.False(game.pieceIsSelected);
             Assert.AreEqual(game.boardState[x / 100, (y - 100) / 100], 0);
 
             x += 100;
             Assert.False(game.MovePiece(x, y));
             Assert.AreEqual(game.boardState[(x - 100) / 100, y / 100], piece);
-            Assert.AreEqual(game.pieceIsSelected, false);
+            Assert.False(game.pieceIsSelected);
             x -= 100;
 
             game = new StrategoWin(2000, 2000, new int[10, 10]);
             game.placePiece(piece, x, y);
-            game.turn = 1;
+            game.turn = turn;
             Assert.True(game.SelectPiece(x, y).Value);
             y -= 200;
             Assert.True(game.MovePiece(x, y));
             Assert.AreEqual(piece, game.boardState[x / 200, y / 200]);
-            Assert.AreEqual(game.pieceIsSelected, false);
+            Assert.False(game.pieceIsSelected);
             Assert.AreEqual(game.boardState[x / 200, (y + 200) / 200], 0);
+        }
+
+        [TestCase(1, 650, 950)]
+        public void TestThatMovePieceCantMoveOnAlliedPiece(int piece, int x, int y)
+        {
+            int turn = 0; //Note these lines of code don't really do anything right now
+            if (piece > 0) //Someone else is going to make some other test thing that will test for it
+                turn = 1;
+            else if (piece < 0)
+                turn = -1;
+            else Assert.Fail("Invalid piece argument for this test");
+
+            int secondaryPiece = turn * 5;
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.placePiece(piece, x, y);
+            game.placePiece(secondaryPiece, x + 100, y);
+            game.turn = turn;
+            Assert.True(game.SelectPiece(x, y).Value);
+            x += 100;
+            Assert.False(game.MovePiece(x, y));
+            Assert.AreEqual(secondaryPiece, game.boardState[x / 100, y / 100]);
+            Assert.False(game.pieceIsSelected);
+            Assert.AreEqual(piece, game.boardState[(x - 100) / 100, y / 100]);
         }
     }
 }

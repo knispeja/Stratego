@@ -474,6 +474,7 @@ namespace StrategoTest
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.turn = initialTurn;
+            game.preGameActive = initialbool;
             game.nextTurn();
             Assert.AreEqual(expectedFinal, game.preGameActive);
         }

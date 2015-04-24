@@ -24,7 +24,7 @@ namespace Stratego
         int panelHeight;                          // Height of the enclosing panel
         public int[,] boardState { get; set; }                // The 2DArray full of all pieces on the board
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
-        bool preGameStarted;                      // Whether or not the pre game has begun
+        bool preGameActive;                      // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
         public Point pieceSelectedCoords { get; set; }                // Coordinates of the piece that is currently selceted in the array
         public Boolean pieceIsSelected { get; set; }
@@ -85,7 +85,7 @@ namespace Stratego
             sound.Play();
             this.FireBox.Dispose();
             this.placements = (int[])this.defaults.Clone();
-            this.preGameStarted = true;
+            this.preGameActive = true;
 
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -168,7 +168,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_Paint(object sender, PaintEventArgs e)
         {
-            if (this.preGameStarted)
+            if (this.preGameActive)
             {
                 this.panelWidth = this.backPanel.Width;
                 this.panelHeight = this.backPanel.Height;
@@ -349,7 +349,7 @@ namespace Stratego
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
             bool? piecePlaced = false;
-            if (preGameStarted && turn == 0)
+            if (preGameActive && turn == 0)
             {
                 piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
                 backPanel.Focus();
@@ -374,7 +374,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (preGameStarted)
+            if (preGameActive)
             {
                 KeysConverter kc = new KeysConverter();
                 string keyChar = kc.ConvertToString(e.KeyCode);

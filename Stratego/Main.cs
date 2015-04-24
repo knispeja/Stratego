@@ -349,6 +349,12 @@ namespace Stratego
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
             if (!this.pieceIsSelected)
                 return false;
+            if (Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y],
+                this.boardState[x / scaleX, y / scaleY]) == null)
+            {
+                this.pieceIsSelected = false;
+                return false;
+            }
             this.boardState[x / scaleX, y / scaleY] = this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y];
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
             this.pieceIsSelected = false;

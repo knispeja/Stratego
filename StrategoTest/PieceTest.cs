@@ -131,10 +131,13 @@ namespace StrategoTest
         [TestCase(-8, -11)]
         [TestCase(7, 3)]
         [TestCase(-7, -3)]
-        // Tests that attack throws exception for two pieces of the same team
-        public void TestThatAttackThrowsException(int a, int b)
+        [TestCase(-7, 42)]
+        [TestCase(7, 42)]
+        // Tests that attack returns null two pieces of the same team
+        // Or if the piece being attacked is the obsticle piece (42)
+        public void TestThatAttackReturnsNullOnInvalidAttack(int a, int b)
         {
-            Assert.Throws<ArgumentException>(() => Piece.attack(a, b));
+            Assert.Null(Piece.attack(a, b));
         }
 
         [TestCase(1, Result = "Marshall")]

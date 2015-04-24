@@ -599,5 +599,28 @@ namespace StrategoTest
             Assert.False(game.pieceIsSelected);
             Assert.AreEqual(0, game.boardState[x / 100, y / 100]);
         }
+
+        [TestCase(5, 650, 950)]
+        //Test to make sure that a piece can only move up/down/left/right, not diagonal
+        public void TestThatMovePieceResolvesCombat(int piece, int x, int y)
+        {
+            int turn = 0; //Note these lines of code don't really do anything right now
+            if (piece > 0) //Someone else is going to make some other test thing that will test for it
+                turn = 1;
+            else if (piece < 0)
+                turn = -1;
+            else Assert.Fail("Invalid piece argument for this test");
+
+            int secondaryPiece = turn * -5;
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.placePiece(piece, x, y);
+            game.placePiece(secondaryPiece, x + 100, y);
+            game.turn = turn;
+            Assert.True(game.SelectPiece(x, y).Value);
+            x += 100;
+            Assert.True(game.MovePiece(x, y));
+            Assert.AreEqual(Piece.attack(piece, secondaryPiece), game.boardState[x / 100, y / 100]);
+            Assert.False(game.pieceIsSelected);
+        }
     }
 }

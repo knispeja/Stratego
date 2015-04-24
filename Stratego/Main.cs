@@ -355,10 +355,56 @@ namespace Stratego
                 this.boardState[x / scaleX, y / scaleY]) == null)
                 return false;
             if (Math.Abs(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y]) != 9)
+            {
                 if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) > 1 || Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) > 1)
                     return false;
+            }
+            else
+            { //Check for the special 9 cases.
+                if(Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) > 1)
+                {
+                    if (((x / scaleX) - this.pieceSelectedCoords.X) > 1)
+                    {
+                        for(int i = 1; i < (x / scaleX) - this.pieceSelectedCoords.X; i++)
+                        {
+                            if(this.boardState[this.pieceSelectedCoords.X+i, this.pieceSelectedCoords.Y] != 0)
+                                return false;
+                        }
+                    }
+                    else if (((x / scaleX) - this.pieceSelectedCoords.X) < -1)
+                    {
+                        for(int i = -1; i > (x / scaleX) - this.pieceSelectedCoords.X; i--)
+                        {
+                            if(this.boardState[this.pieceSelectedCoords.X+i, this.pieceSelectedCoords.Y] != 0)
+                                return false;
+                        }
+                    }
+                }
+                else if (Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) > 1)
+                {
+                    if (((y / scaleY) - this.pieceSelectedCoords.Y) > 1)
+                    {
+                        for (int i = 1; i < (y / scaleY) - this.pieceSelectedCoords.Y; i++)
+                        {
+                            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y + i] != 0)
+                                return false;
+                        }
+                    }
+                    else if (((y / scaleY) - this.pieceSelectedCoords.Y) < -1)
+                    {
+                        for (int i = -1; i > (y / scaleY) - this.pieceSelectedCoords.Y; i--)
+                        {
+                            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y + i] != 0)
+                                return false;
+                        }
+                    }
+                }
+            }
             if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) >= 1 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) >= 1)
                 return false;
+            if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) == 0 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) == 0)
+                return false;
+
             this.boardState[x / scaleX, y / scaleY] = this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y];
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
             return true;

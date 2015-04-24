@@ -323,8 +323,11 @@ namespace Stratego
             }
             else
             {
+                if (this.turn == -1)
+                    this.preGameActive = false;
+                else
+                    this.preGameActive = true;
                 this.turn = 1;
-                this.preGameActive = true;
             }
         }
 

@@ -488,6 +488,16 @@ namespace StrategoTest
             Assert.AreEqual(game.boardState[(x - 100) / 100, y / 100], piece);
             Assert.AreEqual(game.pieceIsSelected, false);
             x -= 100;
+
+            game = new StrategoWin(2000, 2000, new int[10, 10]);
+            game.placePiece(piece, x, y);
+            game.turn = 1;
+            Assert.True(game.SelectPiece(x, y).Value);
+            y -= 200;
+            Assert.True(game.MovePiece(x, y));
+            Assert.AreEqual(piece, game.boardState[x / 200, y / 200]);
+            Assert.AreEqual(game.pieceIsSelected, false);
+            Assert.AreEqual(game.boardState[x / 200, (y + 200) / 200], 0);
         }
     }
 }

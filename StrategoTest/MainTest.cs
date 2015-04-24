@@ -474,27 +474,27 @@ namespace StrategoTest
             Assert.True(game.SelectPiece(x, y).Value);
             y -= 100;
             Assert.True(game.MovePiece(x,y));
-            Assert.AreEqual(game.boardState[x / 100, y / 100], piece);
+            Assert.AreEqual(piece, game.boardState[x / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
-            Assert.AreEqual(game.boardState[x / 100, (y + 100) / 100], 0);
+            Assert.AreEqual(0, game.boardState[x / 100, (y + 100) / 100]);
 
             game.SelectPiece(x, y);
             x -= 100;
             Assert.True(game.MovePiece(x, y));
-            Assert.AreEqual(game.boardState[x / 100, y / 100], piece);
+            Assert.AreEqual(piece, game.boardState[x / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
-            Assert.AreEqual(game.boardState[(x + 100) / 100, y / 100], 0);
+            Assert.AreEqual(0, game.boardState[(x + 100) / 100, y / 100]);
 
             Assert.True(game.SelectPiece(x, y).Value);
             y += 100;
             Assert.True(game.MovePiece(x, y));
-            Assert.AreEqual(game.boardState[x / 100, y / 100], piece);
+            Assert.AreEqual(piece, game.boardState[x / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
-            Assert.AreEqual(game.boardState[x / 100, (y - 100) / 100], 0);
+            Assert.AreEqual(0, game.boardState[x / 100, (y - 100) / 100]);
 
             x += 100;
             Assert.False(game.MovePiece(x, y));
-            Assert.AreEqual(game.boardState[(x - 100) / 100, y / 100], piece);
+            Assert.AreEqual(piece, game.boardState[(x - 100) / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
             x -= 100;
 
@@ -506,7 +506,7 @@ namespace StrategoTest
             Assert.True(game.MovePiece(x, y));
             Assert.AreEqual(piece, game.boardState[x / 200, y / 200]);
             Assert.False(game.pieceIsSelected);
-            Assert.AreEqual(game.boardState[x / 200, (y + 200) / 200], 0);
+            Assert.AreEqual(0, game.boardState[x / 200, (y + 200) / 200]);
         }
 
         [TestCase(1, 650, 950)]
@@ -600,8 +600,12 @@ namespace StrategoTest
             Assert.AreEqual(0, game.boardState[x / 100, y / 100]);
         }
 
-        [TestCase(5, 650, 950)]
-        //Test to make sure that a piece can only move up/down/left/right, not diagonal
+        [TestCase(1, 650, 950)]
+        [TestCase(-5, 650, 950)]
+        [TestCase(8, 650, 950)]
+        [TestCase(-3, 650, 950)]
+        [TestCase(-4, 650, 950)]
+        //Test to make sure that a piece gets resolved
         public void TestThatMovePieceResolvesCombat(int piece, int x, int y)
         {
             int turn = 0; //Note these lines of code don't really do anything right now

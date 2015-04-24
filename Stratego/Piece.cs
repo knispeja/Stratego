@@ -18,32 +18,34 @@ namespace Stratego
     {
         private static readonly string[] names= new string[] {"Empty", "Marshall", "General", "Colonel", "Major", "Captain", "Lieutenant",
                                     "Sergeant", "Miner", "Scout", "Spy", "Bomb", "Flag"};
-        public static int? attack(int? first, int? second)
+        public static int? attack(int first, int second)
         {
-            if(Math.Sign(first.Value) == Math.Sign(second.Value) || first.Value == 42 || second.Value == 42) return null;
+            if((Math.Sign(first) == Math.Sign(second) || first == 42 || second == 42) && first != 0 && second != 0) return null;
             
 
-            if (Math.Abs(first.Value) == 11)
+            if (Math.Abs(first) == 11)
             {
-            if (Math.Abs(second.Value) != 8)
+            if (Math.Abs(second) != 8)
                 return first;
             else
                 return second;
             }
-            else if (Math.Abs(second.Value) == 11)
+            else if (Math.Abs(second) == 11)
             {
-                if (Math.Abs(first.Value) != 8)
+                if (Math.Abs(first) != 8)
                     return second;
                 else
                     return first;
             }
-            if ((Math.Abs(first.Value) == 1 || Math.Abs(second.Value) == 1) && (Math.Abs(first.Value) == 10 || Math.Abs(second.Value) == 10))
-            {
+            if (first == 0)
+                return second;
+            if (second == 0)
                 return first;
-            }
-            if (Math.Abs(first.Value) < Math.Abs(second.Value))
+            if ((Math.Abs(first) == 1 || Math.Abs(second) == 1) && (Math.Abs(first) == 10 || Math.Abs(second) == 10))
                 return first;
-            else if (Math.Abs(first.Value) > Math.Abs(second.Value))
+            if (Math.Abs(first) < Math.Abs(second))
+                return first;
+            else if (Math.Abs(first) > Math.Abs(second))
                 return second;
             else return 0;
         }

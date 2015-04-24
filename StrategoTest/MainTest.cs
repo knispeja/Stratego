@@ -454,7 +454,9 @@ namespace StrategoTest
         }
 
         [TestCase(1, 650, 950)]
-        //Tests that the MovePiece function properly moves pieces
+        [TestCase(2, 650, 950)]
+        //Tests that the MovePiece function properly moves pieces up down left right, no special cases.
+        //Except for the case where you try to move and nothing is selected.
         public void TestThatMovePieceWorksInsideMap(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
@@ -485,6 +487,7 @@ namespace StrategoTest
             Assert.False(game.MovePiece(x, y));
             Assert.AreEqual(game.boardState[(x - 100) / 100, y / 100], piece);
             Assert.AreEqual(game.pieceIsSelected, false);
+            x -= 100;
         }
     }
 }

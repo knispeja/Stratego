@@ -757,7 +757,9 @@ namespace StrategoTest
         [TestCase(0, 3)]
         public void TestFillRow(int value, int row)
         {
-            int[,] gameBoard = new int[10, 10];
+            int[,] gameBoard;
+            if(value > 0) gameBoard = new int[5, 5];
+            else gameBoard = new int[10, 10];
             StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
             game.fillRow(value, row);
             for (int x = 0; x < 10; x++) Assert.AreEqual(value, game.boardState[x, row]);

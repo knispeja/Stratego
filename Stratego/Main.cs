@@ -23,7 +23,7 @@ namespace Stratego
         int panelHeight;                          // Height of the enclosing panel
         public int[,] boardState { get; set; }                // The 2DArray full of all pieces on the board
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
-        bool preGameActive;                      // Whether or not the pre game has begun
+        public bool preGameActive { get; set; }   // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
         public Point pieceSelectedCoords { get; set; }                // Coordinates of the piece that is currently selected in the array
         public Boolean pieceIsSelected { get; set; }
@@ -69,6 +69,7 @@ namespace Stratego
             this.panelHeight = windowHeight;
             this.boardState = boardState;
             this.placements = (int[]) this.defaults.Clone();
+            this.preGameActive = false;
         }
 
         /// <summary>

@@ -504,21 +504,21 @@ namespace StrategoTest
             Assert.AreEqual(expectedFinal, game.preGameActive);
         }
 
-        /*
-        [TestCase(-1, -2, 0, 0, true)]
-        [TestCase(-1, -3, 0, 0, true)]
-        [TestCase(-1, -4, 0, 0, true)]
-        [TestCase(-1, -5, 0, 0, true)]
-        [TestCase(-1, -6, 0, 0, true)]
-        public void TestSelectPieceTakesTurnIntoAccount(int initialTurn, int piece, int xCell, int yCell, bool expectedResult)
+        
+        [TestCase(-1, -2, true)]
+        [TestCase(-1, -3, true)]
+        [TestCase(-1, -4, true)]
+        [TestCase(-1, -5, true)]
+        [TestCase(-1, -6, true)]
+        public void TestSelectPieceTakesTurnIntoAccount(int initialTurn, int piece, bool expectedResult)
         {
             int[,] gameState = new int[10, 10];
-            gameState[xCell, yCell] = piece;
+            gameState[0, 0] = piece;
             StrategoWin game = new StrategoWin(1000, 1000, gameState);
             game.turn = initialTurn;
             game.preGameActive = false;
             Assert.AreEqual(expectedResult, game.SelectPiece(0, 0));
-        }*/
+        }
 
         
         [TestCase(1, -5, 200, 150, false)]
@@ -550,9 +550,8 @@ namespace StrategoTest
             StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
             game.turn = initialTurn;
             game.preGameActive = true;
-            game.placePiece(0, x * 100, y * 100);
+            Assert.IsFalse(game.placePiece(0, x * 100, y * 100) == true);
             Assert.IsFalse(game.getPiece(0, 0) == 0);
-            //Assert.IsTrue(game.placePiece(0, x, y) == false);
         }
     }
 }

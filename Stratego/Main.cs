@@ -14,7 +14,6 @@ namespace Stratego
 {
     public partial class StrategoWin : Form
     {
-        enum Turns { P2SetUp = -2, P2Move, Inactive, P1Move, P1SetUp };
         public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
 
         int piecePlacing = 0;                     // The piece currently being placed by the user
@@ -26,7 +25,7 @@ namespace Stratego
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
         bool preGameActive;                      // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
-        public Point pieceSelectedCoords { get; set; }                // Coordinates of the piece that is currently selceted in the array
+        public Point pieceSelectedCoords { get; set; }                // Coordinates of the piece that is currently selected in the array
         public Boolean pieceIsSelected { get; set; }
         /// <summary>
         /// Initializer for normal play (initializes GUI).
@@ -317,6 +316,7 @@ namespace Stratego
         /// </summary>
         public void nextTurn() 
         {
+            this.turn = 1;
         }
 
         /// <summary>

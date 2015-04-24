@@ -290,6 +290,7 @@ namespace Stratego
         public bool? placePiece(int piece, int x, int y)
         {
             if (Math.Abs(piece) > 12 || x<0 || y<0 || x>this.panelWidth || y>this.panelHeight) throw new ArgumentException();
+            if ((Math.Sign(piece) != Math.Sign(this.turn)) &&(piece!=0)) return false;
             Boolean retVal = true;
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY= this.panelHeight / this.boardState.GetLength(1);

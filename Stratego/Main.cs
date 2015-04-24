@@ -299,6 +299,7 @@ namespace Stratego
             if (piece == 0 && pieceAtPos != 42)
             {
                 // We are trying to remove
+                if (Math.Sign(pieceAtPos) != Math.Sign(this.turn)) return false;
                 if (pieceAtPos == 0) retVal = false;
                 this.placements[pieceAtPos]++;
             }

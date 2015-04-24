@@ -362,6 +362,11 @@ namespace Stratego
                     this.pieceIsSelected = false;
                     return false;
                 }
+            if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) >= 1 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) >= 1)
+            {
+                this.pieceIsSelected = false;
+                return false;
+            }
             this.boardState[x / scaleX, y / scaleY] = this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y];
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
             this.pieceIsSelected = false;

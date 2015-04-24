@@ -455,8 +455,9 @@ namespace StrategoTest
 
         [TestCase(1, 650, 950)]
         [TestCase(2, 650, 950)]
+        [TestCase(9, 650, 950)]
         [TestCase(-10, 650, 950)]
-        [TestCase(-8, 650, 950)]
+        [TestCase(-9, 650, 950)]
         //Tests that the MovePiece function properly moves pieces up down left right, no special cases.
         //Except for the case where you try to move and nothing is selected.
         public void TestThatMovePieceWorksInsideMap(int piece, int x, int y)
@@ -509,9 +510,9 @@ namespace StrategoTest
         }
 
         [TestCase(1, 650, 950)]
-        [TestCase(2, 650, 950)]
+        [TestCase(9, 650, 950)]
         [TestCase(-2, 650, 950)]
-        [TestCase(-6, 650, 950)]
+        [TestCase(-9, 650, 950)]
         public void TestThatMovePieceCantMoveOnAlliedPiece(int piece, int x, int y)
         {
             int turn = 0; //Note these lines of code don't really do anything right now

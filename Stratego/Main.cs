@@ -278,8 +278,9 @@ namespace Stratego
             return this.boardState[x,y];
         }
 
+        public void fillRow(int value, int row)
         {
-
+            for (int x = 0; x < 10; x++) this.boardState[x, 1] = -5;
         }
 
         /// <summary>

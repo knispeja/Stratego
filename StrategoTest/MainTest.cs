@@ -751,5 +751,14 @@ namespace StrategoTest
             Assert.IsFalse(game.placePiece(0, x * 100, y * 100) == true);
             Assert.IsFalse(game.getPiece(0, 0) == 0);
         }
+
+        [TestCase(-5, 1)]
+        public void TestFillRow(int value, int row)
+        {
+            int[,] gameBoard = new int[10, 10];
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
+            game.fillRow(value, row);
+            for (int x = 0; x < 10; x++) Assert.AreEqual(value, game.boardState[x, row]);
+        }
     }
 }

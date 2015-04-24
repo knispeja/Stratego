@@ -18,6 +18,7 @@ namespace Stratego
         //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
         //public readonly int[] defaults = new int[13] { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
+        bool testing = false;
         int piecePlacing = 0;                     // The piece currently being placed by the user
         int activeSidePanelButton = 0;            // Placeholder for which button on the placement side panel is being used
         int ticks = 0;                            // Used by the timer to keep track of the title screen's music & sounds
@@ -65,6 +66,7 @@ namespace Stratego
         /// <param name="boardState">Modified initial board state for ease of testing</param>
         public StrategoWin(int windowWidth, int windowHeight, int[,] boardState)
         {
+            testing = true;
             this.panelWidth = windowWidth;
             this.panelHeight = windowHeight;
             this.boardState = boardState;
@@ -333,7 +335,9 @@ namespace Stratego
         /// </summary>
         public void nextTurn() 
         {
-            this.backPanel.Invalidate();
+            if(!testing)
+                this.backPanel.Invalidate();
+
             //this.backPanel.Update();
             if (this.turn == 1)
             {
@@ -561,7 +565,7 @@ namespace Stratego
         private void SidePanelOpenButton_MouseClick(object sender, MouseEventArgs e)
         {
             //Makes the side panel open when the button is clicked
-            if (this.SidePanel.Visible)
+            if (this.SidePanel.Visible && !this.testing)
                 this.backPanel.Focus();
             this.SidePanel.Visible = !this.SidePanel.Visible;
         }
@@ -601,7 +605,6 @@ namespace Stratego
         {
             //nextTurn();
             this.piecePlacing *= -1;
-            //Booooo Jacob. Your code is shit.
             //if (turn == -1) for (int row = 6; row < boardState.GetLength(1); row++) fillRow(0, row);
             //if (turn == 1) for (int row = 4; row < 6; row++) fillRow(0, row);
             if (turn == 1)
@@ -612,7 +615,6 @@ namespace Stratego
                 ((Button)sender).Enabled = false;
             nextTurn();
             //for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
-            // if it's P2's turn now, fill rows up there with 0s so he/she can place pieces
         }
     }
 }

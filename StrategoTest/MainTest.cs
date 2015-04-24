@@ -510,6 +510,12 @@ namespace StrategoTest
         [TestCase(-1, -4, true)]
         [TestCase(-1, -5, true)]
         [TestCase(-1, -6, true)]
+        [TestCase(1, -4, false)]
+        [TestCase(1, -5, false)]
+        [TestCase(1, -6, false)]
+        [TestCase(-1, 2, false)]
+        [TestCase(-1, 3, false)]
+        [TestCase(-1, 6, false)]
         public void TestSelectPieceTakesTurnIntoAccount(int initialTurn, int piece, bool expectedResult)
         {
             int[,] gameState = new int[10, 10];

@@ -316,13 +316,13 @@ namespace Stratego
         /// </summary>
         public void nextTurn() 
         {
-            if (this.turn == 0)
+            if (this.turn == 1)
             {
-                this.turn = 1;
+                this.turn = -1;
             }
             else
             {
-                this.turn = -1;
+                this.turn = 1;
             }
         }
 

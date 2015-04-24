@@ -318,8 +318,8 @@ namespace Stratego
         /// <summary>
         /// Selects a piece if no piece is selected.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">x coords of the click in pixels</param>
+        /// <param name="y">y coord of the click in pixels</param>
         /// <returns></returns>
         public bool? SelectPiece(int x, int y)
         {

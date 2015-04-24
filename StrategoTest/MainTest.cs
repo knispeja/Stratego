@@ -753,6 +753,8 @@ namespace StrategoTest
         }
 
         [TestCase(-5, 1)]
+        [TestCase(42, 6)]
+        [TestCase(0, 3)]
         public void TestFillRow(int value, int row)
         {
             int[,] gameBoard = new int[10, 10];

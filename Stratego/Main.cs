@@ -44,6 +44,8 @@ namespace Stratego
             Timer t = new Timer();
             this.panelWidth = this.backPanel.Width;
             this.panelHeight = this.backPanel.Height;
+            this.turn = 0;
+            this.preGameActive = false;
             t.Start();
 
             // Initialize the board state with invalid spaces in the enemy player's side
@@ -85,7 +87,9 @@ namespace Stratego
             sound.Play();
             this.FireBox.Dispose();
             this.placements = (int[])this.defaults.Clone();
-            this.preGameActive = true;
+
+            // Start the game!
+            nextTurn();
 
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -442,7 +446,7 @@ namespace Stratego
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
             bool? piecePlaced = false;
-            if (preGameActive && turn == 0)
+            if (preGameActive)
             {
                 piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
                 backPanel.Focus();
@@ -467,7 +471,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (preGameActive)
+            if (this.preGameActive)
             {
                 KeysConverter kc = new KeysConverter();
                 string keyChar = kc.ConvertToString(e.KeyCode);

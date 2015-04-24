@@ -14,8 +14,9 @@ namespace Stratego
 {
     public partial class StrategoWin : Form
     {
-        //public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
-        public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+        public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+        //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+        //public readonly int[] defaults = new int[13] { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
         int piecePlacing = 0;                     // The piece currently being placed by the user
         int activeSidePanelButton = 0;            // Placeholder for which button on the placement side panel is being used
@@ -209,17 +210,15 @@ namespace Stratego
                                 if (piece > 0)
                                 {
                                     // Piece is on the blue team, so we change the brush color to blue
-                                    b = new SolidBrush(Color.FromArgb(25, 25, 15 * Math.Abs(piece)));
+                                    //b = new SolidBrush(Color.FromArgb(25, 25, 15 * Math.Abs(piece)));
+                                    b = new SolidBrush(Color.FromArgb(25, 25, 175));
                                     pen.Color = Color.FromArgb(200, 200, 255);
-                                    //if(this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                    //{
-                                    //    pen.Color = Color.FromArgb(10, 255, 10);
-                                    //}
                                 }
                                 else
                                 {
                                     // Piece is on the red team, so we change the brush to reflect that
-                                    b = new SolidBrush(Color.FromArgb(15 * Math.Abs(piece), 25, 25));
+                                    //b = new SolidBrush(Color.FromArgb(15 * Math.Abs(piece), 25, 25));
+                                    b = new SolidBrush(Color.FromArgb(175, 25, 25));
                                     pen.Color = Color.FromArgb(255, 200, 200);
                                 }
 
@@ -239,15 +238,20 @@ namespace Stratego
                                 {
                                     // Piece is something else, display as circle (to be changed later)
                                     g.FillEllipse(b, cornerX, cornerY, diameter, diameter);
+                                    if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                        pen.Color = Color.FromArgb(10, 255, 10);
                                     g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
 
                                     // Draw the text (the name of the piece) onto the circle
-                                    string drawString = Piece.toString(piece);
-                                    System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
-                                    System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-                                    g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 8, cornerY + diameter / 4);
-                                    drawFont.Dispose();
-                                    drawBrush.Dispose();
+                                    if ((turn == -1 && piece < 0) || (turn == 1 && piece > 0))
+                                    {
+                                        string drawString = Piece.toString(piece);
+                                        System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
+                                        System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+                                        g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 8, cornerY + diameter / 4);
+                                        drawFont.Dispose();
+                                        drawBrush.Dispose();
+                                    }
                                 }
 
                                 // Dispose of the brush
@@ -329,6 +333,8 @@ namespace Stratego
         /// </summary>
         public void nextTurn() 
         {
+            this.backPanel.Invalidate();
+            //this.backPanel.Update();
             if (this.turn == 1)
             {
                 this.turn = -1;
@@ -337,7 +343,19 @@ namespace Stratego
             else
             {
                 if (this.turn == -1)
+                {
+                    if(this.preGameActive == true)
+                        for (int i = 4; i < 6; i++)
+                        {
+                            for (int x = 0; x < 2; x++)
+                                this.boardState[x, i] = 0;
+                            for (int x = 4; x < 6; x++)
+                                this.boardState[x, i] = 0;
+                            for (int x = 8; x < 10; x++)
+                                this.boardState[x, i] = 0;
+                        }
                     this.preGameActive = false;
+                }
                 else
                     this.preGameActive = true;
                 this.turn = 1;
@@ -438,6 +456,7 @@ namespace Stratego
                 return false;
             this.boardState[x / scaleX, y / scaleY] = Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y], this.boardState[x / scaleX, y / scaleY]).Value;
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
+            this.nextTurn();
             return true;
         }
 
@@ -448,29 +467,50 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            bool? piecePlaced = false;
             if (preGameActive)
             {
-                piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
+                bool? piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
                 backPanel.Focus();
-            }
 
-            // Only run if the placement succeeded
-            if (piecePlaced.Value)
+                // Only run if the placement succeeded
+                if (piecePlaced.Value)
+                {
+                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                    //This makes it so it only repaints the rectangle where the piece is placed
+                    Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
+                    backPanel.Invalidate(r);
+
+                    for (int i = 0; i < this.placements.Length; i++)
+                    {
+                        if (this.placements[i] != 0)
+                        {
+                            this.donePlacingButton.Enabled = false;
+                            return;
+                        }
+                    }
+                    this.donePlacingButton.Enabled = true;
+                }
+            }
+            else if(this.pieceIsSelected)
             {
+                this.MovePiece(e.X, e.Y);
                 int scaleX = this.panelWidth / this.boardState.GetLength(0);
                 int scaleY = this.panelHeight / this.boardState.GetLength(1);
                 //This makes it so it only repaints the rectangle where the piece is placed
-                Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY); 
+                Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
                 backPanel.Invalidate(r);
-
-                for (int i = 0; i < this.placements.Length; i++){
-                    if (this.placements[i] != 0){
-                        this.donePlacingButton.Enabled = false;
-                        return;
-                    }
-                }
-                this.donePlacingButton.Enabled = true;
+                r = new Rectangle(this.pieceSelectedCoords.X * scaleX, this.pieceSelectedCoords.Y * scaleY, scaleX, scaleY);
+                backPanel.Invalidate(r);
+            }
+            else
+            {
+                this.SelectPiece(e.X, e.Y);
+                int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                //This makes it so it only repaints the rectangle where the piece is placed
+                Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
+                backPanel.Invalidate(r);
             }
             //backPanel.Invalidate();
         }
@@ -568,6 +608,8 @@ namespace Stratego
                 for (int i = 0; i < 4; i++)
                     for (int x = 0; x < 10; x++)
                         this.boardState[x, i] = 0;
+            if (this.turn == -1)
+                ((Button)sender).Enabled = false;
             nextTurn();
             //for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
             // if it's P2's turn now, fill rows up there with 0s so he/she can place pieces

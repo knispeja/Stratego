@@ -345,6 +345,7 @@ namespace Stratego
         /// <returns>true if a piece was moved, false otherwise</returns>
         public bool MovePiece(int x, int y)
         {
+            // TODO Make this implement the attack and update the board, as well as the end turn functionality.
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
             if (!this.pieceIsSelected)

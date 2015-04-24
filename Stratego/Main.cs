@@ -345,9 +345,11 @@ namespace Stratego
         /// <returns>true if a piece was moved, false otherwise</returns>
         public bool MovePiece(int x, int y)
         {
+            int scaleX = this.panelWidth / this.boardState.GetLength(0);
+            int scaleY = this.panelHeight / this.boardState.GetLength(1);
             if (!this.pieceIsSelected)
                 return false;
-            this.boardState[x / 100, y / 100] = this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y];
+            this.boardState[x / scaleX, y / scaleY] = this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y];
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
             this.pieceIsSelected = false;
             return true;

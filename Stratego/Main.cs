@@ -52,11 +52,7 @@ namespace Stratego
             // Initialize the board state with invalid spaces in the enemy player's side
             // of the board and empty spaces everywhere else. To be changed later!
             boardState = new int[10, 10];
-            for (int x = 0; x < boardState.GetLength(0); x++ )
-            {
-                for (int y = 0; y < 6; y++)
-                    boardState[x, y] = 42;
-            }
+            for (int row = 0; row < 6; row++) fillRow(42, row);
         }
 
         /// <summary>
@@ -554,7 +550,9 @@ namespace Stratego
         private void donePlacingButton_click(object sender, EventArgs e)
         {
             nextTurn();
-
+            this.piecePlacing *= -1;
+            if (turn == -1) for (int row = 6; row < boardState.GetLength(1); row++) fillRow(0, row);
+            else if (turn == 1) for (int row = 4; row < 6; row++) fillRow(0, row);
             // if it's P2's turn now, fill rows up there with 0s so he/she can place pieces
         }
     }

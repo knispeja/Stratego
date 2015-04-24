@@ -476,6 +476,7 @@ namespace StrategoTest
             Assert.AreEqual(expectedFinal, game.preGameActive);
         }
 
+        /*
         [TestCase(-1, -2, 0, 0, true)]
         [TestCase(-1, -3, 0, 0, true)]
         [TestCase(-1, -4, 0, 0, true)]
@@ -486,7 +487,22 @@ namespace StrategoTest
             int[,] gameState = new int[10, 10];
             gameState[xCell, yCell] = piece;
             StrategoWin game = new StrategoWin(1000, 1000, gameState);
-            Assert.AreEqual(expectedResult, game.SelectPiece(10, 10));
+            game.turn = initialTurn;
+            game.preGameActive = false;
+            Assert.AreEqual(expectedResult, game.SelectPiece(0, 0));
+        }*/
+
+        
+        [TestCase(1, -5, 200, 150, false)]
+        [TestCase(1, -3, 200, 250, false)]
+        [TestCase(1, -4, 300, 150, false)]
+        [TestCase(1, -10, 800, 25, false)]
+        public void TestPlacePieceTakesTurnIntoAccount(int initialTurn, int piece, int x, int y, bool expectedResult)
+        {
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.turn = initialTurn;
+            game.preGameActive = true;
+            Assert.AreEqual(expectedResult, game.placePiece(piece, x, y));
         }
     }
 }

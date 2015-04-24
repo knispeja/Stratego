@@ -535,7 +535,11 @@ namespace StrategoTest
         }
 
         [TestCase(1, 650, 950)]
-        //TEst to make sure that a piece can only move one space, unless that piece is a Scout (9)
+        [TestCase(2, 650, 950)]
+        [TestCase(9, 650, 950)]
+        [TestCase(-3, 650, 950)]
+        [TestCase(-9, 650, 950)]
+        //Test to make sure that a piece can only move one space, unless that piece is a Scout (9)
         public void TestThatMovePieceCanOnlyMoveOne(int piece, int x, int y)
         {
             int turn = 0; //Note these lines of code don't really do anything right now
@@ -559,11 +563,35 @@ namespace StrategoTest
             }
             else
             {
-                Assert.False(game.MovePiece(x, y));
+                Assert.True(game.MovePiece(x, y));
                 Assert.False(game.pieceIsSelected);
-                Assert.AreEqual(piece, game.boardState[(x - 200) / 100, y / 100]);
-                Assert.AreEqual(0, game.boardState[x / 100, y / 100]);
+                Assert.AreEqual(0, game.boardState[(x - 200) / 100, y / 100]);
+                Assert.AreEqual(9*turn, game.boardState[x / 100, y / 100]);
             }
+        }
+
+        [TestCase(1, 650, 950)]
+        //Test to make sure that a piece can only move up/down/left/right, not diagonal
+        public void TestThatMovePieceCantMoveDiagonal(int piece, int x, int y)
+        {
+            int turn = 0; //Note these lines of code don't really do anything right now
+            if (piece > 0) //Someone else is going to make some other test thing that will test for it
+                turn = 1;
+            else if (piece < 0)
+                turn = -1;
+            else Assert.Fail("Invalid piece argument for this test");
+
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.placePiece(piece, x, y);
+            game.turn = turn;
+            Assert.True(game.SelectPiece(x, y).Value);
+            x += 100;
+            y -= 100;
+
+            Assert.False(game.MovePiece(x, y));
+            Assert.AreEqual(piece, game.boardState[(x-100) / 100, (y+100) / 100]);
+            Assert.False(game.pieceIsSelected);
+            Assert.AreEqual(0, game.boardState[x / 100, y / 100]);
         }
     }
 }

@@ -572,6 +572,11 @@ namespace StrategoTest
         }
 
         [TestCase(1, 650, 950)]
+        [TestCase(2, 650, 950)]
+        [TestCase(9, 650, 950)]
+        [TestCase(-1, 650, 950)]
+        [TestCase(-2, 650, 950)]
+        [TestCase(-9, 650, 950)]
         //Test to make sure that a piece can only move up/down/left/right, not diagonal
         public void TestThatMovePieceCantMoveDiagonal(int piece, int x, int y)
         {

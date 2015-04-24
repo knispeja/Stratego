@@ -49,6 +49,7 @@ namespace StrategoTest
             map[x/100, y/100] = 42;
 
             StrategoWin game = new StrategoWin(1000, 1000, map);
+            game.nextTurn();
             return game.placePiece(piece, x, y);
         }
 
@@ -89,6 +90,9 @@ namespace StrategoTest
         public void TestThatPieceIsPlacedIntoEmptySpace(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.nextTurn();
+            if (piece < 0)
+                game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
             Assert.AreEqual(game.getPiece(x/100, y/100),piece);
             Assert.IsTrue(result.Value); 
@@ -134,6 +138,7 @@ namespace StrategoTest
             map[x / 100, y / 100] = 1;
 
             StrategoWin game = new StrategoWin(1000, 1000, map);
+            game.nextTurn();
             return game.placePiece(piece, x, y);
         }
 
@@ -168,6 +173,7 @@ namespace StrategoTest
             map[x / 200, y / 200] = 42;
 
             StrategoWin game = new StrategoWin(2000, 2000, map);
+            game.nextTurn();
             return game.placePiece(piece, x, y);
         }
 
@@ -202,6 +208,7 @@ namespace StrategoTest
             map[x / 200, y / 200] = 1;
 
             StrategoWin game = new StrategoWin(2000, 2000, map);
+            game.nextTurn();
             return game.placePiece(piece, x, y);
         }
 
@@ -233,6 +240,7 @@ namespace StrategoTest
         public void TestThatPieceIsPlacedIntoEmptySpaceV2(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 2000, new int[10, 10]);
+            game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
             Assert.AreEqual(game.getPiece(x / 200, y / 200), piece);
             Assert.IsTrue(result.Value);
@@ -247,6 +255,7 @@ namespace StrategoTest
         public void TestThatPieceIsPlacedIntoEmptySpaceV3(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 1000, new int[10, 10]);
+            game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
             Assert.AreEqual(game.getPiece(x / 200, y / 100), piece);
             Assert.IsTrue(result.Value);
@@ -264,6 +273,7 @@ namespace StrategoTest
             map[x / 200, y / 100] = 1;
 
             StrategoWin game = new StrategoWin(2000, 1000, map);
+            game.nextTurn();
             return game.placePiece(piece, x, y);
         }
 
@@ -279,6 +289,7 @@ namespace StrategoTest
             map[x / 200, y / 100] = 42;
 
             StrategoWin game = new StrategoWin(2000, 1000, map);
+            game.nextTurn();
             return game.placePiece(piece, x, y);
         }
 
@@ -292,6 +303,7 @@ namespace StrategoTest
             map[x / 123, y / 254] = 42;
 
             StrategoWin game = new StrategoWin(1230, 2540, map);
+            game.nextTurn();
             return game.placePiece(piece, x, y);
         }
 
@@ -305,6 +317,7 @@ namespace StrategoTest
             map[x / 123, y / 254] = 42;
 
             StrategoWin game = new StrategoWin(1230, 2540, map);
+            game.nextTurn();
             return game.placePiece(piece, x, y);
         }
 
@@ -315,6 +328,7 @@ namespace StrategoTest
         public void TestThatPieceIsPlacedIntoEmptySpaceV4(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1240, 2540, new int[10, 10]);
+            game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
             Assert.AreEqual(game.getPiece(x / 124, y / 254), piece);
             Assert.IsTrue(result.Value);
@@ -328,6 +342,7 @@ namespace StrategoTest
         {
             int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
             StrategoWin game = new StrategoWin(1230, 2540, new int[10, 10]);
+            game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
             Assert.AreEqual(defaults[Math.Abs(piece)]-1, game.getPiecesLeft(Math.Abs(piece)));
             Assert.IsTrue(result.Value);
@@ -340,6 +355,7 @@ namespace StrategoTest
         {
             //int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.nextTurn();
             int[] defaults = game.defaults;
             bool? result = true;
             for (int i = 0; i <= defaults[Math.Abs(piece)]; i++)
@@ -359,6 +375,9 @@ namespace StrategoTest
         public void TestThatRemoveActuallyRemovesPiecesAndUpdatesPiecesLeft(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);
+            game.nextTurn();
+            if (piece < 0)
+                game.nextTurn();
             int[] defaults = game.defaults;
             
             for(int p=1; p<defaults.Length; p++)
@@ -389,6 +408,7 @@ namespace StrategoTest
         public void TestThatPieceCannotBeRemovedFromEmpty(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);
+            game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
             Assert.IsFalse(result.Value);
         }
@@ -404,6 +424,7 @@ namespace StrategoTest
             int[,] map = new int[10, 10];
             map[x / 200, y / 220] = 42;
             StrategoWin game = new StrategoWin(2000, 2200, map);
+            game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
             Assert.IsFalse(result.Value);
         }
@@ -422,6 +443,9 @@ namespace StrategoTest
         public void TestThatPlacePieceThrowsException(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(2000, 2200, new int[10, 10]);
+            game.nextTurn();
+            if (piece < 0)
+                game.nextTurn();
             Assert.Throws<ArgumentException>(() => game.placePiece(piece, x, y));
         }
 
@@ -433,8 +457,10 @@ namespace StrategoTest
         public void TestThatSelectWorks(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.nextTurn();
+            if (piece < 0)
+                game.nextTurn();
             game.placePiece(piece, x, y);
-            game.turn = 1;
             Assert.True(game.SelectPiece(x, y).Value);
             Assert.AreEqual(new Point(x/100, y/100), game.pieceSelectedCoords);
             Assert.AreEqual(piece, game.boardState[game.pieceSelectedCoords.X, game.pieceSelectedCoords.Y]);
@@ -448,8 +474,10 @@ namespace StrategoTest
         public void TestThatSelectWorksForBombsAndFlags(int piece, int x, int y)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.nextTurn();
+            if (piece < 0)
+                game.nextTurn();
             game.placePiece(piece, x, y);
-            game.turn = 1;
             Assert.False(game.SelectPiece(x, y).Value);
         }
 
@@ -469,8 +497,10 @@ namespace StrategoTest
                 turn = -1;
             else Assert.Fail("Invalid piece argument for this test");
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
-            game.placePiece(piece, x, y);
             game.turn = turn;
+            game.preGameActive = true;
+            game.placePiece(piece, x, y);
+            game.preGameActive = false;
             Assert.True(game.SelectPiece(x, y).Value);
             y -= 100;
             Assert.True(game.MovePiece(x,y));
@@ -499,8 +529,11 @@ namespace StrategoTest
             x -= 100;
 
             game = new StrategoWin(2000, 2000, new int[10, 10]);
-            game.placePiece(piece, x, y);
             game.turn = turn;
+            game.preGameActive = true;
+            game.placePiece(piece, x, y);
+            game.preGameActive = false;
+
             Assert.True(game.SelectPiece(x, y).Value);
             y -= 200;
             Assert.True(game.MovePiece(x, y));
@@ -524,9 +557,11 @@ namespace StrategoTest
 
             int secondaryPiece = turn * 5;
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.preGameActive = true;
+            game.turn = turn;
             game.placePiece(piece, x, y);
             game.placePiece(secondaryPiece, x + 100, y);
-            game.turn = turn;
+            game.preGameActive = false;
             Assert.True(game.SelectPiece(x, y).Value);
             x += 100;
             Assert.False(game.MovePiece(x, y));
@@ -543,16 +578,18 @@ namespace StrategoTest
         //Test to make sure that a piece can only move one space, unless that piece is a Scout (9)
         public void TestThatMovePieceCanOnlyMoveOne(int piece, int x, int y)
         {
-            int turn = 0; //Note these lines of code don't really do anything right now
-            if (piece > 0) //Someone else is going to make some other test thing that will test for it
+            int turn = 0;
+            if (piece > 0)
                 turn = 1;
             else if (piece < 0)
                 turn = -1;
             else Assert.Fail("Invalid piece argument for this test");
 
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
-            game.placePiece(piece, x, y);
             game.turn = turn;
+            game.preGameActive = true;
+            game.placePiece(piece, x, y);
+            game.preGameActive = false;
             Assert.True(game.SelectPiece(x, y).Value);
             x += 200;
             if (Math.Abs(piece) != 9)
@@ -588,8 +625,10 @@ namespace StrategoTest
             else Assert.Fail("Invalid piece argument for this test");
 
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
-            game.placePiece(piece, x, y);
             game.turn = turn;
+            game.preGameActive = true;
+            game.placePiece(piece, x, y);
+            game.preGameActive = false;
             Assert.True(game.SelectPiece(x, y).Value);
             x += 100;
             y -= 100;
@@ -617,14 +656,97 @@ namespace StrategoTest
 
             int secondaryPiece = turn * -5;
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.turn = turn;
+            game.preGameActive = true;
             game.placePiece(piece, x, y);
+            game.turn = -turn;
             game.placePiece(secondaryPiece, x + 100, y);
             game.turn = turn;
+            game.preGameActive = false;
             Assert.True(game.SelectPiece(x, y).Value);
             x += 100;
             Assert.True(game.MovePiece(x, y));
             Assert.AreEqual(Piece.attack(piece, secondaryPiece), game.boardState[x / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
+        }
+
+        [TestCase(0, 1)]
+        [TestCase(1, -1)]
+        [TestCase(-1, 1)]
+        public void TestThatNextTurnChangesTurn(int initialTurn, int expectedNewTurn)
+        {
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.turn = initialTurn;
+            game.nextTurn();
+            Assert.AreEqual(expectedNewTurn, game.turn);     
+        }
+       
+        [TestCase(0, false, true)]
+        [TestCase(-1, true, false)]
+        [TestCase(-1, false, false)]
+        public void TestThatNextTurnChangesPreGame(int initialTurn, bool initialbool, bool expectedFinal)
+        {
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.turn = initialTurn;
+            game.preGameActive = initialbool;
+            game.nextTurn();
+            Assert.AreEqual(expectedFinal, game.preGameActive);
+        }
+
+        
+        [TestCase(-1, -2, true)]
+        [TestCase(-1, -3, true)]
+        [TestCase(-1, -4, true)]
+        [TestCase(-1, -5, true)]
+        [TestCase(-1, -6, true)]
+        [TestCase(1, -4, false)]
+        [TestCase(1, -5, false)]
+        [TestCase(1, -6, false)]
+        [TestCase(-1, 2, false)]
+        [TestCase(-1, 3, false)]
+        [TestCase(-1, 6, false)]
+        public void TestSelectPieceTakesTurnIntoAccount(int initialTurn, int piece, bool expectedResult)
+        {
+            int[,] gameState = new int[10, 10];
+            gameState[0, 0] = piece;
+            StrategoWin game = new StrategoWin(1000, 1000, gameState);
+            game.turn = initialTurn;
+            game.preGameActive = false;
+            Assert.AreEqual(expectedResult, game.SelectPiece(0, 0));
+        }
+
+        
+        [TestCase(1, -5, 200, 150, false)]
+        [TestCase(1, -3, 200, 250, false)]
+        [TestCase(1, -4, 300, 150, false)]
+        [TestCase(1, -10, 800, 25, false)]
+        [TestCase(-1, -5, 200, 150, true)]
+        [TestCase(-1, -3, 200, 250, true)]
+        [TestCase(-1, -4, 300, 150, true)]
+        [TestCase(-1, -10, 800, 25, true)]
+        [TestCase(-1, 5, 200, 150, false)]
+        [TestCase(-1, 3, 200, 250, false)]
+        [TestCase(-1, 4, 300, 150, false)]
+        [TestCase(-1, 10, 800, 25, false)]
+        public void TestPlacePieceTakesTurnIntoAccount(int initialTurn, int piece, int x, int y, bool expectedResult)
+        {
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.turn = initialTurn;
+            game.preGameActive = true;
+            Assert.AreEqual(expectedResult, game.placePiece(piece, x, y));
+        }
+
+        [TestCase(-1, 0, 0)]
+        [TestCase(1, 0, 0)]
+        public void TestPlacePieceCantRemoveEnemyPieces(int initialTurn, int x, int y)
+        {
+            int[,] gameBoard = new int[10, 10];
+            gameBoard[x, y] = -initialTurn * 4;
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
+            game.turn = initialTurn;
+            game.preGameActive = true;
+            Assert.IsFalse(game.placePiece(0, x * 100, y * 100) == true);
+            Assert.IsFalse(game.getPiece(0, 0) == 0);
         }
     }
 }

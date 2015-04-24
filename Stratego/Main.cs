@@ -347,7 +347,7 @@ namespace Stratego
         {
             if (!this.pieceIsSelected)
                 return false;
-            this.boardState[x / 100, y / 100] = 1;
+            this.boardState[x / 100, y / 100] = this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y];
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
             this.pieceIsSelected = false;
             return true;

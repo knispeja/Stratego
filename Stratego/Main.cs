@@ -278,6 +278,10 @@ namespace Stratego
             return this.boardState[x,y];
         }
 
+        {
+
+        }
+
         /// <summary>
         /// Retrieves the number of pieces still available for
         /// placement of a given type
@@ -549,6 +553,8 @@ namespace Stratego
         private void donePlacingButton_click(object sender, EventArgs e)
         {
             nextTurn();
+
+            // if it's P2's turn now, fill rows up there with 0s so he/she can place pieces
         }
     }
 }

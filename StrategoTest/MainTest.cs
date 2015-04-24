@@ -545,10 +545,12 @@ namespace StrategoTest
         [TestCase(1, 0, 0)]
         public void TestPlacePieceCantRemoveEnemyPieces(int initialTurn, int x, int y)
         {
-            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
-            game.placePiece(-initialTurn * 4, x, y);
+            int[,] gameBoard = new int[10, 10];
+            gameBoard[x, y] = -initialTurn * 4;
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
             game.turn = initialTurn;
             game.preGameActive = true;
+            game.placePiece(0, x * 100, y * 100);
             Assert.IsFalse(game.getPiece(0, 0) == 0);
             //Assert.IsTrue(game.placePiece(0, x, y) == false);
         }

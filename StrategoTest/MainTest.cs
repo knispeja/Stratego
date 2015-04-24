@@ -684,12 +684,15 @@ namespace StrategoTest
         [TestCase(0, false, true)]
         [TestCase(-1, true, false)]
         [TestCase(-1, false, false)]
+        [TestCase(1, true, true)]
         public void TestThatNextTurnChangesPreGame(int initialTurn, bool initialbool, bool expectedFinal)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.turn = initialTurn;
             game.preGameActive = initialbool;
+            game.placePiece(3, 4, 4);
             game.nextTurn();
+            if (initialTurn == 1 && initialbool == true) Assert.AreEqual(game.getPiecesLeft(3), game.defaults[3]);
             Assert.AreEqual(expectedFinal, game.preGameActive);
         }
 

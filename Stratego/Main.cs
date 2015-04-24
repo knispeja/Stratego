@@ -15,6 +15,7 @@ namespace Stratego
     public partial class StrategoWin : Form
     {
         public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+        //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
         int piecePlacing = 0;                     // The piece currently being placed by the user
         int activeSidePanelButton = 0;            // Placeholder for which button on the placement side panel is being used
@@ -93,7 +94,7 @@ namespace Stratego
 
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
-                button.Click += SidePanelButtonClick;
+                if(button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Stratego
             {
                 foreach (var button in this.SidePanel.Controls.OfType<Button>())
                     button.UseVisualStyleBackColor = true;
-                this.piecePlacing = Convert.ToInt32(((Button)sender).Tag);
+                this.piecePlacing = this.turn * Convert.ToInt32(((Button)sender).Tag);
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
         }
@@ -460,6 +461,14 @@ namespace Stratego
                 //This makes it so it only repaints the rectangle where the piece is placed
                 Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY); 
                 backPanel.Invalidate(r);
+
+                for (int i = 0; i < this.placements.Length; i++){
+                    if (this.placements[i] != 0){
+                        this.donePlacingButton.Enabled = false;
+                        return;
+                    }
+                }
+                this.donePlacingButton.Enabled = true;
             }
             //backPanel.Invalidate();
         }
@@ -529,6 +538,16 @@ namespace Stratego
             } 
             else
                 this.piecePlacing = this.activeSidePanelButton;
+        }
+
+        /// <summary>
+        /// Called by the button that means the user is done placing pieces
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void donePlacingButton_click(object sender, EventArgs e)
+        {
+            nextTurn();
         }
     }
 }

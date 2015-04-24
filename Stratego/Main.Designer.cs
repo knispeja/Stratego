@@ -34,6 +34,7 @@
             this.backPanel = new System.Windows.Forms.Panel();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
+            this.donePlacingButton = new System.Windows.Forms.Button();
             this.removeCheckBox = new System.Windows.Forms.CheckBox();
             this.place12Button = new System.Windows.Forms.Button();
             this.place11Button = new System.Windows.Forms.Button();
@@ -98,6 +99,7 @@
             // SidePanel
             // 
             this.SidePanel.BackColor = System.Drawing.Color.DimGray;
+            this.SidePanel.Controls.Add(this.donePlacingButton);
             this.SidePanel.Controls.Add(this.removeCheckBox);
             this.SidePanel.Controls.Add(this.place12Button);
             this.SidePanel.Controls.Add(this.place11Button);
@@ -113,16 +115,27 @@
             this.SidePanel.Controls.Add(this.place1Button);
             this.SidePanel.Location = new System.Drawing.Point(0, 29);
             this.SidePanel.Name = "SidePanel";
-            this.SidePanel.Size = new System.Drawing.Size(107, 532);
+            this.SidePanel.Size = new System.Drawing.Size(107, 598);
             this.SidePanel.TabIndex = 4;
             this.SidePanel.Visible = false;
+            // 
+            // donePlacingButton
+            // 
+            this.donePlacingButton.Enabled = false;
+            this.donePlacingButton.Location = new System.Drawing.Point(5, 3);
+            this.donePlacingButton.Name = "donePlacingButton";
+            this.donePlacingButton.Size = new System.Drawing.Size(96, 46);
+            this.donePlacingButton.TabIndex = 13;
+            this.donePlacingButton.Text = "Done Placing!";
+            this.donePlacingButton.UseVisualStyleBackColor = true;
+            this.donePlacingButton.Click += new System.EventHandler(this.donePlacingButton_click);
             // 
             // removeCheckBox
             // 
             this.removeCheckBox.AutoSize = true;
-            this.removeCheckBox.Location = new System.Drawing.Point(12, 507);
+            this.removeCheckBox.Location = new System.Drawing.Point(12, 565);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
+            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;
@@ -130,7 +143,7 @@
             // 
             // place12Button
             // 
-            this.place12Button.Location = new System.Drawing.Point(3, 465);
+            this.place12Button.Location = new System.Drawing.Point(5, 517);
             this.place12Button.Name = "place12Button";
             this.place12Button.Size = new System.Drawing.Size(96, 36);
             this.place12Button.TabIndex = 11;
@@ -140,7 +153,7 @@
             // 
             // place11Button
             // 
-            this.place11Button.Location = new System.Drawing.Point(3, 423);
+            this.place11Button.Location = new System.Drawing.Point(5, 475);
             this.place11Button.Name = "place11Button";
             this.place11Button.Size = new System.Drawing.Size(96, 36);
             this.place11Button.TabIndex = 10;
@@ -150,7 +163,7 @@
             // 
             // place10Button
             // 
-            this.place10Button.Location = new System.Drawing.Point(3, 381);
+            this.place10Button.Location = new System.Drawing.Point(5, 433);
             this.place10Button.Name = "place10Button";
             this.place10Button.Size = new System.Drawing.Size(96, 36);
             this.place10Button.TabIndex = 9;
@@ -160,7 +173,7 @@
             // 
             // place9Button
             // 
-            this.place9Button.Location = new System.Drawing.Point(3, 339);
+            this.place9Button.Location = new System.Drawing.Point(5, 391);
             this.place9Button.Name = "place9Button";
             this.place9Button.Size = new System.Drawing.Size(96, 36);
             this.place9Button.TabIndex = 8;
@@ -170,7 +183,7 @@
             // 
             // place8Button
             // 
-            this.place8Button.Location = new System.Drawing.Point(3, 297);
+            this.place8Button.Location = new System.Drawing.Point(5, 349);
             this.place8Button.Name = "place8Button";
             this.place8Button.Size = new System.Drawing.Size(96, 36);
             this.place8Button.TabIndex = 7;
@@ -180,7 +193,7 @@
             // 
             // place7Button
             // 
-            this.place7Button.Location = new System.Drawing.Point(3, 255);
+            this.place7Button.Location = new System.Drawing.Point(5, 307);
             this.place7Button.Name = "place7Button";
             this.place7Button.Size = new System.Drawing.Size(96, 36);
             this.place7Button.TabIndex = 6;
@@ -190,7 +203,7 @@
             // 
             // place6Button
             // 
-            this.place6Button.Location = new System.Drawing.Point(3, 213);
+            this.place6Button.Location = new System.Drawing.Point(5, 265);
             this.place6Button.Name = "place6Button";
             this.place6Button.Size = new System.Drawing.Size(96, 36);
             this.place6Button.TabIndex = 5;
@@ -200,7 +213,7 @@
             // 
             // place5Button
             // 
-            this.place5Button.Location = new System.Drawing.Point(3, 171);
+            this.place5Button.Location = new System.Drawing.Point(5, 223);
             this.place5Button.Name = "place5Button";
             this.place5Button.Size = new System.Drawing.Size(96, 36);
             this.place5Button.TabIndex = 4;
@@ -210,7 +223,7 @@
             // 
             // place4Button
             // 
-            this.place4Button.Location = new System.Drawing.Point(3, 129);
+            this.place4Button.Location = new System.Drawing.Point(5, 181);
             this.place4Button.Name = "place4Button";
             this.place4Button.Size = new System.Drawing.Size(96, 36);
             this.place4Button.TabIndex = 3;
@@ -220,7 +233,7 @@
             // 
             // place3Button
             // 
-            this.place3Button.Location = new System.Drawing.Point(3, 87);
+            this.place3Button.Location = new System.Drawing.Point(5, 139);
             this.place3Button.Name = "place3Button";
             this.place3Button.Size = new System.Drawing.Size(96, 36);
             this.place3Button.TabIndex = 2;
@@ -230,7 +243,7 @@
             // 
             // place2Button
             // 
-            this.place2Button.Location = new System.Drawing.Point(3, 45);
+            this.place2Button.Location = new System.Drawing.Point(5, 97);
             this.place2Button.Name = "place2Button";
             this.place2Button.Size = new System.Drawing.Size(96, 36);
             this.place2Button.TabIndex = 1;
@@ -241,7 +254,7 @@
             // place1Button
             // 
             this.place1Button.BackColor = System.Drawing.Color.DimGray;
-            this.place1Button.Location = new System.Drawing.Point(3, 3);
+            this.place1Button.Location = new System.Drawing.Point(5, 55);
             this.place1Button.Name = "place1Button";
             this.place1Button.Size = new System.Drawing.Size(96, 36);
             this.place1Button.TabIndex = 0;
@@ -358,6 +371,7 @@
         private System.Windows.Forms.Button place2Button;
         private System.Windows.Forms.Button PauseMenuExitButton;
         private System.Windows.Forms.CheckBox removeCheckBox;
+        private System.Windows.Forms.Button donePlacingButton;
     }
 }
 

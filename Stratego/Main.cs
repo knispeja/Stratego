@@ -343,7 +343,7 @@ namespace Stratego
         {
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
-            if (this.pieceSelectedCoords == new Point(x / scaleX, y / scaleY))
+            if ((this.pieceSelectedCoords == new Point(x / scaleX, y / scaleY))&&this.pieceIsSelected)
             {
                 this.pieceIsSelected = false;
                 return false;

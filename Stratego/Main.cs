@@ -14,6 +14,7 @@ namespace Stratego
 {
     public partial class StrategoWin : Form
     {
+        enum Turns { P2SetUp = -2, P2Move, Inactive, P1Move, P1SetUp };
         public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
 
         int piecePlacing = 0;                     // The piece currently being placed by the user
@@ -309,6 +310,13 @@ namespace Stratego
 
             if (retVal) this.boardState[x / scaleX, y / scaleY] = piece;
             return retVal;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void nextTurn() 
+        {
         }
 
         /// <summary>

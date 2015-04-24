@@ -280,7 +280,7 @@ namespace Stratego
 
         public void fillRow(int value, int row)
         {
-            for (int x = 0; x < 10; x++) this.boardState[x, row] = value;
+            for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
         }
 
         /// <summary>

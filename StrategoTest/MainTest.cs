@@ -463,5 +463,16 @@ namespace StrategoTest
             game.nextTurn();
             Assert.AreEqual(expectedNewTurn, game.turn);     
         }
+       
+        //0 --> 1 true
+        //-1 --> 1 false
+        [TestCase(0, false, true)]
+        public void TestThatNextTurnChangesPreGame(int initialTurn, bool initialbool, bool expectedFinal)
+        {
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.turn = initialTurn;
+            game.nextTurn();
+            Assert.AreEqual(expectedFinal, game.preGameActive);
+        }
     }
 }

@@ -453,14 +453,14 @@ namespace StrategoTest
             Assert.False(game.SelectPiece(x, y).Value);
         }
 
-        [TestCase(0)]
-        public void TestThatNextTurnWorks(int initialTurn)
+        [TestCase(0, 1)]
+        [TestCase(1, -1)]
+        public void TestThatNextTurnWorks(int initialTurn, int expectedNewTurn)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.turn = initialTurn;
             game.nextTurn();
-            if(initialTurn == 0)
-                Assert.True(game.turn == 1);
+            Assert.AreEqual(expectedNewTurn, game.turn);
             
         }
     }

@@ -37,16 +37,27 @@ namespace StrategoTest
         [TestCase(1)]
         [TestCase(-1)]
         // Tests that AI.placePiece() places as many pieces as possible
+        // Makes sure AI.placePiece() places its own pieces...
         public void TestPlacePiecesDrainsPlacements(int team)
         {
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
             win.nextTurn();
+            if(team < 0) win.nextTurn();
             AI ai = new AI(win, team);
 
             ai.placePieces();
             for (int i = 0; i < win.defaults.Length; i++)
                 Assert.AreEqual(0, win.getPiecesLeft(i));
+
+            for (int x = 0; x < win.boardState.GetLength(0); x++)
+            {
+                for (int y = 0; y < win.boardState.GetLength(1); y++)
+                {
+                    if (team < 0) Assert.True(win.getPiece(x, y) <= 0);
+                    else Assert.True(win.getPiece(x, y) >= 0);
+                }
+            }
         }
     }
 }

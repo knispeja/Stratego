@@ -73,8 +73,14 @@ namespace StrategoTest
             AI ai = new AI(win, team);
 
             ai.placePieces();
-            for (int i = 0; i < win.defaults.Length; i++)
-                Assert.AreEqual(0, win.getPiecesLeft(i));
+
+            // If the team is 1, the placements array gets reset after nextTurn() is called.
+            // Therefore, we should only test this if the team is -1 to being with
+            if (team != 1)
+            {
+                for (int i = 0; i < win.defaults.Length; i++)
+                    Assert.AreEqual(0, win.getPiecesLeft(i));
+            }
 
             for (int x = 0; x < win.boardState.GetLength(0); x++)
             {

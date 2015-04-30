@@ -11,8 +11,14 @@ namespace Stratego
         private StrategoWin win;
         public int team { get; set; }
 
+        /// <summary>
+        /// Initializes this AI player
+        /// </summary>
+        /// <param name="win">The window upon which to perform most game functions directly</param>
+        /// <param name="team">This AI player's team, either -1 or 1 (typically that translates to red or blue)</param>
         public AI(StrategoWin win, int team)
         {
+            if (Math.Abs(team) != 1) throw new ArgumentException();
             this.team = team;
         }
 

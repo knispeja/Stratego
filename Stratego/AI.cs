@@ -10,6 +10,7 @@ namespace Stratego
     {
         private StrategoWin win;
         public int team { get; set; }
+        private Random rnd;
         private int boardX;
         private int boardY;
 
@@ -24,6 +25,7 @@ namespace Stratego
             this.team = team;
             this.win = win;
 
+            this.rnd = new Random();
             this.boardX = this.win.boardState.GetLength(0);
             this.boardY = this.win.boardState.GetLength(1);
         }
@@ -57,7 +59,7 @@ namespace Stratego
         }
 
         /// <summary>
-        /// Converts x and y tiles to x and y coordinates
+        /// Converts x and y tiles to x and y coordinates and places the piece
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -69,6 +71,25 @@ namespace Stratego
             int y = yTile*scaleY;
 
             return win.placePiece(piece, x, y);
+        }
+
+        /// <summary>
+        /// Converts x and y tiles to x and y coordinates and executes the move
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public void movePiece(Move move)
+        {
+            int scaleX = win.panelWidth / this.boardX;
+            int scaleY = win.panelHeight / this.boardY;
+            int ox = move.origX * scaleX;
+            int oy = move.origY * scaleY;
+
+            int nx = move.newX * scaleX;
+            int ny = move.newY * scaleY;
+
+            win.SelectPiece(ox, oy);
+            win.MovePiece(nx, ny);
         }
 
         public List<Move> generateValidMoves()
@@ -108,7 +129,23 @@ namespace Stratego
 
         public void executeHighestPriorityMove(List<Move> moves)
         {
+            int max = moves[0].priority;
+            foreach (Move move in moves)
+            {
+                if (move.priority < max)
+                    moves.Remove(move);
+                else if (move.priority > max)
+                    max = move.priority;
+            }
 
+            foreach (Move move in moves)
+            {
+                if (move.priority < max)
+                    moves.Remove(move);
+            }
+
+            int r = rnd.Next(moves.Count);
+            movePiece(moves[r]);
         }
 
         public class Move

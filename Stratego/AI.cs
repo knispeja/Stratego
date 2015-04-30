@@ -13,7 +13,7 @@ namespace Stratego
 
         public AI(StrategoWin win, int team)
         {
-            
+            this.team = team;
         }
 
         public void placePieces()

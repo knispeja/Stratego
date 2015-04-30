@@ -171,7 +171,7 @@ namespace StrategoTest
                 int first = win.getPiece(move.origX, move.origY);
                 int second = win.getPiece(move.newX, move.newY);
                 int? returned = Piece.attack(first, second);
-                Assert.AreEqual(true, returned);
+                Assert.AreEqual(5, returned);
             }
         }
     }

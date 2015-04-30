@@ -71,7 +71,7 @@ namespace Stratego
             return win.placePiece(piece, x, y);
         }
 
-        private List<Move> generateValidMoves()
+        public List<Move> generateValidMoves()
         {
             List<Move> moves = new List<Move>();
 

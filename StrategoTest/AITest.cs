@@ -94,14 +94,13 @@ namespace StrategoTest
             Assert.AreNotEqual(initialTurn, win.turn);
         }
 
-
         [TestCase(true, 1, 3, 0)]
         [TestCase(true, -1, -3, 0)]
         [TestCase(false, 1, 2, 5)]
         [TestCase(false, -1, -5, -3)]
         [TestCase(false, 1, 5, 42)]
         [TestCase(false, -1, -5, 42)]
-        // Tests that invalid calls to AI.placePiece() throw exceptions
+        // Tests that evaluate move properly finds valid and invalid moves to some extent
         public void TestEvaluateMoveFindsInvalidMoves(bool expected, int team, int attacker, int defender)
         {
             int[,] gameBoard = new int[10, 10];
@@ -131,6 +130,40 @@ namespace StrategoTest
 
             for (int row = 0; row < 10; row++)
                 Assert.AreEqual(expected, ai.evaluateMove(new AI.Move(5, row, 4, row)));
+        }
+
+        [TestCase(1)]
+        [TestCase(-1)]
+        // Verifies that generateValidMoves does not return a null or empty list
+        public void TestEvaluateMoveFindsInvalidMoves(int team)
+        {
+            int[,] gameBoard = new int[10, 10];
+            for (int row = 0; row < 10; row++)
+            {
+                int column;
+                for (column = 6; column < 10; column++)
+                {
+                    // Stick some 42s to the right of the attackers
+                    gameBoard[column, row] = 42;
+                }
+
+                // Place the attackers in column 5
+                column = 5;
+                gameBoard[column, row] = 5;
+
+                for (column = 0; column < 5; column++)
+                {
+                    // Put a row of defenders to the left of the attackers
+                    gameBoard[column, row] = 0;
+                }
+            }
+            StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
+            win.nextTurn();
+            if (team < 0) win.nextTurn();
+            AI ai = new AI(win, team);
+            System.Collections.Generic.List<AI.Move> moves = ai.generateValidMoves();
+            Assert.AreNotEqual(null, moves);
+            Assert.IsNotEmpty(moves);
         }
     }
 

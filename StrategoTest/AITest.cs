@@ -7,6 +7,7 @@ namespace StrategoTest
     [TestFixture()]
     public class AITest
     {
+        /*
         [TestCase(1)]
         [TestCase(-1)]
         // Tests AI's constructor, which sets the AI's team
@@ -14,6 +15,6 @@ namespace StrategoTest
         {
             AI ai = new AI(team);
             Assert.AreEqual(team, ai.team);
-        }
+        } */
     }
 }

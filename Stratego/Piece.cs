@@ -14,7 +14,7 @@ using System.Threading.Tasks;
  */
 namespace Stratego
 {
-    public class Piece
+    public static class Piece
     {
         private static readonly string[] names= new string[] {"Empty", "Marshall", "General", "Colonel", "Major", "Captain", "Lieutenant",
                                     "Sergeant", "Miner", "Scout", "Spy", "Bomb", "Flag"};

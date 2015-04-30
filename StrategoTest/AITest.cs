@@ -99,6 +99,8 @@ namespace StrategoTest
         [TestCase(true, -1, -3, 0)]
         [TestCase(false, 1, 2, 5)]
         [TestCase(false, -1, -5, -3)]
+        [TestCase(false, 1, 5, 42)]
+        [TestCase(false, -1, -5, 42)]
         // Tests that invalid calls to AI.placePiece() throw exceptions
         public void TestEvaluateMoveFindsInvalidMoves(bool expected, int team, int attacker, int defender)
         {

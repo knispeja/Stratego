@@ -80,7 +80,7 @@ namespace Stratego
 
         public bool evaluateMove(Move move)
         {
-            return false;
+            return true;
         }
 
         public class Move

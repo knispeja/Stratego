@@ -20,11 +20,41 @@ namespace Stratego
         {
             if (Math.Abs(team) != 1) throw new ArgumentException();
             this.team = team;
+            this.win = win;
         }
 
         public void placePieces()
         {
-            
+            int x = 0;
+            int y = 0;
+            for (int piece = 1; piece < win.defaults.Length; piece++)
+            {
+                while (win.getPiecesLeft(piece) != 0)
+                {
+                    placePieceByTile(piece, x, y);
+                    x++;
+                    if(x >= win.boardState.GetLength(0))
+                    {
+                        x = 0;
+                        y++;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts x and y tiles to x and y coordinates
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public bool? placePieceByTile(int piece, int xTile, int yTile)
+        {
+            int scaleX = win.panelWidth / win.boardState.GetLength(0);
+            int scaleY = win.panelHeight / win.boardState.GetLength(1);
+            int x = xTile*scaleX;
+            int y = yTile*scaleY;
+
+            return win.placePiece(piece, x, y);
         }
 
         private List<Move> generateValidMoves()

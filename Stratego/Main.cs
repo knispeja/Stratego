@@ -22,14 +22,15 @@ namespace Stratego
         int piecePlacing = 0;                     // The piece currently being placed by the user
         int activeSidePanelButton = 0;            // Placeholder for which button on the placement side panel is being used
         int ticks = 0;                            // Used by the timer to keep track of the title screen's music & sounds
-        int panelWidth;                           // Width of the enclosing panel   
-        int panelHeight;                          // Height of the enclosing panel
-        public int[,] boardState { get; set; }                // The 2DArray full of all pieces on the board
+        public int panelWidth { get; set; }       // Width of the enclosing panel   
+        public int panelHeight { get; set; }      // Height of the enclosing panel
+        public int[,] boardState { get; set; }    // The 2DArray full of all pieces on the board
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
         public bool preGameActive { get; set; }   // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
-        public Point pieceSelectedCoords { get; set; }        // Coordinates of the piece that is currently selceted in the array
+        public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selceted in the array
         public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
+
         /// <summary>
         /// Initializer for normal play (initializes GUI).
         /// Not to be used for testing!

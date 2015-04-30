@@ -41,6 +41,7 @@ namespace StrategoTest
         {
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
+            win.nextTurn();
             AI ai = new AI(win, team);
 
             ai.placePieces();

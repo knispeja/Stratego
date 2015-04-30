@@ -80,8 +80,9 @@ namespace Stratego
 
         public bool evaluateMove(Move move)
         {
-            if(Math.Sign(this.win.getPiece(move.origX, move.origY)) == Math.Sign(this.win.getPiece(move.newX, move.newY))) return false;
-            return true;
+            int? returnMe = Piece.attack(win.getPiece(move.origX, move.origY), win.getPiece(move.newX, move.newY));
+            if (returnMe == null) return false;
+            else return true;
         }
 
         public class Move

@@ -38,7 +38,7 @@ namespace StrategoTest
         [TestCase(-1)]
         // Tests that AI.placePiece() places as many pieces as possible
         // Makes sure AI.placePiece() places its own pieces...
-        public void TestPlacePiecesDrainsPlacements(int team)
+        public void TestPlacePieces(int team)
         {
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);

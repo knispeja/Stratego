@@ -31,7 +31,7 @@ namespace Stratego
             {
                 while (win.getPiecesLeft(piece) != 0)
                 {
-                    placePieceByTile(piece, x, y);
+                    placePieceByTile(piece*this.team, x, y);
                     x++;
                     if(x >= win.boardState.GetLength(0))
                     {

@@ -74,7 +74,7 @@ namespace Stratego
         public List<Move> generateValidMoves()
         {
             List<Move> moves = new List<Move>();
-
+            moves.Add(new Move(0, 0, 0, 1));
             return moves;
         }
 

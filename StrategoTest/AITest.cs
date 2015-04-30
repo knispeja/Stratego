@@ -124,8 +124,7 @@ namespace StrategoTest
                 }
             }
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
-            win.nextTurn();
-            if (team < 0) win.nextTurn();
+
             AI ai = new AI(win, team);
 
             for (int row = 0; row < 10; row++)
@@ -135,6 +134,9 @@ namespace StrategoTest
         [TestCase(1)]
         [TestCase(-1)]
         // Verifies that generateValidMoves does not return a null or empty list
+        // Verifies that generateValidMoves actually generates valid moves
+            // NOTE: Any other functionality (WHICH moves are gen'd) 
+            // is arguably subjective and won't be tested
         public void TestEvaluateMoveFindsInvalidMoves(int team)
         {
             int[,] gameBoard = new int[10, 10];
@@ -158,12 +160,19 @@ namespace StrategoTest
                 }
             }
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
-            win.nextTurn();
-            if (team < 0) win.nextTurn();
+
             AI ai = new AI(win, team);
             System.Collections.Generic.List<AI.Move> moves = ai.generateValidMoves();
             Assert.AreNotEqual(null, moves);
             Assert.IsNotEmpty(moves);
+            
+            foreach (AI.Move move in moves)
+            {
+                int first = win.getPiece(move.origX, move.origY);
+                int second = win.getPiece(move.newX, move.newY);
+                int? returned = Piece.attack(first, second);
+                Assert.AreEqual(true, returned);
+            }
         }
     }
 

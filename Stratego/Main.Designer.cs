@@ -31,7 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StrategoWin));
             this.startTimer = new System.Windows.Forms.Timer(this.components);
-            this.backPanel = new System.Windows.Forms.Panel();
+            this.SidePanelOpenButton = new System.Windows.Forms.Button();
+            this.StartButton = new System.Windows.Forms.Button();
+            this.backPanel = new Stratego.BuffPanel();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
             this.donePlacingButton = new System.Windows.Forms.Button();
@@ -48,10 +50,8 @@
             this.place3Button = new System.Windows.Forms.Button();
             this.place2Button = new System.Windows.Forms.Button();
             this.place1Button = new System.Windows.Forms.Button();
-            this.StartButton = new System.Windows.Forms.Button();
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
-            this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.backPanel.SuspendLayout();
             this.SidePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
@@ -62,6 +62,36 @@
             // 
             this.startTimer.Enabled = true;
             this.startTimer.Tick += new System.EventHandler(this.startTimer_Tick);
+            // 
+            // SidePanelOpenButton
+            // 
+            this.SidePanelOpenButton.Location = new System.Drawing.Point(0, 0);
+            this.SidePanelOpenButton.Name = "SidePanelOpenButton";
+            this.SidePanelOpenButton.Size = new System.Drawing.Size(96, 23);
+            this.SidePanelOpenButton.TabIndex = 1;
+            this.SidePanelOpenButton.Text = "Open Side Panel";
+            this.SidePanelOpenButton.UseVisualStyleBackColor = true;
+            this.SidePanelOpenButton.Visible = false;
+            this.SidePanelOpenButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SidePanelOpenButton_MouseClick);
+            // 
+            // StartButton
+            // 
+            this.StartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.StartButton.BackColor = System.Drawing.Color.Transparent;
+            this.StartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.StartButton.ForeColor = System.Drawing.Color.Black;
+            this.StartButton.Image = global::Stratego.Properties.Resources.StartButton;
+            this.StartButton.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.StartButton.Location = new System.Drawing.Point(782, 419);
+            this.StartButton.Name = "StartButton";
+            this.StartButton.Size = new System.Drawing.Size(216, 91);
+            this.StartButton.TabIndex = 2;
+            this.StartButton.TabStop = false;
+            this.StartButton.UseVisualStyleBackColor = true;
+            this.StartButton.Visible = false;
+            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
+            this.StartButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.StartButton_MouseDown);
+            this.StartButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.StartButton_MouseUp);
             // 
             // backPanel
             // 
@@ -135,7 +165,7 @@
             this.removeCheckBox.AutoSize = true;
             this.removeCheckBox.Location = new System.Drawing.Point(12, 565);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
+            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;
@@ -262,25 +292,6 @@
             this.place1Button.Text = "1";
             this.place1Button.UseVisualStyleBackColor = true;
             // 
-            // StartButton
-            // 
-            this.StartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.StartButton.BackColor = System.Drawing.Color.Transparent;
-            this.StartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.StartButton.ForeColor = System.Drawing.Color.Black;
-            this.StartButton.Image = global::Stratego.Properties.Resources.StartButton;
-            this.StartButton.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.StartButton.Location = new System.Drawing.Point(782, 419);
-            this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(216, 91);
-            this.StartButton.TabIndex = 2;
-            this.StartButton.TabStop = false;
-            this.StartButton.UseVisualStyleBackColor = true;
-            this.StartButton.Visible = false;
-            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
-            this.StartButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.StartButton_MouseDown);
-            this.StartButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.StartButton_MouseUp);
-            // 
             // TitlePictureBox
             // 
             this.TitlePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -312,17 +323,6 @@
             this.FireBox.TabStop = false;
             this.FireBox.Visible = false;
             // 
-            // SidePanelOpenButton
-            // 
-            this.SidePanelOpenButton.Location = new System.Drawing.Point(0, 0);
-            this.SidePanelOpenButton.Name = "SidePanelOpenButton";
-            this.SidePanelOpenButton.Size = new System.Drawing.Size(96, 23);
-            this.SidePanelOpenButton.TabIndex = 1;
-            this.SidePanelOpenButton.Text = "Open Side Panel";
-            this.SidePanelOpenButton.UseVisualStyleBackColor = true;
-            this.SidePanelOpenButton.Visible = false;
-            this.SidePanelOpenButton.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SidePanelOpenButton_MouseClick);
-            // 
             // StrategoWin
             // 
             this.AcceptButton = this.StartButton;
@@ -353,7 +353,7 @@
         private System.Windows.Forms.Timer startTimer;
         private System.Windows.Forms.PictureBox FireBox;
         private System.Windows.Forms.Button StartButton;
-        private System.Windows.Forms.Panel backPanel;
+        private BuffPanel backPanel;
         public System.Windows.Forms.PictureBox TitlePictureBox;
         private System.Windows.Forms.Panel SidePanel;
         private System.Windows.Forms.Button place1Button;

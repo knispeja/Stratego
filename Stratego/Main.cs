@@ -88,10 +88,8 @@ namespace Stratego
             sound.Play();
             this.FireBox.Dispose();
             this.placements = (int[])this.defaults.Clone();
-
             // Start the game!
             nextTurn();
-
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
                 if(button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
@@ -233,9 +231,17 @@ namespace Stratego
                                     // Piece is a blue scout (displaying as image)
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
-                                    Rectangle r = new Rectangle(x * scaleX + (scaleX / 10), y * scaleY + (scaleY / 10), scaleX - 2*(scaleX / 10), scaleY - 2*(scaleY / 10));
-                                    Image imag = Properties.Resources.BlueScout;
-                                    e.Graphics.DrawImage(imag, r);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55))/2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn > 0)
+                                    {
+                                        Image imag = Properties.Resources.BlueScout;
+                                        e.Graphics.DrawImage(imag, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
                                 }
                                 else
                                 {
@@ -266,7 +272,7 @@ namespace Stratego
 
                 // Dispose of our resources
                 pen.Dispose();
-                g.Dispose();
+                //g.Dispose();
             }
         }
 
@@ -612,8 +618,8 @@ namespace Stratego
                 for (int i = 0; i < 4; i++)
                     for (int x = 0; x < 10; x++)
                         this.boardState[x, i] = 0;
-            if (this.turn == -1)
-                ((Button)sender).Enabled = false;
+            //if (this.turn == -1)
+            ((Button)sender).Enabled = false;
             nextTurn();
             //for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
         }

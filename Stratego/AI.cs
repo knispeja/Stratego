@@ -6,14 +6,22 @@ using System.Threading.Tasks;
 
 namespace Stratego
 {
-    public static class AI
+    public class AI
     {
-        public static void placePieces(StrategoWin win)
+        private StrategoWin win;
+        public int team { get; set; }
+
+        public AI(StrategoWin win, int team)
         {
             
         }
 
-        public static List<Move> generateValidMoves(int[,] boardState, int team)
+        public void placePieces()
+        {
+            
+        }
+
+        private List<Move> generateValidMoves()
         {
             return null;
         }

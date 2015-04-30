@@ -10,6 +10,8 @@ namespace Stratego
     {
         private StrategoWin win;
         public int team { get; set; }
+        private int boardX;
+        private int boardY;
 
         /// <summary>
         /// Initializes this AI player
@@ -21,6 +23,9 @@ namespace Stratego
             if (Math.Abs(team) != 1) throw new ArgumentException();
             this.team = team;
             this.win = win;
+
+            this.boardX = this.win.boardState.GetLength(0);
+            this.boardY = this.win.boardState.GetLength(1);
         }
 
         /// <summary>
@@ -36,13 +41,13 @@ namespace Stratego
                 {
                     placePieceByTile(piece*this.team, x, y);
                     x++;
-                    if(x >= win.boardState.GetLength(0))
+                    if(x >= this.boardX)
                     {
                         x = 0;
                         y++;
 
                         // We've run out of tiles to place upon, looks like we're done here
-                        if (y >= win.boardState.GetLength(1))
+                        if (y >= this.boardY)
                             throw new InvalidOperationException();
                     }
                 }
@@ -58,8 +63,8 @@ namespace Stratego
         /// <param name="y"></param>
         public bool? placePieceByTile(int piece, int xTile, int yTile)
         {
-            int scaleX = win.panelWidth / win.boardState.GetLength(0);
-            int scaleY = win.panelHeight / win.boardState.GetLength(1);
+            int scaleX = win.panelWidth / this.boardX;
+            int scaleY = win.panelHeight / this.boardY;
             int x = xTile*scaleX;
             int y = yTile*scaleY;
 
@@ -68,16 +73,34 @@ namespace Stratego
 
         private List<Move> generateValidMoves()
         {
-            return null;
+            List<Move> moves = new List<Move>();
+
+            return moves;
         }
 
-
-        private class Move
+        public bool evaluateMove(Move move)
         {
-            //int origXPos;
-            //int origYPos;
-            //int newXPos;
-            //int newYPos;
+            return false;
+        }
+
+        public class Move
+        {
+            int origX;
+            int origY;
+            int newX;
+            int newY;
+
+            int priority;
+
+            public Move(int origX, int origY, int newX, int newY)
+            {
+                this.origX = origX;
+                this.origY = origY;
+                this.newX = newX;
+                this.newY = newY;
+
+                this.priority = 0;
+            }
         }
     }
 }

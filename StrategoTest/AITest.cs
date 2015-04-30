@@ -75,7 +75,7 @@ namespace StrategoTest
             ai.placePieces();
 
             // If the team is 1, the placements array gets reset after nextTurn() is called.
-            // Therefore, we should only test this if the team is -1 to being with
+            // Therefore, we should only test this if the team is -1 to begin with
             if (team != 1)
             {
                 for (int i = 0; i < win.defaults.Length; i++)
@@ -93,5 +93,43 @@ namespace StrategoTest
 
             Assert.AreNotEqual(initialTurn, win.turn);
         }
+
+
+        [TestCase(true, 1, 3, 0)]
+        [TestCase(true, -1, -3, 0)]
+        // Tests that invalid calls to AI.placePiece() throw exceptions
+        public void TestEvaluateMoveFindsInvalidMoves(bool expected, int team, int attacker, int defender)
+        {
+            int[,] gameBoard = new int[10, 10];
+            for (int row = 0; row < 10; row++)
+            {
+                int column;
+                for (column = 6; column < 10; column++)
+                {
+                    // Stick some 42s to the right of the attackers
+                    gameBoard[row, column] = 42;
+                }
+
+                // Place the attackers in column 5
+                column = 5;
+                gameBoard[row, column] = attacker;
+
+                for (column = 0; column < 5; column++)
+                {
+                    // Put a row of defenders to the left of the attackers
+                    gameBoard[row, column] = defender;
+                }
+            }
+            StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
+            win.nextTurn();
+            if (team < 0) win.nextTurn();
+            AI ai = new AI(win, team);
+
+            for (int row = 0; row < 10; row++)
+                Assert.AreEqual(expected, ai.evaluateMove(new AI.Move(5, row, 6, row)));
+        }
     }
-}
+
+    }
+
+

@@ -35,7 +35,10 @@ namespace Stratego
 
         private class Move
         {
-
+            //int origXPos;
+            //int origYPos;
+            //int newXPos;
+            //int newYPos;
         }
     }
 }

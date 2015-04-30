@@ -33,5 +33,19 @@ namespace StrategoTest
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
             Assert.Throws<ArgumentException>(() => new AI(win, invalidTeam));
         }
+
+        [TestCase(1)]
+        [TestCase(-1)]
+        // Tests that AI.placePiece() places as many pieces as possible
+        public void TestPlacePiecesDrainsPlacements(int team)
+        {
+            int[,] gameBoard = new int[10, 10];
+            StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
+            AI ai = new AI(win, team);
+
+            ai.placePieces();
+            for (int i = 0; i < win.defaults.Length; i++)
+                Assert.AreEqual(0, win.getPiecesLeft(i));
+        }
     }
 }

@@ -100,7 +100,15 @@ namespace Stratego
         {
             int? returnMe = Piece.attack(win.getPiece(move.origX, move.origY), win.getPiece(move.newX, move.newY));
             if (returnMe == null) return false;
-            else return true;
+            else {
+                // Update this move's priority
+                return true;
+            }
+        }
+
+        public void executeHighestPriorityMove(List<Move> moves)
+        {
+
         }
 
         public class Move
@@ -110,7 +118,7 @@ namespace Stratego
             public int newX;
             public int newY;
 
-            int priority;
+            public int priority;
 
             public Move(int origX, int origY, int newX, int newY)
             {

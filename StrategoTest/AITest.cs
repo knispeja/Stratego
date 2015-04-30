@@ -170,9 +170,37 @@ namespace StrategoTest
             {
                 int first = win.getPiece(move.origX, move.origY);
                 int second = win.getPiece(move.newX, move.newY);
+                Assert.AreNotEqual(0, first);
+                Assert.AreNotEqual(11, first);
+                Assert.AreNotEqual(12, first);
+                Assert.AreNotEqual(42, first);
                 int? returned = Piece.attack(first, second);
                 Assert.AreEqual(5*team, returned);
             }
+        }
+
+        [TestCase(1)]
+        [TestCase(-1)]
+        // Tests that AI.executeHighestPriorityMove() works as expected
+        public void TestExecuteHighestPriorityMoveWorks(int team)
+        {
+            int[,] gameBoard = new int[10, 10];
+            gameBoard[0, 0] = 5*team;
+
+            StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
+
+            win.nextTurn();
+            win.nextTurn();
+            win.nextTurn();
+            if (team < 0) win.nextTurn();
+
+            AI ai = new AI(win, team);
+            System.Collections.Generic.List<AI.Move> moves = ai.generateValidMoves();
+            moves[0] = new AI.Move(0, 0, 1, 0);
+            moves[0].priority = 1;
+            ai.executeHighestPriorityMove(moves);
+            Assert.AreEqual(0, win.boardState[0, 0]);
+            Assert.AreEqual(5 * team, win.boardState[1, 0]);
         }
     }
 

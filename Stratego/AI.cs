@@ -23,6 +23,9 @@ namespace Stratego
             this.win = win;
         }
 
+        /// <summary>
+        /// Places this AI player's pieces. Currently places them very stupidly, can be updated later
+        /// </summary>
         public void placePieces()
         {
             int x = 0;
@@ -37,6 +40,9 @@ namespace Stratego
                     {
                         x = 0;
                         y++;
+
+                        // We've run out of tiles to place upon, looks like we're done here
+                        if (y >= win.boardState.GetLength(1)) throw new InvalidOperationException();
                     }
                 }
             }

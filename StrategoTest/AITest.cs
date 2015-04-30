@@ -60,12 +60,16 @@ namespace StrategoTest
         [TestCase(-1)]
         // Tests that AI.placePiece() places as many pieces as possible
         // Makes sure AI.placePiece() places its own pieces...
+        // Verifies that AI.placePiece() cycles the turn once it's finished
         public void TestPlacePieces(int team)
         {
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
             win.nextTurn();
             if (team < 0) win.nextTurn();
+
+            int initialTurn = win.turn;
+
             AI ai = new AI(win, team);
 
             ai.placePieces();
@@ -80,6 +84,8 @@ namespace StrategoTest
                     else Assert.True(win.getPiece(x, y) >= 0);
                 }
             }
+
+            Assert.AreNotEqual(initialTurn, win.turn);
         }
     }
 }

@@ -8,6 +8,20 @@ namespace Stratego
 {
     public static class AI
     {
+        public static void placePieces(StrategoWin win)
+        {
+            
+        }
 
+        public static List<Move> generateValidMoves(int[,] boardState, int team)
+        {
+            return null;
+        }
+
+
+        private class Move
+        {
+
+        }
     }
 }

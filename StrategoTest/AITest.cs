@@ -151,7 +151,7 @@ namespace StrategoTest
 
                 // Place the attackers in column 5
                 column = 5;
-                gameBoard[column, row] = 5;
+                gameBoard[column, row] = 5*team;
 
                 for (column = 0; column < 5; column++)
                 {
@@ -171,7 +171,7 @@ namespace StrategoTest
                 int first = win.getPiece(move.origX, move.origY);
                 int second = win.getPiece(move.newX, move.newY);
                 int? returned = Piece.attack(first, second);
-                Assert.AreEqual(5, returned);
+                Assert.AreEqual(5*team, returned);
             }
         }
     }

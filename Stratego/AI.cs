@@ -74,7 +74,25 @@ namespace Stratego
         public List<Move> generateValidMoves()
         {
             List<Move> moves = new List<Move>();
-            moves.Add(new Move(0, 0, 0, 1));
+            for (int x = 0; x < this.boardX; x++)
+            {
+                for (int y = 0; y < this.boardY; y++)
+                {
+                    int piece = this.win.getPiece(x, y);
+                    int? attackVal = Piece.attack(this.win.getPiece(x,y), -1*this.team);
+                    if (piece != 0 && attackVal != null)
+                    {
+                        if (x != 0)
+                            moves.Add(new Move(x, y, x - 1, y));
+                        else if (x != this.boardX)
+                            moves.Add(new Move(x, y, x + 1, y));
+                        else if (y != 0)
+                            moves.Add(new Move(x, y, x, y - 1));
+                        else if (y != this.boardY)
+                            moves.Add(new Move(x, y, x, y + 1));
+                    }
+                }
+            }
             return moves;
         }
 

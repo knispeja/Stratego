@@ -42,10 +42,13 @@ namespace Stratego
                         y++;
 
                         // We've run out of tiles to place upon, looks like we're done here
-                        if (y >= win.boardState.GetLength(1)) throw new InvalidOperationException();
+                        if (y >= win.boardState.GetLength(1))
+                            throw new InvalidOperationException();
                     }
                 }
             }
+
+            win.nextTurn();
         }
 
         /// <summary>

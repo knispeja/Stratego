@@ -36,6 +36,28 @@ namespace StrategoTest
 
         [TestCase(1)]
         [TestCase(-1)]
+        // Tests that invalid calls to AI.placePiece() throw exceptions
+        public void TestPlacePiecesThrowsInvalidOperationException(int team)
+        {
+            int[,] gameBoard = new int[10, 10];
+            for (int row = 0; row < 10; row++)
+            {
+                for (int column = 0; column < 10; column++)
+                {
+                    // Make every cell of the gameBoard invalid for placement
+                    gameBoard[row, column] = 42;
+                }
+            }
+            StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
+            win.nextTurn();
+            if(team < 0) win.nextTurn();
+            AI ai = new AI(win, team);
+
+            Assert.Throws<InvalidOperationException>(() => ai.placePieces());
+        }
+
+        [TestCase(1)]
+        [TestCase(-1)]
         // Tests that AI.placePiece() places as many pieces as possible
         // Makes sure AI.placePiece() places its own pieces...
         public void TestPlacePieces(int team)
@@ -43,7 +65,7 @@ namespace StrategoTest
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
             win.nextTurn();
-            if(team < 0) win.nextTurn();
+            if (team < 0) win.nextTurn();
             AI ai = new AI(win, team);
 
             ai.placePieces();

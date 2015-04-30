@@ -8,7 +8,7 @@ namespace Stratego
 {
     public class AI
     {
-        int team { public get; set; }
+        public int team { get; set; }
 
         /// <summary>
         /// Initializes a single AI player

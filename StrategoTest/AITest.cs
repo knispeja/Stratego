@@ -45,7 +45,7 @@ namespace StrategoTest
                 for (int column = 0; column < 10; column++)
                 {
                     // Make every cell of the gameBoard invalid for placement
-                    gameBoard[row, column] = 42;
+                    gameBoard[column, row] = 42;
                 }
             }
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
@@ -109,17 +109,17 @@ namespace StrategoTest
                 for (column = 6; column < 10; column++)
                 {
                     // Stick some 42s to the right of the attackers
-                    gameBoard[row, column] = 42;
+                    gameBoard[column, row] = 42;
                 }
 
                 // Place the attackers in column 5
                 column = 5;
-                gameBoard[row, column] = attacker;
+                gameBoard[column, row] = attacker;
 
                 for (column = 0; column < 5; column++)
                 {
                     // Put a row of defenders to the left of the attackers
-                    gameBoard[row, column] = defender;
+                    gameBoard[column, row] = defender;
                 }
             }
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
@@ -128,7 +128,7 @@ namespace StrategoTest
             AI ai = new AI(win, team);
 
             for (int row = 0; row < 10; row++)
-                Assert.AreEqual(expected, ai.evaluateMove(new AI.Move(5, row, 6, row)));
+                Assert.AreEqual(expected, ai.evaluateMove(new AI.Move(5, row, 4, row)));
         }
     }
 

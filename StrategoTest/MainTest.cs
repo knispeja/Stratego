@@ -771,7 +771,7 @@ namespace StrategoTest
             for (int x = 0; x < width; x++) Assert.AreEqual(value, game.boardState[x, row]);
         }
 
-        [TestCase()]
+        [Test()]
         public void TestSaveGame()
         {
             StringWriter writer = new StringWriter();
@@ -808,6 +808,56 @@ namespace StrategoTest
             Assert.AreEqual(result, writer.ToString());
 
             result = "-1 1\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            game.isSinglePlayer = true;
+            writer = new StringWriter();
+            Assert.IsTrue(game.saveGame(writer));
+            Assert.AreEqual(result, writer.ToString());
+            writer.Close();
+        }
+
+        [Test()]
+        public void TestSaveGameV2()
+        {
+            StringWriter writer = new StringWriter();
+            string result = "1 0\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
+            int[,] gameBoard = new int[10, 10];
+            for (int i = 0; i < 10; i++)
+            {
+                gameBoard[i, 0] = 42;
+                gameBoard[i, 1] = 0;
+                gameBoard[i, 2] = 0;
+                gameBoard[i, 3] = 1;
+                gameBoard[i, 4] = 1;
+                gameBoard[i, 5] = 9;
+                gameBoard[i, 6] = 8;
+                gameBoard[i, 7] = 3;
+                gameBoard[i, 8] = 4;
+                gameBoard[i, 9] = 2;
+            }
+
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
+            game.nextTurn();
+            game.nextTurn();
+            game.nextTurn();
+
+            Assert.IsTrue(game.saveGame(writer));
+            Assert.AreEqual(result, writer.ToString());
+
+            result = "1 1\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
+            game.isSinglePlayer = true;
+            writer = new StringWriter();
+            Assert.IsTrue(game.saveGame(writer));
+            Assert.AreEqual(result, writer.ToString());
+
+            game.nextTurn();
+
+            result = "-1 0\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
+            game.isSinglePlayer = false;
+            writer = new StringWriter();
+            Assert.IsTrue(game.saveGame(writer));
+            Assert.AreEqual(result, writer.ToString());
+
+            result = "-1 1\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
             game.isSinglePlayer = true;
             writer = new StringWriter();
             Assert.IsTrue(game.saveGame(writer));

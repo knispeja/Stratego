@@ -555,16 +555,16 @@ namespace Stratego
                 double num;
                 if (double.TryParse(keyChar, out num))
                 {
-                    this.piecePlacing = (int) num;
+                    this.piecePlacing = ((int)num) * this.turn;
                 }
                 else
                 {
                     if (keyChar == "S")
-                        this.piecePlacing = 10;
+                        this.piecePlacing = 10 * this.turn;
                     else if (keyChar == "B")
-                        this.piecePlacing = 11;
+                        this.piecePlacing = 11 * this.turn;
                     else if (keyChar == "F")
-                        this.piecePlacing = 12;
+                        this.piecePlacing = 12 * this.turn;
                 }
             }
         }

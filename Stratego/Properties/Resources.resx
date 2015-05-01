@@ -152,4 +152,28 @@
     <value>1</value>
     <comment>Numeric value for a scout piece</comment>
   </data>
+  <data name="BlueBomb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueBomb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueCaptain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueCaptain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueScoutN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueScoutN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueSpy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueSpy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedBomb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedBomb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedCaptain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedCaptain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedScout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedScout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedSpy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedSpy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

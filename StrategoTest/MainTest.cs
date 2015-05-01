@@ -786,9 +786,7 @@ namespace StrategoTest
             }
 
             StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
-            game.nextTurn();
-            game.nextTurn();
-            game.nextTurn();
+            game.turn = 1;
 
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());
@@ -836,9 +834,8 @@ namespace StrategoTest
             }
 
             StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
-            game.nextTurn();
-            game.nextTurn();
-            game.nextTurn();
+
+            game.turn = 1;
 
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());

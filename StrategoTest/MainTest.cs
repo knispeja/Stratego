@@ -861,5 +861,19 @@ namespace StrategoTest
             Assert.AreEqual(result, writer.ToString());
             writer.Close();
         }
+
+        [Test()]
+        public void TestLoadGame()
+        {
+            string input = "1 0\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
+
+            StringReader reader = new StringReader(input);
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10,10]);
+
+            Assert.IsTrue(game.loadGame(reader));
+
+
+
+        }
     }
 }

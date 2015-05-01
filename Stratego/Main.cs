@@ -489,6 +489,8 @@ namespace Stratego
         /// <returns></returns>
         public bool saveGame(TextWriter writer)
         {
+            if (this.turn == 0) return false;
+
             string buffer = "";
             if (isSinglePlayer)
                 buffer = " 1";

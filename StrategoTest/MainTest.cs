@@ -889,13 +889,20 @@ namespace StrategoTest
         public void TestLoadGame()
         {
             string input = "1 0\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
+            int[,] gameBoard = new int[,] { { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 },
+                                            { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 },
+                                            { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 },
+                                            { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 },
+                                            { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }};
 
             StringReader reader = new StringReader(input);
             StrategoWin game = new StrategoWin(1000, 1000, new int[10,10]);
 
             Assert.IsTrue(game.loadGame(reader));
 
-
+            Assert.AreEqual(game.turn, 1);
+            Assert.IsFalse(game.isSinglePlayer);
+            Assert.AreEqual(game.boardState, gameBoard);
 
         }
     }

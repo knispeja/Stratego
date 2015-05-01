@@ -88,11 +88,9 @@ namespace Stratego
 
             if(dialog.ShowDialog() == DialogResult.OK)
             {
-                Stream file = null;
-                if((file = dialog.OpenFile())!=null)
-                {
-                    saveGame(new StreamWriter(file));
-                }
+                StreamWriter writer = new StreamWriter(dialog.FileName);
+                saveGame(writer);
+                writer.Close();
             }
         }
         private void LoadButton_Click(object sender, EventArgs e)
@@ -731,6 +729,7 @@ namespace Stratego
                 buffer += boardState[9, i];
                 writer.WriteLine(buffer);
             }
+  
             return true;
         }
         /// <summary>

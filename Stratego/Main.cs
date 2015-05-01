@@ -31,7 +31,7 @@ namespace Stratego
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
         public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selceted in the array
         public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
-        public Boolean isSinglePlayer { get; set; } //Whether player 2 is an AI or not
+        public Boolean isSinglePlayer { get; set; }         //Whether player 2 is an AI or not
 
         /// <summary>
         /// Initializer for normal play (initializes GUI).
@@ -52,6 +52,7 @@ namespace Stratego
             this.panelHeight = this.backPanel.Height;
             this.turn = 0;
             this.preGameActive = false;
+            this.isSinglePlayer = false;
             t.Start();
 
             // Initialize the board state with invalid spaces in the enemy player's side
@@ -75,6 +76,7 @@ namespace Stratego
             this.boardState = boardState;
             this.placements = (int[]) this.defaults.Clone();
             this.preGameActive = false;
+            this.isSinglePlayer = false;
         }
 
         /// <summary>

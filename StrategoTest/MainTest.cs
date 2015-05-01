@@ -771,10 +771,11 @@ namespace StrategoTest
             for (int x = 0; x < width; x++) Assert.AreEqual(value, game.boardState[x, row]);
         }
 
-        [TestCase("1 0\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n")]
-        public void TestSaveGame(string result)
+        [TestCase()]
+        public void TestSaveGame()
         {
             StringWriter writer = new StringWriter();
+            string result = "1 0\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
             int[,] gameBoard = new int[10, 10];
             for (int i = 0; i < 10; i++)
             {
@@ -789,6 +790,12 @@ namespace StrategoTest
             game.nextTurn();
             game.nextTurn();
 
+            Assert.IsTrue(game.saveGame(writer));
+            Assert.AreEqual(result, writer.ToString());
+
+            game.nextTurn();
+
+            result = "-1 0\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());
             writer.Close();

@@ -201,6 +201,7 @@ namespace StrategoTest
             ai.executeHighestPriorityMove(moves);
             Assert.AreEqual(0, win.boardState[0, 0]);
             Assert.AreEqual(5 * team, win.boardState[1, 0]);
+            Assert.AreNotEqual(initialTurn, win.turn);
         }
     }
 

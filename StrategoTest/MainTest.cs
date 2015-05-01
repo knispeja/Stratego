@@ -907,8 +907,9 @@ namespace StrategoTest
 
             Assert.AreEqual(game.turn, 1);
             Assert.IsFalse(game.isSinglePlayer);
-            Assert.AreEqual(game.boardState, gameBoard);
+            Assert.AreEqual(gameBoard, game.boardState);
 
+            reader.Close();
         }
 
         [Test()]
@@ -931,8 +932,8 @@ namespace StrategoTest
 
             Assert.AreEqual(game.turn, -1);
             Assert.IsTrue(game.isSinglePlayer);
-            Assert.AreEqual(game.boardState, gameBoard);
-
+            Assert.AreEqual(gameBoard, game.boardState);
+            reader.Close();
         }
     }
 }

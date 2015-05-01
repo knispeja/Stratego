@@ -480,21 +480,36 @@ namespace Stratego
         /// <returns></returns>
         public bool loadGame(TextReader reader) 
         {
-            this.turn = 1;
-            this.isSinglePlayer = false;
-            for (int i = 0; i < 10; i++)
+            string[] lines = new string[100]; //Make a Standard max size later
+            string line = reader.ReadLine();
+            lines[0] = line;
+            int i = 0;
+            while (line != null) 
             {
-                boardState[i, 0] = 42;
-                boardState[i, 1] = 0;
-                boardState[i, 2] = 0;
-                boardState[i, 3] = 1;
-                boardState[i, 4] = 1;
-                boardState[i, 5] = 9;
-                boardState[i, 6] = 8;
-                boardState[i, 7] = 3;
-                boardState[i, 8] = 4;
-                boardState[i, 9] = 2;
+                lines[i] = line;
+                line = reader.ReadLine();
+                i++;
             }
+
+            string[] numbers = lines[0].Split(' ');
+            this.turn = Convert.ToInt32(numbers[0]);
+            if (numbers[1] == "0")
+                this.isSinglePlayer = false;
+            else
+                this.isSinglePlayer = true;
+
+            numbers = lines[1].Split(' ');
+            int[,] newBoard = new int[i - 1, numbers.Length];
+
+            for (int k = 1; k< i; k++ )
+            {
+                numbers = lines[k].Split(' ');
+                for(int j =0; j< numbers.Length; j++)
+                {
+                    newBoard[k - 1, j] = Convert.ToInt32(numbers[j]);
+                }
+            }
+            this.boardState = newBoard;
                 return true;
         }
         /// <summary>

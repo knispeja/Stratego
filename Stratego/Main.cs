@@ -489,7 +489,12 @@ namespace Stratego
         /// <returns></returns>
         public bool saveGame(TextWriter writer)
         {
-            writer.WriteLine(this.turn + " 0");
+            string buffer = "";
+            if (isSinglePlayer)
+                buffer = " 1";
+            else
+                buffer = " 0";
+            writer.WriteLine(this.turn + buffer);
             for (int i = 0; i < 10; i++ )
             {
                 writer.WriteLine("0 1 2 3 4 5 6 7 8 9");

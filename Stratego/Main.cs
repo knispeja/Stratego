@@ -53,6 +53,8 @@ namespace Stratego
             this.turn = 0;
             this.preGameActive = false;
             this.isSinglePlayer = false;
+            this.LoadButton.Click +=LoadButton_Click;
+            this.SaveButton.Click +=SaveButton_Click;
             t.Start();
 
             // Initialize the board state with invalid spaces in the enemy player's side
@@ -78,7 +80,54 @@ namespace Stratego
             this.preGameActive = false;
             this.isSinglePlayer = false;
         }
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.RestoreDirectory = true;
 
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                Stream file = null;
+                if((file = dialog.OpenFile())!=null)
+                {
+                    saveGame(new StreamWriter(file));
+                }
+            }
+        }
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            dialog.InitialDirectory = "c:\\";
+            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.RestoreDirectory = true;
+
+            if(dialog.ShowDialog()== DialogResult.OK)
+            {
+                Stream file = null;
+                try
+                {
+                    if((file = dialog.OpenFile())!= null){
+                        loadGame(new StreamReader(file));
+                    }
+                    SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
+                    sound.Play();
+                    this.FireBox.Dispose();
+                    this.placements = (int[])this.defaults.Clone();
+
+                    this.LoadButton.Visible = false;
+                    this.SidePanelOpenButton.Visible = true;
+                    foreach (var button in this.SidePanel.Controls.OfType<Button>())
+                        if (button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
+  
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk");
+                }
+            }
+        }
         /// <summary>
         /// Called by the start button on the main menu.
         /// </summary>
@@ -94,6 +143,7 @@ namespace Stratego
             this.placements = (int[])this.defaults.Clone();
             // Start the game!
             nextTurn();
+            this.LoadButton.Visible = false;
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
                 if(button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
@@ -137,6 +187,7 @@ namespace Stratego
                 //this.FormBorderStyle = FormBorderStyle.Sizable;
                 this.StartButton.Visible = true;
                 this.FireBox.Visible = true;
+                this.LoadButton.Visible = true;
                 this.startTimer.Dispose();
             }
         }
@@ -642,14 +693,14 @@ namespace Stratego
                 this.isSinglePlayer = true;
 
             numbers = lines[1].Split(' ');
-            int[,] newBoard = new int[i - 1, numbers.Length];
+            int[,] newBoard = new int[numbers.Length, i - 1];
 
             for (int k = 1; k< i; k++ )
             {
                 numbers = lines[k].Split(' ');
                 for(int j =0; j< numbers.Length; j++)
                 {
-                    newBoard[k - 1, j] = Convert.ToInt32(numbers[j]);
+                    newBoard[j, k-1] = Convert.ToInt32(numbers[j]);
                 }
             }
             this.boardState = newBoard;
@@ -675,9 +726,9 @@ namespace Stratego
                 buffer = "";
                 for (int j = 0; j < 9; j++)
                 {
-                    buffer += boardState[i, j] + " ";
+                    buffer += boardState[j, i] + " ";
                 }
-                buffer += boardState[i, 9];
+                buffer += boardState[9, i];
                 writer.WriteLine(buffer);
             }
             return true;

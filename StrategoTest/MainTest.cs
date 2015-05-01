@@ -781,7 +781,7 @@ namespace StrategoTest
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    gameBoard[i, j] = j;
+                    gameBoard[j, i] = j;
                 }
             }
 
@@ -821,16 +821,16 @@ namespace StrategoTest
             int[,] gameBoard = new int[10, 10];
             for (int i = 0; i < 10; i++)
             {
-                gameBoard[i, 0] = 42;
-                gameBoard[i, 1] = 0;
-                gameBoard[i, 2] = 0;
-                gameBoard[i, 3] = 1;
-                gameBoard[i, 4] = 1;
-                gameBoard[i, 5] = 9;
-                gameBoard[i, 6] = 8;
-                gameBoard[i, 7] = 3;
-                gameBoard[i, 8] = 4;
-                gameBoard[i, 9] = 2;
+                gameBoard[0, i] = 42;
+                gameBoard[1, i] = 0;
+                gameBoard[2, i] = 0;
+                gameBoard[3, i] = 1;
+                gameBoard[4, i] = 1;
+                gameBoard[5, i] = 9;
+                gameBoard[6, i] = 8;
+                gameBoard[7, i] = 3;
+                gameBoard[8, i] = 4;
+                gameBoard[9, i] = 2;
             }
 
             StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
@@ -894,11 +894,11 @@ namespace StrategoTest
         public void TestLoadGame()
         {
             string input = "1 0\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
-            int[,] gameBoard = new int[,] { { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 },
-                                            { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 },
-                                            { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 },
-                                            { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 },
-                                            { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }, { 42, 0, 0, 1, 1, 9, 8, 3, 4, 2 }};
+            int[,] gameBoard = new int[,] { {42,42,42,42,42,42,42,42,42,42}, { 0,0,0,0,0,0,0,0,0,0},
+                                            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, { 1,1,1,1,1,1,1,1,1,1 },
+                                            { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, { 9,9,9,9,9,9,9,9,9,9 },
+                                            { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8}, { 3,3,3,3,3,3,3,3,3,3 },
+                                            { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}, { 2,2,2,2,2,2,2,2,2,2}};
 
             StringReader reader = new StringReader(input);
             StrategoWin game = new StrategoWin(1000, 1000, new int[10,10]);
@@ -921,7 +921,7 @@ namespace StrategoTest
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    gameBoard[i, j] = j;
+                    gameBoard[j, i] = j;
                 }
             }
 

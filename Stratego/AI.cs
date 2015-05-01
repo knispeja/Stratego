@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Stratego
 {
+    /// <summary>
+    /// Holds methods and classes relating to the AI player.
+    /// </summary>
     public class AI
     {
         private StrategoWin win;
@@ -31,6 +34,21 @@ namespace Stratego
         }
 
         /// <summary>
+        /// Puts together most of the AI's functions and takes the AI's turn
+        /// </summary>
+        public void takeTurn()
+        {
+            if (win.preGameActive)
+                placePieces();
+            else
+            {
+                List<Move> moves = generateValidMoves();
+                foreach (Move move in moves) evaluateMove(move);
+                executeHighestPriorityMove(moves);
+            }
+        }
+
+        /// <summary>
         /// Places this AI player's pieces. Currently places them very stupidly, can be updated later
         /// </summary>
         public void placePieces()
@@ -48,8 +66,8 @@ namespace Stratego
                         x = 0;
                         y++;
 
-                        // We've run out of tiles to place upon, looks like we're done here
                         if (y >= this.boardY)
+                            // We've run out of places to place our pieces!
                             throw new InvalidOperationException();
                     }
                 }
@@ -65,11 +83,13 @@ namespace Stratego
         /// <param name="y"></param>
         public bool? placePieceByTile(int piece, int xTile, int yTile)
         {
+            // Convert tiles to coordinates
             int scaleX = win.panelWidth / this.boardX;
             int scaleY = win.panelHeight / this.boardY;
             int x = xTile*scaleX;
             int y = yTile*scaleY;
 
+            // Actually place the piece
             return win.placePiece(piece, x, y);
         }
 
@@ -80,18 +100,23 @@ namespace Stratego
         /// <param name="y"></param>
         public void movePiece(Move move)
         {
+            // Convert tiles to coordinates
             int scaleX = win.panelWidth / this.boardX;
             int scaleY = win.panelHeight / this.boardY;
             int ox = move.origX * scaleX;
             int oy = move.origY * scaleY;
-
             int nx = move.newX * scaleX;
             int ny = move.newY * scaleY;
 
+            // Select and move the piece
             win.SelectPiece(ox, oy);
             win.MovePiece(nx, ny);
         }
 
+        /// <summary>
+        /// Generate a list of all valid moves (evaluateMove() may throw these out!!)
+        /// </summary>
+        /// <returns>A list of moves</returns>
         public List<Move> generateValidMoves()
         {
             List<Move> moves = new List<Move>();
@@ -103,6 +128,8 @@ namespace Stratego
                     int? attackVal = Piece.attack(this.win.getPiece(x,y), -1*this.team);
                     if (piece != 0 && attackVal != null)
                     {
+                        // Generate 4 moves per friendly piece, one for each direction
+                        // (as such, scouts currently won't be moved further than 1 space)
                         if (x != 0)
                             moves.Add(new Move(x, y, x - 1, y));
                         else if (x != this.boardX)
@@ -117,6 +144,11 @@ namespace Stratego
             return moves;
         }
 
+        /// <summary>
+        /// Evaluates whether or not a move is valid. If it is, it updates that move's priority.
+        /// </summary>
+        /// <param name="move">The move to be evaluated</param>
+        /// <returns>Whether or not the move is valid</returns>
         public bool evaluateMove(Move move)
         {
             int? returnMe = Piece.attack(win.getPiece(move.origX, move.origY), win.getPiece(move.newX, move.newY));
@@ -127,9 +159,17 @@ namespace Stratego
             }
         }
 
+        /// <summary>
+        /// Executes the move with the highest priority out of a given list of moves.
+        /// If several moves have the same priority, it chooses randomly.
+        /// </summary>
+        /// <param name="moves">The list of moves to choose from.</param>
         public void executeHighestPriorityMove(List<Move> moves)
         {
+            // Initialize max
             int max = moves[0].priority;
+
+            // Find the true max while removing some obviously insignificant moves
             foreach (Move move in moves)
             {
                 if (move.priority < max)
@@ -138,6 +178,7 @@ namespace Stratego
                     max = move.priority;
             }
 
+            // The max may have changed, so remove any straggling small-priority moves
             foreach (Move move in moves)
             {
                 if (move.priority < max)
@@ -148,6 +189,10 @@ namespace Stratego
             movePiece(moves[r]);
         }
 
+        /// <summary>
+        /// Represents a move to be made by the AI.
+        /// Useful for evaluating which move should be taken from a list.
+        /// </summary>
         public class Move
         {
             public int origX;

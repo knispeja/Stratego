@@ -480,7 +480,7 @@ namespace Stratego
         /// <returns></returns>
         public bool loadGame(TextReader reader) 
         {
-            return false;
+            return true;
         }
         /// <summary>
         /// Saves a gamestate into the string or file in the given writer

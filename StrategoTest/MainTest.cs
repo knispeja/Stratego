@@ -861,7 +861,30 @@ namespace StrategoTest
             Assert.AreEqual(result, writer.ToString());
             writer.Close();
         }
+        [Test()]
+        public void TestThatGameCannotBeSavedBeforePiecesArePlaced()
+        {
+            StringWriter writer = new StringWriter();
+            int[,] gameBoard = new int[10, 10];
+            for (int i = 0; i < 10; i++)
+            {
+                gameBoard[i, 0] = 42;
+                gameBoard[i, 1] = 0;
+                gameBoard[i, 2] = 0;
+                gameBoard[i, 3] = 1;
+                gameBoard[i, 4] = 1;
+                gameBoard[i, 5] = 9;
+                gameBoard[i, 6] = 8;
+                gameBoard[i, 7] = 3;
+                gameBoard[i, 8] = 4;
+                gameBoard[i, 9] = 2;
+            }
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
 
+            Assert.IsFalse(game.saveGame(writer));
+            Assert.AreEqual("", writer.ToString());
+
+        }
         [Test()]
         public void TestLoadGame()
         {

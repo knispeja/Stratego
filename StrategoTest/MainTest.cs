@@ -791,6 +791,7 @@ namespace StrategoTest
 
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());
+            writer.Close();
         }
     }
 }

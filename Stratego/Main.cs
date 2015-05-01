@@ -31,6 +31,7 @@ namespace Stratego
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
         public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selceted in the array
         public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
+        public Boolean isSinglePlayer { get; set; } //Whether player 2 is an AI or not
 
         /// <summary>
         /// Initializer for normal play (initializes GUI).
@@ -470,15 +471,28 @@ namespace Stratego
             this.nextTurn();
             return true;
         }
-
+        /// <summary>
+        /// Loads a gamestate from the given reader 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         public bool loadGame(TextReader reader) 
         {
             return false;
         }
-
+        /// <summary>
+        /// Saves a gamestate into the string or file in the given writer
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <returns></returns>
         public bool saveGame(TextWriter writer)
         {
-            return false;
+            writer.WriteLine("1 0");
+            for (int i = 0; i < 10; i++ )
+            {
+                writer.WriteLine("0 1 2 3 4 5 6 7 8 9");
+            }
+            return true;
         }
         /// <summary>
         /// Receives clicks on the back panel and directs them to the game as needed

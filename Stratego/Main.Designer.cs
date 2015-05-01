@@ -52,6 +52,7 @@
             this.place1Button = new System.Windows.Forms.Button();
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
+            this.LoadButton = new System.Windows.Forms.Button();
             this.backPanel.SuspendLayout();
             this.SidePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
@@ -99,6 +100,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.backPanel.BackColor = System.Drawing.Color.Transparent;
+            this.backPanel.Controls.Add(this.LoadButton);
             this.backPanel.Controls.Add(this.PauseMenuExitButton);
             this.backPanel.Controls.Add(this.SidePanel);
             this.backPanel.Controls.Add(this.StartButton);
@@ -165,7 +167,7 @@
             this.removeCheckBox.AutoSize = true;
             this.removeCheckBox.Location = new System.Drawing.Point(12, 565);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
+            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;
@@ -314,7 +316,7 @@
             this.FireBox.BackColor = System.Drawing.Color.Transparent;
             this.FireBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.FireBox.Image = global::Stratego.Properties.Resources.AniFire;
-            this.FireBox.Location = new System.Drawing.Point(-4, -3);
+            this.FireBox.Location = new System.Drawing.Point(-4, -2);
             this.FireBox.Margin = new System.Windows.Forms.Padding(0);
             this.FireBox.Name = "FireBox";
             this.FireBox.Size = new System.Drawing.Size(1130, 630);
@@ -322,6 +324,16 @@
             this.FireBox.TabIndex = 3;
             this.FireBox.TabStop = false;
             this.FireBox.Visible = false;
+            // 
+            // LoadButton
+            // 
+            this.LoadButton.Location = new System.Drawing.Point(510, 420);
+            this.LoadButton.Name = "LoadButton";
+            this.LoadButton.Size = new System.Drawing.Size(129, 59);
+            this.LoadButton.TabIndex = 6;
+            this.LoadButton.Text = "Load Game";
+            this.LoadButton.UseVisualStyleBackColor = true;
+            this.LoadButton.Visible = false;
             // 
             // StrategoWin
             // 
@@ -372,6 +384,7 @@
         private System.Windows.Forms.Button PauseMenuExitButton;
         private System.Windows.Forms.CheckBox removeCheckBox;
         private System.Windows.Forms.Button donePlacingButton;
+        private System.Windows.Forms.Button LoadButton;
     }
 }
 

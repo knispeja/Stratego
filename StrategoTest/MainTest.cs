@@ -796,6 +796,7 @@ namespace StrategoTest
             game.nextTurn();
 
             result = "-1 0\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            writer = new StringWriter();
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());
             writer.Close();

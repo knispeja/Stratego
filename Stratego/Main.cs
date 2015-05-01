@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 using System.Media;
+using System.IO;
 
 namespace Stratego
 {
@@ -406,7 +407,6 @@ namespace Stratego
         /// <returns>true if a piece was moved, false otherwise</returns>
         public bool MovePiece(int x, int y)
         {
-            // TODO Make this implement the attack and update the board, as well as the end turn functionality.
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
             if (!this.pieceIsSelected)
@@ -471,6 +471,15 @@ namespace Stratego
             return true;
         }
 
+        public bool loadGame(TextReader reader) 
+        {
+            return false;
+        }
+
+        public bool saveGame(TextWriter writer)
+        {
+            return false;
+        }
         /// <summary>
         /// Receives clicks on the back panel and directs them to the game as needed
         /// </summary>

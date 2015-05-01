@@ -3,6 +3,7 @@ using Stratego;
 using NUnit.Framework;
 using System.Windows.Forms;
 using System.Drawing;
+using System.IO;
 
 namespace StrategoTest
 {
@@ -768,6 +769,28 @@ namespace StrategoTest
             StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
             game.fillRow(value, row);
             for (int x = 0; x < width; x++) Assert.AreEqual(value, game.boardState[x, row]);
+        }
+
+        [TestCase("1 0\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n")]
+        public void TestSaveGame(string result)
+        {
+            StringWriter writer = new StringWriter();
+            int[,] gameBoard = new int[10, 10];
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    gameBoard[i, j] = j;
+                }
+            }
+
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
+            game.nextTurn();
+            game.nextTurn();
+            game.nextTurn();
+
+            Assert.IsTrue(game.saveGame(writer));
+            Assert.AreEqual(result, writer.ToString());
         }
     }
 }

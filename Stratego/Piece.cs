@@ -10,7 +10,7 @@ using System.Threading.Tasks;
  * 10 - Spy
  * 11 - Bomb
  * 12 - Flag
- * NULL = place you cant move (lakes)
+ * 42 = place you cant move (lakes)
  */
 namespace Stratego
 {

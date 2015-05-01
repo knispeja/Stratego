@@ -193,6 +193,7 @@ namespace StrategoTest
             win.nextTurn();
             win.nextTurn();
             if (team < 0) win.nextTurn();
+            int initialTurn = win.turn;
 
             AI ai = new AI(win, team);
             System.Collections.Generic.List<AI.Move> moves = ai.generateValidMoves();

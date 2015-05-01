@@ -480,7 +480,22 @@ namespace Stratego
         /// <returns></returns>
         public bool loadGame(TextReader reader) 
         {
-            return true;
+            this.turn = 1;
+            this.isSinglePlayer = false;
+            for (int i = 0; i < 10; i++)
+            {
+                boardState[i, 0] = 42;
+                boardState[i, 1] = 0;
+                boardState[i, 2] = 0;
+                boardState[i, 3] = 1;
+                boardState[i, 4] = 1;
+                boardState[i, 5] = 9;
+                boardState[i, 6] = 8;
+                boardState[i, 7] = 3;
+                boardState[i, 8] = 4;
+                boardState[i, 9] = 2;
+            }
+                return true;
         }
         /// <summary>
         /// Saves a gamestate into the string or file in the given writer

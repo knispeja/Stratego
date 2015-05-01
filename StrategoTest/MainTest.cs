@@ -884,6 +884,11 @@ namespace StrategoTest
             Assert.IsFalse(game.saveGame(writer));
             Assert.AreEqual("", writer.ToString());
 
+            game.nextTurn();
+
+            Assert.IsFalse(game.saveGame(writer));
+            Assert.AreEqual("", writer.ToString());
+
         }
         [Test()]
         public void TestLoadGame()

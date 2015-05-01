@@ -910,5 +910,29 @@ namespace StrategoTest
             Assert.AreEqual(game.boardState, gameBoard);
 
         }
+
+        [Test()]
+        public void TestLoadGameV2()
+        {
+            string input = "-1 1\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            int[,] gameBoard = new int[10, 10];
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    gameBoard[i, j] = j;
+                }
+            }
+
+            StringReader reader = new StringReader(input);
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+
+            Assert.IsTrue(game.loadGame(reader));
+
+            Assert.AreEqual(game.turn, -1);
+            Assert.IsTrue(game.isSinglePlayer);
+            Assert.AreEqual(game.boardState, gameBoard);
+
+        }
     }
 }

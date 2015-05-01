@@ -238,8 +238,151 @@ namespace Stratego
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55))/2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn > 0)
                                     {
-                                        Image imag = Properties.Resources.BlueScout;
+                                        Image imag = Properties.Resources.BlueScoutN;
                                         e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.DrawRectangle(pen, r);
+                                        g.FillRectangle(b, r);
+                                    }
+                                }
+                                else if (piece == -9)
+                                {
+                                    // Piece is a blue scout (displaying as image)
+                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn < 0)
+                                    {
+                                        Image imag = Properties.Resources.RedScout;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 11)
+                                {
+                                    // Piece is a blue scout (displaying as image)
+                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn > 0)
+                                    {
+                                        Image imag = Properties.Resources.BlueBomb;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.DrawRectangle(pen, r);
+                                        g.FillRectangle(b, r);
+                                    }
+                                }
+                                else if (piece == -11)
+                                {
+                                    // Piece is a blue scout (displaying as image)
+                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn < 0)
+                                    {
+                                        Image imag = Properties.Resources.RedBomb;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 10)
+                                {
+                                    // Piece is a blue scout (displaying as image)
+                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn > 0)
+                                    {
+                                        Image imag = Properties.Resources.BlueSpy;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.DrawRectangle(pen, r);
+                                        g.FillRectangle(b, r);
+                                    }
+                                }
+                                else if (piece == -10)
+                                {
+                                    // Piece is a blue scout (displaying as image)
+                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn < 0)
+                                    {
+                                        Image imag = Properties.Resources.RedSpy;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 5)
+                                {
+                                    // Piece is a blue scout (displaying as image)
+                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn > 0)
+                                    {
+                                        Image imag = Properties.Resources.BlueCaptain;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == -5)
+                                {
+                                    // Piece is a blue scout (displaying as image)
+                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn < 0)
+                                    {
+                                        Image imag = Properties.Resources.RedCaptain;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
                                     }
                                     else
                                     {

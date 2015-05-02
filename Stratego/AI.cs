@@ -17,6 +17,7 @@ namespace Stratego
         private Random rnd;
         private int boardX;
         private int boardY;
+        private int targetPiece;
 
         /// <summary>
         /// Initializes this AI player
@@ -163,12 +164,29 @@ namespace Stratego
             int defender = win.getPiece(move.newX, move.newY);
             int attacker = win.getPiece(move.origX, move.origY);
             if (defender == 0) return true;
-            int? returnMe = Piece.attack(attacker, defender);
-            if (returnMe == null) return false;
-            else {
-                // Update this move's priority
-                return true;
+            int? attackVal = Piece.attack(attacker, defender);
+            if (attackVal == null) return false;
+
+            // ---------- Update this move's priority -----------
+            if (difficulty == 5)
+            {
+                int enemyTeam = this.team*-1;
+
+                // Look at opponent's pieces and cheat
+                if (attackVal == attacker) {
+                    // If the AI is going to come out on top, raise priority a lot
+                    move.priority += (15-Math.Abs(defender));
+                }
+                if (defender == 12)
+                    // If the defender is the enemy flag, raise priority an insane amount
+                    move.priority += 1000;
             }
+            else if (difficulty == 0)
+            {
+                // Just choose moves randomly, don't change priority
+            }
+
+            return true;
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace StrategoTest
         {
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
-            AI ai = new AI(win, team, 3);
+            AI ai = new AI(win, team, difficulty);
             Assert.AreEqual(team, ai.team);
             Assert.AreEqual(difficulty, ai.difficulty);
         }

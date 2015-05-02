@@ -28,6 +28,7 @@ namespace Stratego
         {
             if (Math.Abs(team) != 1) throw new ArgumentException();
             this.team = team;
+            this.difficulty = difficulty;
             this.win = win;
 
             this.rnd = new Random();

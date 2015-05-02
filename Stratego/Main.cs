@@ -33,6 +33,8 @@ namespace Stratego
         public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
         public Boolean isSinglePlayer { get; set; }         //Whether player 2 is an AI or not
 
+        public AI ai;
+
         /// <summary>
         /// Initializer for normal play (initializes GUI).
         /// Not to be used for testing!
@@ -53,14 +55,16 @@ namespace Stratego
             this.turn = 0;
             this.preGameActive = false;
             this.isSinglePlayer = false;
-            this.LoadButton.Click +=LoadButton_Click;
-            this.SaveButton.Click +=SaveButton_Click;
+            this.LoadButton.Click +=LoadButton_Click;  // Why do we have these two lines instead of just setting the
+            this.SaveButton.Click +=SaveButton_Click;  // property using the GUI??
             t.Start();
 
             // Initialize the board state with invalid spaces in the enemy player's side
             // of the board and empty spaces everywhere else. To be changed later!
             boardState = new int[10, 10];
             for (int row = 0; row < 6; row++) fillRow(42, row);
+
+            this.ai = new AI(this, -1);
         }
 
         /// <summary>
@@ -72,13 +76,15 @@ namespace Stratego
         /// <param name="boardState">Modified initial board state for ease of testing</param>
         public StrategoWin(int windowWidth, int windowHeight, int[,] boardState)
         {
-            testing = true;
+            this.testing = true;
             this.panelWidth = windowWidth;
             this.panelHeight = windowHeight;
             this.boardState = boardState;
             this.placements = (int[]) this.defaults.Clone();
             this.preGameActive = false;
             this.isSinglePlayer = false;
+
+            this.ai = new AI(this, -1);
         }
         private void SaveButton_Click(object sender, EventArgs e)
         {
@@ -115,6 +121,7 @@ namespace Stratego
                     this.placements = (int[])this.defaults.Clone();
 
                     this.LoadButton.Visible = false;
+                    this.SinglePlayerButton.Visible = false;
                     this.SidePanelOpenButton.Visible = true;
                     foreach (var button in this.SidePanel.Controls.OfType<Button>())
                         if (button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
@@ -122,7 +129,7 @@ namespace Stratego
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: Could not read file from disk");
+                    MessageBox.Show("Error loading file: " + ex.Message);
                 }
             }
         }
@@ -142,6 +149,7 @@ namespace Stratego
             // Start the game!
             nextTurn();
             this.LoadButton.Visible = false;
+            this.SinglePlayerButton.Visible = false;
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
                 if(button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
@@ -186,6 +194,7 @@ namespace Stratego
                 this.StartButton.Visible = true;
                 this.FireBox.Visible = true;
                 this.LoadButton.Visible = true;
+                this.SinglePlayerButton.Visible = true;
                 this.startTimer.Dispose();
             }
         }
@@ -551,7 +560,8 @@ namespace Stratego
             {
                 if (this.turn == -1)
                 {
-                    if(this.preGameActive == true)
+                    if (this.preGameActive == true)
+                    {
                         for (int i = 4; i < 6; i++)
                         {
                             for (int x = 0; x < 2; x++)
@@ -561,11 +571,21 @@ namespace Stratego
                             for (int x = 8; x < 10; x++)
                                 this.boardState[x, i] = 0;
                         }
+
+                    }
                     this.preGameActive = false;
                 }
                 else
                     this.preGameActive = true;
                 this.turn = 1;
+            }
+
+            if (this.isSinglePlayer && this.turn == this.ai.team && !this.testing)
+            {
+                if (this.preGameActive)
+                    this.ai.placePieces();
+                else
+                    this.ai.takeTurn();
             }
         }
 
@@ -883,6 +903,12 @@ namespace Stratego
             ((Button)sender).Enabled = false;
             nextTurn();
             //for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
+        }
+
+        private void SinglePlayerButton_click(object sender, EventArgs e)
+        {
+            this.isSinglePlayer = true;
+            StartButton_Click(sender, e);
         }
     }
 }

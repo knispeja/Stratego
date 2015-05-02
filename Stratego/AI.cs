@@ -22,7 +22,8 @@ namespace Stratego
         /// </summary>
         /// <param name="win">The window upon which to perform most game functions directly</param>
         /// <param name="team">This AI player's team, either -1 or 1 (typically that translates to red or blue)</param>
-        public AI(StrategoWin win, int team)
+        /// <param name="difficulty">This is the AI player's difficulty. A higher number indicates the AI is more difficult, 5 being insanity</param>
+        public AI(StrategoWin win, int team, int difficulty = 0)
         {
             if (Math.Abs(team) != 1) throw new ArgumentException();
             this.team = team;
@@ -43,7 +44,9 @@ namespace Stratego
             else
             {
                 List<Move> moves = generateValidMoves();
-                foreach (Move move in moves) evaluateMove(move);
+
+                Console.WriteLine("Total moves: " + moves.Count);
+
                 executeHighestPriorityMove(moves);
             }
         }
@@ -126,22 +129,26 @@ namespace Stratego
                 {
                     int piece = this.win.getPiece(x, y);
                     int? attackVal = Piece.attack(this.win.getPiece(x,y), -1*this.team);
-                    if (piece != 0 && attackVal != null)
+                    if (piece != 0 && Math.Abs(piece) != 42 && Math.Abs(piece) != 11 && Math.Abs(piece) != 12 && attackVal != null)
                     {
                         // Generate 4 moves per friendly piece, one for each direction
                         // (as such, scouts currently won't be moved further than 1 space)
                         if (x != 0)
                             moves.Add(new Move(x, y, x - 1, y));
-                        else if (x != this.boardX)
+                        if (x != this.boardX-1)
                             moves.Add(new Move(x, y, x + 1, y));
-                        else if (y != 0)
+                        if (y != 0)
                             moves.Add(new Move(x, y, x, y - 1));
-                        else if (y != this.boardY)
+                        if (y != this.boardY-1)
                             moves.Add(new Move(x, y, x, y + 1));
                     }
                 }
             }
-            return moves;
+
+            List<Move> finalMoves = new List<Move>();
+            foreach (Move move in moves) if (evaluateMove(move)) finalMoves.Add(move);
+
+            return finalMoves;
         }
 
         /// <summary>
@@ -151,7 +158,10 @@ namespace Stratego
         /// <returns>Whether or not the move is valid</returns>
         public bool evaluateMove(Move move)
         {
-            int? returnMe = Piece.attack(win.getPiece(move.origX, move.origY), win.getPiece(move.newX, move.newY));
+            int defender = win.getPiece(move.newX, move.newY);
+            int attacker = win.getPiece(move.origX, move.origY);
+            if (defender == 0) return true;
+            int? returnMe = Piece.attack(attacker, defender);
             if (returnMe == null) return false;
             else {
                 // Update this move's priority
@@ -166,27 +176,32 @@ namespace Stratego
         /// <param name="moves">The list of moves to choose from.</param>
         public void executeHighestPriorityMove(List<Move> moves)
         {
+            List<Move> intermediateMoves = new List<Move>();
+            List<Move> finalMoves = new List<Move>();
+
             // Initialize max
             int max = moves[0].priority;
 
             // Find the true max while removing some obviously insignificant moves
             foreach (Move move in moves)
             {
-                if (move.priority < max)
-                    moves.Remove(move);
-                else if (move.priority > max)
-                    max = move.priority;
+                if (move.priority >= max)
+                {
+                    intermediateMoves.Add(move);
+                    if(move.priority > max)
+                        max = move.priority;
+                }
             }
 
             // The max may have changed, so remove any straggling small-priority moves
-            foreach (Move move in moves)
+            foreach (Move move in intermediateMoves)
             {
-                if (move.priority < max)
-                    moves.Remove(move);
+                if (move.priority >= max)
+                    finalMoves.Add(move);
             }
 
-            int r = rnd.Next(moves.Count);
-            movePiece(moves[r]);
+            int r = rnd.Next(finalMoves.Count);
+            movePiece(finalMoves[r]);
         }
 
         /// <summary>

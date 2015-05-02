@@ -34,9 +34,11 @@
             this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.backPanel = new Stratego.BuffPanel();
+            this.SinglePlayerButton = new System.Windows.Forms.Button();
             this.LoadButton = new System.Windows.Forms.Button();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
+            this.SaveButton = new System.Windows.Forms.Button();
             this.donePlacingButton = new System.Windows.Forms.Button();
             this.removeCheckBox = new System.Windows.Forms.CheckBox();
             this.place12Button = new System.Windows.Forms.Button();
@@ -53,7 +55,6 @@
             this.place1Button = new System.Windows.Forms.Button();
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
-            this.SaveButton = new System.Windows.Forms.Button();
             this.backPanel.SuspendLayout();
             this.SidePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
@@ -84,7 +85,7 @@
             this.StartButton.ForeColor = System.Drawing.Color.Black;
             this.StartButton.Image = global::Stratego.Properties.Resources.StartButton;
             this.StartButton.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.StartButton.Location = new System.Drawing.Point(1519, 647);
+            this.StartButton.Location = new System.Drawing.Point(1274, 647);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(216, 91);
             this.StartButton.TabIndex = 2;
@@ -101,6 +102,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.backPanel.BackColor = System.Drawing.Color.Transparent;
+            this.backPanel.Controls.Add(this.SinglePlayerButton);
             this.backPanel.Controls.Add(this.LoadButton);
             this.backPanel.Controls.Add(this.PauseMenuExitButton);
             this.backPanel.Controls.Add(this.SidePanel);
@@ -110,11 +112,22 @@
             this.backPanel.Location = new System.Drawing.Point(0, 0);
             this.backPanel.Margin = new System.Windows.Forms.Padding(0);
             this.backPanel.Name = "backPanel";
-            this.backPanel.Size = new System.Drawing.Size(1857, 858);
+            this.backPanel.Size = new System.Drawing.Size(1612, 858);
             this.backPanel.TabIndex = 0;
             this.backPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.backPanel_Paint);
             this.backPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.backPanel_MouseClick);
             this.backPanel.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.backPanel_PreviewKeyDown);
+            // 
+            // SinglePlayerButton
+            // 
+            this.SinglePlayerButton.Location = new System.Drawing.Point(871, 565);
+            this.SinglePlayerButton.Name = "SinglePlayerButton";
+            this.SinglePlayerButton.Size = new System.Drawing.Size(129, 59);
+            this.SinglePlayerButton.TabIndex = 7;
+            this.SinglePlayerButton.Text = "Single-Player";
+            this.SinglePlayerButton.UseVisualStyleBackColor = true;
+            this.SinglePlayerButton.Visible = false;
+            this.SinglePlayerButton.Click += new System.EventHandler(this.SinglePlayerButton_click);
             // 
             // LoadButton
             // 
@@ -129,7 +142,7 @@
             // PauseMenuExitButton
             // 
             this.PauseMenuExitButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.PauseMenuExitButton.Location = new System.Drawing.Point(871, 398);
+            this.PauseMenuExitButton.Location = new System.Drawing.Point(749, 398);
             this.PauseMenuExitButton.Name = "PauseMenuExitButton";
             this.PauseMenuExitButton.Size = new System.Drawing.Size(136, 59);
             this.PauseMenuExitButton.TabIndex = 5;
@@ -163,6 +176,15 @@
             this.SidePanel.TabIndex = 4;
             this.SidePanel.Visible = false;
             // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(5, 559);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(96, 36);
+            this.SaveButton.TabIndex = 14;
+            this.SaveButton.Text = "Save Game";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            // 
             // donePlacingButton
             // 
             this.donePlacingButton.Enabled = false;
@@ -179,7 +201,7 @@
             this.removeCheckBox.AutoSize = true;
             this.removeCheckBox.Location = new System.Drawing.Point(12, 613);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
+            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;
@@ -312,7 +334,7 @@
             this.TitlePictureBox.BackColor = System.Drawing.Color.Transparent;
             this.TitlePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.TitlePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("TitlePictureBox.Image")));
-            this.TitlePictureBox.Location = new System.Drawing.Point(1414, 342);
+            this.TitlePictureBox.Location = new System.Drawing.Point(1169, 342);
             this.TitlePictureBox.Name = "TitlePictureBox";
             this.TitlePictureBox.Size = new System.Drawing.Size(321, 95);
             this.TitlePictureBox.TabIndex = 1;
@@ -331,27 +353,18 @@
             this.FireBox.Location = new System.Drawing.Point(-4, -2);
             this.FireBox.Margin = new System.Windows.Forms.Padding(0);
             this.FireBox.Name = "FireBox";
-            this.FireBox.Size = new System.Drawing.Size(1867, 858);
+            this.FireBox.Size = new System.Drawing.Size(1622, 858);
             this.FireBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.FireBox.TabIndex = 3;
             this.FireBox.TabStop = false;
             this.FireBox.Visible = false;
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.Location = new System.Drawing.Point(5, 559);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(96, 36);
-            this.SaveButton.TabIndex = 14;
-            this.SaveButton.Text = "Save Game";
-            this.SaveButton.UseVisualStyleBackColor = true;
             // 
             // StrategoWin
             // 
             this.AcceptButton = this.StartButton;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1857, 858);
+            this.ClientSize = new System.Drawing.Size(1612, 858);
             this.Controls.Add(this.SidePanelOpenButton);
             this.Controls.Add(this.backPanel);
             this.DoubleBuffered = true;
@@ -397,6 +410,7 @@
         private System.Windows.Forms.Button donePlacingButton;
         private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button SinglePlayerButton;
     }
 }
 

@@ -7,15 +7,18 @@ namespace StrategoTest
     [TestFixture()]
     public class AITest
     {
-        [TestCase(1)]
-        [TestCase(-1)]
-        // Tests AI's constructor, which sets the AI's team
-        public void TestConstructor(int team)
+        [TestCase(1, 2)]
+        [TestCase(-1, 3)]
+        [TestCase(1, 0)]
+        [TestCase(-1, 5)]
+        // Tests AI's constructor, which sets the AI's team & difficulty
+        public void TestConstructor(int team, int difficulty)
         {
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
-            AI ai = new AI(win, team);
+            AI ai = new AI(win, team, 3);
             Assert.AreEqual(team, ai.team);
+            Assert.AreEqual(difficulty, ai.difficulty);
         }
 
         [TestCase(0)]

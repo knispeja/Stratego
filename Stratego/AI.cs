@@ -13,6 +13,7 @@ namespace Stratego
     {
         private StrategoWin win;
         public int team { get; set; }
+        public int difficulty { get; set; }
         private Random rnd;
         private int boardX;
         private int boardY;
@@ -23,7 +24,7 @@ namespace Stratego
         /// <param name="win">The window upon which to perform most game functions directly</param>
         /// <param name="team">This AI player's team, either -1 or 1 (typically that translates to red or blue)</param>
         /// <param name="difficulty">This is the AI player's difficulty. A higher number indicates the AI is more difficult, 5 being insanity</param>
-        public AI(StrategoWin win, int team, int difficulty = 0)
+        public AI(StrategoWin win, int team, int difficulty = 5)
         {
             if (Math.Abs(team) != 1) throw new ArgumentException();
             this.team = team;

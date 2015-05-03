@@ -275,7 +275,7 @@ namespace Stratego
         /// Does a check to see if the given piece is an enemy
         /// </summary>
         /// <param name="piece">A piece to check</param>
-        /// <returns>True if the piece is an enemy, false if it is not</returns>
+        /// <returns>True if the piece is an enemy, false otherwise</returns>
         public bool isEnemyPiece(int piece)
         {
             if (piece == 42 || piece == 0) return false;
@@ -283,6 +283,11 @@ namespace Stratego
             return Math.Sign(piece) != this.team;
         }
 
+        /// <summary>
+        /// Does a check to see if the given piece is friendly
+        /// </summary>
+        /// <param name="piece">A piece to check</param>
+        /// <returns>True if the piece is friendly, false otherwise</returns>
         public bool isFriendlyPiece(int piece)
         {
             return false;

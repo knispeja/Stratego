@@ -207,6 +207,24 @@ namespace StrategoTest
             Assert.AreEqual(5 * team, win.boardState[1, 0]);
             Assert.AreNotEqual(initialTurn, win.turn);
         }
+
+        [TestCase(1, -1, true)]
+        [TestCase(-1, 1, true)]
+        [TestCase(-1, 5, true)]
+        [TestCase(1, -5, true)]
+        // Tests that AI.isEnemyPiece() works as expected
+        public void TestIsEnemyPiece(int team, int piece, bool expected)
+        {
+            int[,] gameBoard = new int[10, 10];
+
+            StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
+
+            if (team < 0) win.nextTurn();
+            int initialTurn = win.turn;
+
+            AI ai = new AI(win, team);
+            Assert.AreEqual(expected, ai.isEnemyPiece(piece));
+        }
     }
 
     }

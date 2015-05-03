@@ -290,6 +290,8 @@ namespace Stratego
         /// <returns>True if the piece is friendly, false otherwise</returns>
         public bool isFriendlyPiece(int piece)
         {
+            if (piece == 42 || piece == 0) return false;
+
             return Math.Sign(piece) == this.team;
         }
 

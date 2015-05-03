@@ -258,6 +258,7 @@ namespace Stratego
         /// <returns>True if the piece is an enemy, false if it is not</returns>
         public bool isEnemyPiece(int piece)
         {
+            if (piece == 42) return false;
             return Math.Sign(piece) != this.team;
         }
 

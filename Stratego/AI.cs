@@ -47,9 +47,6 @@ namespace Stratego
             else
             {
                 List<Move> moves = generateValidMoves();
-
-                Console.WriteLine("Total moves: " + moves.Count);
-
                 executeHighestPriorityMove(moves);
             }
         }
@@ -168,25 +165,122 @@ namespace Stratego
             if (attackVal == null) return false;
 
             // ---------- Update this move's priority -----------
-            if (difficulty == 5)
-            {
-                int enemyTeam = this.team*-1;
 
-                // Look at opponent's pieces and cheat
-                if (attackVal == attacker) {
-                    // If the AI is going to come out on top, raise priority a lot
-                    move.priority += (15-Math.Abs(defender));
-                }
-                if (defender == 12)
-                    // If the defender is the enemy flag, raise priority an insane amount
-                    move.priority += 1000;
-            }
-            else if (difficulty == 0)
-            {
+            if (!(move.newY < move.origY))
+                // Prioritize downward movement, side-to-side is fine
+                move.priority++;
+
+            if (difficulty == 0)
                 // Just choose moves randomly, don't change priority
+                return true;
+
+            if (difficulty >= 2)
+            {
+                // Try not to move right next to unknown enemy pieces
+                int nPiece = this.win.boardState[move.newX, move.newY - 1];
+                int ePiece = this.win.boardState[move.newX + 1, move.newY];
+                int sPiece = this.win.boardState[move.newX, move.newY + 1];
+                int wPiece = this.win.boardState[move.newX - 1, move.newY];
+
+                // Reduce priority for each of these that is an unknown (unknown part is unimplemented) enemy
+                if (this.difficulty != 5)
+                {
+                    // Check for unknowns
+                }
+                else
+                {
+                    // Difficulty 5, time to look at the opponent's pieces (>")>
+
+                    if (defender == 12)
+                    {
+                        // If the defender is the enemy flag, raise priority an insane amount
+                        move.priority += 1000;
+                        return true;
+                    }
+
+                    if (attackVal == attacker)
+                    {
+                        // If the AI is going to come out on top, raise priority
+                        // by the perceived value of the piece to be executed
+                        move.priority += getPieceValue(defender);
+                    }
+
+                    // Now we can see whether or not the opponent will win if they
+                    // try to attack us after we move, so we take that into account...
+                    int? nResult = Piece.attack(nPiece, attacker);
+                    int? eResult = Piece.attack(ePiece, attacker);
+                    int? sResult = Piece.attack(sPiece, attacker);
+                    int? wResult = Piece.attack(wPiece, attacker);
+
+                    if (nResult != nPiece && eResult != ePiece && sResult != sPiece && wResult != wPiece)
+                    {
+                        // If this piece will be safe, raise the priority a little bit to encourage safe movement
+                        move.priority += 2;
+                        if (isEnemyPiece(nPiece))
+                            move.priority += 4;
+                        if (isEnemyPiece(ePiece))
+                            move.priority += 4;
+                        if (isEnemyPiece(sPiece))
+                            move.priority += 4;
+                        if (isEnemyPiece(wPiece))
+                            move.priority += 4;
+                    }
+                    else
+                        // This piece will be in danger, so lower the priority
+                        // by the value of the potentially lost piece
+                        move.priority -= getPieceValue(attacker);
+                }
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Does a check to see if the given piece is an enemy
+        /// </summary>
+        /// <param name="piece">A piece to check</param>
+        /// <returns>True if the piece is an enemy, false if it is not</returns>
+        public bool isEnemyPiece(int piece)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Returns an arbitrary value representing the perceived value of the given piece
+        /// </summary>
+        /// <param name="piece">Piece to get the value of</param>
+        /// <returns>Value of the piece</returns>
+        public int getPieceValue(int piece)
+        {
+            switch(piece)
+            {
+                case(1):
+                    return 16;
+                case(2):
+                    return 14;
+                case(3):
+                    return 12;
+                case(4):
+                    return 10;
+                case(5):
+                    return 9;
+                case(6):
+                    return 8;
+                case(7):
+                    return 7;
+                case(8):
+                    return 11;
+                case(9):
+                    return 5;
+                case(10):
+                    return 13;
+                case(11):
+                    return 2;
+                case(12):
+                    return 1000;
+                default:
+                    return 0;
+            }
         }
 
         /// <summary>

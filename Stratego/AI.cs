@@ -160,7 +160,6 @@ namespace Stratego
         {
             int defender = win.getPiece(move.newX, move.newY);
             int attacker = win.getPiece(move.origX, move.origY);
-            if (defender == 0) return true;
             int? attackVal = Piece.attack(attacker, defender);
             if (attackVal == null) return false;
 
@@ -177,10 +176,18 @@ namespace Stratego
             if (difficulty >= 2)
             {
                 // Try not to move right next to unknown enemy pieces
-                int nPiece = this.win.boardState[move.newX, move.newY - 1];
-                int ePiece = this.win.boardState[move.newX + 1, move.newY];
-                int sPiece = this.win.boardState[move.newX, move.newY + 1];
-                int wPiece = this.win.boardState[move.newX - 1, move.newY];
+                int nPiece = 0;
+                int ePiece = 0;
+                int sPiece = 0;
+                int wPiece = 0;
+                if(move.newY != 0)
+                    nPiece = this.win.getPiece(move.newX, move.newY - 1);
+                if(move.newX != this.boardX - 1)
+                    ePiece = this.win.getPiece(move.newX + 1, move.newY);
+                if(move.newY != this.boardY - 1)
+                    sPiece = this.win.getPiece(move.newX, move.newY + 1);
+                if(move.newX != 0)
+                    wPiece = this.win.getPiece(move.newX - 1, move.newY);
 
                 // Reduce priority for each of these that is an unknown (unknown part is unimplemented) enemy
                 if (this.difficulty != 5)
@@ -198,11 +205,17 @@ namespace Stratego
                         return true;
                     }
 
-                    if (attackVal == attacker)
+                    if (attackVal == attacker && isEnemyPiece(defender))
                     {
                         // If the AI is going to come out on top, raise priority
                         // by the perceived value of the piece to be executed
                         move.priority += getPieceValue(defender);
+                    }
+                    else
+                    {
+                        // The AI is going to die, and this move is a terrible decision!
+                        move.priority -= 50;
+                        return true;
                     }
 
                     // Now we can see whether or not the opponent will win if they
@@ -215,15 +228,15 @@ namespace Stratego
                     if (nResult != nPiece && eResult != ePiece && sResult != sPiece && wResult != wPiece)
                     {
                         // If this piece will be safe, raise the priority a little bit to encourage safe movement
-                        move.priority += 2;
+                        move.priority += 1;
                         if (isEnemyPiece(nPiece))
-                            move.priority += 4;
+                            move.priority += 3;
                         if (isEnemyPiece(ePiece))
-                            move.priority += 4;
+                            move.priority += 3;
                         if (isEnemyPiece(sPiece))
-                            move.priority += 4;
+                            move.priority += 3;
                         if (isEnemyPiece(wPiece))
-                            move.priority += 4;
+                            move.priority += 3;
                     }
                     else
                         // This piece will be in danger, so lower the priority

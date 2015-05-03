@@ -242,7 +242,7 @@ namespace Stratego
         /// <returns>True if the piece is an enemy, false if it is not</returns>
         public bool isEnemyPiece(int piece)
         {
-            return false;
+            return true;
         }
 
         /// <summary>

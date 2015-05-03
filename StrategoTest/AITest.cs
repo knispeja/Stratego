@@ -216,6 +216,8 @@ namespace StrategoTest
         [TestCase(1, 1, false)]
         [TestCase(1, 5, false)]
         [TestCase(-1, -5, false)]
+        [TestCase(-1, 42, false)]
+        [TestCase(1, 42, false)]
         // Tests that AI.isEnemyPiece() works as expected
         public void TestIsEnemyPiece(int team, int piece, bool expected)
         {

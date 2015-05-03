@@ -166,12 +166,16 @@ namespace Stratego
             // ---------- Update this move's priority -----------
 
             if (!(move.newY < move.origY))
+            {
                 // Prioritize downward movement, side-to-side is fine
                 move.priority++;
+            }
 
             if (difficulty == 0)
+            {
                 // Just choose moves randomly, don't change priority
                 return true;
+            }
 
             if (difficulty >= 2)
             {
@@ -196,6 +200,7 @@ namespace Stratego
                 if (this.difficulty != 5)
                 {
                     // Check for unknowns
+
                 }
                 else
                 {
@@ -208,11 +213,20 @@ namespace Stratego
                         return true;
                     }
 
-                    if (attackVal == attacker && isEnemyPiece(defender))
+                    if (attackVal == attacker)
                     {
-                        // If the AI is going to come out on top, raise priority
-                        // by the perceived value of the piece to be executed
-                        move.priority += getPieceValue(defender);
+                        if (isEnemyPiece(defender))
+                        {
+                            // If the AI is going to come out on top, raise priority
+                            // by the perceived value of the piece to be executed
+                            move.priority += getPieceValue(defender);
+                        }
+                        else
+                        {
+                            // This is just a normal, empty space we're trying to move into. 
+                            // Probably don't do anything here?
+                        }
+
                     }
                     else
                     {
@@ -227,6 +241,10 @@ namespace Stratego
                     int? eResult = Piece.attack(ePiece, attacker);
                     int? sResult = Piece.attack(sPiece, attacker);
                     int? wResult = Piece.attack(wPiece, attacker);
+                    if (nPiece == 11) nResult = attacker;
+                    if (ePiece == 11) eResult = attacker;
+                    if (sPiece == 11) sResult = attacker;
+                    if (wPiece == 11) wResult = attacker;
 
                     if (nResult != nPiece && eResult != ePiece && sResult != sPiece && wResult != wPiece)
                     {
@@ -242,9 +260,11 @@ namespace Stratego
                             move.priority += 3;
                     }
                     else
+                    {
                         // This piece will be in danger, so lower the priority
                         // by the value of the potentially lost piece
                         move.priority -= getPieceValue(attacker);
+                    }
                 }
             }
 
@@ -259,7 +279,13 @@ namespace Stratego
         public bool isEnemyPiece(int piece)
         {
             if (piece == 42 || piece == 0) return false;
+
             return Math.Sign(piece) != this.team;
+        }
+
+        public bool isFriendlyPiece(int piece)
+        {
+            return false;
         }
 
         /// <summary>

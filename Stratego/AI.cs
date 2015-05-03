@@ -189,6 +189,9 @@ namespace Stratego
                 if(move.newX != 0)
                     wPiece = this.win.getPiece(move.newX - 1, move.newY);
 
+                // If pieces nearby are friendly, up the priority
+                // When a piece is currently in danger, move it away
+
                 // Reduce priority for each of these that is an unknown (unknown part is unimplemented) enemy
                 if (this.difficulty != 5)
                 {
@@ -255,7 +258,6 @@ namespace Stratego
         /// <returns>True if the piece is an enemy, false if it is not</returns>
         public bool isEnemyPiece(int piece)
         {
-            return true;
         }
 
         /// <summary>

@@ -201,7 +201,7 @@ namespace StrategoTest
             AI ai = new AI(win, team);
             System.Collections.Generic.List<AI.Move> moves = ai.generateValidMoves();
             moves[0] = new AI.Move(0, 0, 1, 0);
-            moves[0].priority = 1;
+            moves[0].priority = 100000;
             ai.executeHighestPriorityMove(moves);
             Assert.AreEqual(0, win.boardState[0, 0]);
             Assert.AreEqual(5 * team, win.boardState[1, 0]);

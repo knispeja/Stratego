@@ -168,7 +168,7 @@ namespace Stratego
             if (!(move.newY < move.origY))
             {
                 // Prioritize downward movement, side-to-side is fine
-                move.priority++;
+                move.priority+=2;
             }
 
             if (difficulty == 0)
@@ -194,7 +194,17 @@ namespace Stratego
                     wPiece = this.win.getPiece(move.newX - 1, move.newY);
 
                 // If pieces nearby are friendly, up the priority
-                // When a piece is currently in danger, move it away
+                if (isFriendlyPiece(nPiece))
+                    move.priority++;
+                if (isFriendlyPiece(ePiece))
+                    move.priority++;
+                if (isFriendlyPiece(sPiece))
+                    move.priority++;
+                if (isFriendlyPiece(wPiece))
+                    move.priority++;
+
+
+                // When a piece is currently in danger, moving it away is a good plan
 
                 // Reduce priority for each of these that is an unknown (unknown part is unimplemented) enemy
                 if (this.difficulty != 5)
@@ -248,8 +258,7 @@ namespace Stratego
 
                     if (nResult != nPiece && eResult != ePiece && sResult != sPiece && wResult != wPiece)
                     {
-                        // If this piece will be safe, raise the priority a little bit to encourage safe movement
-                        move.priority += 1;
+                        // If this piece will be safe despite nearby enemy pieces, up the priority more
                         if (isEnemyPiece(nPiece))
                             move.priority += 3;
                         if (isEnemyPiece(ePiece))
@@ -305,27 +314,27 @@ namespace Stratego
             switch(piece)
             {
                 case(1):
-                    return 16;
+                    return 17;
                 case(2):
-                    return 14;
+                    return 15;
                 case(3):
-                    return 12;
-                case(4):
-                    return 10;
-                case(5):
-                    return 9;
-                case(6):
-                    return 8;
-                case(7):
-                    return 7;
-                case(8):
-                    return 11;
-                case(9):
-                    return 5;
-                case(10):
                     return 13;
+                case(4):
+                    return 11;
+                case(5):
+                    return 10;
+                case(6):
+                    return 9;
+                case(7):
+                    return 8;
+                case(8):
+                    return 13;
+                case(9):
+                    return 6;
+                case(10):
+                    return 14;
                 case(11):
-                    return 2;
+                    return 12;
                 case(12):
                     return 1000;
                 default:

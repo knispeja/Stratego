@@ -239,6 +239,10 @@ namespace StrategoTest
         [TestCase(1, -1, false)]
         [TestCase(1, -5, false)]
         [TestCase(-1, 5, false)]
+        [TestCase(-1, 42, false)]
+        [TestCase(1, 42, false)]
+        [TestCase(-1, 0, false)]
+        [TestCase(1, 0, false)]
         // Tests that AI.isFriendlyPiece() works as expected
         public void TestIsFriendlyPiece(int team, int piece, bool expected)
         {

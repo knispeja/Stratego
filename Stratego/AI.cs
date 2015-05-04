@@ -61,14 +61,42 @@ namespace Stratego
 
             // Put the flag in the back, protected by some bombs
             int flagX = rnd.Next(this.boardX-1);
-            int flagY = rnd.Next(1);
+            int flagY;
+            if (this.difficulty == 3) flagY = rnd.Next(1);
+            else if (this.difficulty >= 4) flagY = 0;
+            else flagY = rnd.Next(2);
             placePieceByTile(12 * this.team, flagX, flagY);
-            try {placePieceByTile(11 * this.team, flagX+1, flagY);} catch(ArgumentException) {}
-            try {placePieceByTile(11 * this.team, flagX-1, flagY);} catch(ArgumentException) {}
-            try {placePieceByTile(11 * this.team, flagX, flagY+1);} catch(ArgumentException) {}
-            try {placePieceByTile(11 * this.team, flagX, flagY-1);} catch(ArgumentException) {}
+            if (this.difficulty >= 2)
+            {
+                // We only surround the flag in bombs if the difficulty is sufficient
+                try { placePieceByTile(11 * this.team, flagX + 1, flagY); }
+                catch (ArgumentException) { }
+                try { placePieceByTile(11 * this.team, flagX - 1, flagY); }
+                catch (ArgumentException) { }
+                try { placePieceByTile(11 * this.team, flagX, flagY + 1); }
+                catch (ArgumentException) { }
+                try { placePieceByTile(11 * this.team, flagX, flagY - 1); }
+                catch (ArgumentException) { }
+            }
 
-            // Place some scouts clusters near the front
+            // Place fake bomb clusters around 7s (to kill the 8
+            // that will inevitably defuse the bombs), advanced technique
+            if (this.difficulty >= 4)
+            {
+                flagX = rnd.Next(this.boardX - 1);
+                flagY = rnd.Next(2);
+                placePieceByTile(7 * this.team, flagX, flagY);
+                try { placePieceByTile(11 * this.team, flagX + 1, flagY); }
+                catch (ArgumentException) { }
+                try { placePieceByTile(11 * this.team, flagX - 1, flagY); }
+                catch (ArgumentException) { }
+                try { placePieceByTile(11 * this.team, flagX, flagY + 1); }
+                catch (ArgumentException) { }
+                try { placePieceByTile(11 * this.team, flagX, flagY - 1); }
+                catch (ArgumentException) { }
+            }
+
+            // Place some scout clusters near the front
             for (int i = 0; i < win.defaults[9]; i++ )
             {
                 x = rnd.Next(this.boardX-1);
@@ -94,6 +122,8 @@ namespace Stratego
                 }
 
                 // Place them in order when that inevitably fails
+                x = 0;
+                y = 0;
                 while (win.getPiecesLeft(piece) != 0)
                 {
                     placePieceByTile(piece * this.team, x, y);
@@ -239,6 +269,8 @@ namespace Stratego
 
 
                 // When a piece is currently in danger, moving it away is a good plan
+                // What if a piece is "protected" by another friendly piece?
+                // Should we implement pathing to direct pieces to faraway locations?
 
                 // Reduce priority for each of these that is an unknown (unknown part is unimplemented) enemy
                 if (this.difficulty != 5)
@@ -293,14 +325,14 @@ namespace Stratego
                     if (nResult != nPiece && eResult != ePiece && sResult != sPiece && wResult != wPiece)
                     {
                         // If this piece will be safe despite nearby enemy pieces, up the priority more
-                        if (isEnemyPiece(nPiece))
-                            move.priority += 3;
-                        if (isEnemyPiece(ePiece))
-                            move.priority += 3;
-                        if (isEnemyPiece(sPiece))
-                            move.priority += 3;
-                        if (isEnemyPiece(wPiece))
-                            move.priority += 3;
+                        if (isEnemyPiece(nPiece) && (nPiece != 11 || attacker == 8))
+                            move.priority += getPieceValue(nPiece)/4;
+                        if (isEnemyPiece(ePiece) && (ePiece != 11 || attacker == 8))
+                            move.priority += getPieceValue(ePiece)/4;
+                        if (isEnemyPiece(sPiece) && (sPiece != 11 || attacker == 8))
+                            move.priority += getPieceValue(sPiece)/4;
+                        if (isEnemyPiece(wPiece) && (wPiece != 11 || attacker == 8))
+                            move.priority += getPieceValue(wPiece)/4;
                     }
                     else
                     {

@@ -58,13 +58,47 @@ namespace Stratego
         {
             int x = 0;
             int y = 0;
-            for (int piece = 1; piece < win.defaults.Length; piece++)
+
+            // Put the flag in the back, protected by some bombs
+            int flagX = rnd.Next(this.boardX-1);
+            int flagY = rnd.Next(1);
+            placePieceByTile(12 * this.team, flagX, flagY);
+            try {placePieceByTile(11 * this.team, flagX+1, flagY);} catch(ArgumentException) {}
+            try {placePieceByTile(11 * this.team, flagX-1, flagY);} catch(ArgumentException) {}
+            try {placePieceByTile(11 * this.team, flagX, flagY+1);} catch(ArgumentException) {}
+            try {placePieceByTile(11 * this.team, flagX, flagY-1);} catch(ArgumentException) {}
+
+            // Place some scouts clusters near the front
+            for (int i = 0; i < win.defaults[9]; i++ )
             {
+                x = rnd.Next(this.boardX-1);
+                y = rnd.Next(1)+2;
+                placePieceByTile(9 * this.team, x, y);
+            }
+
+            // Scatter miners, but don't put them at the front
+            for (int i = 0; i < win.defaults[8]; i++)
+            {
+                x = rnd.Next(this.boardX-1);
+                y = rnd.Next(2);
+                placePieceByTile(8 * this.team, x, y);
+            }
+
+            // Place any remaining pieces
+            for (int piece = win.defaults.Length-1; piece > 0; piece--)
+            {
+                // Try to scatter them at first
+                for (int i = 0; i < win.getPiecesLeft(piece); i++ )
+                {
+                    placePieceByTile(piece, rnd.Next(this.boardX - 1), rnd.Next(this.boardY - 1));
+                }
+
+                // Place them in order when that inevitably fails
                 while (win.getPiecesLeft(piece) != 0)
                 {
-                    placePieceByTile(piece*this.team, x, y);
+                    placePieceByTile(piece * this.team, x, y);
                     x++;
-                    if(x >= this.boardX)
+                    if (x >= this.boardX)
                     {
                         x = 0;
                         y++;

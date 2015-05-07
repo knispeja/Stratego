@@ -29,9 +29,10 @@ namespace Stratego
         int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
         public bool preGameActive { get; set; }   // Whether or not the pre game has begun
         public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
-        public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selceted in the array
+        public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selected in the array
         public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
         public Boolean isSinglePlayer { get; set; }         //Whether player 2 is an AI or not
+        public Point lastFought { get; set; }             //Coordinates of the last piece to win a battle
 
         public AI ai;
 
@@ -814,10 +815,12 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            Console.WriteLine("Key\n");
             if(this.turn != 0 && !this.preGameActive)
             {
                 KeysConverter kc = new KeysConverter();
                 string keyChar = kc.ConvertToString(e.KeyCode);
+                Console.WriteLine("Escape\n");
                 if (e.KeyCode == Keys.Escape)
                 {
                     this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;

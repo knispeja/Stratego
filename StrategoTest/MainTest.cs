@@ -936,6 +936,15 @@ namespace StrategoTest
             reader.Close();
         }
 
+        [Test()]
+        //Tests that game initializes with the lastFought at the point -1, -1
+        public void TestThatLastFoughtInitializes()
+        {
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            Assert.AreEqual(-1, game.lastFought.X);
+            Assert.AreEqual(-1, game.lastFought.Y);
+        }
+
         //[TestCase(-1, 10, 800, 25, false)]
         //public void TestGetPieceMoves(int piece, int x, int y, bool expectedResult)
         //{

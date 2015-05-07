@@ -945,6 +945,28 @@ namespace StrategoTest
             Assert.AreEqual(-1, game.lastFought.Y);
         }
 
+        [Test()]
+        //Tests that moving a piece to attack another changes lastFought
+        public void TestThatMovePieceChangesLastFought()
+        {
+            int[,] gameboard = new int[10, 10];
+            gameboard[5, 5] = 3;
+            gameboard[6, 5] = -7;
+            gameboard[7, 7] = -3;
+            gameboard[7 , 6] = 7;
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.turn = -1;
+            game.SelectPiece(600, 500);
+            game.MovePiece(500, 500);
+            Assert.AreEqual(new Point(5, 5), game.lastFought);
+
+            game.SelectPiece(700, 600);
+            game.MovePiece(700, 700);
+            Assert.AreEqual(new Point(7,7), game.lastFought);
+
+           
+        }
+
         //[TestCase(-1, 10, 800, 25, false)]
         //public void TestGetPieceMoves(int piece, int x, int y, bool expectedResult)
         //{

@@ -56,6 +56,7 @@ namespace Stratego
             this.turn = 0;
             this.preGameActive = false;
             this.isSinglePlayer = false;
+            this.lastFought = new Point(-1, -1);
             this.LoadButton.Click +=LoadButton_Click;  // Why do we have these two lines instead of just setting the
             this.SaveButton.Click +=SaveButton_Click;  // property using the GUI??
             t.Start();
@@ -84,6 +85,7 @@ namespace Stratego
             this.placements = (int[]) this.defaults.Clone();
             this.preGameActive = false;
             this.isSinglePlayer = false;
+            this.lastFought = new Point(-1, -1);
 
             this.ai = new AI(this, -1);
         }

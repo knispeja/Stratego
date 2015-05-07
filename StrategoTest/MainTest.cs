@@ -935,5 +935,14 @@ namespace StrategoTest
             Assert.AreEqual(gameBoard, game.boardState);
             reader.Close();
         }
+
+        //[TestCase(-1, 10, 800, 25, false)]
+        //public void TestGetPieceMoves(int piece, int x, int y, bool expectedResult)
+        //{
+        //    StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+        //    game.turn = initialTurn;
+        //    game.preGameActive = true;
+        //    Assert.AreEqual(expectedResult, game.placePiece(piece, x, y));
+        //}
     }
 }

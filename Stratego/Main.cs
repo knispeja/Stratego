@@ -910,5 +910,10 @@ namespace Stratego
             this.isSinglePlayer = true;
             StartButton_Click(sender, e);
         }
+
+        public int[,] GetPieceMoves(int pieceX, int pieceY)
+        {
+            return null;
+        }
     }
 }

@@ -1630,6 +1630,7 @@ namespace StrategoTest
             game.nextTurn();
             Assert.IsTrue(game.loadSetUp(reader));
             Assert.AreEqual(expected, game.boardState);
+            Assert.AreEqual(new int[10],game.placements);
         }
     }
 

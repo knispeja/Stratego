@@ -1609,7 +1609,29 @@ namespace StrategoTest
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());
         }
+
+        [Test()]
+        public void TestLoadSetUp()
+        {
+            String input = "9 9 9 9 9 9 8 8 8 8\r\n8 7 7 7 7 6 6 6 6 5\r\n5 5 5 4 4 4 3 3 1 2\r\n10 11 11 11 11 11 11 12 9 9\r\n";
+            StringReader reader = new StringReader(input);
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            int[,] expected =new int[,]{{0,0,0,0,0,0,9,8,5,10},
+                                        {0,0,0,0,0,0,9,7,5,11},
+                                        {0,0,0,0,0,0,9,7,5,11},
+                                        {0,0,0,0,0,0,9,7,4,11},
+                                        {0,0,0,0,0,0,9,7,4,11},
+                                        {0,0,0,0,0,0,9,6,4,11},
+                                        {0,0,0,0,0,0,8,6,3,11},
+                                        {0,0,0,0,0,0,8,6,3,12},
+                                        {0,0,0,0,0,0,8,6,1,9},
+                                        {0,0,0,0,0,0,8,5,2,9}};
+
+            game.nextTurn();
+            Assert.IsTrue(game.loadSetUp(reader));
+            Assert.AreEqual(expected, game.boardState);
+        }
     }
 
-
+        
 }

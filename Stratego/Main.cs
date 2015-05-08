@@ -954,19 +954,29 @@ namespace Stratego
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
+            if(boardState[Y, X] == 9)
             {
-                moveArray = new int[,] { 
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0} };
+                for (int yD = Y + 1; yD < boardState.GetLength(0) && boardState[yD, X] == 0; yD++)
+                    moveArray[yD, X] = 1;
+                for (int yU = Y - 1; yU >= 0 && boardState[yU, X] == 0; yU--)
+                    moveArray[yU, X] = 1;
+                for (int xR = X + 1; xR < boardState.GetLength(1) && boardState[Y, xR] == 0; xR++)
+                    moveArray[Y, xR] = 1;
+                for (int xL = X - 1; xL >= 0 && boardState[Y, xL] == 0; xL--)
+                    moveArray[Y, xL] = 1;
             }
+            if(Y > 0)
+                if ((Math.Sign(boardState[Y - 1, X]) != Math.Sign(boardState[Y, X])) && boardState[Y - 1, X] != 42)
+                    moveArray[Y - 1, X] = 1;
+            if (Y < boardState.GetLength(0))
+                if ((Math.Sign(boardState[Y + 1, X]) != Math.Sign(boardState[Y, X])) && boardState[Y + 1, X] != 42)
+                    moveArray[Y + 1, X] = 1;
+            if (X < boardState.GetLength(1))
+                if ((Math.Sign(boardState[Y, X + 1]) != Math.Sign(boardState[Y, X])) && boardState[Y, X + 1] != 42)
+                    moveArray[Y, X + 1] = 1;
+            if(X > 0)
+                if ((Math.Sign(boardState[Y, X - 1]) != Math.Sign(boardState[Y, X])) && boardState[Y, X - 1] != 42)
+                    moveArray[Y, X - 1] = 1;
             return moveArray;
             //for(int yD = Y +)
         }

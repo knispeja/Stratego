@@ -806,7 +806,7 @@ namespace Stratego
         public bool saveSetUp(TextWriter writer)
         {
             string buffer = "";
-
+            if (!preGameActive) return false;
             if (turn > 0)
             {
                 for (int i = 6; i < 10; i++)

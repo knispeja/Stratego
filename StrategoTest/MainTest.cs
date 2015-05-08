@@ -1554,6 +1554,61 @@ namespace StrategoTest
             Assert.AreEqual("", writer.ToString());
 
         }
+
+        [Test()]
+        public void TestThatSaveSetUpOnlyWorksForStandardMap()
+        {
+            int[,] gameBoard = new int[11, 11];
+            for (int i = 0; i < 11; i++)
+            {
+                gameBoard[0, i] = 42;
+                gameBoard[1, i] = 0;
+                gameBoard[2, i] = 0;
+                gameBoard[3, i] = 1;
+                gameBoard[4, i] = 1;
+                gameBoard[5, i] = 9;
+                gameBoard[6, i] = 8;
+                gameBoard[7, i] = 3;
+                gameBoard[8, i] = 4;
+                gameBoard[9, i] = 2;
+                gameBoard[10, i] = 9;
+            }
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
+            StringWriter writer = new StringWriter();
+
+            game.nextTurn();
+            Assert.IsFalse(game.saveSetUp(writer));
+            Assert.AreEqual("", writer.ToString());
+        }
+
+        [Test()]
+        public void TestThatSaveGameWorksForNonstandardSize()
+        {
+            StringWriter writer = new StringWriter();
+            string result = "1 0\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n";
+            int[,] gameBoard = new int[11, 11];
+            for (int i = 0; i < 11; i++)
+            {
+                gameBoard[0, i] = 42;
+                gameBoard[1, i] = 0;
+                gameBoard[2, i] = 0;
+                gameBoard[3, i] = 1;
+                gameBoard[4, i] = 1;
+                gameBoard[5, i] = 9;
+                gameBoard[6, i] = 8;
+                gameBoard[7, i] = 3;
+                gameBoard[8, i] = 4;
+                gameBoard[9, i] = 2;
+                gameBoard[10, i] = 9;
+            }
+
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
+
+            game.turn = 1;
+
+            Assert.IsTrue(game.saveGame(writer));
+            Assert.AreEqual(result, writer.ToString());
+        }
     }
 
 

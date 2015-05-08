@@ -1163,7 +1163,7 @@ namespace StrategoTest
         public void TestGetPieceMovesFourDirectionsNineWater()
         {
             int piece = 9;
-            int x = 5;
+            int x = 6;
             int y = 1;
             int[,] moveArray = new int[,] { 
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -1188,7 +1188,8 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            Assert.AreEqual(moveArray, game.GetPieceMoves(x, y));
+            int[,] expected = game.GetPieceMoves(x, y);
+            Assert.AreEqual(moveArray, expected);
 
         }
     }

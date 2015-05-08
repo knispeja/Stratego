@@ -683,8 +683,12 @@ namespace Stratego
                 return false;
             if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) == 0 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) == 0)
                 return false;
+            int defender =this.boardState[x / scaleX, y / scaleY];
             this.boardState[x / scaleX, y / scaleY] = Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y], this.boardState[x / scaleX, y / scaleY]).Value;
-            this.lastFought = new Point(x / scaleX, y / scaleY);
+            if(defender==0)
+                this.lastFought = new Point(-1, -1);
+            else
+                this.lastFought = new Point(x / scaleX, y / scaleY);
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
             this.nextTurn();
             return true;

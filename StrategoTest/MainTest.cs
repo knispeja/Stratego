@@ -1006,6 +1006,27 @@ namespace StrategoTest
 
         }
 
+        [Test()]
+        //Tests that attacking a piece of the same number resets lastFought (because both were killed)
+        public void TestThatTiesResetLastFought()
+        {
+            int[,] gameboard = new int[10, 10];
+            gameboard[5, 5] = -3;
+            gameboard[6, 5] = -7;
+            gameboard[7, 6] = 7;
+            gameboard[7, 7] = -7;
+            StrategoWin game = new StrategoWin(1000, 1000, gameboard);
+            game.turn = -1;
+            game.SelectPiece(600, 500);
+            game.MovePiece(500, 500);
+
+            game.turn = 1;
+            game.SelectPiece(700, 600);
+            game.MovePiece(700, 700);
+            Assert.AreEqual(new Point(-1, -1), game.lastFought);
+
+        }
+
         //[TestCase(-1, 10, 800, 25, false)]
         //public void TestGetPieceMoves(int piece, int x, int y, bool expectedResult)
         //{

@@ -42,18 +42,23 @@ namespace Stratego
             this.boardY = this.win.boardState.GetLength(1);
         }
 
+        public void takeTurn()
+        {
+            takeTurn(win.boardState);
+        }
+
         /// <summary>
         /// Puts together most of the AI's functions and takes the AI's turn
         /// </summary>
-        public void takeTurn()
+        public void takeTurn(int[,] boardState)
         {
             if (win.preGameActive)
                 placePieces();
             else
             {
-                List<Move> moves = generateValidMoves();
-                foreach (Move move in moves) evaluateMove(move);
-                executeHighestPriorityMove(moves);
+                List<Move> moves = generateValidMoves(boardState);
+                foreach (Move move in moves) evaluateMove(move, boardState);
+                executeHighestPriorityMove(moves, boardState);
             }
         }
 
@@ -166,39 +171,39 @@ namespace Stratego
             return win.placePiece(piece, x, y);
         }
 
+        public void executeMove(Move move)
+        {
+            executeMove(move, win.boardState);
+        }
+
         /// <summary>
         /// Converts x and y tiles to x and y coordinates and executes the move
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void executeMove(Move move)
+        public void executeMove(Move move, int[,] boardState)
         {
-            // Convert tiles to coordinates
-            //int scaleX = win.panelWidth / this.boardX;
-            //int scaleY = win.panelHeight / this.boardY;
-            //int ox = move.origX * scaleX;
-            //int oy = move.origY * scaleY;
-            //int nx = move.newX * scaleX;
-            //int ny = move.newY * scaleY;
-
-            // Select and move the piece
-            //win.SelectPiece(ox, oy);
-            //win.MovePiece(nx, ny);
-
-            int piece = win.getPiece(move.origX, move.origY);
-            win.boardState[move.origX, move.origY] = 0;
-            int? attackVal = Piece.attack(piece, win.getPiece(move.newX, move.newY));
+            int piece = boardState[move.origX, move.origY];
+            boardState[move.origX, move.origY] = 0;
+            int? attackVal = Piece.attack(piece, boardState[move.newX, move.newY]);
             if(attackVal == null)
                 throw new Exception();
-            win.boardState[move.newX, move.newY] = (int) attackVal;
-            win.nextTurn();
+            boardState[move.newX, move.newY] = (int) attackVal;
+            
+            if(this.recursionLevel == 0)
+                win.nextTurn();
+        }
+
+        public List<Move> generateValidMoves()
+        {
+            return generateValidMoves(win.boardState);
         }
 
         /// <summary>
         /// Generate a list of all valid moves
         /// </summary>
         /// <returns>A list of moves</returns>
-        public List<Move> generateValidMoves()
+        public List<Move> generateValidMoves(int[,] boardState)
         {
             List<Move> moves = new List<Move>();
 
@@ -206,10 +211,10 @@ namespace Stratego
             {
                 for(int y1 = 0; y1 < this.boardY; y1++)
                 {
-                    int piece = win.getPiece(x1, y1);
+                    int piece = boardState[x1, y1];
                     if (isFriendlyPiece(piece))
                     {
-                        int[,] validPlaces = this.win.GetPieceMoves(x1, y1);
+                        int[,] validPlaces = this.win.GetPieceMoves(x1, y1, boardState);
                         for (int x2 = 0; x2 < this.boardX; x2++)
                         {
                             for (int y2 = 0; y2 < this.boardY; y2++)
@@ -271,8 +276,8 @@ namespace Stratego
 
             this.recursionLevel++;
 
-            // Back up the board state
-            int[,] backupBState = (int[,]) win.boardState.Clone();
+            // Create a fake board state to use for simulating turns
+            int[,] boardState = (int[,]) win.boardState.Clone();
             int backupTeam = this.team;
 
             // Evaluate our current board "value"
@@ -282,7 +287,7 @@ namespace Stratego
             {
                 for(int y=0; y<this.boardY; y++)
                 {
-                    int piece = win.getPiece(x, y);
+                    int piece = boardState[x,y];
                     if(isFriendlyPiece(piece))
                         friendlyPieces++;
                     else if(isEnemyPiece(piece))
@@ -291,16 +296,14 @@ namespace Stratego
             }
 
             // Execute the move
-            win.isSinglePlayer = false;
-            //win.testing = true;
-            executeMove(move);
+            executeMove(move, boardState);
 
             // Simulate several turns into the future
             int i = 0;
             while(i < MAX_TURNS_FORWARD)
             {
                 this.team *= -1;
-                takeTurn();
+                takeTurn(boardState);
                 i++;
             }
             
@@ -311,7 +314,7 @@ namespace Stratego
             {
                 for (int y = 0; y < this.boardY; y++)
                 {
-                    int piece = win.getPiece(x, y);
+                    int piece = boardState[x,y];
                     if (isFriendlyPiece(piece))
                         friendlyPiecesNew++;
                     else if (isEnemyPiece(piece))
@@ -325,11 +328,12 @@ namespace Stratego
             
             // Reset the game to its previous state
             this.team = backupTeam;
-            win.turn = this.team;
-            win.boardState = backupBState;
-            win.isSinglePlayer = true;
-            //win.testing = false;
             this.recursionLevel = 0;
+        }
+
+        public void evaluateMove(Move move)
+        {
+            evaluateMove(move, win.boardState);
         }
 
         /// <summary>
@@ -337,10 +341,10 @@ namespace Stratego
         /// </summary>
         /// <param name="move">The move to be evaluated</param>
         /// <returns>Whether or not the move is valid</returns>
-        public void evaluateMove(Move move)
+        public void evaluateMove(Move move, int[,] boardState)
         {
-            int defender = win.getPiece(move.newX, move.newY);
-            int attacker = win.getPiece(move.origX, move.origY);
+            int defender = boardState[move.newX, move.newY];
+            int attacker = boardState[move.origX, move.origY];
             int? attackVal = Piece.attack(attacker, defender);
             //if (attackVal == null) return false;
 
@@ -367,13 +371,13 @@ namespace Stratego
                 int sPiece = 0;
                 int wPiece = 0;
                 if (move.origY != 0)
-                    nPiece = this.win.getPiece(move.origX, move.origY - 1);
+                    nPiece = boardState[move.origX, move.origY - 1];
                 if (move.origX != this.boardX - 1)
-                    ePiece = this.win.getPiece(move.origX + 1, move.origY);
+                    ePiece = boardState[move.origX + 1, move.origY];
                 if (move.origY != this.boardY - 1)
-                    sPiece = this.win.getPiece(move.origX, move.origY + 1);
+                    sPiece = boardState[move.origX, move.origY + 1];
                 if (move.origX != 0)
-                    wPiece = this.win.getPiece(move.origX - 1, move.origY);
+                    wPiece = boardState[move.origX - 1, move.origY];
                 if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
                 if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
                 if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
@@ -385,13 +389,13 @@ namespace Stratego
                 sPiece = 0;
                 wPiece = 0;
                 if(move.newY != 0)
-                    nPiece = this.win.getPiece(move.newX, move.newY - 1);
+                    nPiece = boardState[move.newX, move.newY - 1];
                 if(move.newX != this.boardX - 1)
-                    ePiece = this.win.getPiece(move.newX + 1, move.newY);
+                    ePiece = boardState[move.newX + 1, move.newY];
                 if(move.newY != this.boardY - 1)
-                    sPiece = this.win.getPiece(move.newX, move.newY + 1);
+                    sPiece = boardState[move.newX, move.newY + 1];
                 if(move.newX != 0)
-                    wPiece = this.win.getPiece(move.newX - 1, move.newY);
+                    wPiece = boardState[move.newX - 1, move.newY];
 
                 // If pieces nearby are friendly, up the priority
                 if (isFriendlyPiece(nPiece))
@@ -578,12 +582,17 @@ namespace Stratego
             }
         }
 
+        public void executeHighestPriorityMove(List<Move> moves)
+        {
+            executeHighestPriorityMove(moves, win.boardState);
+        }
+
         /// <summary>
         /// Executes the move with the highest priority out of a given list of moves.
         /// If several moves have the same priority, it chooses randomly.
         /// </summary>
         /// <param name="moves">The list of moves to choose from.</param>
-        public void executeHighestPriorityMove(List<Move> moves)
+        public void executeHighestPriorityMove(List<Move> moves, int[,] boardState)
         {
             List<Move> intermediateMoves = new List<Move>();
             List<Move> finalMoves = new List<Move>();
@@ -610,7 +619,7 @@ namespace Stratego
             }
 
             int r = rnd.Next(finalMoves.Count);
-            executeMove(finalMoves[r]);
+            executeMove(finalMoves[r], boardState);
         }
 
         /// <summary>

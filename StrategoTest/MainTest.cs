@@ -1512,10 +1512,17 @@ namespace StrategoTest
             StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
             StringWriter writer = new StringWriter();
             String expected = "42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
+            String expected2 = "2 4 3 8 9 1 1 0 0 42\r\n2 4 3 8 9 1 1 0 0 42\r\n2 4 3 8 9 1 1 0 0 42\r\n2 4 3 8 9 1 1 0 0 42\r\n";
 
             game.nextTurn();
             Assert.IsTrue(game.saveSetUp(writer));
             Assert.AreEqual(expected, writer.ToString());
+            game.nextTurn();
+            writer = new StringWriter();
+            Assert.IsTrue(game.saveSetUp(writer));
+            Assert.AreEqual(expected2, writer.ToString());
+            writer.Close();
+            
 
         }
     }

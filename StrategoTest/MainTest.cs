@@ -954,7 +954,7 @@ namespace StrategoTest
             gameboard[6, 5] = -7;
             gameboard[7, 7] = -3;
             gameboard[7 , 6] = 7;
-            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            StrategoWin game = new StrategoWin(1000, 1000, gameboard);
             game.turn = -1;
             game.SelectPiece(600, 500);
             game.MovePiece(500, 500);
@@ -963,8 +963,47 @@ namespace StrategoTest
             game.SelectPiece(700, 600);
             game.MovePiece(700, 700);
             Assert.AreEqual(new Point(7,7), game.lastFought);
-
            
+        }
+        [Test()]
+        //Tests that invalid moves don't change LastFought
+        public void TestThatInvalidMoveDoesNotChangeLastFought()
+        {
+            int[,] gameboard = new int[10, 10];
+            gameboard[5, 5] = -3;
+            gameboard[6, 5] = -7;
+            gameboard[7, 7] = 3;
+            gameboard[7, 6] = 7;
+            StrategoWin game = new StrategoWin(1000, 1000, gameboard);
+            game.turn = -1;
+            game.SelectPiece(600, 500);
+            game.MovePiece(500, 500);
+            Assert.AreEqual(new Point(-1, -1), game.lastFought);
+
+            game.turn = 1;
+            game.SelectPiece(700, 600);
+            game.MovePiece(700, 700);
+            Assert.AreEqual(new Point(-1, -1), game.lastFought);
+
+        }
+        [Test()]
+        //Tests that moving into empty spaces resets lastFought
+        public void TestThatMovementIntoEmptySpaceResetsLastFought()
+        {
+            int[,] gameboard = new int[10, 10];
+            gameboard[5, 5] = -3;
+            gameboard[6, 5] = -7;
+            gameboard[7, 6] = 7;
+            StrategoWin game = new StrategoWin(1000, 1000, gameboard);
+            game.turn = -1;
+            game.SelectPiece(600, 500);
+            game.MovePiece(500, 500);
+
+            game.turn = 1;
+            game.SelectPiece(700, 600);
+            game.MovePiece(700, 700);
+            Assert.AreEqual(new Point(-1, -1), game.lastFought);
+
         }
 
         //[TestCase(-1, 10, 800, 25, false)]

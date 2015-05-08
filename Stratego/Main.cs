@@ -980,7 +980,6 @@ namespace Stratego
                 if ((Math.Sign(boardState[Y, X - 1]) != Math.Sign(boardState[Y, X])) && boardState[Y, X - 1] != 42)
                     moveArray[Y, X - 1] = 1;
             return moveArray;
-            //for(int yD = Y +)
         }
     }
 }

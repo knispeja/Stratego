@@ -126,6 +126,8 @@ namespace Stratego
                     this.LoadButton.Visible = false;
                     this.SinglePlayerButton.Visible = false;
                     this.SidePanelOpenButton.Visible = true;
+                    this.lastFought = new Point(-1, -1);
+
                     foreach (var button in this.SidePanel.Controls.OfType<Button>())
                         if (button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
   
@@ -297,7 +299,7 @@ namespace Stratego
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55))/2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn > 0)
+                                    if (turn > 0 ||this.lastFought.Equals(new Point (x, y)))
                                     {
                                         Image imag = Properties.Resources.BlueScoutN;
                                         e.Graphics.DrawImage(imag, r);
@@ -313,11 +315,11 @@ namespace Stratego
                                 }
                                 else if (piece == -9)
                                 {
-                                    // Piece is a blue scout (displaying as image)
+                                    // Piece is a red scout (displaying as image)
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn < 0)
+                                    if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.RedScout;
                                         e.Graphics.DrawImage(imag, r);
@@ -333,11 +335,11 @@ namespace Stratego
                                 }
                                 else if (piece == 11)
                                 {
-                                    // Piece is a blue scout (displaying as image)
+                                    // Piece is a blue bomb (displaying as image)
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn > 0)
+                                    if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.BlueBomb;
                                         e.Graphics.DrawImage(imag, r);
@@ -353,11 +355,11 @@ namespace Stratego
                                 }
                                 else if (piece == -11)
                                 {
-                                    // Piece is a blue scout (displaying as image)
+                                    // Piece is a red bomb (displaying as image)
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn < 0)
+                                    if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.RedBomb;
                                         e.Graphics.DrawImage(imag, r);
@@ -373,11 +375,11 @@ namespace Stratego
                                 }
                                 else if (piece == 10)
                                 {
-                                    // Piece is a blue scout (displaying as image)
+                                    // Piece is a blue spy (displaying as image)
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn > 0)
+                                    if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.BlueSpy;
                                         e.Graphics.DrawImage(imag, r);
@@ -393,11 +395,11 @@ namespace Stratego
                                 }
                                 else if (piece == -10)
                                 {
-                                    // Piece is a blue scout (displaying as image)
+                                    // Piece is a red spy (displaying as image)
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn < 0)
+                                    if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.RedSpy;
                                         e.Graphics.DrawImage(imag, r);
@@ -413,11 +415,11 @@ namespace Stratego
                                 }
                                 else if (piece == 5)
                                 {
-                                    // Piece is a blue scout (displaying as image)
+                                    // Piece is a blue captain (displaying as image)
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn > 0)
+                                    if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.BlueCaptain;
                                         e.Graphics.DrawImage(imag, r);
@@ -433,11 +435,11 @@ namespace Stratego
                                 }
                                 else if (piece == -5)
                                 {
-                                    // Piece is a blue scout (displaying as image)
+                                    // Piece is a red captain (displaying as image)
                                     int scaleX = this.panelWidth / this.boardState.GetLength(0);
                                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn < 0)
+                                    if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.RedCaptain;
                                         e.Graphics.DrawImage(imag, r);
@@ -460,7 +462,7 @@ namespace Stratego
                                     g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
 
                                     // Draw the text (the name of the piece) onto the circle
-                                    if ((turn == -1 && piece < 0) || (turn == 1 && piece > 0))
+                                    if ((turn == -1 && piece < 0) || (turn == 1 && piece > 0) || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         string drawString = Piece.toString(piece);
                                         System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);

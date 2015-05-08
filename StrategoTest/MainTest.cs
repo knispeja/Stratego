@@ -991,7 +991,7 @@ namespace StrategoTest
         public void TestThatMovementIntoEmptySpaceResetsLastFought()
         {
             int[,] gameboard = new int[10, 10];
-            gameboard[5, 5] = -3;
+            gameboard[5, 5] = 3;
             gameboard[6, 5] = -7;
             gameboard[7, 6] = 7;
             StrategoWin game = new StrategoWin(1000, 1000, gameboard);

@@ -776,6 +776,7 @@ namespace Stratego
         /// <returns></returns> True if Successful
         public bool loadSetUp(TextReader reader)
         {
+            if (!preGameActive) return false;
             string[] lines = new string[4]; 
             string line = reader.ReadLine();
             lines[0] = line;

@@ -18,7 +18,10 @@ namespace Stratego
         private int boardX;
         private int boardY;
 
-        private static int MAX_RECURSION_DEPTH = 2;
+        private int recursionLevel = 0;
+        private static int MAX_RECURSION_DEPTH = 1;
+        private static int MAX_TURNS_FORWARD = 4;
+
         //private int targetPiece;
 
         /// <summary>
@@ -195,19 +198,26 @@ namespace Stratego
             {
                 for(int y1 = 0; y1 < this.boardY; y1++)
                 {
-                    int[,] validPlaces = this.win.GetPieceMoves(x1, y1);
-                    for (int x2 = 0; x2 < this.boardX; x2++)
+                    int piece = win.getPiece(x1, y1);
+                    if (isFriendlyPiece(piece))
                     {
-                        for (int y2 = 0; y2 < this.boardY; y2++)
+                        int[,] validPlaces = this.win.GetPieceMoves(x1, y1);
+                        for (int x2 = 0; x2 < this.boardX; x2++)
                         {
-                            if (validPlaces[x2, y2] == 1)
+                            for (int y2 = 0; y2 < this.boardY; y2++)
                             {
-                                moves.Add(new Move(x1, y1, x2, y2));
+                                if (validPlaces[x2, y2] == 1)
+                                {
+                                    moves.Add(new Move(x1, y1, x2, y2));
+                                    //Console.WriteLine("x1 " + x1 + ", y1 " + y1 + ", x2 " + x2 + ", y2 " + y2);
+                                }
                             }
                         }
                     }
                 }
             }
+
+            //Console.WriteLine(moves.Count);
 
             return moves;
 
@@ -242,13 +252,76 @@ namespace Stratego
         }
 
         /// <summary>
-        /// Evaluates 
+        /// Evaluates the priority of the move on long-term predictions
         /// </summary>
         /// <param name="move"></param>
         /// <param name="depth"></param>
-        public void evaluateMoveRecursive(Move move, int depth = 0)
+        public void evaluateMoveRecursive(Move move)
         {
+            if (this.recursionLevel >= MAX_RECURSION_DEPTH)
+                return;
 
+            this.recursionLevel++;
+
+            // Back up the board state
+            int[,] backupBState = (int[,]) win.boardState.Clone();
+            int backupTeam = this.team;
+
+            // Evaluate our current board "value"
+            int enemyPieces=0;
+            int friendlyPieces=0;
+            for(int x=0; x<this.boardX; x++)
+            {
+                for(int y=0; y<this.boardY; y++)
+                {
+                    int piece = win.getPiece(x, y);
+                    if(isFriendlyPiece(piece))
+                        friendlyPieces++;
+                    else if(isEnemyPiece(piece))
+                        enemyPieces++;
+                }
+            }
+
+            // Execute the move
+            win.isSinglePlayer = false;
+            //win.testing = true;
+            executeMove(move);
+
+            // Simulate several turns into the future
+            int i = 0;
+            while(i < MAX_TURNS_FORWARD)
+            {
+                this.team *= -1;
+                takeTurn();
+                i++;
+            }
+            
+            // Evaluate whether or not this move resulted in good things
+            int enemyPiecesNew = 0;
+            int friendlyPiecesNew = 0;
+            for (int x = 0; x < this.boardX; x++)
+            {
+                for (int y = 0; y < this.boardY; y++)
+                {
+                    int piece = win.getPiece(x, y);
+                    if (isFriendlyPiece(piece))
+                        friendlyPiecesNew++;
+                    else if (isEnemyPiece(piece))
+                        enemyPiecesNew++;
+                }
+            }
+            if (enemyPiecesNew < enemyPieces)
+                move.priority += (enemyPieces - enemyPiecesNew) * 3;
+            if (friendlyPiecesNew < friendlyPieces)
+                move.priority -= (friendlyPieces - friendlyPiecesNew) * 4;
+            
+            // Reset the game to its previous state
+            this.team = backupTeam;
+            win.turn = this.team;
+            win.boardState = backupBState;
+            win.isSinglePlayer = true;
+            //win.testing = false;
+            this.recursionLevel = 0;
         }
 
         /// <summary>
@@ -279,11 +352,30 @@ namespace Stratego
 
             if (difficulty >= 2)
             {
-                // Try not to move right next to unknown enemy pieces
+                // When a piece is currently in danger, moving it away is a good plan
+                // Basically, pieces next to enemy pieces take priority frequently
                 int nPiece = 0;
                 int ePiece = 0;
                 int sPiece = 0;
                 int wPiece = 0;
+                if (move.origY != 0)
+                    nPiece = this.win.getPiece(move.origX, move.origY - 1);
+                if (move.origX != this.boardX - 1)
+                    ePiece = this.win.getPiece(move.origX + 1, move.origY);
+                if (move.origY != this.boardY - 1)
+                    sPiece = this.win.getPiece(move.origX, move.origY + 1);
+                if (move.origX != 0)
+                    wPiece = this.win.getPiece(move.origX - 1, move.origY);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+
+                // Try not to move right next to unknown enemy pieces
+                nPiece = 0;
+                ePiece = 0;
+                sPiece = 0;
+                wPiece = 0;
                 if(move.newY != 0)
                     nPiece = this.win.getPiece(move.newX, move.newY - 1);
                 if(move.newX != this.boardX - 1)
@@ -302,11 +394,6 @@ namespace Stratego
                     move.priority++;
                 if (isFriendlyPiece(wPiece))
                     move.priority++;
-
-
-                // When a piece is currently in danger, moving it away is a good plan
-                // What if a piece is "protected" by another friendly piece?
-                // Should we implement pathing to direct pieces to faraway locations?
 
                 // Reduce priority for each of these that is an unknown (unknown part is unimplemented) enemy
                 if (this.difficulty != 5)
@@ -342,8 +429,10 @@ namespace Stratego
                     }
                     else
                     {
-                        // The AI is going to die, and this move is a terrible decision!
-                        move.priority -= 50;
+                        // The AI is going to die, and this move is a terrible decision 
+                        // unless this is an even trade, in which case everything is mostly okay
+                        if (attackVal != 0) move.priority -= 50;
+                        else move.priority++;
                         return;
                     }
 
@@ -372,11 +461,47 @@ namespace Stratego
                     }
                     else
                     {
+                        bool protectorPresent = false;
+                        int dangerousPiece = 0;
+
+                        // Check if this piece is protected by a friendly one
+                        if (nResult == nPiece) dangerousPiece = nPiece;
+                        if (eResult == ePiece) dangerousPiece = ePiece;
+                        if (sResult == sPiece) dangerousPiece = sPiece;
+                        if (wResult == wPiece) dangerousPiece = wPiece;
+
+                        if (isFriendlyPiece(nPiece))
+                            if (Piece.attack(nPiece, dangerousPiece) != dangerousPiece)
+                                protectorPresent = true;
+
+                        if (isFriendlyPiece(ePiece))
+                            if (Piece.attack(ePiece, dangerousPiece) != dangerousPiece)
+                                protectorPresent = true;
+
+                        if (isFriendlyPiece(sPiece))
+                            if (Piece.attack(sPiece, dangerousPiece) != dangerousPiece)
+                                protectorPresent = true;
+
+                        if (isFriendlyPiece(wPiece))
+                            if (Piece.attack(wPiece, dangerousPiece) != dangerousPiece)
+                                protectorPresent = true;
+
                         // This piece will be in danger, so lower the priority
                         // by the value of the potentially lost piece
-                        move.priority -= getPieceValue(attacker);
+                        if(!protectorPresent)
+                            move.priority -= getPieceValue(attacker);
                     }
                 }
+            }
+
+            if (difficulty >= 3 && move.priority >= 1)
+            {
+                evaluateMoveRecursive(move);
+            }
+            else if (move.priority < 1)
+            {
+                // Try to prioritize moves that were positive in the first place
+                move.priority -= 100;
             }
 
             return;

@@ -954,7 +954,7 @@ namespace Stratego
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            if((Math.Abs(boardState[Y, X]) == 11))
+            if ((Math.Abs(boardState[Y, X]) == 11) || (Math.Abs(boardState[Y, X]) == 12))
                 return moveArray;
             if(Math.Abs(boardState[Y, X]) == 9)
             {

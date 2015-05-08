@@ -808,9 +808,14 @@ namespace Stratego
             }
             else if(this.pieceIsSelected)
             {
-                this.MovePiece(e.X, e.Y);
                 int scaleX = this.panelWidth / this.boardState.GetLength(0);
                 int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                int[,] pieceMoves = this.GetPieceMoves(this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y);
+                for (int x = 0; x < this.boardState.GetLength(0); x++)
+                    for (int y = 0; y < this.boardState.GetLength(1); y++)
+                        if (pieceMoves[x, y] == 1)
+                            backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
+                this.MovePiece(e.X, e.Y);
                 //This makes it so it only repaints the rectangle where the piece is placed
                 Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
                 backPanel.Invalidate(r);
@@ -979,25 +984,25 @@ namespace Stratego
                 for (int yD = Y + 1; yD < boardState.GetLength(1) && ((Math.Sign(boardState[X, yD]) != Math.Sign(boardState[X, Y])) && boardState[X, yD] != 42); yD++)
                 {
                     moveArray[X, yD] = 1;
-                    if(Math.Sign(boardState[X, yD]) != Math.Sign(boardState[X, Y]))
+                    if ((Math.Sign(boardState[X, yD]) != Math.Sign(boardState[X, Y])) && (Math.Sign(boardState[X, yD]) != 0))
                         break;
                 }
                 for (int yU = Y - 1; yU >= 0 && ((Math.Sign(boardState[X, yU]) != Math.Sign(boardState[X, Y])) && boardState[X, yU] != 42); yU--)
                 {
                     moveArray[X, yU] = 1;
-                    if(Math.Sign(boardState[X, yU]) != Math.Sign(boardState[X, Y]))
+                    if ((Math.Sign(boardState[X, yU]) != Math.Sign(boardState[X, Y])) && (Math.Sign(boardState[X, yU]) != 0))
                         break;
                 }
                 for (int xR = X + 1; xR < boardState.GetLength(0) && ((Math.Sign(boardState[xR, Y]) != Math.Sign(boardState[X, Y])) && boardState[xR, Y] != 42); xR++)
                 {
                     moveArray[xR, Y] = 1;
-                    if (Math.Sign(boardState[xR, Y]) != Math.Sign(boardState[X, Y]))
+                    if ((Math.Sign(boardState[xR, Y]) != Math.Sign(boardState[X, Y])) && (Math.Sign(boardState[xR, Y]) != 0))
                         break;
                 }
                 for (int xL = X - 1; xL >= 0 && ((Math.Sign(boardState[xL, Y]) != Math.Sign(boardState[X, Y])) && boardState[xL, Y] != 42); xL--)
                 {
                     moveArray[xL, Y] = 1;
-                    if (Math.Sign(boardState[xL, Y]) != Math.Sign(boardState[X, Y]))
+                    if ((Math.Sign(boardState[xL, Y]) != Math.Sign(boardState[X, Y])) && (Math.Sign(boardState[xL, Y]) != 0))
                         break;
                 }
             }

@@ -735,7 +735,7 @@ namespace Stratego
         /// Loads a gamestate from the given reader 
         /// </summary>
         /// <param name="reader"></param>
-        /// <returns></returns>
+        /// <returns> True if successful </returns> 
         public bool loadGame(TextReader reader) 
         {
             string[] lines = new string[100]; //Make a Standard max size later
@@ -774,7 +774,7 @@ namespace Stratego
         /// Saves a gamestate into the string or file in the given writer
         /// </summary>
         /// <param name="writer"></param>
-        /// <returns></returns>
+        /// <returns> True if successful </returns> 
         public bool saveGame(TextWriter writer)
         {
             if ((this.turn == 0)||(this.preGameActive)) return false;
@@ -797,6 +797,26 @@ namespace Stratego
             }
   
             return true;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <returns></returns>
+        public bool saveSetUp(TextWriter writer)
+        {
+            string buffer = "";
+            for (int i = 6; i < 10; i++ )
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    buffer += boardState[j, i] + " ";
+                }
+                buffer += boardState[9, i];
+                writer.WriteLine(buffer);
+                buffer = "";
+            }
+                return true;
         }
         /// <summary>
         /// Receives clicks on the back panel and directs them to the game as needed

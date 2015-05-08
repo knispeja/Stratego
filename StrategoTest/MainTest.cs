@@ -1522,7 +1522,36 @@ namespace StrategoTest
             Assert.IsTrue(game.saveSetUp(writer));
             Assert.AreEqual(expected2, writer.ToString());
             writer.Close();
-            
+
+        }
+
+        [Test()]
+        public void TestThatSaveSetUpOnlyWorksDuringPregame()
+        {
+            int[,] gameBoard = new int[10, 10];
+            for (int i = 0; i < 10; i++)
+            {
+                gameBoard[0, i] = 42;
+                gameBoard[1, i] = 0;
+                gameBoard[2, i] = 0;
+                gameBoard[3, i] = 1;
+                gameBoard[4, i] = 1;
+                gameBoard[5, i] = 9;
+                gameBoard[6, i] = 8;
+                gameBoard[7, i] = 3;
+                gameBoard[8, i] = 4;
+                gameBoard[9, i] = 2;
+            }
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
+            StringWriter writer = new StringWriter();
+
+            Assert.IsFalse(game.saveSetUp(writer));
+            Assert.AreEqual("", writer.ToString());
+            game.nextTurn();
+            game.nextTurn();
+            game.nextTurn();
+            Assert.IsFalse(game.saveSetUp(writer));
+            Assert.AreEqual("", writer.ToString());
 
         }
     }

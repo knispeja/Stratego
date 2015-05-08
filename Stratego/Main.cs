@@ -1146,5 +1146,53 @@ namespace Stratego
             this.backPanel.Focus();
             this.backPanel.Invalidate();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void saveSetUpButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.RestoreDirectory = true;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Console.WriteLine("lsdjflksdjflsjdfl");
+                StreamWriter writer = new StreamWriter(dialog.FileName);
+                saveSetUp(writer);
+                writer.Close();
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loadSetUpButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            dialog.InitialDirectory = "c:\\";
+            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.RestoreDirectory = true;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                Stream file = null;
+                try
+                {
+                    if ((file = dialog.OpenFile()) != null)
+                    {
+                        loadSetUp(new StreamReader(file));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading file: " + ex.Message);
+                }
+            }
+        }
     }
 }

@@ -59,6 +59,8 @@
             this.place1Button = new System.Windows.Forms.Button();
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
+            this.saveSetUpButton = new System.Windows.Forms.Button();
+            this.loadSetUpButton = new System.Windows.Forms.Button();
             this.backPanel.SuspendLayout();
             this.EndGamePanel.SuspendLayout();
             this.SidePanel.SuspendLayout();
@@ -159,7 +161,7 @@
             // 
             this.EndGameTextBox.Location = new System.Drawing.Point(123, 36);
             this.EndGameTextBox.Name = "EndGameTextBox";
-            this.EndGameTextBox.Size = new System.Drawing.Size(229, 20);
+            this.EndGameTextBox.Size = new System.Drawing.Size(229, 22);
             this.EndGameTextBox.TabIndex = 0;
             // 
             // SinglePlayerButton
@@ -199,6 +201,8 @@
             // SidePanel
             // 
             this.SidePanel.BackColor = System.Drawing.Color.DimGray;
+            this.SidePanel.Controls.Add(this.loadSetUpButton);
+            this.SidePanel.Controls.Add(this.saveSetUpButton);
             this.SidePanel.Controls.Add(this.SaveButton);
             this.SidePanel.Controls.Add(this.donePlacingButton);
             this.SidePanel.Controls.Add(this.removeCheckBox);
@@ -216,7 +220,7 @@
             this.SidePanel.Controls.Add(this.place1Button);
             this.SidePanel.Location = new System.Drawing.Point(0, 29);
             this.SidePanel.Name = "SidePanel";
-            this.SidePanel.Size = new System.Drawing.Size(107, 652);
+            this.SidePanel.Size = new System.Drawing.Size(107, 709);
             this.SidePanel.TabIndex = 4;
             this.SidePanel.Visible = false;
             // 
@@ -243,9 +247,9 @@
             // removeCheckBox
             // 
             this.removeCheckBox.AutoSize = true;
-            this.removeCheckBox.Location = new System.Drawing.Point(12, 613);
+            this.removeCheckBox.Location = new System.Drawing.Point(12, 684);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
+            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;
@@ -403,6 +407,26 @@
             this.FireBox.TabStop = false;
             this.FireBox.Visible = false;
             // 
+            // saveSetUpButton
+            // 
+            this.saveSetUpButton.Location = new System.Drawing.Point(5, 600);
+            this.saveSetUpButton.Name = "saveSetUpButton";
+            this.saveSetUpButton.Size = new System.Drawing.Size(96, 36);
+            this.saveSetUpButton.TabIndex = 15;
+            this.saveSetUpButton.Text = "Save Set Up";
+            this.saveSetUpButton.UseVisualStyleBackColor = true;
+            this.saveSetUpButton.Click += new System.EventHandler(this.saveSetUpButton_Click);
+            // 
+            // loadSetUpButton
+            // 
+            this.loadSetUpButton.Location = new System.Drawing.Point(5, 642);
+            this.loadSetUpButton.Name = "loadSetUpButton";
+            this.loadSetUpButton.Size = new System.Drawing.Size(96, 36);
+            this.loadSetUpButton.TabIndex = 16;
+            this.loadSetUpButton.Text = "Load Set Up";
+            this.loadSetUpButton.UseVisualStyleBackColor = true;
+            this.loadSetUpButton.Click += new System.EventHandler(this.loadSetUpButton_Click);
+            // 
             // StrategoWin
             // 
             this.AcceptButton = this.StartButton;
@@ -461,6 +485,8 @@
         private System.Windows.Forms.Button EndGameExitButton;
         private System.Windows.Forms.Button PlayAgainButton;
         private System.Windows.Forms.TextBox EndGameTextBox;
+        private System.Windows.Forms.Button loadSetUpButton;
+        private System.Windows.Forms.Button saveSetUpButton;
     }
 }
 

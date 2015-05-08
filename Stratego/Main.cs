@@ -246,8 +246,8 @@ namespace Stratego
                 Pen pen = new Pen(Color.White, 1);
                 Graphics g = e.Graphics;
 
-                int num_cols = 10;
-                int num_rows = 10;
+                int num_cols = this.boardState.GetLength(1);
+                int num_rows = this.boardState.GetLength(0);
                 int col_inc = panelWidth / num_cols;
                 int row_inc = panelHeight / num_rows;
 
@@ -263,12 +263,26 @@ namespace Stratego
                     g.DrawLine(pen, 0, row_inc*j, panelWidth, row_inc*j);
                 }
 
+                int[,] pieceMoves = new int[num_rows, num_cols];
+                if (pieceIsSelected)
+                    pieceMoves = this.GetPieceMoves(this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y);
+
                 // Large loop which draws the necessary circles/images that represent pieces
                 int diameter = Math.Min(col_inc,row_inc);
                 int paddingX = (col_inc - diameter) / 2;
                 int paddingY = (row_inc - diameter) / 2;
                 for (int x = 0; x < this.boardState.GetLength(0); x++){
                     for(int y = 0; y < this.boardState.GetLength(1); y++){
+                        int scaleX = this.panelWidth / this.boardState.GetLength(0);
+                        int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                        //Draw grey background overlay to show the piece can move
+                        if(pieceMoves[y, x] == 1)
+                        {
+                            Console.WriteLine("PENILE BLEEDING");
+                            Rectangle r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
+                            pen.Color = Color.FromArgb(255, 130, 130, 130);
+                            g.DrawRectangle(pen, r);
+                        }
                         int piece = this.boardState[x, y];
                         if (piece != 0)
                         {
@@ -296,8 +310,6 @@ namespace Stratego
                                 if (piece == 9)
                                 {
                                     // Piece is a blue scout (displaying as image)
-                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55))/2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn > 0 ||this.lastFought.Equals(new Point (x, y)))
                                     {
@@ -316,8 +328,6 @@ namespace Stratego
                                 else if (piece == -9)
                                 {
                                     // Piece is a red scout (displaying as image)
-                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
@@ -336,8 +346,6 @@ namespace Stratego
                                 else if (piece == 11)
                                 {
                                     // Piece is a blue bomb (displaying as image)
-                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
@@ -356,8 +364,6 @@ namespace Stratego
                                 else if (piece == -11)
                                 {
                                     // Piece is a red bomb (displaying as image)
-                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
@@ -376,8 +382,6 @@ namespace Stratego
                                 else if (piece == 10)
                                 {
                                     // Piece is a blue spy (displaying as image)
-                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
@@ -396,8 +400,6 @@ namespace Stratego
                                 else if (piece == -10)
                                 {
                                     // Piece is a red spy (displaying as image)
-                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
@@ -416,8 +418,6 @@ namespace Stratego
                                 else if (piece == 5)
                                 {
                                     // Piece is a blue captain (displaying as image)
-                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
@@ -436,8 +436,6 @@ namespace Stratego
                                 else if (piece == -5)
                                 {
                                     // Piece is a red captain (displaying as image)
-                                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
                                     {
@@ -472,7 +470,13 @@ namespace Stratego
                                         drawBrush.Dispose();
                                     }
                                 }
-
+                                if (pieceMoves[y, x] == 1)
+                                {
+                                    Console.WriteLine("PENILE");
+                                    Rectangle r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
+                                    pen.Color = Color.FromArgb(255, 90, 90, 255);
+                                    g.FillRectangle(b, r);
+                                }
                                 // Dispose of the brush
                                 b.Dispose();
                             }
@@ -943,32 +947,59 @@ namespace Stratego
         /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
         public int[,] GetPieceMoves(int X, int Y, int[,] boardState)
         {
-            int[,] moveArray = new int[boardState.GetLength(0), boardState.GetLength(1)];
-            if ((Math.Abs(boardState[Y, X]) == 11) || (Math.Abs(boardState[Y, X]) == 12) || (Math.Abs(boardState[Y, X]) == 42))
+            //int[,] moveArray = new int[boardState.GetLength(0), boardState.GetLength(1)];
+            //if ((Math.Abs(boardState[Y, X]) == 0) || (Math.Abs(boardState[Y, X]) == 11) || (Math.Abs(boardState[Y, X]) == 12) || (Math.Abs(boardState[Y, X]) == 42))
+            //    return moveArray;
+            //if(Math.Abs(boardState[Y, X]) == 9)
+            //{
+            //    for (int yD = Y + 1; yD < boardState.GetLength(0) && boardState[yD, X] == 0; yD++)
+            //        moveArray[yD, X] = 1;
+            //    for (int yU = Y - 1; yU >= 0 && boardState[yU, X] == 0; yU--)
+            //        moveArray[yU, X] = 1;
+            //    for (int xR = X + 1; xR < boardState.GetLength(1) && boardState[Y, xR] == 0; xR++)
+            //        moveArray[Y, xR] = 1;
+            //    for (int xL = X - 1; xL >= 0 && boardState[Y, xL] == 0; xL--)
+            //        moveArray[Y, xL] = 1;
+            //}
+            //if(Y > 0)
+            //    if ((Math.Sign(boardState[Y - 1, X]) != Math.Sign(boardState[Y, X])) && boardState[Y - 1, X] != 42)
+            //        moveArray[Y - 1, X] = 1;
+            //if (Y < boardState.GetLength(0) - 1)
+            //    if ((Math.Sign(boardState[Y + 1, X]) != Math.Sign(boardState[Y, X])) && boardState[Y + 1, X] != 42)
+            //        moveArray[Y + 1, X] = 1;
+            //if (X < boardState.GetLength(1) - 1)
+            //    if ((Math.Sign(boardState[Y, X + 1]) != Math.Sign(boardState[Y, X])) && boardState[Y, X + 1] != 42)
+            //        moveArray[Y, X + 1] = 1;
+            //if(X > 0)
+            //    if ((Math.Sign(boardState[Y, X - 1]) != Math.Sign(boardState[Y, X])) && boardState[Y, X - 1] != 42)
+            //        moveArray[Y, X - 1] = 1;
+            //return moveArray;
+            int[,] moveArray = new int[boardState.GetLength(1), boardState.GetLength(0)];
+            if ((Math.Abs(boardState[X, Y]) == 0) || (Math.Abs(boardState[X, Y]) == 11) || (Math.Abs(boardState[X, Y]) == 12) || (Math.Abs(boardState[X, Y]) == 42))
                 return moveArray;
-            if(Math.Abs(boardState[Y, X]) == 9)
+            if (Math.Abs(boardState[X, Y]) == 9)
             {
-                for (int yD = Y + 1; yD < boardState.GetLength(0) && boardState[yD, X] == 0; yD++)
-                    moveArray[yD, X] = 1;
-                for (int yU = Y - 1; yU >= 0 && boardState[yU, X] == 0; yU--)
-                    moveArray[yU, X] = 1;
-                for (int xR = X + 1; xR < boardState.GetLength(1) && boardState[Y, xR] == 0; xR++)
-                    moveArray[Y, xR] = 1;
-                for (int xL = X - 1; xL >= 0 && boardState[Y, xL] == 0; xL--)
-                    moveArray[Y, xL] = 1;
+                for (int yD = Y + 1; yD < boardState.GetLength(1) && boardState[X, yD] == 0; yD++)
+                    moveArray[X, yD] = 1;
+                for (int yU = Y - 1; yU >= 0 && boardState[X, yU] == 0; yU--)
+                    moveArray[X, yU] = 1;
+                for (int xR = X + 1; xR < boardState.GetLength(0) && boardState[xR, Y] == 0; xR++)
+                    moveArray[xR, Y] = 1;
+                for (int xL = X - 1; xL >= 0 && boardState[xL, Y] == 0; xL--)
+                    moveArray[xL, Y] = 1;
             }
-            if(Y > 0)
-                if ((Math.Sign(boardState[Y - 1, X]) != Math.Sign(boardState[Y, X])) && boardState[Y - 1, X] != 42)
-                    moveArray[Y - 1, X] = 1;
-            if (Y < boardState.GetLength(0) - 1)
-                if ((Math.Sign(boardState[Y + 1, X]) != Math.Sign(boardState[Y, X])) && boardState[Y + 1, X] != 42)
-                    moveArray[Y + 1, X] = 1;
-            if (X < boardState.GetLength(1) - 1)
-                if ((Math.Sign(boardState[Y, X + 1]) != Math.Sign(boardState[Y, X])) && boardState[Y, X + 1] != 42)
-                    moveArray[Y, X + 1] = 1;
-            if(X > 0)
-                if ((Math.Sign(boardState[Y, X - 1]) != Math.Sign(boardState[Y, X])) && boardState[Y, X - 1] != 42)
-                    moveArray[Y, X - 1] = 1;
+            if (Y > 0)
+                if ((Math.Sign(boardState[X, Y - 1]) != Math.Sign(boardState[X, Y])) && boardState[X, Y - 1] != 42)
+                    moveArray[X, Y - 1] = 1;
+            if (Y < boardState.GetLength(1) - 1)
+                if ((Math.Sign(boardState[X, Y + 1]) != Math.Sign(boardState[X, Y])) && boardState[X, Y + 1] != 42)
+                    moveArray[X, Y + 1] = 1;
+            if (X < boardState.GetLength(0) - 1)
+                if ((Math.Sign(boardState[X + 1, Y]) != Math.Sign(boardState[X, Y])) && boardState[X + 1, Y] != 42)
+                    moveArray[X + 1, Y] = 1;
+            if (X > 0)
+                if ((Math.Sign(boardState[X - 1, Y]) != Math.Sign(boardState[X, Y])) && boardState[X - 1, Y] != 42)
+                    moveArray[X - 1, Y] = 1;
             return moveArray;
         }
     }

@@ -1063,7 +1063,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFourDirectionsBaseCase()
         {
-            int piece = 4;
+            //int piece = 4;
             int x = 4;
             int y = 1;
             int[,] moveArray = new int[,] { 
@@ -1096,7 +1096,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFourDirectionsBaseCaseTwo()
         {
-            int piece = 5;
+            //int piece = 5;
             int x = 5;
             int y = 1;
             int[,] moveArray = new int[,] { 
@@ -1129,7 +1129,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFourDirectionsNine()
         {
-            int piece = 9;
+            //int piece = 9;
             int x = 5;
             int y = 1;
             int[,] moveArray = new int[,] { 
@@ -1162,7 +1162,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFourDirectionsNineWater()
         {
-            int piece = 9;
+            //int piece = 9;
             int x = 6;
             int y = 1;
             int[,] moveArray = new int[,] { 
@@ -1196,7 +1196,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFourDirectionsNineNextToEnemy()
         {
-            int piece = 9;
+            //int piece = 9;
             int x = 6;
             int y = 1;
             int[,] moveArray = new int[,] { 
@@ -1230,7 +1230,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFourDirectionsNineNextToAlly()
         {
-            int piece = 9;
+            //int piece = 9;
             int x = 6;
             int y = 1;
             int[,] moveArray = new int[,] { 
@@ -1264,12 +1264,12 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFourDirectionsNineFarFromEnemy()
         {
-            int piece = 9;
+            //int piece = 9;
             int x = 6;
             int y = 1;
             int[,] moveArray = new int[,] { 
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 1, 1, 0, 1, 1, 1},
+            {0, 0, 0, 1, 1, 1, 0, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1298,12 +1298,12 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFourDirectionsnegativeNineFarFromEnemy()
         {
-            int piece = -9;
+            //int piece = -9;
             int x = 6;
             int y = 1;
             int[,] moveArray = new int[,] { 
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 1, 1, 0, 1, 1, 1},
+            {0, 0, 0, 1, 1, 1, 0, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1331,7 +1331,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesBombCantMove()
         {
-            int piece = 11;
+            //int piece = 11;
             int x = 6;
             int y = 1;
             int[,] moveArray = new int[,] { 
@@ -1364,7 +1364,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesFlagCantMove()
         {
-            int piece = 12;
+            //int piece = 12;
             int x = 6;
             int y = 1;
             int[,] moveArray = new int[,] { 
@@ -1397,7 +1397,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMoves42CantMove()
         {
-            int piece = 42;
+            //int piece = 42;
             int x = 6;
             int y = 4;
             int[,] moveArray = new int[,] { 
@@ -1430,7 +1430,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMoves0CantMoveCorner()
         {
-            int piece = 0;
+            //int piece = 0;
             int x = 9;
             int y = 9;
             int[,] moveArray = new int[,] { 
@@ -1463,7 +1463,7 @@ namespace StrategoTest
         [Test()]
         public void TestGetPieceMovesSurroundedCantMove()
         {
-            int piece = 0;
+            //int piece = 0;
             int x = 4;
             int y = 1;
             int[,] moveArray = new int[,] { 

@@ -793,6 +793,7 @@ namespace Stratego
                 for (int k = 0; k < 10; k++)
                 {
                     boardState[k, j] = Convert.ToInt32(numbers[k]);
+                    this.placements[Math.Abs(boardState[k,j])] -= 1;
                 }
             }
             return true;

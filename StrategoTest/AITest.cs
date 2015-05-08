@@ -19,6 +19,7 @@ namespace StrategoTest
             AI ai = new AI(win, team, difficulty);
             Assert.AreEqual(team, ai.team);
             Assert.AreEqual(difficulty, ai.difficulty);
+            Assert.AreEqual(gameBoard, ai.knownBoardState);
         }
 
         [TestCase(0)]

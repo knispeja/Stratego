@@ -18,6 +18,8 @@ namespace Stratego
         private int boardX;
         private int boardY;
 
+        public int[,] knownBoardState;
+
         private bool boardValDisabled = false;
         private int boardValue = 0;
         private int recursionLevel = 0;

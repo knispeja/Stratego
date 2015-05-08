@@ -698,37 +698,37 @@ namespace Stratego
             if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) == 0 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) == 0)
                 return false;
             int defender = this.boardState[x / scaleX, y / scaleY];
-            if(defender == 12)
-            {
-                if(this.isSinglePlayer)
-                    this.EndGameTextBox.Text = "YOU LOST! HA! DUMMY!";
-                else
-                    this.EndGameTextBox.Text = "RED PLAYER WINS.";
-
-                this.backPanel.Enabled = false;
-                this.EndGamePanel.Enabled = true;
-                this.EndGamePanel.Visible = true;
-                this.EndGamePanel.Focus();
-            }
-            else if(defender == -12)
-            {
-                if(this.isSinglePlayer)
-                    this.EndGameTextBox.Text = "YOU ARE VICTORIOUS. READY PLAYER 1.";
-                else
-                    this.EndGameTextBox.Text = "BLUE PLAYER WINS.";
-
-                this.backPanel.Enabled = false;
-                this.EndGamePanel.Enabled = true;
-                this.EndGamePanel.Visible = true;
-                this.EndGamePanel.Focus();
-            }
             this.boardState[x / scaleX, y / scaleY] = Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y], this.boardState[x / scaleX, y / scaleY]).Value;
             if ((defender == 0) || this.boardState[x / scaleX, y / scaleY]==0)
                 this.lastFought = new Point(-1, -1);
             else
                 this.lastFought = new Point(x / scaleX, y / scaleY);
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
-            this.nextTurn();
+            if (defender == 12)
+            {
+                if (this.isSinglePlayer)
+                    this.EndGameTextBox.Text = "YOU LOST! HA! DUMMY!";
+                else
+                    this.EndGameTextBox.Text = "RED PLAYER WINS.";
+
+                this.backPanel.Enabled = false;
+                this.EndGamePanel.Visible = true;
+                this.EndGamePanel.Enabled = true;
+                this.EndGamePanel.Focus();
+            }
+            else if (defender == -12)
+            {
+                if (this.isSinglePlayer)
+                    this.EndGameTextBox.Text = "YOU ARE VICTORIOUS. READY PLAYER 1.";
+                else
+                    this.EndGameTextBox.Text = "BLUE PLAYER WINS.";
+
+                //this.backPanel.Enabled = false;
+                this.EndGamePanel.Visible = true;
+                this.EndGamePanel.Enabled = true;
+                this.EndGamePanel.Focus();
+            }
+            else { this.nextTurn(); }
             return true;
         }
         /// <summary>
@@ -840,6 +840,8 @@ namespace Stratego
                         if (pieceMoves[x, y] == 1)
                             backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
                 this.MovePiece(e.X, e.Y);
+                if (this.EndGamePanel.Enabled == true)
+                    return;
                 //This makes it so it only repaints the rectangle where the piece is placed
                 Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
                 backPanel.Invalidate(r);
@@ -1047,12 +1049,14 @@ namespace Stratego
 
         private void PlayAgainButton_Click(object sender, EventArgs e)
         {
+           
             this.boardState = new int[this.boardState.GetLength(0), this.boardState.GetLength(1)];
             this.turn = 0;
             this.preGameActive = true;
             this.lastFought = new Point(-1, -1);
             this.placements = (int[])this.defaults.Clone();
             nextTurn();
+            this.EndGamePanel.Visible = false;
             this.EndGamePanel.Enabled = false;
             this.backPanel.Enabled = true;
             this.backPanel.Focus();

@@ -174,16 +174,24 @@ namespace Stratego
         public void executeMove(Move move)
         {
             // Convert tiles to coordinates
-            int scaleX = win.panelWidth / this.boardX;
-            int scaleY = win.panelHeight / this.boardY;
-            int ox = move.origX * scaleX;
-            int oy = move.origY * scaleY;
-            int nx = move.newX * scaleX;
-            int ny = move.newY * scaleY;
+            //int scaleX = win.panelWidth / this.boardX;
+            //int scaleY = win.panelHeight / this.boardY;
+            //int ox = move.origX * scaleX;
+            //int oy = move.origY * scaleY;
+            //int nx = move.newX * scaleX;
+            //int ny = move.newY * scaleY;
 
             // Select and move the piece
-            win.SelectPiece(ox, oy);
-            win.MovePiece(nx, ny);
+            //win.SelectPiece(ox, oy);
+            //win.MovePiece(nx, ny);
+
+            int piece = win.getPiece(move.origX, move.origY);
+            win.boardState[move.origX, move.origY] = 0;
+            int? attackVal = Piece.attack(piece, win.getPiece(move.newX, move.newY));
+            if(attackVal == null)
+                throw new Exception();
+            win.boardState[move.newX, move.newY] = (int) attackVal;
+            win.nextTurn();
         }
 
         /// <summary>

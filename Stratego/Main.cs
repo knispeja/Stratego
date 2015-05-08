@@ -806,15 +806,34 @@ namespace Stratego
         public bool saveSetUp(TextWriter writer)
         {
             string buffer = "";
-            for (int i = 6; i < 10; i++ )
+
+            if (turn > 0)
             {
-                for (int j = 0; j < 9; j++)
+                for (int i = 6; i < 10; i++)
                 {
-                    buffer += boardState[j, i] + " ";
+
+                    for (int j = 0; j < 9; j++)
+                    {
+                        buffer += boardState[j, i] + " ";
+
+                    }
+                    buffer += boardState[9, i];
+                    writer.WriteLine(buffer);
+                    buffer = "";
                 }
-                buffer += boardState[9, i];
-                writer.WriteLine(buffer);
-                buffer = "";
+            }
+            else
+            {
+                for(int i =0; i< 4; i++)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        buffer += boardState[9 - j, 4 - i]+ " ";
+                    }
+                    buffer += boardState[0, 4 - i];
+                    writer.WriteLine(buffer);
+                    buffer = "";
+                }
             }
                 return true;
         }

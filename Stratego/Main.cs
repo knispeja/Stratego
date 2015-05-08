@@ -776,7 +776,7 @@ namespace Stratego
         /// <returns></returns> True if Successful
         public bool loadSetUp(TextReader reader)
         {
-            if (!preGameActive) return false;
+            if (!this.preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10)) return false;
             string[] lines = new string[4]; 
             string line = reader.ReadLine();
             lines[0] = line;
@@ -807,10 +807,24 @@ namespace Stratego
                     numbers = lines[j].Split(' ');
                     for (int k = 0; k < 10; k++)
                     {
-                        boardState[9-k, 3-j] = Convert.ToInt32(numbers[k]);
+                        boardState[9-k, 3-j] = turn*Convert.ToInt32(numbers[k]);
                         this.placements[Math.Abs(boardState[9-k, 3-j])] -= 1;
                     }
                 }
+            }
+            if(!this.testing)
+            {
+                backPanel.Invalidate();
+
+                for (i = 0; i < this.placements.Length; i++)
+                {
+                    if (this.placements[i] != 0)
+                    {
+                        this.donePlacingButton.Enabled = false;
+                        return true;
+                    }
+                }
+                this.donePlacingButton.Enabled = true;
             }
             return true;
 
@@ -873,9 +887,9 @@ namespace Stratego
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        buffer += boardState[9 - j, 4 - i]+ " ";
+                        buffer += boardState[9 - j, 3 - i]+ " ";
                     }
-                    buffer += boardState[0, 4 - i];
+                    buffer += boardState[0, 3 - i];
                     writer.WriteLine(buffer);
                     buffer = "";
                 }

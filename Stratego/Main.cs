@@ -697,7 +697,31 @@ namespace Stratego
                 return false;
             if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) == 0 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) == 0)
                 return false;
-            int defender =this.boardState[x / scaleX, y / scaleY];
+            int defender = this.boardState[x / scaleX, y / scaleY];
+            if(defender == 12)
+            {
+                if(this.isSinglePlayer)
+                    this.EndGameTextBox.Text = "YOU LOST! HA! DUMMY!";
+                else
+                    this.EndGameTextBox.Text = "RED PLAYER WINS.";
+
+                this.backPanel.Enabled = false;
+                this.EndGamePanel.Enabled = true;
+                this.EndGamePanel.Visible = true;
+                this.EndGamePanel.Focus();
+            }
+            else if(defender == -12)
+            {
+                if(this.isSinglePlayer)
+                    this.EndGameTextBox.Text = "YOU ARE VICTORIOUS. READY PLAYER 1.";
+                else
+                    this.EndGameTextBox.Text = "BLUE PLAYER WINS.";
+
+                this.backPanel.Enabled = false;
+                this.EndGamePanel.Enabled = true;
+                this.EndGamePanel.Visible = true;
+                this.EndGamePanel.Focus();
+            }
             this.boardState[x / scaleX, y / scaleY] = Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y], this.boardState[x / scaleX, y / scaleY]).Value;
             if ((defender == 0) || this.boardState[x / scaleX, y / scaleY]==0)
                 this.lastFought = new Point(-1, -1);
@@ -1019,6 +1043,20 @@ namespace Stratego
                 if ((Math.Sign(boardState[X - 1, Y]) != Math.Sign(boardState[X, Y])) && boardState[X - 1, Y] != 42)
                     moveArray[X - 1, Y] = 1;
             return moveArray;
+        }
+
+        private void PlayAgainButton_Click(object sender, EventArgs e)
+        {
+            this.boardState = new int[this.boardState.GetLength(0), this.boardState.GetLength(1)];
+            this.turn = 0;
+            this.preGameActive = true;
+            this.lastFought = new Point(-1, -1);
+            this.placements = (int[])this.defaults.Clone();
+            nextTurn();
+            this.EndGamePanel.Enabled = false;
+            this.backPanel.Enabled = true;
+            this.backPanel.Focus();
+            this.backPanel.Invalidate();
         }
     }
 }

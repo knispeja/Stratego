@@ -1651,6 +1651,25 @@ namespace StrategoTest
 
             reader.Close();
         }
+        [Test()]
+        public void TestThatLoadSetUpOnlyWorksDuringPregame()
+        {
+            String input = "9 9 9 9 9 9 8 8 8 8\r\n8 7 7 7 7 6 6 6 6 5\r\n5 5 5 4 4 4 3 3 1 2\r\n10 11 11 11 11 11 11 12 9 9\r\n";
+            StringReader reader = new StringReader(input);
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+
+            Assert.IsFalse(game.loadSetUp(reader));
+            Assert.AreEqual(new int[10,10], game.boardState);
+
+            game.turn = 1;
+            Assert.IsFalse(game.loadSetUp(reader));
+            Assert.AreEqual(new int[10, 10], game.boardState);
+
+            game.nextTurn();
+            Assert.IsFalse(game.loadSetUp(reader));
+            Assert.AreEqual(new int[10, 10], game.boardState);
+
+        }
     }
 
         

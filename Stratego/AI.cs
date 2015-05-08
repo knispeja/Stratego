@@ -366,10 +366,10 @@ namespace Stratego
                     sPiece = this.win.getPiece(move.origX, move.origY + 1);
                 if (move.origX != 0)
                     wPiece = this.win.getPiece(move.origX - 1, move.origY);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
 
                 // Try not to move right next to unknown enemy pieces
                 nPiece = 0;
@@ -432,7 +432,8 @@ namespace Stratego
                         // The AI is going to die, and this move is a terrible decision 
                         // unless this is an even trade, in which case everything is mostly okay
                         if (attackVal != 0) move.priority -= 50;
-                        else move.priority++;
+                        else move.priority+=getPieceValue(attacker)/3;
+
                         return;
                     }
 
@@ -451,13 +452,13 @@ namespace Stratego
                     {
                         // If this piece will be safe despite nearby enemy pieces, up the priority more
                         if (isEnemyPiece(nPiece) && (nPiece != 11 || attacker == 8))
-                            move.priority += getPieceValue(nPiece)/4;
+                            move.priority += getPieceValue(nPiece)/5;
                         if (isEnemyPiece(ePiece) && (ePiece != 11 || attacker == 8))
-                            move.priority += getPieceValue(ePiece)/4;
+                            move.priority += getPieceValue(ePiece)/5;
                         if (isEnemyPiece(sPiece) && (sPiece != 11 || attacker == 8))
-                            move.priority += getPieceValue(sPiece)/4;
+                            move.priority += getPieceValue(sPiece)/5;
                         if (isEnemyPiece(wPiece) && (wPiece != 11 || attacker == 8))
-                            move.priority += getPieceValue(wPiece)/4;
+                            move.priority += getPieceValue(wPiece)/5;
                     }
                     else
                     {

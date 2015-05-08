@@ -1586,8 +1586,8 @@ namespace StrategoTest
         {
             StringWriter writer = new StringWriter();
             string result = "1 0\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n";
-            int[,] gameBoard = new int[11, 11];
-            for (int i = 0; i < 11; i++)
+            int[,] gameBoard = new int[11, 10];
+            for (int i = 0; i < 10; i++)
             {
                 gameBoard[0, i] = 42;
                 gameBoard[1, i] = 0;

@@ -785,14 +785,14 @@ namespace Stratego
             else
                 buffer = " 0";
             writer.WriteLine(this.turn + buffer);
-            for (int i = 0; i < 10; i++ )
+            for (int i = 0; i < boardState.GetLength(1); i++ )
             {
                 buffer = "";
-                for (int j = 0; j < 9; j++)
+                for (int j = 0; j < boardState.GetLength(0)-1; j++)
                 {
                     buffer += boardState[j, i] + " ";
                 }
-                buffer += boardState[9, i];
+                buffer += boardState[boardState.GetLength(0) - 1, i];
                 writer.WriteLine(buffer);
             }
   
@@ -806,7 +806,7 @@ namespace Stratego
         public bool saveSetUp(TextWriter writer)
         {
             string buffer = "";
-            if (!preGameActive) return false;
+            if (!preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10)) return false;
             if (turn > 0)
             {
                 for (int i = 6; i < 10; i++)

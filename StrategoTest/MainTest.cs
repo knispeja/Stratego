@@ -1089,7 +1089,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            Assert.AreEqual(moveArray, game.GetPieceMoves(x, y));
+            Assert.AreEqual(moveArray, game.GetPieceMoves(y, x));
 
         }
 
@@ -1122,7 +1122,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            Assert.AreEqual(moveArray, game.GetPieceMoves(x, y));
+            Assert.AreEqual(moveArray, game.GetPieceMoves(y, x));
 
         }
 
@@ -1155,7 +1155,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            Assert.AreEqual(moveArray, game.GetPieceMoves(x, y));
+            Assert.AreEqual(moveArray, game.GetPieceMoves(y, x));
 
         }
 
@@ -1188,7 +1188,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
 
         }
@@ -1222,7 +1222,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
 
         }
@@ -1256,7 +1256,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
 
         }
@@ -1290,7 +1290,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
 
         }
@@ -1324,7 +1324,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
         }
 
@@ -1357,7 +1357,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
         }
 
@@ -1390,7 +1390,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
         }
 
@@ -1423,7 +1423,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
         }
 
@@ -1456,7 +1456,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
         }
 
@@ -1489,7 +1489,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
             StrategoWin game = new StrategoWin(1000, 1000, boardstate);
-            int[,] expected = game.GetPieceMoves(x, y);
+            int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
         }
     }

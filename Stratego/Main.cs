@@ -685,7 +685,7 @@ namespace Stratego
                 return false;
             int defender =this.boardState[x / scaleX, y / scaleY];
             this.boardState[x / scaleX, y / scaleY] = Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y], this.boardState[x / scaleX, y / scaleY]).Value;
-            if(defender==0)
+            if ((defender == 0) || this.boardState[x / scaleX, y / scaleY]==0)
                 this.lastFought = new Point(-1, -1);
             else
                 this.lastFought = new Point(x / scaleX, y / scaleY);

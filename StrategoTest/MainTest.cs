@@ -1626,11 +1626,30 @@ namespace StrategoTest
                                         {0,0,0,0,0,0,8,6,3,12},
                                         {0,0,0,0,0,0,8,6,1,9},
                                         {0,0,0,0,0,0,8,5,2,9}};
+            int[,] expected2 = new int[,]{{9,2,5,8,0,0,9,8,5,10},
+                                          {9,1,6,8,0,0,9,7,5,11},
+                                         {12,3,6,8,0,0,9,7,5,11},
+                                         {11,3,6,8,0,0,9,7,4,11},
+                                         {11,4,6,9,0,0,9,7,4,11},
+                                         {11,4,7,9,0,0,9,6,4,11},
+                                         {11,4,7,9,0,0,8,6,3,11},
+                                         {11,5,7,9,0,0,8,6,3,12},
+                                         {11,5,7,9,0,0,8,6,1,9},
+                                         {10,5,8,9,0,0,8,5,2,9}};
 
             game.nextTurn();
             Assert.IsTrue(game.loadSetUp(reader));
             Assert.AreEqual(expected, game.boardState);
             Assert.AreEqual(new int[13],game.placements);
+
+            game.nextTurn();
+            reader = new StringReader(input);
+
+            Assert.IsTrue(game.loadSetUp(reader));
+            Assert.AreEqual(expected2, game.boardState);
+            Assert.AreEqual(new int[13], game.placements);
+
+            reader.Close();
         }
     }
 

@@ -97,6 +97,7 @@ namespace StrategoTest
             Assert.AreNotEqual(initialTurn, win.turn);
         }
 
+        /*
         [TestCase(true, 1, 3, 0)]
         [TestCase(true, -1, -3, 0)]
         [TestCase(false, 1, 2, 5)]
@@ -132,7 +133,8 @@ namespace StrategoTest
 
             for (int row = 0; row < 10; row++)
                 Assert.AreEqual(expected, ai.evaluateMove(new AI.Move(5, row, 4, row)));
-        }
+        }*/
+        
 
         [TestCase(1)]
         [TestCase(-1)]
@@ -140,7 +142,7 @@ namespace StrategoTest
         // Verifies that generateValidMoves actually generates valid moves
             // NOTE: Any other functionality (WHICH moves are gen'd) 
             // is arguably subjective and won't be tested
-        public void TestEvaluateMoveFindsInvalidMoves(int team)
+        public void TestGenerateValidMoves(int team)
         {
             int[,] gameBoard = new int[10, 10];
             for (int row = 0; row < 10; row++)

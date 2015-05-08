@@ -17,7 +17,9 @@ namespace Stratego
         private Random rnd;
         private int boardX;
         private int boardY;
-        private int targetPiece;
+
+        private static int MAX_RECURSION_DEPTH = 2;
+        //private int targetPiece;
 
         /// <summary>
         /// Initializes this AI player
@@ -47,6 +49,7 @@ namespace Stratego
             else
             {
                 List<Move> moves = generateValidMoves();
+                foreach (Move move in moves) evaluateMove(move);
                 executeHighestPriorityMove(moves);
             }
         }
@@ -165,7 +168,7 @@ namespace Stratego
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void movePiece(Move move)
+        public void executeMove(Move move)
         {
             // Convert tiles to coordinates
             int scaleX = win.panelWidth / this.boardX;
@@ -181,12 +184,34 @@ namespace Stratego
         }
 
         /// <summary>
-        /// Generate a list of all valid moves (evaluateMove() may throw these out!!)
+        /// Generate a list of all valid moves
         /// </summary>
         /// <returns>A list of moves</returns>
         public List<Move> generateValidMoves()
         {
             List<Move> moves = new List<Move>();
+
+            for(int x1 = 0; x1 < this.boardX; x1++)
+            {
+                for(int y1 = 0; y1 < this.boardY; y1++)
+                {
+                    int[,] validPlaces = this.win.GetPieceMoves(x1, y1);
+                    for (int x2 = 0; x2 < this.boardX; x2++)
+                    {
+                        for (int y2 = 0; y2 < this.boardY; y2++)
+                        {
+                            if (validPlaces[x2, y2] == 1)
+                            {
+                                moves.Add(new Move(x1, y1, x2, y2));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return moves;
+
+            /*
             for (int x = 0; x < this.boardX; x++)
             {
                 for (int y = 0; y < this.boardY; y++)
@@ -213,19 +238,30 @@ namespace Stratego
             foreach (Move move in moves) if (evaluateMove(move)) finalMoves.Add(move);
 
             return finalMoves;
+            */
         }
 
         /// <summary>
-        /// Evaluates whether or not a move is valid. If it is, it updates that move's priority.
+        /// Evaluates 
+        /// </summary>
+        /// <param name="move"></param>
+        /// <param name="depth"></param>
+        public void evaluateMoveRecursive(Move move, int depth = 0)
+        {
+
+        }
+
+        /// <summary>
+        /// Updates the priority of the move based on short-term goals
         /// </summary>
         /// <param name="move">The move to be evaluated</param>
         /// <returns>Whether or not the move is valid</returns>
-        public bool evaluateMove(Move move)
+        public void evaluateMove(Move move)
         {
             int defender = win.getPiece(move.newX, move.newY);
             int attacker = win.getPiece(move.origX, move.origY);
             int? attackVal = Piece.attack(attacker, defender);
-            if (attackVal == null) return false;
+            //if (attackVal == null) return false;
 
             // ---------- Update this move's priority -----------
 
@@ -238,7 +274,7 @@ namespace Stratego
             if (difficulty == 0)
             {
                 // Just choose moves randomly, don't change priority
-                return true;
+                return;
             }
 
             if (difficulty >= 2)
@@ -286,7 +322,7 @@ namespace Stratego
                     {
                         // If the defender is the enemy flag, raise priority an insane amount
                         move.priority += 1000;
-                        return true;
+                        return;
                     }
 
                     if (attackVal == attacker)
@@ -308,7 +344,7 @@ namespace Stratego
                     {
                         // The AI is going to die, and this move is a terrible decision!
                         move.priority -= 50;
-                        return true;
+                        return;
                     }
 
                     // Now we can see whether or not the opponent will win if they
@@ -343,7 +379,7 @@ namespace Stratego
                 }
             }
 
-            return true;
+            return;
         }
 
         /// <summary>
@@ -440,7 +476,7 @@ namespace Stratego
             }
 
             int r = rnd.Next(finalMoves.Count);
-            movePiece(finalMoves[r]);
+            executeMove(finalMoves[r]);
         }
 
         /// <summary>

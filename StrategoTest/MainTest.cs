@@ -1426,6 +1426,39 @@ namespace StrategoTest
             int[,] expected = game.GetPieceMoves(x, y);
             Assert.AreEqual(moveArray, expected);
         }
+
+        [Test()]
+        public void TestGetPieceMoves0CantMoveCorner()
+        {
+            int piece = 0;
+            int x = 9;
+            int y = 9;
+            int[,] moveArray = new int[,] { 
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
+            int[,] boardstate = new int[,] { 
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+          {0, 0, 42, 42, 0, 0, 42, 42, 0, 0},
+          {0, 0, 42, 42, 0, 0, 42, 42, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
+            StrategoWin game = new StrategoWin(1000, 1000, boardstate);
+            int[,] expected = game.GetPieceMoves(x, y);
+            Assert.AreEqual(moveArray, expected);
+        }
     }
 
 

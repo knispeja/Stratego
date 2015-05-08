@@ -970,10 +970,10 @@ namespace Stratego
             if(Y > 0)
                 if ((Math.Sign(boardState[Y - 1, X]) != Math.Sign(boardState[Y, X])) && boardState[Y - 1, X] != 42)
                     moveArray[Y - 1, X] = 1;
-            if (Y < boardState.GetLength(0))
+            if (Y < boardState.GetLength(0) - 1)
                 if ((Math.Sign(boardState[Y + 1, X]) != Math.Sign(boardState[Y, X])) && boardState[Y + 1, X] != 42)
                     moveArray[Y + 1, X] = 1;
-            if (X < boardState.GetLength(1))
+            if (X < boardState.GetLength(1) - 1)
                 if ((Math.Sign(boardState[Y, X + 1]) != Math.Sign(boardState[Y, X])) && boardState[Y, X + 1] != 42)
                     moveArray[Y, X + 1] = 1;
             if(X > 0)

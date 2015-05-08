@@ -121,7 +121,6 @@ namespace Stratego
                     SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
                     sound.Play();
                     this.FireBox.Dispose();
-                    this.placements = (int[])this.defaults.Clone();
 
                     this.LoadButton.Visible = false;
                     this.SinglePlayerButton.Visible = false;
@@ -771,6 +770,35 @@ namespace Stratego
                 return true;
         }
         /// <summary>
+        /// Loads a premade piece setup onto the current team's side of the board
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns> True if Successful
+        public bool loadSetUp(TextReader reader)
+        {
+            string[] lines = new string[4]; 
+            string line = reader.ReadLine();
+            lines[0] = line;
+            int i = 0;
+            while (line != null)
+            {
+                lines[i] = line;
+                line = reader.ReadLine();
+                i++;
+            }
+            string[] numbers;
+            for (int j = 6; j < 10; j++)
+            {
+                numbers = lines[j-6].Split(' ');
+                for (int k = 0; k < 10; k++)
+                {
+                    boardState[k, j] = Convert.ToInt32(numbers[k]);
+                }
+            }
+            return true;
+
+        }
+        /// <summary>
         /// Saves a gamestate into the string or file in the given writer
         /// </summary>
         /// <param name="writer"></param>
@@ -799,7 +827,7 @@ namespace Stratego
             return true;
         }
         /// <summary>
-        /// 
+        /// Saves the set up of the current teams pieces into a file
         /// </summary>
         /// <param name="writer"></param>
         /// <returns></returns>

@@ -923,7 +923,25 @@ namespace Stratego
             StartButton_Click(sender, e);
         }
 
+        /// <summary>
+        /// Finds all of the possible moves for a piece with the given X and Y coordinates using the games board state.
+        /// </summary>
+        /// <param name="pieceX">X position in the board state (not in pixels)</param>
+        /// <param name="pieceY">Y position in the board state (not in pixels)</param>
+        /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
         public int[,] GetPieceMoves(int pieceX, int pieceY)
+        {
+            return GetPieceMoves(pieceX, pieceY, this.boardState);
+        }
+
+        /// <summary>
+        /// Finds all of the possible moves for a piece with the given X and Y coordinates using the board state passed in.
+        /// </summary>
+        /// <param name="X">>X position in the board state (not in pixels)</param>
+        /// <param name="Y">Y position in the board state (not in pixels)</param>
+        /// <param name="boardState">A 2D array representing the state of the board.</param>
+        /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
+        public int[,] GetPieceMoves(int X, int Y, int[,] boardState)
         {
             return null;
         }

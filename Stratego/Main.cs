@@ -787,13 +787,28 @@ namespace Stratego
                 i++;
             }
             string[] numbers;
-            for (int j = 6; j < 10; j++)
+            if (turn > 0)
             {
-                numbers = lines[j-6].Split(' ');
-                for (int k = 0; k < 10; k++)
+                for (int j = 6; j < 10; j++)
                 {
-                    boardState[k, j] = Convert.ToInt32(numbers[k]);
-                    this.placements[Math.Abs(boardState[k,j])] -= 1;
+                    numbers = lines[j - 6].Split(' ');
+                    for (int k = 0; k < 10; k++)
+                    {
+                        boardState[k, j] = Convert.ToInt32(numbers[k]);
+                        this.placements[Math.Abs(boardState[k, j])] -= 1;
+                    }
+                }
+            }
+            else
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    numbers = lines[j].Split(' ');
+                    for (int k = 0; k < 10; k++)
+                    {
+                        boardState[9-k, 3-j] = Convert.ToInt32(numbers[k]);
+                        this.placements[Math.Abs(boardState[9-k, 3-j])] -= 1;
+                    }
                 }
             }
             return true;

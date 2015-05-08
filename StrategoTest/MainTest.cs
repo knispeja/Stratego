@@ -1492,6 +1492,32 @@ namespace StrategoTest
             int[,] expected = game.GetPieceMoves(y, x);
             Assert.AreEqual(moveArray, expected);
         }
+        [Test()]
+        public void TestSaveSetUp()
+        {
+            int[,] gameBoard = new int[10, 10];
+            for (int i = 0; i < 10; i++)
+            {
+                gameBoard[0, i] = 42;
+                gameBoard[1, i] = 0;
+                gameBoard[2, i] = 0;
+                gameBoard[3, i] = 1;
+                gameBoard[4, i] = 1;
+                gameBoard[5, i] = 9;
+                gameBoard[6, i] = 8;
+                gameBoard[7, i] = 3;
+                gameBoard[8, i] = 4;
+                gameBoard[9, i] = 2;
+            }
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
+            StringWriter writer = new StringWriter();
+            String expected = "42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
+
+            game.nextTurn();
+            Assert.IsTrue(game.saveSetUp(writer));
+            Assert.AreEqual(expected, writer.ToString());
+
+        }
     }
 
 

@@ -18,6 +18,7 @@ namespace Stratego
         private int boardX;
         private int boardY;
 
+        private bool boardValDisabled = false;
         private int boardValue = 0;
         private int recursionLevel = 0;
         private static int MAX_RECURSION_DEPTH = 1;
@@ -306,6 +307,8 @@ namespace Stratego
             while(i < MAX_TURNS_FORWARD)
             {
                 this.team *= -1;
+                if (this.team != backupTeam) boardValDisabled = true;
+                else boardValDisabled = false;
                 backupTeam2 = this.team;
                 takeTurn(boardState);
                 i++;
@@ -334,7 +337,7 @@ namespace Stratego
                 this.team = backupTeam2;
             }
 
-            move.priority += (this.boardValue - backupValue) / 4;
+            move.priority += (this.boardValue - backupValue) / (MAX_TURNS_FORWARD - 1);
             
             // Reset the game to its previous state
             this.team = backupTeam;
@@ -360,10 +363,10 @@ namespace Stratego
 
             // ---------- Update this move's priority -----------
 
-            if (!(move.newY < move.origY))
+            if ((!(move.newY < move.origY) && this.team == -1) || (!(move.newY > move.origY) && this.team == 1))
             {
-                // Prioritize downward movement, side-to-side is fine
-                move.priority++;
+                // Discourages movement away from the enemy
+                move.priority+=2;
             }
 
             if (difficulty == 0)
@@ -410,11 +413,11 @@ namespace Stratego
                 // If pieces nearby are friendly, up the priority
                 if (isFriendlyPiece(nPiece))
                     move.priority++;
-                else if (isFriendlyPiece(ePiece))
+                if (isFriendlyPiece(ePiece))
                     move.priority++;
-                else if (isFriendlyPiece(sPiece))
+                if (isFriendlyPiece(sPiece))
                     move.priority++;
-                else if (isFriendlyPiece(wPiece))
+                if (isFriendlyPiece(wPiece))
                     move.priority++;
 
                 // Reduce priority for each of these that is an unknown (unknown part is unimplemented) enemy
@@ -644,7 +647,7 @@ namespace Stratego
             }
 
             int r = rnd.Next(finalMoves.Count);
-            this.boardValue += finalMoves[r].priority;
+            if(!this.boardValDisabled) this.boardValue += finalMoves[r].priority;
             executeMove(finalMoves[r], boardState);
         }
 

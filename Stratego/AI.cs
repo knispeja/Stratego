@@ -40,6 +40,7 @@ namespace Stratego
             this.team = team;
             this.difficulty = difficulty;
             this.win = win;
+            this.knownBoardState = win.boardState;
 
             this.rnd = new Random();
             this.boardX = this.win.boardState.GetLength(0);

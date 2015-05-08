@@ -18,9 +18,10 @@ namespace Stratego
         private int boardX;
         private int boardY;
 
+        private int boardValue = 0;
         private int recursionLevel = 0;
         private static int MAX_RECURSION_DEPTH = 1;
-        private static int MAX_TURNS_FORWARD = 4;
+        private static int MAX_TURNS_FORWARD = 20;
 
         //private int targetPiece;
 
@@ -279,6 +280,8 @@ namespace Stratego
             // Create a fake board state to use for simulating turns
             int[,] boardState = (int[,]) win.boardState.Clone();
             int backupTeam = this.team;
+            int backupTeam2;
+            int backupValue = this.boardValue;
 
             // Evaluate our current board "value"
             int enemyPieces=0;
@@ -303,31 +306,39 @@ namespace Stratego
             while(i < MAX_TURNS_FORWARD)
             {
                 this.team *= -1;
+                backupTeam2 = this.team;
                 takeTurn(boardState);
                 i++;
-            }
-            
-            // Evaluate whether or not this move resulted in good things
-            int enemyPiecesNew = 0;
-            int friendlyPiecesNew = 0;
-            for (int x = 0; x < this.boardX; x++)
-            {
-                for (int y = 0; y < this.boardY; y++)
+
+                this.team = backupTeam;
+
+                // Evaluate whether or not this move resulted in good things
+                int enemyPiecesNew = 0;
+                int friendlyPiecesNew = 0;
+                for (int x = 0; x < this.boardX; x++)
                 {
-                    int piece = boardState[x,y];
-                    if (isFriendlyPiece(piece))
-                        friendlyPiecesNew++;
-                    else if (isEnemyPiece(piece))
-                        enemyPiecesNew++;
+                    for (int y = 0; y < this.boardY; y++)
+                    {
+                        int piece = boardState[x, y];
+                        if (isFriendlyPiece(piece))
+                            friendlyPiecesNew++;
+                        else if (isEnemyPiece(piece))
+                            enemyPiecesNew++;
+                    }
                 }
+                if (enemyPiecesNew < enemyPieces)
+                    move.priority += (enemyPieces - enemyPiecesNew)/(i+1);
+                if (friendlyPiecesNew < friendlyPieces)
+                    move.priority -= (friendlyPieces - friendlyPiecesNew)/(i+1);
+
+                this.team = backupTeam2;
             }
-            if (enemyPiecesNew < enemyPieces)
-                move.priority += (enemyPieces - enemyPiecesNew) * 3;
-            if (friendlyPiecesNew < friendlyPieces)
-                move.priority -= (friendlyPieces - friendlyPiecesNew) * 4;
+
+            move.priority += (this.boardValue - backupValue) / 4;
             
             // Reset the game to its previous state
             this.team = backupTeam;
+            this.boardValue = backupValue;
             this.recursionLevel = 0;
         }
 
@@ -346,14 +357,13 @@ namespace Stratego
             int defender = boardState[move.newX, move.newY];
             int attacker = boardState[move.origX, move.origY];
             int? attackVal = Piece.attack(attacker, defender);
-            //if (attackVal == null) return false;
 
             // ---------- Update this move's priority -----------
 
             if (!(move.newY < move.origY))
             {
                 // Prioritize downward movement, side-to-side is fine
-                move.priority+=2;
+                move.priority++;
             }
 
             if (difficulty == 0)
@@ -378,10 +388,10 @@ namespace Stratego
                     sPiece = boardState[move.origX, move.origY + 1];
                 if (move.origX != 0)
                     wPiece = boardState[move.origX - 1, move.origY];
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 4);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
 
                 // Try not to move right next to unknown enemy pieces
                 nPiece = 0;
@@ -400,11 +410,11 @@ namespace Stratego
                 // If pieces nearby are friendly, up the priority
                 if (isFriendlyPiece(nPiece))
                     move.priority++;
-                if (isFriendlyPiece(ePiece))
+                else if (isFriendlyPiece(ePiece))
                     move.priority++;
-                if (isFriendlyPiece(sPiece))
+                else if (isFriendlyPiece(sPiece))
                     move.priority++;
-                if (isFriendlyPiece(wPiece))
+                else if (isFriendlyPiece(wPiece))
                     move.priority++;
 
                 // Reduce priority for each of these that is an unknown (unknown part is unimplemented) enemy
@@ -417,7 +427,7 @@ namespace Stratego
                 {
                     // Difficulty 5, time to look at the opponent's pieces (>")>
 
-                    if (defender == 12)
+                    if (Math.Abs(defender) == 12)
                     {
                         // If the defender is the enemy flag, raise priority an insane amount
                         move.priority += 1000;
@@ -430,7 +440,7 @@ namespace Stratego
                         {
                             // If the AI is going to come out on top, raise priority
                             // by the perceived value of the piece to be executed
-                            move.priority += getPieceValue(defender);
+                            move.priority += getPieceValue(defender)*4;
                         }
                         else
                         {
@@ -443,7 +453,7 @@ namespace Stratego
                     {
                         // The AI is going to die, and this move is a terrible decision 
                         // unless this is an even trade, in which case everything is mostly okay
-                        if (attackVal != 0) move.priority -= 50;
+                        if (attackVal != 0) move.priority -= 500;
                         else move.priority+=getPieceValue(attacker)/3;
 
                         return;
@@ -455,22 +465,22 @@ namespace Stratego
                     int? eResult = Piece.attack(ePiece, attacker);
                     int? sResult = Piece.attack(sPiece, attacker);
                     int? wResult = Piece.attack(wPiece, attacker);
-                    if (nPiece == 11) nResult = attacker;
-                    if (ePiece == 11) eResult = attacker;
-                    if (sPiece == 11) sResult = attacker;
-                    if (wPiece == 11) wResult = attacker;
+                    if (Math.Abs(nPiece) == 11) nResult = attacker;
+                    if (Math.Abs(ePiece) == 11) eResult = attacker;
+                    if (Math.Abs(sPiece) == 11) sResult = attacker;
+                    if (Math.Abs(wPiece) == 11) wResult = attacker;
 
                     if (nResult != nPiece && eResult != ePiece && sResult != sPiece && wResult != wPiece)
                     {
                         // If this piece will be safe despite nearby enemy pieces, up the priority more
-                        if (isEnemyPiece(nPiece) && (nPiece != 11 || attacker == 8))
-                            move.priority += getPieceValue(nPiece)/5;
-                        if (isEnemyPiece(ePiece) && (ePiece != 11 || attacker == 8))
-                            move.priority += getPieceValue(ePiece)/5;
-                        if (isEnemyPiece(sPiece) && (sPiece != 11 || attacker == 8))
-                            move.priority += getPieceValue(sPiece)/5;
-                        if (isEnemyPiece(wPiece) && (wPiece != 11 || attacker == 8))
-                            move.priority += getPieceValue(wPiece)/5;
+                        if (isEnemyPiece(nPiece) && (Math.Abs(nPiece) != 11 || Math.Abs(attacker) == 8))
+                            move.priority += getPieceValue(nPiece)/3;
+                        if (isEnemyPiece(ePiece) && (Math.Abs(ePiece) != 11 || Math.Abs(attacker) == 8))
+                            move.priority += getPieceValue(ePiece)/3;
+                        if (isEnemyPiece(sPiece) && (Math.Abs(sPiece) != 11 || Math.Abs(attacker) == 8))
+                            move.priority += getPieceValue(sPiece)/3;
+                        if (isEnemyPiece(wPiece) && (Math.Abs(wPiece) != 11 || Math.Abs(attacker) == 8))
+                            move.priority += getPieceValue(wPiece)/3;
                     }
                     else
                     {
@@ -478,31 +488,43 @@ namespace Stratego
                         int dangerousPiece = 0;
 
                         // Check if this piece is protected by a friendly one
-                        if (nResult == nPiece) dangerousPiece = nPiece;
-                        if (eResult == ePiece) dangerousPiece = ePiece;
-                        if (sResult == sPiece) dangerousPiece = sPiece;
-                        if (wResult == wPiece) dangerousPiece = wPiece;
+                        if (nResult == nPiece && Math.Abs(nPiece) != 11 && getPieceValue(nPiece) > getPieceValue(dangerousPiece)) dangerousPiece = nPiece;
+                        if (eResult == ePiece && Math.Abs(ePiece) != 11 && getPieceValue(ePiece) > getPieceValue(dangerousPiece)) dangerousPiece = ePiece;
+                        if (sResult == sPiece && Math.Abs(sPiece) != 11 && getPieceValue(sPiece) > getPieceValue(dangerousPiece)) dangerousPiece = sPiece;
+                        if (wResult == wPiece && Math.Abs(wPiece) != 11 && getPieceValue(wPiece) > getPieceValue(dangerousPiece)) dangerousPiece = wPiece;
 
                         if (isFriendlyPiece(nPiece))
-                            if (Piece.attack(nPiece, dangerousPiece) != dangerousPiece)
+                            if (Piece.attack(nPiece, dangerousPiece) == nPiece && Math.Abs(nPiece) != 11)
+                            {
                                 protectorPresent = true;
+                                move.priority += getPieceValue(dangerousPiece) / 4;
+                            }
 
                         if (isFriendlyPiece(ePiece))
-                            if (Piece.attack(ePiece, dangerousPiece) != dangerousPiece)
+                            if (Piece.attack(ePiece, dangerousPiece) == ePiece && Math.Abs(ePiece) != 11)
+                            {
                                 protectorPresent = true;
+                                move.priority += getPieceValue(dangerousPiece) / 4;
+                            }
 
                         if (isFriendlyPiece(sPiece))
-                            if (Piece.attack(sPiece, dangerousPiece) != dangerousPiece)
+                            if (Piece.attack(sPiece, dangerousPiece) != sPiece && Math.Abs(sPiece) != 11)
+                            {
                                 protectorPresent = true;
+                                move.priority += getPieceValue(dangerousPiece) / 4;
+                            }
 
                         if (isFriendlyPiece(wPiece))
-                            if (Piece.attack(wPiece, dangerousPiece) != dangerousPiece)
+                            if (Piece.attack(wPiece, dangerousPiece) != wPiece && Math.Abs(wPiece) != 11)
+                            {
                                 protectorPresent = true;
+                                move.priority += getPieceValue(dangerousPiece) / 4;
+                            }
 
                         // This piece will be in danger, so lower the priority
                         // by the value of the potentially lost piece
                         if(!protectorPresent)
-                            move.priority -= getPieceValue(attacker);
+                            move.priority -= getPieceValue(attacker)*4;
                     }
                 }
             }
@@ -551,7 +573,7 @@ namespace Stratego
         /// <returns>Value of the piece</returns>
         public int getPieceValue(int piece)
         {
-            switch(piece)
+            switch(Math.Abs(piece))
             {
                 case(1):
                     return 17;
@@ -594,6 +616,9 @@ namespace Stratego
         /// <param name="moves">The list of moves to choose from.</param>
         public void executeHighestPriorityMove(List<Move> moves, int[,] boardState)
         {
+            if (moves.Count == 0)
+                return;
+
             List<Move> intermediateMoves = new List<Move>();
             List<Move> finalMoves = new List<Move>();
 
@@ -619,6 +644,7 @@ namespace Stratego
             }
 
             int r = rnd.Next(finalMoves.Count);
+            this.boardValue += finalMoves[r].priority;
             executeMove(finalMoves[r], boardState);
         }
 

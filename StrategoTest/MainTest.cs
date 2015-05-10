@@ -1695,7 +1695,7 @@ namespace StrategoTest
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.nextTurn();
             game.placePiece(5, 700, 800);
-            game.loadGame(reader);
+            game.loadSetUp(reader);
             Assert.AreEqual(game.defaults, game.placements);
 
 

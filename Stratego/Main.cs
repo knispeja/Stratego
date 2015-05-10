@@ -788,6 +788,7 @@ namespace Stratego
                 i++;
             }
             string[] numbers;
+            this.placements = (int[])this.defaults.Clone(); 
             if (turn > 0)
             {
                 for (int j = 6; j < 10; j++)
@@ -796,7 +797,7 @@ namespace Stratego
                     for (int k = 0; k < 10; k++)
                     {
                         boardState[k, j] = Convert.ToInt32(numbers[k]);
-                        this.placements[Math.Abs(boardState[k, j])] -= 1;
+                        if(Convert.ToInt32(numbers[k])!=0) this.placements[Math.Abs(boardState[k, j])] -= 1;
                     }
                 }
             }

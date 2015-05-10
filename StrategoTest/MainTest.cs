@@ -1651,6 +1651,7 @@ namespace StrategoTest
 
             reader.Close();
         }
+
         [Test()]
         public void TestThatLoadSetUpOnlyWorksDuringPregame()
         {
@@ -1683,6 +1684,20 @@ namespace StrategoTest
 
             game.nextTurn();
             Assert.IsFalse(game.loadSetUp(reader));
+
+        }
+
+        [Test()]
+        public void TestThatLoadSetUpClearsPlacements()
+        {
+            String input = "0 0 0 0 0 0 0 0 0 0\r\n0 0 0 0 0 0 0 0 0 0\r\n0 0 0 0 0 0 0 0 0 0\r\n0 0 0 0 0 0 0 0 0 0\r\n";
+            StringReader reader = new StringReader(input);
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.nextTurn();
+            game.placePiece(5, 700, 800);
+            game.loadGame(reader);
+            Assert.AreEqual(game.defaults, game.placements);
+
 
         }
     }

@@ -276,21 +276,6 @@ namespace Stratego
                     {
                         int scaleX = this.panelWidth / this.boardState.GetLength(0);
                         int scaleY = this.panelHeight / this.boardState.GetLength(1);
-                        //Draw grey background overlay to show the piece can move
-                        //if (pieceMoves[x, y] == 1)
-                        //{
-                        //    Console.WriteLine("PENILE");
-                        //    Rectangle r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
-                        //    //b.Color = Color.FromArgb(90, 90, 255);
-                        //    g.FillRectangle(new SolidBrush(Color.FromArgb(100, 130, 130, 130)), r);
-                        //}
-                        //if(pieceMoves[y, x] == 1)
-                        //{
-                        //    Console.WriteLine("PENILE BLEEDING");
-                        //    Rectangle r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
-                        //    pen.Color = Color.FromArgb(255, 130, 130, 130);
-                        //    g.DrawRectangle(pen, r);
-                        //}
                         int piece = this.boardState[x, y];
                         if (piece != 0)
                         {
@@ -888,9 +873,9 @@ namespace Stratego
                 {
                     for (int j = 0; j < 9; j++)
                     {
-                        buffer += boardState[9 - j, 3 - i]+ " ";
+                        buffer += Math.Abs(boardState[9 - j, 3 - i])+ " ";
                     }
-                    buffer += boardState[0, 3 - i];
+                    buffer += Math.Abs(boardState[0, 3 - i]);
                     writer.WriteLine(buffer);
                     buffer = "";
                 }
@@ -1200,7 +1185,9 @@ namespace Stratego
                 {
                     if ((file = dialog.OpenFile()) != null)
                     {
-                        loadSetUp(new StreamReader(file));
+                        StreamReader reader = new StreamReader(file);
+                        loadSetUp(reader);
+                        reader.Close();
                     }
                 }
                 catch (Exception ex)

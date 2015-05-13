@@ -1155,11 +1155,12 @@ namespace Stratego
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.InitialDirectory = System.IO.Path.GetDirectoryName(Application.ExecutablePath);//System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), @"YourSubDirectoryName");
+
             dialog.RestoreDirectory = true;
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                Console.WriteLine("lsdjflksdjflsjdfl");
                 StreamWriter writer = new StreamWriter(dialog.FileName);
                 saveSetUp(writer);
                 writer.Close();

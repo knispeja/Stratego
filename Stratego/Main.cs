@@ -93,6 +93,19 @@ namespace Stratego
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
+            {
+                for (int i = 0; i < path.Length - 3; i++)
+                {
+                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n'))
+                    {
+                        path = path.Substring(0, i);
+                        break;
+                    }
+                }
+            }
+            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\SaveGames");
             dialog.RestoreDirectory = true;
 
             if(dialog.ShowDialog() == DialogResult.OK)
@@ -106,10 +119,21 @@ namespace Stratego
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
-            dialog.InitialDirectory = "c:\\";
             dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
+            {
+                for (int i = 0; i < path.Length - 3; i++)
+                {
+                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n'))
+                    {
+                        path = path.Substring(0, i);
+                        break;
+                    }
+                }
+            }
+            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\SaveGames");
             dialog.RestoreDirectory = true;
-
             if(dialog.ShowDialog()== DialogResult.OK)
             {
                 Stream file = null;
@@ -1155,8 +1179,19 @@ namespace Stratego
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            dialog.InitialDirectory = System.IO.Path.GetDirectoryName(Application.ExecutablePath);//System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath), @"YourSubDirectoryName");
-
+            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            if(path.EndsWith("\\bin\\Debug")||path.EndsWith("\\bin\\Release"))
+            {
+                for(int i =0; i<path.Length-3; i++)
+                {
+                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n')) 
+                    {
+                        path = path.Substring(0, i);
+                        break;
+                    }
+                }
+            }
+            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\Presets");
             dialog.RestoreDirectory = true;
 
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -1175,8 +1210,20 @@ namespace Stratego
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
-            dialog.InitialDirectory = "c:\\";
             dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
+            {
+                for (int i = 0; i < path.Length - 3; i++)
+                {
+                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n'))
+                    {
+                        path = path.Substring(0, i);
+                        break;
+                    }
+                }
+            }
+            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\Presets");
             dialog.RestoreDirectory = true;
 
             if (dialog.ShowDialog() == DialogResult.OK)

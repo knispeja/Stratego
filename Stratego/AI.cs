@@ -225,48 +225,14 @@ namespace Stratego
                             for (int y2 = 0; y2 < this.boardY; y2++)
                             {
                                 if (validPlaces[x2, y2] == 1)
-                                {
                                     moves.Add(new Move(x1, y1, x2, y2));
-                                    //Console.WriteLine("x1 " + x1 + ", y1 " + y1 + ", x2 " + x2 + ", y2 " + y2);
-                                }
                             }
                         }
                     }
                 }
             }
 
-            //Console.WriteLine(moves.Count);
-
             return moves;
-
-            /*
-            for (int x = 0; x < this.boardX; x++)
-            {
-                for (int y = 0; y < this.boardY; y++)
-                {
-                    int piece = this.win.getPiece(x, y);
-                    int? attackVal = Piece.attack(this.win.getPiece(x,y), -1*this.team);
-                    if (piece != 0 && Math.Abs(piece) != 42 && Math.Abs(piece) != 11 && Math.Abs(piece) != 12 && attackVal != null)
-                    {
-                        // Generate 4 moves per friendly piece, one for each direction
-                        // (as such, scouts currently won't be moved further than 1 space)
-                        if (x != 0)
-                            moves.Add(new Move(x, y, x - 1, y));
-                        if (x != this.boardX-1)
-                            moves.Add(new Move(x, y, x + 1, y));
-                        if (y != 0)
-                            moves.Add(new Move(x, y, x, y - 1));
-                        if (y != this.boardY-1)
-                            moves.Add(new Move(x, y, x, y + 1));
-                    }
-                }
-            }
-
-            List<Move> finalMoves = new List<Move>();
-            foreach (Move move in moves) if (evaluateMove(move)) finalMoves.Add(move);
-
-            return finalMoves;
-            */
         }
 
         /// <summary>
@@ -467,6 +433,8 @@ namespace Stratego
 
                     // Now we can see whether or not the opponent will win if they
                     // try to attack us after we move, so we take that into account...
+
+                    /*
                     int? nResult = Piece.attack(nPiece, attacker);
                     int? eResult = Piece.attack(ePiece, attacker);
                     int? sResult = Piece.attack(sPiece, attacker);
@@ -531,7 +499,7 @@ namespace Stratego
                         // by the value of the potentially lost piece
                         if(!protectorPresent)
                             move.priority -= getPieceValue(attacker)*4;
-                    }
+                    } */
                 }
             }
 
@@ -546,6 +514,20 @@ namespace Stratego
             }
 
             return;
+        }
+
+        /// <summary>
+        /// Returns the number of adjacent enemies the piece at (x, y) is safe from via protection or rank.
+        /// Return value of 0 means no enemies are present, return value of -1 means this piece is in danger!
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="piece"></param>
+        /// <param name="boardState"></param>
+        /// <returns></returns>
+        public int safetyCheck(int x, int y, int piece, int[,] boardState)
+        {
+            return 0;
         }
 
         /// <summary>

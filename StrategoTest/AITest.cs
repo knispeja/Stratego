@@ -276,7 +276,7 @@ namespace StrategoTest
         [TestCase(-1, 6, 6, 0, 10, 0, 9, -5, 2)]
         [TestCase(1, 3, 8, -10, -10, 5, -12, 9, 3)]
         [TestCase(-1, 2, 7, 0, 7, 0, 0, -1, 1)]
-        [TestCase(1, 6, 8, -8, -12, -2, -9, 3, 4)]
+        [TestCase(1, 6, 8, -8, -12, -4, -9, 3, 4)]
 
         // Tests that bomb is included as a harmless enemy
 
@@ -288,7 +288,7 @@ namespace StrategoTest
         [TestCase(-1, 0, 9, 0, 0, 0, 0, -4, 0)]
         [TestCase(1, 9, 5, 0, 0, 5, 1, 4, 0)]
         [TestCase(1, 9, 0, 1, 4, 5, 1, 4, 0)]
-        [TestCase(-1, 0, 0, -5, 0, -8, -9, 1, 0)]
+        [TestCase(-1, 0, 0, -5, 0, -8, -9, -1, 0)]
         public void TestSafetyCheck(int team, int x, int y, int nPiece, int ePiece, int sPiece, int wPiece, int piece, int expected)
         {
             int[,] gameBoard = new int[10, 10];

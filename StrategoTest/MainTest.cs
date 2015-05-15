@@ -914,7 +914,7 @@ namespace StrategoTest
 
             Assert.IsTrue(game.loadGame(reader));
 
-            Assert.AreEqual(game.turn, 1);
+            Assert.AreEqual(game.turn, -2);
             Assert.IsFalse(game.isSinglePlayer);
             Assert.AreEqual(gameBoard, game.boardState);
 
@@ -939,7 +939,7 @@ namespace StrategoTest
 
             Assert.IsTrue(game.loadGame(reader));
 
-            Assert.AreEqual(game.turn, -1);
+            Assert.AreEqual(game.turn, 2);
             Assert.IsTrue(game.isSinglePlayer);
             Assert.AreEqual(gameBoard, game.boardState);
             reader.Close();

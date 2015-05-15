@@ -527,7 +527,7 @@ namespace Stratego
         /// <returns></returns>
         public int safetyCheck(int x, int y, int piece, int[,] boardState)
         {
-            return 0;
+            return -1;
         }
 
         /// <summary>

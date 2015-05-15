@@ -115,6 +115,8 @@ namespace Stratego
                 saveGame(writer);
                 writer.Close();
             }
+
+            this.backPanel.Focus();
         }
         private void LoadButton_Click(object sender, EventArgs e)
         {
@@ -188,6 +190,8 @@ namespace Stratego
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
                 if(button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
+
+            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -205,6 +209,7 @@ namespace Stratego
                 this.piecePlacing = this.turn * Convert.ToInt32(((Button)sender).Tag);
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
+            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -865,7 +870,7 @@ namespace Stratego
             }
             if(!this.testing)
             {
-                backPanel.Invalidate();
+                this.backPanel.Invalidate();
 
                 for (i = 0; i < this.placements.Length; i++)
                 {
@@ -957,7 +962,7 @@ namespace Stratego
             if (preGameActive)
             {
                 bool? piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
-                backPanel.Focus();
+                this.backPanel.Focus();
 
                 // Only run if the placement succeeded
                 if (piecePlaced.Value)
@@ -966,7 +971,7 @@ namespace Stratego
                     int scaleY = this.panelHeight / this.boardState.GetLength(1);
                     //This makes it so it only repaints the rectangle where the piece is placed
                     Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
-                    backPanel.Invalidate(r);
+                    this.backPanel.Invalidate(r);
 
                     for (int i = 0; i < this.placements.Length; i++)
                     {
@@ -987,17 +992,17 @@ namespace Stratego
                 for (int x = 0; x < this.boardState.GetLength(0); x++)
                     for (int y = 0; y < this.boardState.GetLength(1); y++)
                         if (pieceMoves[x, y] == 1)
-                            backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
+                            this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
                 Rectangle r = new Rectangle(this.pieceSelectedCoords.X * scaleX, this.pieceSelectedCoords.Y * scaleY, scaleX, scaleY);
-                backPanel.Invalidate(r);
+                this.backPanel.Invalidate(r);
                 this.MovePiece(e.X, e.Y);
                 if (this.EndGamePanel.Enabled == true)
                     return;
                 //This makes it so it only repaints the rectangle where the piece is placed
                 r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
-                backPanel.Invalidate(r);
+                this.backPanel.Invalidate(r);
                 r = new Rectangle(this.pieceSelectedCoords.X * scaleX, this.pieceSelectedCoords.Y * scaleY, scaleX, scaleY);
-                backPanel.Invalidate(r);
+                this.backPanel.Invalidate(r);
             }
             else
             {
@@ -1010,11 +1015,11 @@ namespace Stratego
                 for (int x = 0; x < this.boardState.GetLength(0); x++)
                     for(int y = 0; y < this.boardState.GetLength(1); y++)
                         if (pieceMoves[x, y] == 1)
-                            backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
+                            this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
                 if (pieceIsSelected)
                     pieceMoves = this.GetPieceMoves(this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y);
                 //r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
-                backPanel.Invalidate(new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY));
+                this.backPanel.Invalidate(new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY));
             }
             //backPanel.Invalidate();
         }
@@ -1040,7 +1045,6 @@ namespace Stratego
                 {
                     if (this.SidePanel.Visible && !this.testing)
                     {
-                        this.backPanel.Focus();
                         this.SidePanelOpenButton.Text = "Open Side";
                     }
                     else if(!this.testing)
@@ -1106,6 +1110,7 @@ namespace Stratego
             }
             else if (!this.testing)
             {
+                this.backPanel.Focus();
                 this.SidePanelOpenButton.Text = "Close Side";
             }
             this.SidePanel.Visible = !this.SidePanel.Visible;
@@ -1333,6 +1338,17 @@ namespace Stratego
             this.nextTurn();
             this.backPanel.Focus();
 
+        }
+
+        private void xButton_Click(object sender, EventArgs e)
+        {
+            this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
+            this.backPanel.Focus();
+        }
+
+        private void concedeButton_Click(object sender, EventArgs e)
+        {
+            this.backPanel.Focus();
         }
     }
 }

@@ -787,7 +787,7 @@ namespace Stratego
         /// <returns></returns> True if Successful
         public bool loadSetUp(TextReader reader)
         {
-            if (!this.preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10)) return false;
+            if (!this.preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10) || (Math.Abs(turn)==2)) return false;
             string[] lines = new string[4]; 
             string line = reader.ReadLine();
             lines[0] = line;
@@ -877,7 +877,7 @@ namespace Stratego
         public bool saveSetUp(TextWriter writer)
         {
             string buffer = "";
-            if (!preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10)) return false;
+            if (!preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10)||(Math.Abs(turn)==2)) return false;
             if (turn > 0)
             {
                 for (int i = 6; i < 10; i++)

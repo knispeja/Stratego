@@ -1700,6 +1700,19 @@ namespace StrategoTest
 
 
         }
+
+        [Test()]
+        public void TestThatPlayersCannotActDuringTransition()
+        {
+            String stringIn = "9 9 9 9 9 9 8 8 8 8\r\n8 7 7 7 7 6 6 6 6 5\r\n5 5 5 4 4 4 3 3 1 2\r\n10 11 11 11 11 11 11 12 9 9\r\n";
+            String gameIn = "1 0\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n42 0 0 1 1 9 8 3 4 2 9\r\n";
+
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            game.preGameActive = true;
+            game.turn = 2;
+            Assert.IsFalse(game.placePiece(-1, 100, 100).Value);
+            Assert.IsFalse(game.placePiece(1, 100, 100).Value);
+        }
     }
 
         

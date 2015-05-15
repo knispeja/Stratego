@@ -28,7 +28,8 @@ namespace Stratego
         public int[,] boardState { get; set; }    // The 2DArray full of all pieces on the board
         public int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
         public bool preGameActive { get; set; }   // Whether or not the pre game has begun
-        public int turn { get; set; }             // -1 for player2 (red) and 1 for player 1. 0 when game isn't started
+        public int turn { get; set; }             // -1 for player2 and 1 for player 1. 0 when game isn't started. 
+                                                  // 2 for transition from player1 to player2; -2 for transition from player2 to player1
         public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selected in the array
         public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
         public Boolean isSinglePlayer { get; set; }         //Whether player 2 is an AI or not
@@ -328,7 +329,7 @@ namespace Stratego
                                 {
                                     // Piece is a blue scout (displaying as image)
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55))/2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn > 0 ||this.lastFought.Equals(new Point (x, y)))
+                                    if (turn == 1 ||this.lastFought.Equals(new Point (x, y)))
                                     {
                                         Image imag = Properties.Resources.BlueScoutN;
                                         e.Graphics.DrawImage(imag, r);
@@ -346,7 +347,7 @@ namespace Stratego
                                 {
                                     // Piece is a red scout (displaying as image)
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
+                                    if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.RedScout;
                                         e.Graphics.DrawImage(imag, r);
@@ -364,7 +365,7 @@ namespace Stratego
                                 {
                                     // Piece is a blue bomb (displaying as image)
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
+                                    if (turn ==1 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.BlueBomb;
                                         e.Graphics.DrawImage(imag, r);
@@ -382,7 +383,7 @@ namespace Stratego
                                 {
                                     // Piece is a red bomb (displaying as image)
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
+                                    if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.RedBomb;
                                         e.Graphics.DrawImage(imag, r);
@@ -400,7 +401,7 @@ namespace Stratego
                                 {
                                     // Piece is a blue spy (displaying as image)
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
+                                    if (turn ==1 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.BlueSpy;
                                         e.Graphics.DrawImage(imag, r);
@@ -418,7 +419,7 @@ namespace Stratego
                                 {
                                     // Piece is a red spy (displaying as image)
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
+                                    if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.RedSpy;
                                         e.Graphics.DrawImage(imag, r);
@@ -436,7 +437,7 @@ namespace Stratego
                                 {
                                     // Piece is a blue captain (displaying as image)
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn > 0 || this.lastFought.Equals(new Point(x, y)))
+                                    if (turn ==1|| this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.BlueCaptain;
                                         e.Graphics.DrawImage(imag, r);
@@ -454,7 +455,7 @@ namespace Stratego
                                 {
                                     // Piece is a red captain (displaying as image)
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                    if (turn < 0 || this.lastFought.Equals(new Point(x, y)))
+                                    if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
                                     {
                                         Image imag = Properties.Resources.RedCaptain;
                                         e.Graphics.DrawImage(imag, r);

@@ -527,14 +527,19 @@ namespace Stratego
         /// <returns></returns>
         public int safetyCheck(int x, int y, int piece, int[,] boardState)
         {
-            for(int i=0; i<4; i++)
+            for(int i=0; i<3; i++)
             {
+                int newx = x, newy = y;
                 int? result = null;
                 if (i == 0 && x != 0)
-                    result = Piece.attack(boardState[x - 1, y], piece);
-                else if (i == 1 && y != this.boardY-1)
-                    result = Piece.attack(boardState[x, y + 1], piece);
+                    newx = x - 1;
+                else if (i == 1 && y != this.boardY - 1)
+                    newy = y + 1;
+                else if (i == 2)
+                    newx = x + 1;
 
+                if(newx != x || newy != y)
+                    result = Piece.attack(boardState[newx, newy], piece);
                 if (result != null && result != piece)
                     return -1;
             }

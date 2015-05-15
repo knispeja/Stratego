@@ -1046,6 +1046,11 @@ namespace Stratego
                     }
                     this.SidePanel.Visible = !this.SidePanel.Visible;
                 }
+                else if(e.KeyCode == Keys.Enter&& Math.Abs(turn)==2)
+                {
+                    NextTurnButton.Visible = false;
+                    this.nextTurn();
+                }
             }
             else if (this.preGameActive)
             {

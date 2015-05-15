@@ -265,6 +265,10 @@ namespace StrategoTest
         [TestCase(1, 8, 3, 0, 0, -10, -5, 1, -1)]
         [TestCase(1, 2, 5, 0, -4, 6, 0, 6, -1)]
         [TestCase(-1, 2, 5, 0, 1, 6, 0, -4, -1)]
+
+        [TestCase(-1, 5, 3, 3, -10, 10, -7, -5, -1)]
+        [TestCase(1, 2, 4, -4, -9, -8, 0, 6, -1)]
+        [TestCase(-1, 7, 6, 6, 0, 0, 0, -8, -1)]
         // Tests that safetyCheck() returns 0 when there are no enemy pieces around
         [TestCase(-1, 4, 7, 0, 0, 0, 0, -4, 0)]
         [TestCase(1, 2, 1, 0, 0, 0, 1, 9, 0)]

@@ -185,10 +185,14 @@ namespace StrategoTest
             }
         }
 
-        [TestCase(1)]
-        [TestCase(-1)]
+        [TestCase(1, 10000)]
+        [TestCase(-1, 10000)]
+        [TestCase(1, -10000)]
+        [TestCase(-1, -10000)]
+        [TestCase(1, 0)]
+        [TestCase(-1, 0)]
         // Tests that AI.executeHighestPriorityMove() works as expected
-        public void TestExecuteHighestPriorityMoveWorks(int team)
+        public void TestExecuteHighestPriorityMoveWorks(int team, int highestPriority)
         {
             int[,] gameBoard = new int[10, 10];
             gameBoard[0, 0] = 5*team;
@@ -203,8 +207,11 @@ namespace StrategoTest
 
             AI ai = new AI(win, team);
             System.Collections.Generic.List<AI.Move> moves = ai.generateValidMoves();
+
+            foreach (AI.Move move in moves)
+                move.priority = highestPriority - 1;
             moves[0] = new AI.Move(0, 0, 1, 0);
-            moves[0].priority = 100000;
+            moves[0].priority = highestPriority;
             ai.executeHighestPriorityMove(moves);
             Assert.AreEqual(0, win.boardState[0, 0]);
             Assert.AreEqual(5 * team, win.boardState[1, 0]);

@@ -924,7 +924,7 @@ namespace StrategoTest
         [Test()]
         public void TestLoadGameV2()
         {
-            string input = "-1 1\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            string input = "-1 1 5\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
             int[,] gameBoard = new int[10, 10];
             for (int i = 0; i < 10; i++)
             {
@@ -942,6 +942,7 @@ namespace StrategoTest
             Assert.AreEqual(game.turn, 2);
             Assert.IsTrue(game.isSinglePlayer);
             Assert.AreEqual(gameBoard, game.boardState);
+            Assert.AreEqual(5, game.ai.difficulty);
             reader.Close();
         }
 
@@ -1743,7 +1744,84 @@ namespace StrategoTest
             Assert.IsFalse(game.SelectPiece(900, 900).Value);
             
         }
+
+        [Test()]
+        public void TestThatAiDifficultyIsLoaded()
+        {
+            string input = "-1 1 5\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            int[,] gameBoard = new int[10, 10];
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    gameBoard[j, i] = j;
+                }
+            }
+
+            StringReader reader = new StringReader(input);
+            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+
+            Assert.IsTrue(game.loadGame(reader));
+
+            Assert.AreEqual(game.turn, 2);
+            Assert.IsTrue(game.isSinglePlayer);
+            Assert.AreEqual(gameBoard, game.boardState);
+            Assert.AreEqual(5, game.ai.difficulty);
+            reader.Close();
+
+            input = "-1 1 4\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            reader = new StringReader(input);
+            Assert.IsTrue(game.loadGame(reader));
+
+            Assert.AreEqual(game.turn, 2);
+            Assert.IsTrue(game.isSinglePlayer);
+            Assert.AreEqual(gameBoard, game.boardState);
+            Assert.AreEqual(4, game.ai.difficulty);
+            reader.Close();
+
+            input = "-1 1 3\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            reader = new StringReader(input);
+            Assert.IsTrue(game.loadGame(reader));
+
+            Assert.AreEqual(game.turn, 2);
+            Assert.IsTrue(game.isSinglePlayer);
+            Assert.AreEqual(gameBoard, game.boardState);
+            Assert.AreEqual(3, game.ai.difficulty);
+            reader.Close();
+
+            input = "-1 1 2\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            reader = new StringReader(input);
+            Assert.IsTrue(game.loadGame(reader));
+
+            Assert.AreEqual(game.turn, 2);
+            Assert.IsTrue(game.isSinglePlayer);
+            Assert.AreEqual(gameBoard, game.boardState);
+            Assert.AreEqual(2, game.ai.difficulty);
+            reader.Close();
+
+            input = "-1 1 1\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            reader = new StringReader(input);
+            Assert.IsTrue(game.loadGame(reader));
+
+            Assert.AreEqual(game.turn, 2);
+            Assert.IsTrue(game.isSinglePlayer);
+            Assert.AreEqual(gameBoard, game.boardState);
+            Assert.AreEqual(1, game.ai.difficulty);
+            reader.Close();
+
+            input = "-1 1 0\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
+            reader = new StringReader(input);
+            Assert.IsTrue(game.loadGame(reader));
+
+            Assert.AreEqual(game.turn, 2);
+            Assert.IsTrue(game.isSinglePlayer);
+            Assert.AreEqual(gameBoard, game.boardState);
+            Assert.AreEqual(0, game.ai.difficulty);
+            reader.Close();
+
+        }
     }
+
 
         
 }

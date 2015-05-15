@@ -151,6 +151,7 @@ namespace Stratego
                     this.SinglePlayerButton.Visible = false;
                     this.SidePanelOpenButton.Visible = true;
                     this.NextTurnButton.Visible = true;
+                    this.backPanel.Focus();
                     this.lastFought = new Point(-1, -1);
 
                     foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -600,6 +601,7 @@ namespace Stratego
                         else
                             NextTurnButton.Text = "AI's Turn";
                         NextTurnButton.Visible = true;
+                        this.backPanel.Focus();
                     }
                     this.turn = 2;
                 }
@@ -623,6 +625,7 @@ namespace Stratego
                 {
                     NextTurnButton.Text = "Player 1's Turn";
                     NextTurnButton.Visible = true;
+                    this.backPanel.Focus();
                 }
                 if (!this.isSinglePlayer) this.turn = -2;
                 else this.turn = 1;
@@ -653,7 +656,7 @@ namespace Stratego
         /// <returns></returns>
         public bool? SelectPiece(int x, int y)
         {
-            if (Math.Abs(turn) == 2) return false;
+            if ((Math.Abs(turn) == 2)||(turn ==-1 &&isSinglePlayer)) return false;
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
             if ((this.pieceSelectedCoords == new Point(x / scaleX, y / scaleY))&&this.pieceIsSelected)
@@ -1024,6 +1027,19 @@ namespace Stratego
                     this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
                     //Make the escape/pause/whatever panel visible
                 }
+                else if(e.KeyCode == Keys.ShiftKey)
+                {
+                    if (this.SidePanel.Visible && !this.testing)
+                    {
+                        this.backPanel.Focus();
+                        this.SidePanelOpenButton.Text = "Open Side";
+                    }
+                    else if(!this.testing)
+                    {
+                        this.SidePanelOpenButton.Text = "Close Side";
+                    }
+                    this.SidePanel.Visible = !this.SidePanel.Visible;
+                }
             }
             else if (this.preGameActive)
             {
@@ -1033,6 +1049,19 @@ namespace Stratego
                 {
                     this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
                     //Make the escape/pause/whatever panel visible
+                }
+                else if (e.KeyCode == Keys.ShiftKey)
+                {
+                    if (this.SidePanel.Visible && !this.testing)
+                    {
+                        this.backPanel.Focus();
+                        this.SidePanelOpenButton.Text = "Open Side";
+                    }
+                    else if (!this.testing)
+                    {
+                        this.SidePanelOpenButton.Text = "Close Side";
+                    }
+                    this.SidePanel.Visible = !this.SidePanel.Visible;
                 }
                 double num;
                 if (double.TryParse(keyChar, out num))
@@ -1055,7 +1084,14 @@ namespace Stratego
         {
             //Makes the side panel open when the button is clicked
             if (this.SidePanel.Visible && !this.testing)
+            {
                 this.backPanel.Focus();
+                this.SidePanelOpenButton.Text = "Open Side";
+            }
+            else if (!this.testing)
+            {
+                this.SidePanelOpenButton.Text = "Close Side";
+            }
             this.SidePanel.Visible = !this.SidePanel.Visible;
         }
 

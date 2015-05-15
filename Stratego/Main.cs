@@ -1328,6 +1328,8 @@ namespace Stratego
         {
             NextTurnButton.Visible = false;
             this.nextTurn();
+            this.backPanel.Focus();
+
         }
     }
 }

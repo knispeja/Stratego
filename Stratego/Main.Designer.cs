@@ -40,7 +40,7 @@
             this.returnToMenuButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.pauseLabel = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.optionsGroup = new System.Windows.Forms.GroupBox();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.NextTurnButton = new System.Windows.Forms.Button();
             this.EndGamePanel = new System.Windows.Forms.Panel();
@@ -145,7 +145,7 @@
             this.OptionsPanel.Controls.Add(this.returnToMenuButton);
             this.OptionsPanel.Controls.Add(this.SaveButton);
             this.OptionsPanel.Controls.Add(this.pauseLabel);
-            this.OptionsPanel.Controls.Add(this.groupBox1);
+            this.OptionsPanel.Controls.Add(this.optionsGroup);
             this.OptionsPanel.Controls.Add(this.PauseMenuExitButton);
             this.OptionsPanel.Location = new System.Drawing.Point(510, 186);
             this.OptionsPanel.Name = "OptionsPanel";
@@ -216,15 +216,15 @@
             this.pauseLabel.TabIndex = 16;
             this.pauseLabel.Text = "PAUSED";
             // 
-            // groupBox1
+            // optionsGroup
             // 
-            this.groupBox1.Font = new System.Drawing.Font("Palatino Linotype", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(35, 94);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(481, 270);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Options";
+            this.optionsGroup.Font = new System.Drawing.Font("Palatino Linotype", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.optionsGroup.Location = new System.Drawing.Point(35, 94);
+            this.optionsGroup.Name = "optionsGroup";
+            this.optionsGroup.Size = new System.Drawing.Size(481, 270);
+            this.optionsGroup.TabIndex = 15;
+            this.optionsGroup.TabStop = false;
+            this.optionsGroup.Text = "Options";
             // 
             // PauseMenuExitButton
             // 
@@ -598,7 +598,7 @@
         private System.Windows.Forms.Button NextTurnButton;
         private System.Windows.Forms.Panel OptionsPanel;
         private System.Windows.Forms.Label pauseLabel;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox optionsGroup;
         private System.Windows.Forms.Button xButton;
         private System.Windows.Forms.Button concedeButton;
         private System.Windows.Forms.Button returnToMenuButton;

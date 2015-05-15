@@ -151,7 +151,7 @@ namespace Stratego
                     this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
                     this.LoadButton.Visible = false;
                     this.SinglePlayerButton.Visible = false;
-                    this.SidePanelOpenButton.Visible = true;
+                    this.SidePanelOpenButton.Visible = false;
                     if (this.turn == 2 && isSinglePlayer)
                         this.NextTurnButton.Text = "AI's Turn";
                     else if (this.turn == 2)
@@ -606,7 +606,7 @@ namespace Stratego
                 {
                     if (!testing)
                     {
-                        if (!isSinglePlayer)
+                        if (!this.isSinglePlayer)
                             NextTurnButton.Text = "Player 2's Turn";
                         else
                             NextTurnButton.Text = "AI's Turn";
@@ -630,6 +630,11 @@ namespace Stratego
                             this.boardState[x, i] = 0;
                     }
                     this.preGameActive = false;
+                    if (!this.testing)
+                    {
+                        this.SidePanelOpenButton.Visible = false;
+                        this.SidePanel.Visible = false;
+                    }
                 }
                 if (!testing && !this.isSinglePlayer)
                 {
@@ -1042,7 +1047,7 @@ namespace Stratego
                     this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
                     //Make the escape/pause/whatever panel visible
                 }
-                else if(e.KeyCode == Keys.ShiftKey)
+                else if(e.KeyCode == Keys.ShiftKey && this.preGameActive)
                 {
                     if (this.SidePanel.Visible && !this.testing)
                     {

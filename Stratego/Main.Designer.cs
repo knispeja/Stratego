@@ -35,8 +35,12 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.backPanel = new Stratego.BuffPanel();
             this.OptionsPanel = new System.Windows.Forms.Panel();
-            this.OptionsLabel = new System.Windows.Forms.Label();
+            this.xButton = new System.Windows.Forms.Button();
+            this.concedeButton = new System.Windows.Forms.Button();
+            this.returnToMenuButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.pauseLabel = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.NextTurnButton = new System.Windows.Forms.Button();
             this.EndGamePanel = new System.Windows.Forms.Panel();
@@ -135,15 +139,21 @@
             // OptionsPanel
             // 
             this.OptionsPanel.BackColor = System.Drawing.Color.DarkGray;
-            this.OptionsPanel.Controls.Add(this.OptionsLabel);
+            this.OptionsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.OptionsPanel.Controls.Add(this.xButton);
+            this.OptionsPanel.Controls.Add(this.concedeButton);
+            this.OptionsPanel.Controls.Add(this.returnToMenuButton);
             this.OptionsPanel.Controls.Add(this.SaveButton);
+            this.OptionsPanel.Controls.Add(this.pauseLabel);
+            this.OptionsPanel.Controls.Add(this.groupBox1);
             this.OptionsPanel.Controls.Add(this.PauseMenuExitButton);
-            this.OptionsPanel.Location = new System.Drawing.Point(690, 294);
+            this.OptionsPanel.Location = new System.Drawing.Point(510, 186);
             this.OptionsPanel.Name = "OptionsPanel";
             this.OptionsPanel.Size = new System.Drawing.Size(553, 552);
             this.OptionsPanel.TabIndex = 9;
             this.OptionsPanel.Visible = false;
             // 
+<<<<<<< HEAD
             // OptionsLabel
             // 
             this.OptionsLabel.AutoSize = true;
@@ -152,24 +162,79 @@
             this.OptionsLabel.Size = new System.Drawing.Size(43, 13);
             this.OptionsLabel.TabIndex = 0;
             this.OptionsLabel.Text = "Options";
+=======
+            // xButton
+            // 
+            this.xButton.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xButton.Location = new System.Drawing.Point(518, 3);
+            this.xButton.Name = "xButton";
+            this.xButton.Size = new System.Drawing.Size(28, 35);
+            this.xButton.TabIndex = 19;
+            this.xButton.Text = "x";
+            this.xButton.UseVisualStyleBackColor = true;
+            this.xButton.Click += new System.EventHandler(this.xButton_Click);
+            // 
+            // concedeButton
+            // 
+            this.concedeButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.concedeButton.Location = new System.Drawing.Point(380, 393);
+            this.concedeButton.Name = "concedeButton";
+            this.concedeButton.Size = new System.Drawing.Size(136, 59);
+            this.concedeButton.TabIndex = 18;
+            this.concedeButton.Text = "Concede";
+            this.concedeButton.UseVisualStyleBackColor = true;
+            this.concedeButton.Click += new System.EventHandler(this.concedeButton_Click);
+            // 
+            // returnToMenuButton
+            // 
+            this.returnToMenuButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.returnToMenuButton.Location = new System.Drawing.Point(209, 420);
+            this.returnToMenuButton.Name = "returnToMenuButton";
+            this.returnToMenuButton.Size = new System.Drawing.Size(136, 91);
+            this.returnToMenuButton.TabIndex = 17;
+            this.returnToMenuButton.Text = "Quit to Main Menu";
+            this.returnToMenuButton.UseVisualStyleBackColor = true;
+>>>>>>> origin/master
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(215, 71);
+            this.SaveButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SaveButton.Location = new System.Drawing.Point(35, 477);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(136, 58);
+            this.SaveButton.Size = new System.Drawing.Size(136, 59);
             this.SaveButton.TabIndex = 14;
             this.SaveButton.Text = "Save Game";
             this.SaveButton.UseVisualStyleBackColor = true;
             // 
+            // pauseLabel
+            // 
+            this.pauseLabel.AutoSize = true;
+            this.pauseLabel.Font = new System.Drawing.Font("Palatino Linotype", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pauseLabel.Location = new System.Drawing.Point(172, 12);
+            this.pauseLabel.Name = "pauseLabel";
+            this.pauseLabel.Size = new System.Drawing.Size(219, 64);
+            this.pauseLabel.TabIndex = 16;
+            this.pauseLabel.Text = "PAUSED";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Font = new System.Drawing.Font("Palatino Linotype", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(35, 94);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(481, 270);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Options";
+            // 
             // PauseMenuExitButton
             // 
             this.PauseMenuExitButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.PauseMenuExitButton.Location = new System.Drawing.Point(213, 465);
+            this.PauseMenuExitButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PauseMenuExitButton.Location = new System.Drawing.Point(35, 395);
             this.PauseMenuExitButton.Name = "PauseMenuExitButton";
             this.PauseMenuExitButton.Size = new System.Drawing.Size(136, 59);
             this.PauseMenuExitButton.TabIndex = 5;
-            this.PauseMenuExitButton.Text = "Exit";
+            this.PauseMenuExitButton.Text = "Close Stratego";
             this.PauseMenuExitButton.UseVisualStyleBackColor = true;
             this.PauseMenuExitButton.VisibleChanged += new System.EventHandler(this.PauseMenuExitButton_VisibleChanged);
             this.PauseMenuExitButton.Click += new System.EventHandler(this.PauseMenuExitButton_Click);
@@ -177,9 +242,10 @@
             // NextTurnButton
             // 
             this.NextTurnButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.NextTurnButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NextTurnButton.Location = new System.Drawing.Point(745, 457);
             this.NextTurnButton.Name = "NextTurnButton";
-            this.NextTurnButton.Size = new System.Drawing.Size(129, 59);
+            this.NextTurnButton.Size = new System.Drawing.Size(129, 70);
             this.NextTurnButton.TabIndex = 2;
             this.NextTurnButton.Text = "Player 1\'s Turn";
             this.NextTurnButton.UseVisualStyleBackColor = true;
@@ -227,18 +293,20 @@
             // 
             // SinglePlayerButton
             // 
-            this.SinglePlayerButton.Location = new System.Drawing.Point(871, 565);
+            this.SinglePlayerButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SinglePlayerButton.Location = new System.Drawing.Point(1352, 566);
             this.SinglePlayerButton.Name = "SinglePlayerButton";
-            this.SinglePlayerButton.Size = new System.Drawing.Size(129, 59);
+            this.SinglePlayerButton.Size = new System.Drawing.Size(129, 77);
             this.SinglePlayerButton.TabIndex = 7;
-            this.SinglePlayerButton.Text = "Single-Player";
+            this.SinglePlayerButton.Text = "New Single-Player";
             this.SinglePlayerButton.UseVisualStyleBackColor = true;
             this.SinglePlayerButton.Visible = false;
             this.SinglePlayerButton.Click += new System.EventHandler(this.SinglePlayerButton_click);
             // 
             // LoadButton
             // 
-            this.LoadButton.Location = new System.Drawing.Point(871, 493);
+            this.LoadButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LoadButton.Location = new System.Drawing.Point(1352, 488);
             this.LoadButton.Name = "LoadButton";
             this.LoadButton.Size = new System.Drawing.Size(129, 59);
             this.LoadButton.TabIndex = 6;
@@ -529,7 +597,11 @@
         private System.Windows.Forms.Button saveSetUpButton;
         private System.Windows.Forms.Button NextTurnButton;
         private System.Windows.Forms.Panel OptionsPanel;
-        private System.Windows.Forms.Label OptionsLabel;
+        private System.Windows.Forms.Label pauseLabel;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button xButton;
+        private System.Windows.Forms.Button concedeButton;
+        private System.Windows.Forms.Button returnToMenuButton;
     }
 }
 

@@ -624,6 +624,7 @@ namespace Stratego
         /// <returns></returns>
         public bool? SelectPiece(int x, int y)
         {
+            if (Math.Abs(turn) == 2) return false;
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
             if ((this.pieceSelectedCoords == new Point(x / scaleX, y / scaleY))&&this.pieceIsSelected)

@@ -260,9 +260,15 @@ namespace StrategoTest
         // Tests that safetyCheck() notices when the piece is in danger
         [TestCase(-1, 5, 5, 0, 0, 0, 1, -9, -1)]
         [TestCase(-1, 5, 5, 0, 0, 0, 5, -7, -1)]
+        [TestCase(1, 8, 4, 0, 0, -4, 9, 5, -1)]
         // Tests that safetyCheck() returns 0 when there are no enemy pieces around
         [TestCase(-1, 4, 7, 0, 0, 0, 0, -4, 0)]
         [TestCase(1, 2, 1, 0, 0, 0, 1, 9, 0)]
+        // Tests that safetyCheck() returns n when there are n harmless enemies around
+
+        // Tests that safetyCheck() recognizes an enemy is harmless when a friendly is acting as a protector
+        // In other words, makes sure -1 is not returned if after the enemy kills this piece, a different friendly piece can take the enemy
+
         // Tests that safetyCheck() doesn't break on the edges of the map
         [TestCase(1, 0, 9, 0, 0, 0, -10, 1, 0)]
         public void TestSafetyCheck(int team, int x, int y, int nPiece, int ePiece, int sPiece, int wPiece, int piece, int expected)

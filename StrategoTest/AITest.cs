@@ -270,7 +270,7 @@ namespace StrategoTest
         // In other words, makes sure -1 is not returned if after the enemy kills this piece, a different friendly piece can take the enemy
 
         // Tests that safetyCheck() doesn't break on the edges of the map
-        [TestCase(1, 0, 9, 0, 0, 0, -10, 1, 0)]
+        [TestCase(1, 0, 8, 0, 0, 0, -10, 1, 0)]
         public void TestSafetyCheck(int team, int x, int y, int nPiece, int ePiece, int sPiece, int wPiece, int piece, int expected)
         {
             int[,] gameBoard = new int[10, 10];

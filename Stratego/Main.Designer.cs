@@ -34,6 +34,7 @@
             this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.backPanel = new Stratego.BuffPanel();
+            this.NextTurnButton = new System.Windows.Forms.Button();
             this.EndGamePanel = new System.Windows.Forms.Panel();
             this.EndGameExitButton = new System.Windows.Forms.Button();
             this.PlayAgainButton = new System.Windows.Forms.Button();
@@ -42,6 +43,8 @@
             this.LoadButton = new System.Windows.Forms.Button();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
+            this.loadSetUpButton = new System.Windows.Forms.Button();
+            this.saveSetUpButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.donePlacingButton = new System.Windows.Forms.Button();
             this.removeCheckBox = new System.Windows.Forms.CheckBox();
@@ -59,8 +62,6 @@
             this.place1Button = new System.Windows.Forms.Button();
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
-            this.saveSetUpButton = new System.Windows.Forms.Button();
-            this.loadSetUpButton = new System.Windows.Forms.Button();
             this.backPanel.SuspendLayout();
             this.EndGamePanel.SuspendLayout();
             this.SidePanel.SuspendLayout();
@@ -109,6 +110,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.backPanel.BackColor = System.Drawing.Color.Transparent;
+            this.backPanel.Controls.Add(this.NextTurnButton);
             this.backPanel.Controls.Add(this.EndGamePanel);
             this.backPanel.Controls.Add(this.SinglePlayerButton);
             this.backPanel.Controls.Add(this.LoadButton);
@@ -125,6 +127,18 @@
             this.backPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.backPanel_Paint);
             this.backPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.backPanel_MouseClick);
             this.backPanel.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.backPanel_PreviewKeyDown);
+            // 
+            // NextTurnButton
+            // 
+            this.NextTurnButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.NextTurnButton.Location = new System.Drawing.Point(745, 457);
+            this.NextTurnButton.Name = "NextTurnButton";
+            this.NextTurnButton.Size = new System.Drawing.Size(129, 59);
+            this.NextTurnButton.TabIndex = 2;
+            this.NextTurnButton.Text = "Next Turn";
+            this.NextTurnButton.UseVisualStyleBackColor = true;
+            this.NextTurnButton.Visible = false;
+            this.NextTurnButton.Click += new System.EventHandler(this.NextTurnButton_Click);
             // 
             // EndGamePanel
             // 
@@ -188,7 +202,7 @@
             // PauseMenuExitButton
             // 
             this.PauseMenuExitButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.PauseMenuExitButton.Location = new System.Drawing.Point(749, 398);
+            this.PauseMenuExitButton.Location = new System.Drawing.Point(742, 398);
             this.PauseMenuExitButton.Name = "PauseMenuExitButton";
             this.PauseMenuExitButton.Size = new System.Drawing.Size(136, 59);
             this.PauseMenuExitButton.TabIndex = 5;
@@ -223,6 +237,26 @@
             this.SidePanel.Size = new System.Drawing.Size(107, 709);
             this.SidePanel.TabIndex = 4;
             this.SidePanel.Visible = false;
+            // 
+            // loadSetUpButton
+            // 
+            this.loadSetUpButton.Location = new System.Drawing.Point(5, 642);
+            this.loadSetUpButton.Name = "loadSetUpButton";
+            this.loadSetUpButton.Size = new System.Drawing.Size(96, 36);
+            this.loadSetUpButton.TabIndex = 16;
+            this.loadSetUpButton.Text = "Load Set Up";
+            this.loadSetUpButton.UseVisualStyleBackColor = true;
+            this.loadSetUpButton.Click += new System.EventHandler(this.loadSetUpButton_Click);
+            // 
+            // saveSetUpButton
+            // 
+            this.saveSetUpButton.Location = new System.Drawing.Point(5, 600);
+            this.saveSetUpButton.Name = "saveSetUpButton";
+            this.saveSetUpButton.Size = new System.Drawing.Size(96, 36);
+            this.saveSetUpButton.TabIndex = 15;
+            this.saveSetUpButton.Text = "Save Set Up";
+            this.saveSetUpButton.UseVisualStyleBackColor = true;
+            this.saveSetUpButton.Click += new System.EventHandler(this.saveSetUpButton_Click);
             // 
             // SaveButton
             // 
@@ -407,26 +441,6 @@
             this.FireBox.TabStop = false;
             this.FireBox.Visible = false;
             // 
-            // saveSetUpButton
-            // 
-            this.saveSetUpButton.Location = new System.Drawing.Point(5, 600);
-            this.saveSetUpButton.Name = "saveSetUpButton";
-            this.saveSetUpButton.Size = new System.Drawing.Size(96, 36);
-            this.saveSetUpButton.TabIndex = 15;
-            this.saveSetUpButton.Text = "Save Set Up";
-            this.saveSetUpButton.UseVisualStyleBackColor = true;
-            this.saveSetUpButton.Click += new System.EventHandler(this.saveSetUpButton_Click);
-            // 
-            // loadSetUpButton
-            // 
-            this.loadSetUpButton.Location = new System.Drawing.Point(5, 642);
-            this.loadSetUpButton.Name = "loadSetUpButton";
-            this.loadSetUpButton.Size = new System.Drawing.Size(96, 36);
-            this.loadSetUpButton.TabIndex = 16;
-            this.loadSetUpButton.Text = "Load Set Up";
-            this.loadSetUpButton.UseVisualStyleBackColor = true;
-            this.loadSetUpButton.Click += new System.EventHandler(this.loadSetUpButton_Click);
-            // 
             // StrategoWin
             // 
             this.AcceptButton = this.StartButton;
@@ -487,6 +501,7 @@
         private System.Windows.Forms.TextBox EndGameTextBox;
         private System.Windows.Forms.Button loadSetUpButton;
         private System.Windows.Forms.Button saveSetUpButton;
+        private System.Windows.Forms.Button NextTurnButton;
     }
 }
 

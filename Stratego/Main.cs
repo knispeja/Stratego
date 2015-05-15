@@ -592,6 +592,7 @@ namespace Stratego
                 }
                 else
                 {
+                    if (!testing) NextTurnButton.Visible = true;
                     this.turn = 2;
                 }
             }
@@ -610,6 +611,7 @@ namespace Stratego
                     }
                     this.preGameActive = false;
                 }
+                if (!testing) NextTurnButton.Visible = true;
                 this.turn = -2;
             }
             else if(this.turn == -2)
@@ -1258,6 +1260,13 @@ namespace Stratego
                     MessageBox.Show("Error loading file: " + ex.Message);
                 }
             }
+        }
+
+        private void NextTurnButton_Click(object sender, EventArgs e)
+        {
+            this.nextTurn();
+            NextTurnButton.Visible = false;
+
         }
     }
 }

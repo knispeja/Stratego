@@ -508,7 +508,7 @@ namespace StrategoTest
             Assert.AreEqual(piece, game.boardState[x / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
             Assert.AreEqual(0, game.boardState[x / 100, (y + 100) / 100]);
-            game.nextTurn();
+            game.turn = turn;
 
             game.SelectPiece(x, y);
             x -= 100;
@@ -516,7 +516,7 @@ namespace StrategoTest
             Assert.AreEqual(piece, game.boardState[x / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
             Assert.AreEqual(0, game.boardState[(x + 100) / 100, y / 100]);
-            game.nextTurn();
+            game.turn = turn;
 
             Assert.True(game.SelectPiece(x, y).Value);
             y += 100;
@@ -524,14 +524,13 @@ namespace StrategoTest
             Assert.AreEqual(piece, game.boardState[x / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
             Assert.AreEqual(0, game.boardState[x / 100, (y - 100) / 100]);
-            game.nextTurn();
+            game.turn = turn;
 
             x += 100;
             Assert.False(game.MovePiece(x, y));
             Assert.AreEqual(piece, game.boardState[(x - 100) / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
             x -= 100;
-            game.nextTurn();
 
             game = new StrategoWin(2000, 2000, new int[10, 10]);
             game.turn = turn;
@@ -806,6 +805,7 @@ namespace StrategoTest
             Assert.AreEqual(result, writer.ToString());
 
             game.nextTurn();
+            game.nextTurn();
 
             result = "-1 0\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n0 1 2 3 4 5 6 7 8 9\r\n";
             game.isSinglePlayer = false;
@@ -854,6 +854,7 @@ namespace StrategoTest
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());
 
+            game.nextTurn();
             game.nextTurn();
 
             result = "-1 0\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n42 0 0 1 1 9 8 3 4 2\r\n";
@@ -967,6 +968,7 @@ namespace StrategoTest
             game.SelectPiece(600, 500);
             game.MovePiece(500, 500);
             Assert.AreEqual(new Point(5, 5), game.lastFought);
+            game.nextTurn();
 
             game.SelectPiece(700, 600);
             game.MovePiece(700, 700);

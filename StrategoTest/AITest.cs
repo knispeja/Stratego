@@ -262,7 +262,7 @@ namespace StrategoTest
         // Tests that safetyCheck() returns 0 when there are no enemy pieces around
         [TestCase(-1, 4, 7, 0, 0, 0, 0, -4, 0)]
         [TestCase(1, 2, 1, 0, 0, 0, 1, 9, 0)]
-        public void TestIsFriendlyPiece(int team, int x, int y, int nPiece, int ePiece, int sPiece, int wPiece, int piece, int expected)
+        public void TestSafetyCheck(int team, int x, int y, int nPiece, int ePiece, int sPiece, int wPiece, int piece, int expected)
         {
             int[,] gameBoard = new int[10, 10];
 

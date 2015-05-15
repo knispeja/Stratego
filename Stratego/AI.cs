@@ -527,7 +527,7 @@ namespace Stratego
         /// <returns></returns>
         public int safetyCheck(int x, int y, int piece, int[,] boardState)
         {
-            if (boardState[x - 1, y] > 0)
+            if (boardState[x - 1, y] == 1 && piece == -9)
                 return -1;
             else return 0;
         }

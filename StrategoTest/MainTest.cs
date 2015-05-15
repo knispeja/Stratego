@@ -1712,6 +1712,9 @@ namespace StrategoTest
             game.turn = 2;
             Assert.IsFalse(game.placePiece(-1, 100, 100).Value);
             Assert.IsFalse(game.placePiece(1, 100, 100).Value);
+            Assert.IsFalse(game.saveSetUp(new StringWriter()));
+            Assert.IsFalse(game.loadSetUp(new StringReader(stringIn)));
+            
         }
     }
 

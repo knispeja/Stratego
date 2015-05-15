@@ -988,11 +988,13 @@ namespace Stratego
                     for (int y = 0; y < this.boardState.GetLength(1); y++)
                         if (pieceMoves[x, y] == 1)
                             backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
+                Rectangle r = new Rectangle(this.pieceSelectedCoords.X * scaleX, this.pieceSelectedCoords.Y * scaleY, scaleX, scaleY);
+                backPanel.Invalidate(r);
                 this.MovePiece(e.X, e.Y);
                 if (this.EndGamePanel.Enabled == true)
                     return;
                 //This makes it so it only repaints the rectangle where the piece is placed
-                Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
+                r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
                 backPanel.Invalidate(r);
                 r = new Rectangle(this.pieceSelectedCoords.X * scaleX, this.pieceSelectedCoords.Y * scaleY, scaleX, scaleY);
                 backPanel.Invalidate(r);
@@ -1049,7 +1051,7 @@ namespace Stratego
                 else if(e.KeyCode == Keys.Enter&& Math.Abs(turn)==2)
                 {
                     NextTurnButton.Visible = false;
-                    this.nextTurn();
+            this.nextTurn();
                 }
             }
             else if (this.preGameActive)

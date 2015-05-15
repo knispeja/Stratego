@@ -347,29 +347,14 @@ namespace Stratego
             if (this.difficulty >= 2)
             {
                 // When a piece is currently in danger, moving it away is a good plan
-                // Basically, pieces next to enemy pieces take priority frequently
-                int nPiece = 0;
-                int ePiece = 0;
-                int sPiece = 0;
-                int wPiece = 0;
-                if (move.origY != 0)
-                    nPiece = boardState[move.origX, move.origY - 1];
-                if (move.origX != this.boardX - 1)
-                    ePiece = boardState[move.origX + 1, move.origY];
-                if (move.origY != this.boardY - 1)
-                    sPiece = boardState[move.origX, move.origY + 1];
-                if (move.origX != 0)
-                    wPiece = boardState[move.origX - 1, move.origY];
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
-                if (isEnemyPiece(nPiece)) move.priority += (getPieceValue(attacker) / 3);
+                int safety = safetyCheck(move.origX, move.origY, attacker, boardState);
+                if (safety >= 10)
+                    move.priority += getPieceValue(attacker);
+                else if (safety < 0)
+                    move.priority += getPieceValue(attacker)*2;
 
                 // Try not to move right next to unknown enemy pieces
-                nPiece = 0;
-                ePiece = 0;
-                sPiece = 0;
-                wPiece = 0;
+                int nPiece = 0, ePiece = 0, sPiece = 0, wPiece = 0;
                 if(move.newY != 0)
                     nPiece = boardState[move.newX, move.newY - 1];
                 if(move.newX != this.boardX - 1)
@@ -436,7 +421,7 @@ namespace Stratego
 
                     // Now we can see whether or not the opponent will win if they
                     // try to attack us after we move, so we take that into account...
-                    int safety = safetyCheck(move.newX, move.newY, attacker, boardState);
+                    safety = safetyCheck(move.newX, move.newY, attacker, boardState);
                     if (safety > 0 && safety < 10)
                         move.priority += safety;
                     else if (safety >= 10)
@@ -515,7 +500,7 @@ namespace Stratego
                         {
                             if(bestFriendly != 42)
                             {
-                                if (Piece.attack(bestFriendly, dPiece) == bestFriendly)
+                                if (Piece.attack(bestFriendly, dPiece) == bestFriendly || (Math.Abs(dPiece) == 1 && friendlySpy))
                                 {
                                     protector = 10;
                                     enemies++;

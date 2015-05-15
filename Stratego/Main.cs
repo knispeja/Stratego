@@ -593,7 +593,14 @@ namespace Stratego
                 }
                 else
                 {
-                    if (!testing) NextTurnButton.Visible = true;
+                    if (!testing)
+                    {
+                        if (!isSinglePlayer)
+                            NextTurnButton.Text = "Player 2's Turn";
+                        else
+                            NextTurnButton.Text = "AI's Turn";
+                        NextTurnButton.Visible = true;
+                    }
                     this.turn = 2;
                 }
             }
@@ -612,7 +619,11 @@ namespace Stratego
                     }
                     this.preGameActive = false;
                 }
-                if (!testing && !this.isSinglePlayer) NextTurnButton.Visible = true;
+                if (!testing && !this.isSinglePlayer)
+                {
+                    NextTurnButton.Text = "Player 1's Turn";
+                    NextTurnButton.Visible = true;
+                }
                 if (!this.isSinglePlayer) this.turn = -2;
                 else this.turn = 1;
             }

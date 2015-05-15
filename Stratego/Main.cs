@@ -888,7 +888,7 @@ namespace Stratego
 
             string buffer = "";
             if (isSinglePlayer)
-                buffer = " 1";
+                buffer = " 1 "+this.ai.difficulty;
             else
                 buffer = " 0";
             writer.WriteLine(this.turn + buffer);

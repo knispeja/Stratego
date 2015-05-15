@@ -1705,8 +1705,12 @@ namespace StrategoTest
         public void TestThatPlayersCannotActDuringTransition()
         {
             String stringIn = "9 9 9 9 9 9 8 8 8 8\r\n8 7 7 7 7 6 6 6 6 5\r\n5 5 5 4 4 4 3 3 1 2\r\n10 11 11 11 11 11 11 12 9 9\r\n";
+            int[,] gameBoard = new int[10,10];
 
-            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            gameBoard[0, 0] = -1;
+            gameBoard[9, 9] = 1;
+
+            StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
             game.preGameActive = true;
             game.turn = 2;
             Assert.IsFalse(game.placePiece(-1, 100, 100).Value);
@@ -1720,6 +1724,15 @@ namespace StrategoTest
             Assert.IsFalse(game.loadSetUp(new StringReader(stringIn)));
             game.preGameActive = false;
             Assert.IsFalse(game.saveGame(new StringWriter()));
+            Assert.IsFalse(game.SelectPiece(0, 0).Value);
+            Assert.IsFalse(game.SelectPiece(900, 900).Value);
+
+            game.turn = 2;
+            Assert.IsFalse(game.saveGame(new StringWriter()));
+            Assert.IsFalse(game.SelectPiece(0, 0).Value);
+            Assert.IsFalse(game.SelectPiece(900, 900).Value);
+
+
             
         }
     }

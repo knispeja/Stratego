@@ -1714,6 +1714,14 @@ namespace StrategoTest
             Assert.IsFalse(game.placePiece(1, 100, 100).Value);
             Assert.IsFalse(game.saveSetUp(new StringWriter()));
             Assert.IsFalse(game.loadSetUp(new StringReader(stringIn)));
+            game.turn = -2;
+            Assert.IsFalse(game.placePiece(-1, 100, 100).Value);
+            Assert.IsFalse(game.placePiece(1, 100, 100).Value);
+            Assert.IsFalse(game.saveSetUp(new StringWriter()));
+            Assert.IsFalse(game.loadSetUp(new StringReader(stringIn)));
+            game.preGameActive = false;
+            Assert.IsFalse(game.saveGame(new StringWriter()));
+            Assert.IsFalse(game.loadGame(new StringReader(gameIn)));
             
         }
     }

@@ -675,13 +675,18 @@ namespace StrategoTest
             Assert.False(game.pieceIsSelected);
         }
 
-        [TestCase(0, 1)]
-        [TestCase(1, -1)]
-        [TestCase(-1, 1)]
-        public void TestThatNextTurnChangesTurn(int initialTurn, int expectedNewTurn)
+        [TestCase(0, 1, false)]
+        [TestCase(1, -1, true)]
+        [TestCase(-1, -2, true)]
+        [TestCase(1, 2, false)]
+        [TestCase(2, -1, false)]
+        [TestCase(-1, -2, false)]
+        [TestCase(-2, 1, false)]
+        public void TestThatNextTurnChangesTurn(int initialTurn, int expectedNewTurn, bool isPregame)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
             game.turn = initialTurn;
+            game.preGameActive = isPregame;
             game.nextTurn();
             Assert.AreEqual(expectedNewTurn, game.turn);     
         }
@@ -690,6 +695,9 @@ namespace StrategoTest
         [TestCase(-1, true, false)]
         [TestCase(-1, false, false)]
         [TestCase(1, true, true)]
+        [TestCase(1, false, false)]
+        [TestCase(2, false, false)]
+        [TestCase(-2, false, false)]
         public void TestThatNextTurnChangesPreGame(int initialTurn, bool initialbool, bool expectedFinal)
         {
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);

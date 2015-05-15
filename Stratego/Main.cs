@@ -986,12 +986,10 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            Console.WriteLine("Key\n");
             if(this.turn != 0 && !this.preGameActive)
             {
                 KeysConverter kc = new KeysConverter();
                 string keyChar = kc.ConvertToString(e.KeyCode);
-                Console.WriteLine("Escape\n");
                 if (e.KeyCode == Keys.Escape)
                 {
                     this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;

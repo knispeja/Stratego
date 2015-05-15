@@ -113,6 +113,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.backPanel.BackColor = System.Drawing.Color.Transparent;
+            this.backPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.backPanel.Controls.Add(this.OptionsPanel);
             this.backPanel.Controls.Add(this.NextTurnButton);
             this.backPanel.Controls.Add(this.EndGamePanel);
@@ -148,7 +149,7 @@
             this.OptionsLabel.AutoSize = true;
             this.OptionsLabel.Location = new System.Drawing.Point(251, 42);
             this.OptionsLabel.Name = "OptionsLabel";
-            this.OptionsLabel.Size = new System.Drawing.Size(57, 17);
+            this.OptionsLabel.Size = new System.Drawing.Size(43, 13);
             this.OptionsLabel.TabIndex = 0;
             this.OptionsLabel.Text = "Options";
             // 
@@ -187,6 +188,7 @@
             // 
             // EndGamePanel
             // 
+            this.EndGamePanel.BackColor = System.Drawing.Color.Black;
             this.EndGamePanel.Controls.Add(this.EndGameExitButton);
             this.EndGamePanel.Controls.Add(this.PlayAgainButton);
             this.EndGamePanel.Controls.Add(this.EndGameTextBox);
@@ -220,7 +222,7 @@
             // 
             this.EndGameTextBox.Location = new System.Drawing.Point(123, 36);
             this.EndGameTextBox.Name = "EndGameTextBox";
-            this.EndGameTextBox.Size = new System.Drawing.Size(229, 22);
+            this.EndGameTextBox.Size = new System.Drawing.Size(229, 20);
             this.EndGameTextBox.TabIndex = 0;
             // 
             // SinglePlayerButton
@@ -305,7 +307,7 @@
             this.removeCheckBox.AutoSize = true;
             this.removeCheckBox.Location = new System.Drawing.Point(12, 638);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
+            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;

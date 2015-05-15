@@ -146,7 +146,7 @@ namespace Stratego
                     SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
                     sound.Play();
                     this.FireBox.Dispose();
-
+                    this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
                     this.LoadButton.Visible = false;
                     this.SinglePlayerButton.Visible = false;
                     this.SidePanelOpenButton.Visible = true;
@@ -181,6 +181,7 @@ namespace Stratego
             sound.Play();
             this.FireBox.Dispose();
             this.placements = (int[])this.defaults.Clone();
+            this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
             // Start the game!
             nextTurn();
             this.LoadButton.Visible = false;

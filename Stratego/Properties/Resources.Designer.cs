@@ -142,6 +142,16 @@ namespace Stratego.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BoardUpdate {
+            get {
+                object obj = ResourceManager.GetObject("BoardUpdate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Captu4re {
             get {
                 object obj = ResourceManager.GetObject("Captu4re", resourceCulture);

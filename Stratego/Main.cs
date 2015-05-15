@@ -612,8 +612,9 @@ namespace Stratego
                     }
                     this.preGameActive = false;
                 }
-                if (!testing) NextTurnButton.Visible = true;
-                this.turn = -2;
+                if (!testing && !this.isSinglePlayer) NextTurnButton.Visible = true;
+                if (!this.isSinglePlayer) this.turn = -2;
+                else this.turn = 1;
             }
             else if(this.turn == -2)
             {
@@ -1265,9 +1266,8 @@ namespace Stratego
 
         private void NextTurnButton_Click(object sender, EventArgs e)
         {
-            this.nextTurn();
             NextTurnButton.Visible = false;
-
+            this.nextTurn();
         }
     }
 }

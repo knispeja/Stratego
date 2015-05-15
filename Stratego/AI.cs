@@ -530,9 +530,14 @@ namespace Stratego
             if (boardState[x, y + 1] == -4)
                 return -1;
 
-            if (x != 0)
+            for(int i=0; i<4; i++)
             {
-                int? result = Piece.attack(boardState[x - 1, y], piece);
+                int? result = null;
+                if (i == 0 && x != 0)
+                    result = Piece.attack(boardState[x - 1, y], piece);
+                else if (i == 1)
+                    result = Piece.attack(boardState[x, y + 1], piece);
+
                 if (result != null && result != piece)
                     return -1;
             }

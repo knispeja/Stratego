@@ -814,7 +814,6 @@ namespace Stratego
             else
             {
                 this.isSinglePlayer = true;
-                this.ai = new AI(this, -1, Convert.ToInt32(numbers[2]));
             }
 
             numbers = lines[1].Split(' ');
@@ -829,6 +828,7 @@ namespace Stratego
                 }
             }
             this.boardState = newBoard;
+            if (this.isSinglePlayer) this.ai = new AI(this, -1, Convert.ToInt32(numbers[2]));
                 return true;
         }
         /// <summary>

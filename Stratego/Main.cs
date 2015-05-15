@@ -1032,7 +1032,8 @@ namespace Stratego
                 string keyChar = kc.ConvertToString(e.KeyCode);
                 if (e.KeyCode == Keys.Escape)
                 {
-                    this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
+                    //this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
+                    this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
                     //Make the escape/pause/whatever panel visible
                 }
                 else if(e.KeyCode == Keys.ShiftKey)
@@ -1060,7 +1061,9 @@ namespace Stratego
                 string keyChar = kc.ConvertToString(e.KeyCode);
                 if(e.KeyCode==Keys.Escape)
                 {
-                    this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
+                    //this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
+                    this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
+
                     //Make the escape/pause/whatever panel visible
                 }
                 else if (e.KeyCode == Keys.ShiftKey)

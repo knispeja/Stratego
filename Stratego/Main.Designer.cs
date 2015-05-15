@@ -34,6 +34,10 @@
             this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.backPanel = new Stratego.BuffPanel();
+            this.OptionsPanel = new System.Windows.Forms.Panel();
+            this.OptionsLabel = new System.Windows.Forms.Label();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.NextTurnButton = new System.Windows.Forms.Button();
             this.EndGamePanel = new System.Windows.Forms.Panel();
             this.EndGameExitButton = new System.Windows.Forms.Button();
@@ -41,11 +45,9 @@
             this.EndGameTextBox = new System.Windows.Forms.TextBox();
             this.SinglePlayerButton = new System.Windows.Forms.Button();
             this.LoadButton = new System.Windows.Forms.Button();
-            this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
             this.loadSetUpButton = new System.Windows.Forms.Button();
             this.saveSetUpButton = new System.Windows.Forms.Button();
-            this.SaveButton = new System.Windows.Forms.Button();
             this.donePlacingButton = new System.Windows.Forms.Button();
             this.removeCheckBox = new System.Windows.Forms.CheckBox();
             this.place12Button = new System.Windows.Forms.Button();
@@ -63,6 +65,7 @@
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
             this.backPanel.SuspendLayout();
+            this.OptionsPanel.SuspendLayout();
             this.EndGamePanel.SuspendLayout();
             this.SidePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
@@ -110,11 +113,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.backPanel.BackColor = System.Drawing.Color.Transparent;
+            this.backPanel.Controls.Add(this.OptionsPanel);
             this.backPanel.Controls.Add(this.NextTurnButton);
             this.backPanel.Controls.Add(this.EndGamePanel);
             this.backPanel.Controls.Add(this.SinglePlayerButton);
             this.backPanel.Controls.Add(this.LoadButton);
-            this.backPanel.Controls.Add(this.PauseMenuExitButton);
             this.backPanel.Controls.Add(this.SidePanel);
             this.backPanel.Controls.Add(this.StartButton);
             this.backPanel.Controls.Add(this.TitlePictureBox);
@@ -127,6 +130,48 @@
             this.backPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.backPanel_Paint);
             this.backPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.backPanel_MouseClick);
             this.backPanel.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.backPanel_PreviewKeyDown);
+            // 
+            // OptionsPanel
+            // 
+            this.OptionsPanel.BackColor = System.Drawing.Color.DarkGray;
+            this.OptionsPanel.Controls.Add(this.OptionsLabel);
+            this.OptionsPanel.Controls.Add(this.SaveButton);
+            this.OptionsPanel.Controls.Add(this.PauseMenuExitButton);
+            this.OptionsPanel.Location = new System.Drawing.Point(690, 294);
+            this.OptionsPanel.Name = "OptionsPanel";
+            this.OptionsPanel.Size = new System.Drawing.Size(553, 552);
+            this.OptionsPanel.TabIndex = 9;
+            this.OptionsPanel.Visible = false;
+            // 
+            // OptionsLabel
+            // 
+            this.OptionsLabel.AutoSize = true;
+            this.OptionsLabel.Location = new System.Drawing.Point(251, 42);
+            this.OptionsLabel.Name = "OptionsLabel";
+            this.OptionsLabel.Size = new System.Drawing.Size(57, 17);
+            this.OptionsLabel.TabIndex = 0;
+            this.OptionsLabel.Text = "Options";
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(215, 71);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(136, 58);
+            this.SaveButton.TabIndex = 14;
+            this.SaveButton.Text = "Save Game";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            // 
+            // PauseMenuExitButton
+            // 
+            this.PauseMenuExitButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.PauseMenuExitButton.Location = new System.Drawing.Point(213, 465);
+            this.PauseMenuExitButton.Name = "PauseMenuExitButton";
+            this.PauseMenuExitButton.Size = new System.Drawing.Size(136, 59);
+            this.PauseMenuExitButton.TabIndex = 5;
+            this.PauseMenuExitButton.Text = "Exit";
+            this.PauseMenuExitButton.UseVisualStyleBackColor = true;
+            this.PauseMenuExitButton.VisibleChanged += new System.EventHandler(this.PauseMenuExitButton_VisibleChanged);
+            this.PauseMenuExitButton.Click += new System.EventHandler(this.PauseMenuExitButton_Click);
             // 
             // NextTurnButton
             // 
@@ -199,25 +244,11 @@
             this.LoadButton.UseVisualStyleBackColor = true;
             this.LoadButton.Visible = false;
             // 
-            // PauseMenuExitButton
-            // 
-            this.PauseMenuExitButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.PauseMenuExitButton.Location = new System.Drawing.Point(742, 398);
-            this.PauseMenuExitButton.Name = "PauseMenuExitButton";
-            this.PauseMenuExitButton.Size = new System.Drawing.Size(136, 59);
-            this.PauseMenuExitButton.TabIndex = 5;
-            this.PauseMenuExitButton.Text = "Exit";
-            this.PauseMenuExitButton.UseVisualStyleBackColor = true;
-            this.PauseMenuExitButton.Visible = false;
-            this.PauseMenuExitButton.VisibleChanged += new System.EventHandler(this.PauseMenuExitButton_VisibleChanged);
-            this.PauseMenuExitButton.Click += new System.EventHandler(this.PauseMenuExitButton_Click);
-            // 
             // SidePanel
             // 
             this.SidePanel.BackColor = System.Drawing.Color.DimGray;
             this.SidePanel.Controls.Add(this.loadSetUpButton);
             this.SidePanel.Controls.Add(this.saveSetUpButton);
-            this.SidePanel.Controls.Add(this.SaveButton);
             this.SidePanel.Controls.Add(this.donePlacingButton);
             this.SidePanel.Controls.Add(this.removeCheckBox);
             this.SidePanel.Controls.Add(this.place12Button);
@@ -234,13 +265,13 @@
             this.SidePanel.Controls.Add(this.place1Button);
             this.SidePanel.Location = new System.Drawing.Point(0, 29);
             this.SidePanel.Name = "SidePanel";
-            this.SidePanel.Size = new System.Drawing.Size(107, 709);
+            this.SidePanel.Size = new System.Drawing.Size(107, 664);
             this.SidePanel.TabIndex = 4;
             this.SidePanel.Visible = false;
             // 
             // loadSetUpButton
             // 
-            this.loadSetUpButton.Location = new System.Drawing.Point(5, 642);
+            this.loadSetUpButton.Location = new System.Drawing.Point(5, 598);
             this.loadSetUpButton.Name = "loadSetUpButton";
             this.loadSetUpButton.Size = new System.Drawing.Size(96, 36);
             this.loadSetUpButton.TabIndex = 16;
@@ -250,22 +281,13 @@
             // 
             // saveSetUpButton
             // 
-            this.saveSetUpButton.Location = new System.Drawing.Point(5, 600);
+            this.saveSetUpButton.Location = new System.Drawing.Point(5, 558);
             this.saveSetUpButton.Name = "saveSetUpButton";
             this.saveSetUpButton.Size = new System.Drawing.Size(96, 36);
             this.saveSetUpButton.TabIndex = 15;
             this.saveSetUpButton.Text = "Save Set Up";
             this.saveSetUpButton.UseVisualStyleBackColor = true;
             this.saveSetUpButton.Click += new System.EventHandler(this.saveSetUpButton_Click);
-            // 
-            // SaveButton
-            // 
-            this.SaveButton.Location = new System.Drawing.Point(5, 559);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(96, 36);
-            this.SaveButton.TabIndex = 14;
-            this.SaveButton.Text = "Save Game";
-            this.SaveButton.UseVisualStyleBackColor = true;
             // 
             // donePlacingButton
             // 
@@ -281,7 +303,7 @@
             // removeCheckBox
             // 
             this.removeCheckBox.AutoSize = true;
-            this.removeCheckBox.Location = new System.Drawing.Point(12, 684);
+            this.removeCheckBox.Location = new System.Drawing.Point(12, 638);
             this.removeCheckBox.Name = "removeCheckBox";
             this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
             this.removeCheckBox.TabIndex = 12;
@@ -458,6 +480,8 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.StrategoWin_Load);
             this.backPanel.ResumeLayout(false);
+            this.OptionsPanel.ResumeLayout(false);
+            this.OptionsPanel.PerformLayout();
             this.EndGamePanel.ResumeLayout(false);
             this.EndGamePanel.PerformLayout();
             this.SidePanel.ResumeLayout(false);
@@ -502,6 +526,8 @@
         private System.Windows.Forms.Button loadSetUpButton;
         private System.Windows.Forms.Button saveSetUpButton;
         private System.Windows.Forms.Button NextTurnButton;
+        private System.Windows.Forms.Panel OptionsPanel;
+        private System.Windows.Forms.Label OptionsLabel;
     }
 }
 

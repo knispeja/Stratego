@@ -807,6 +807,7 @@ namespace Stratego
                 i++;
             }
 
+            int difficulty = 5;
             string[] numbers = lines[0].Split(' ');
             this.turn = -2*Convert.ToInt32(numbers[0]);
             if (numbers[1] == "0")
@@ -814,6 +815,7 @@ namespace Stratego
             else
             {
                 this.isSinglePlayer = true;
+                difficulty = Convert.ToInt32(numbers[2]);
             }
 
             numbers = lines[1].Split(' ');
@@ -828,7 +830,7 @@ namespace Stratego
                 }
             }
             this.boardState = newBoard;
-            if (this.isSinglePlayer) this.ai = new AI(this, -1, Convert.ToInt32(numbers[2]));
+            if (this.isSinglePlayer) this.ai = new AI(this, -1, difficulty);
                 return true;
         }
         /// <summary>

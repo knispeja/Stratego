@@ -338,13 +338,13 @@ namespace Stratego
                 move.priority+=2;
             }
 
-            if (difficulty == 0)
+            if (this.difficulty == 0)
             {
                 // Just choose moves randomly, don't change priority
                 return;
             }
 
-            if (difficulty >= 2)
+            if (this.difficulty >= 2)
             {
                 // When a piece is currently in danger, moving it away is a good plan
                 // Basically, pieces next to enemy pieces take priority frequently
@@ -425,8 +425,11 @@ namespace Stratego
                     {
                         // The AI is going to die, and this move is a terrible decision 
                         // unless this is an even trade, in which case everything is mostly okay
-                        if (attackVal != 0) move.priority -= 500;
-                        else move.priority+=getPieceValue(attacker)/3;
+                        if (attackVal != 0)
+                        {
+                            move.priority -= 500;
+                        }
+                        else move.priority += getPieceValue(attacker) / 3;
 
                         return;
                     }

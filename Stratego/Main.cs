@@ -578,33 +578,47 @@ namespace Stratego
                 this.backPanel.Invalidate();
 
             //this.backPanel.Update();
-            if (this.turn == 1)
+            if(this.turn == 0)
             {
-                this.turn = -1;
-                if (this.preGameActive) this.placements = this.defaults;
+                preGameActive = true;
+                this.turn = 1;
             }
-            else
+            else if (this.turn == 1)
             {
-                if (this.turn == -1)
+                if (this.preGameActive)
                 {
-                    if (this.preGameActive == true)
+                    this.turn = -1;
+                    this.placements = this.defaults;
+                }
+                else
+                {
+                    this.turn = 2;
+                }
+            }
+            else if(this.turn == -1)
+            {
+                if (this.preGameActive)
+                {
+                    for (int i = 4; i < 6; i++)
                     {
-                        for (int i = 4; i < 6; i++)
-                        {
-                            for (int x = 0; x < 2; x++)
-                                this.boardState[x, i] = 0;
-                            for (int x = 4; x < 6; x++)
-                                this.boardState[x, i] = 0;
-                            for (int x = 8; x < 10; x++)
-                                this.boardState[x, i] = 0;
-                        }
-
+                        for (int x = 0; x < 2; x++)
+                            this.boardState[x, i] = 0;
+                        for (int x = 4; x < 6; x++)
+                            this.boardState[x, i] = 0;
+                        for (int x = 8; x < 10; x++)
+                            this.boardState[x, i] = 0;
                     }
                     this.preGameActive = false;
                 }
-                else
-                    this.preGameActive = true;
-                this.turn = 1;
+                this.turn = -2;
+            }
+            else if(this.turn == -2)
+            {
+                turn = 1;
+            }
+            else 
+            {
+                turn = -1;
             }
 
             if (this.isSinglePlayer && this.turn == this.ai.team && !this.testing)

@@ -436,73 +436,11 @@ namespace Stratego
 
                     // Now we can see whether or not the opponent will win if they
                     // try to attack us after we move, so we take that into account...
-
-                    /*
-                    int? nResult = Piece.attack(nPiece, attacker);
-                    int? eResult = Piece.attack(ePiece, attacker);
-                    int? sResult = Piece.attack(sPiece, attacker);
-                    int? wResult = Piece.attack(wPiece, attacker);
-                    if (Math.Abs(nPiece) == 11) nResult = attacker;
-                    if (Math.Abs(ePiece) == 11) eResult = attacker;
-                    if (Math.Abs(sPiece) == 11) sResult = attacker;
-                    if (Math.Abs(wPiece) == 11) wResult = attacker;
-
-                    if (nResult != nPiece && eResult != ePiece && sResult != sPiece && wResult != wPiece)
-                    {
-                        // If this piece will be safe despite nearby enemy pieces, up the priority more
-                        if (isEnemyPiece(nPiece) && (Math.Abs(nPiece) != 11 || Math.Abs(attacker) == 8))
-                            move.priority += getPieceValue(nPiece)/3;
-                        if (isEnemyPiece(ePiece) && (Math.Abs(ePiece) != 11 || Math.Abs(attacker) == 8))
-                            move.priority += getPieceValue(ePiece)/3;
-                        if (isEnemyPiece(sPiece) && (Math.Abs(sPiece) != 11 || Math.Abs(attacker) == 8))
-                            move.priority += getPieceValue(sPiece)/3;
-                        if (isEnemyPiece(wPiece) && (Math.Abs(wPiece) != 11 || Math.Abs(attacker) == 8))
-                            move.priority += getPieceValue(wPiece)/3;
-                    }
-                    else
-                    {
-                        bool protectorPresent = false;
-                        int dangerousPiece = 0;
-
-                        // Check if this piece is protected by a friendly one
-                        if (nResult == nPiece && Math.Abs(nPiece) != 11 && getPieceValue(nPiece) > getPieceValue(dangerousPiece)) dangerousPiece = nPiece;
-                        if (eResult == ePiece && Math.Abs(ePiece) != 11 && getPieceValue(ePiece) > getPieceValue(dangerousPiece)) dangerousPiece = ePiece;
-                        if (sResult == sPiece && Math.Abs(sPiece) != 11 && getPieceValue(sPiece) > getPieceValue(dangerousPiece)) dangerousPiece = sPiece;
-                        if (wResult == wPiece && Math.Abs(wPiece) != 11 && getPieceValue(wPiece) > getPieceValue(dangerousPiece)) dangerousPiece = wPiece;
-
-                        if (isFriendlyPiece(nPiece))
-                            if (Piece.attack(nPiece, dangerousPiece) == nPiece && Math.Abs(nPiece) != 11)
-                            {
-                                protectorPresent = true;
-                                move.priority += getPieceValue(dangerousPiece) / 4;
-                            }
-
-                        if (isFriendlyPiece(ePiece))
-                            if (Piece.attack(ePiece, dangerousPiece) == ePiece && Math.Abs(ePiece) != 11)
-                            {
-                                protectorPresent = true;
-                                move.priority += getPieceValue(dangerousPiece) / 4;
-                            }
-
-                        if (isFriendlyPiece(sPiece))
-                            if (Piece.attack(sPiece, dangerousPiece) != sPiece && Math.Abs(sPiece) != 11)
-                            {
-                                protectorPresent = true;
-                                move.priority += getPieceValue(dangerousPiece) / 4;
-                            }
-
-                        if (isFriendlyPiece(wPiece))
-                            if (Piece.attack(wPiece, dangerousPiece) != wPiece && Math.Abs(wPiece) != 11)
-                            {
-                                protectorPresent = true;
-                                move.priority += getPieceValue(dangerousPiece) / 4;
-                            }
-
-                        // This piece will be in danger, so lower the priority
-                        // by the value of the potentially lost piece
-                        if(!protectorPresent)
-                            move.priority -= getPieceValue(attacker)*4;
-                    } */
+                    int safety = safetyCheck(move.newX, move.newY, attacker, boardState);
+                    if (safety > 0)
+                        move.priority += safety;
+                    else if (safety < 0)
+                        move.priority += safety * 10;
                 }
             }
 

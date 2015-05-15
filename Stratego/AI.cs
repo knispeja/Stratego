@@ -437,8 +437,10 @@ namespace Stratego
                     // Now we can see whether or not the opponent will win if they
                     // try to attack us after we move, so we take that into account...
                     int safety = safetyCheck(move.newX, move.newY, attacker, boardState);
-                    if (safety > 0)
+                    if (safety > 0 && safety < 10)
                         move.priority += safety;
+                    else if (safety >= 10)
+                        move.priority -= getPieceValue(attacker);
                     else if (safety < 0)
                         move.priority += safety * 10;
                 }
@@ -469,34 +471,64 @@ namespace Stratego
         public int safetyCheck(int x, int y, int piece, int[,] boardState)
         {
             int enemies = 0;
-            for(int i=0; i<4; i++)
+            int bestFriendly = 42;
+            bool friendlySpy = false;
+            int protector = 1;
+            for (int first = 0; first < 2; first++)
             {
-                int newx = x, newy = y;
-                int? result = null;
-                if (i == 0 && x != 0)
-                    newx = x - 1;
-                else if (i == 1 && y != this.boardY - 1)
-                    newy = y + 1;
-                else if (i == 2 && x != this.boardX - 1)
-                    newx = x + 1;
-                else if (i == 3 && y != 0)
-                    newy = y - 1;
-
-                int dPiece = 0;
-                if (newx != x || newy != y)
+                for (int i = 0; i < 4; i++)
                 {
-                    dPiece = boardState[newx, newy];
-                    if (Math.Abs(dPiece) == 11)
-                        result = piece;
-                    else
-                        result = Piece.attack(dPiece, piece);
-                }
+                    int newx = x, newy = y;
+                    int? result = null;
+                    if (i == 0 && x != 0)
+                        newx = x - 1;
+                    else if (i == 1 && y != this.boardY - 1)
+                        newy = y + 1;
+                    else if (i == 2 && x != this.boardX - 1)
+                        newx = x + 1;
+                    else if (i == 3 && y != 0)
+                        newy = y - 1;
 
-                if (result != null && result != piece)
-                    return -1;
-                else if (isEnemyPiece(dPiece)) enemies++;
+                    int dPiece = 0;
+                    if (newx != x || newy != y)
+                    {
+                        dPiece = boardState[newx, newy];
+                        if (first != 0)
+                        {
+                            if (Math.Abs(dPiece) == 11)
+                                result = piece;
+                            else
+                                result = Piece.attack(dPiece, piece);
+                        }
+                        else
+                        {
+                            if (Math.Abs(dPiece) < Math.Abs(bestFriendly) && isFriendlyPiece(dPiece))
+                                bestFriendly = dPiece;
+                            if (Math.Abs(dPiece) == 10)
+                                friendlySpy = true;
+                        }
+                    }
+
+                    if (first != 0)
+                    {
+                        if (result != null && result != piece)
+                        {
+                            if(bestFriendly != 42)
+                            {
+                                if (Piece.attack(bestFriendly, dPiece) == bestFriendly)
+                                {
+                                    protector = 10;
+                                    enemies++;
+                                }
+                                else return -1;
+                            }
+                            else return -1;
+                        }
+                        else if (isEnemyPiece(dPiece)) enemies++;
+                    }
+                }
             }
-            return enemies;
+            return enemies*protector;
         }
 
         /// <summary>

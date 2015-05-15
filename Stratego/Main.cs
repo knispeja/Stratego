@@ -848,7 +848,7 @@ namespace Stratego
         /// <returns> True if successful </returns> 
         public bool saveGame(TextWriter writer)
         {
-            if ((this.turn == 0)||(this.preGameActive)) return false;
+            if ((this.turn == 0)||(this.preGameActive)||(Math.Abs(this.turn)==2)) return false;
 
             string buffer = "";
             if (isSinglePlayer)

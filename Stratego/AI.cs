@@ -535,7 +535,7 @@ namespace Stratego
                     newx = x - 1;
                 else if (i == 1 && y != this.boardY - 1)
                     newy = y + 1;
-                else if (i == 2)
+                else if (i == 2 && x != this.boardX - 1)
                     newx = x + 1;
 
                 if(newx != x || newy != y)

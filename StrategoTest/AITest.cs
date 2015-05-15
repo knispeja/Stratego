@@ -284,10 +284,10 @@ namespace StrategoTest
         [TestCase(-1, 2, 7, 0, 7, 0, 0, -1, 1)]
         [TestCase(1, 6, 8, -8, -12, -4, -9, 3, 4)]
         // Tests that bomb is included as a harmless enemy
-        [TestCase(-1, 6, 6, 0, 10, 0, 11, -5, 1)]
-        [TestCase(1, 3, 8, -10, -10, 5, -11, 9, 2)]
-        [TestCase(-1, 2, 7, 0, 11, 0, 0, -1, 0)]
-        [TestCase(1, 6, 8, -8, -12, -11, -9, 3, 3)]
+        [TestCase(-1, 6, 6, 0, 10, 0, 11, -5, 2)]
+        [TestCase(1, 3, 8, -10, -10, 5, -11, 9, 3)]
+        [TestCase(-1, 2, 7, 0, 11, 0, 0, -1, 1)]
+        [TestCase(1, 6, 8, -8, -12, -11, -9, 3, 4)]
         // Tests that safetyCheck() recognizes an enemy is harmless when a friendly is acting as a protector
         // In other words, makes sure -1 is not returned if after the enemy kills this piece, a different friendly piece can take the enemy
 

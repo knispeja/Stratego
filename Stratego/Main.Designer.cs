@@ -41,6 +41,8 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.pauseLabel = new System.Windows.Forms.Label();
             this.optionsGroup = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.AIDifficultyChanger = new System.Windows.Forms.DomainUpDown();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.NextTurnButton = new System.Windows.Forms.Button();
             this.EndGamePanel = new System.Windows.Forms.Panel();
@@ -70,6 +72,7 @@
             this.FireBox = new System.Windows.Forms.PictureBox();
             this.backPanel.SuspendLayout();
             this.OptionsPanel.SuspendLayout();
+            this.optionsGroup.SuspendLayout();
             this.EndGamePanel.SuspendLayout();
             this.SidePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
@@ -208,6 +211,8 @@
             // 
             // optionsGroup
             // 
+            this.optionsGroup.Controls.Add(this.label1);
+            this.optionsGroup.Controls.Add(this.AIDifficultyChanger);
             this.optionsGroup.Font = new System.Drawing.Font("Palatino Linotype", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.optionsGroup.Location = new System.Drawing.Point(35, 94);
             this.optionsGroup.Name = "optionsGroup";
@@ -215,6 +220,31 @@
             this.optionsGroup.TabIndex = 15;
             this.optionsGroup.TabStop = false;
             this.optionsGroup.Text = "Options";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(268, 202);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(139, 28);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "AI Difficulty:";
+            // 
+            // AIDifficultyChanger
+            // 
+            this.AIDifficultyChanger.Items.Add("5");
+            this.AIDifficultyChanger.Items.Add("4");
+            this.AIDifficultyChanger.Items.Add("3");
+            this.AIDifficultyChanger.Items.Add("2");
+            this.AIDifficultyChanger.Items.Add("1");
+            this.AIDifficultyChanger.Items.Add("0");
+            this.AIDifficultyChanger.Location = new System.Drawing.Point(410, 201);
+            this.AIDifficultyChanger.Name = "AIDifficultyChanger";
+            this.AIDifficultyChanger.ReadOnly = true;
+            this.AIDifficultyChanger.Size = new System.Drawing.Size(39, 36);
+            this.AIDifficultyChanger.TabIndex = 0;
+            this.AIDifficultyChanger.Text = "5";
+            this.AIDifficultyChanger.SelectedItemChanged += new System.EventHandler(this.AIDifficultyChanger_SelectedItemChanged);
             // 
             // PauseMenuExitButton
             // 
@@ -542,6 +572,8 @@
             this.backPanel.ResumeLayout(false);
             this.OptionsPanel.ResumeLayout(false);
             this.OptionsPanel.PerformLayout();
+            this.optionsGroup.ResumeLayout(false);
+            this.optionsGroup.PerformLayout();
             this.EndGamePanel.ResumeLayout(false);
             this.EndGamePanel.PerformLayout();
             this.SidePanel.ResumeLayout(false);
@@ -592,6 +624,8 @@
         private System.Windows.Forms.Button xButton;
         private System.Windows.Forms.Button concedeButton;
         private System.Windows.Forms.Button returnToMenuButton;
+        private System.Windows.Forms.DomainUpDown AIDifficultyChanger;
+        private System.Windows.Forms.Label label1;
     }
 }
 

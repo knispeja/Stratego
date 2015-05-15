@@ -1379,5 +1379,11 @@ namespace Stratego
             this.StartButton.Visible = true;
             this.backPanel.Invalidate();
         }
+
+        private void AIDifficultyChanger_SelectedItemChanged(object sender, EventArgs e)
+        {
+            if (this.ai != null)
+                this.ai.difficulty = Convert.ToInt32(this.AIDifficultyChanger.SelectedItem);
+        }
     }
 }

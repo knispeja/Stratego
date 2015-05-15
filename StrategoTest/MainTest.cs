@@ -1731,8 +1731,6 @@ namespace StrategoTest
             Assert.IsFalse(game.saveGame(new StringWriter()));
             Assert.IsFalse(game.SelectPiece(0, 0).Value);
             Assert.IsFalse(game.SelectPiece(900, 900).Value);
-
-
             
         }
     }

@@ -150,6 +150,7 @@ namespace Stratego
                     this.LoadButton.Visible = false;
                     this.SinglePlayerButton.Visible = false;
                     this.SidePanelOpenButton.Visible = true;
+                    this.NextTurnButton.Visible = true;
                     this.lastFought = new Point(-1, -1);
 
                     foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -777,7 +778,7 @@ namespace Stratego
             }
 
             string[] numbers = lines[0].Split(' ');
-            this.turn = Convert.ToInt32(numbers[0]);
+            this.turn = -2*Convert.ToInt32(numbers[0]);
             if (numbers[1] == "0")
                 this.isSinglePlayer = false;
             else

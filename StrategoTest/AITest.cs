@@ -260,10 +260,11 @@ namespace StrategoTest
         // Tests that safetyCheck() notices when the piece is in danger
         [TestCase(-1, 5, 5, 0, 0, 0, 1, -9, -1)]
         [TestCase(-1, 5, 5, 0, 0, 0, 5, -7, -1)]
-        [TestCase(1, 0, 9, 0, 0, 0, -10, 1, -1)]
         // Tests that safetyCheck() returns 0 when there are no enemy pieces around
         [TestCase(-1, 4, 7, 0, 0, 0, 0, -4, 0)]
         [TestCase(1, 2, 1, 0, 0, 0, 1, 9, 0)]
+        // Tests that safetyCheck() doesn't break on the edges of the map
+        [TestCase(1, 0, 9, 0, 0, 0, -10, 1, 0)]
         public void TestSafetyCheck(int team, int x, int y, int nPiece, int ePiece, int sPiece, int wPiece, int piece, int expected)
         {
             int[,] gameBoard = new int[10, 10];

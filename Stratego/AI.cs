@@ -486,7 +486,10 @@ namespace Stratego
                 if (newx != x || newy != y)
                 {
                     dPiece = boardState[newx, newy];
-                    result = Piece.attack(dPiece, piece);
+                    if (Math.Abs(dPiece) == 11)
+                        result = piece;
+                    else
+                        result = Piece.attack(dPiece, piece);
                 }
 
                 if (result != null && result != piece)

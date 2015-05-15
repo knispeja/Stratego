@@ -256,6 +256,24 @@ namespace StrategoTest
             AI ai = new AI(win, team);
             Assert.AreEqual(expected, ai.isFriendlyPiece(piece));
         }
+
+        // Tests that safetyCheck() notices when the piece is in danger
+        [TestCase(5, 5, 0, 0, 0, -1, 9, -1)]
+        public void TestIsFriendlyPiece(int x, int y, int nPiece, int ePiece, int sPiece, int wPiece, int piece, int expected)
+        {
+            int[,] gameBoard = new int[10, 10];
+
+            gameBoard[x, y] = piece;
+            if (y != 0) gameBoard[x, y - 1] = nPiece;
+            if (x != 9) gameBoard[x + 1, y] = ePiece;
+            if (y != 9) gameBoard[x, y + 1] = sPiece;
+            if (x != 0) gameBoard[x - 1, y] = wPiece;
+
+            StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
+
+            AI ai = new AI(win, -1);
+            Assert.AreEqual(expected, ai.safetyCheck(x, y, piece, gameBoard));
+        }
     }
 
     }

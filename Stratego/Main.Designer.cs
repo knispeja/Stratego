@@ -135,7 +135,7 @@
             this.NextTurnButton.Name = "NextTurnButton";
             this.NextTurnButton.Size = new System.Drawing.Size(129, 59);
             this.NextTurnButton.TabIndex = 2;
-            this.NextTurnButton.Text = "Next Turn";
+            this.NextTurnButton.Text = "Player 1\'s Turn";
             this.NextTurnButton.UseVisualStyleBackColor = true;
             this.NextTurnButton.Visible = false;
             this.NextTurnButton.Click += new System.EventHandler(this.NextTurnButton_Click);

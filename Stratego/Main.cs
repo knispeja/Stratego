@@ -150,6 +150,8 @@ namespace Stratego
                     this.LoadButton.Visible = false;
                     this.SinglePlayerButton.Visible = false;
                     this.SidePanelOpenButton.Visible = true;
+                    if (this.turn == 2)
+                        this.NextTurnButton.Text = "AI's Turn";
                     this.NextTurnButton.Visible = true;
                     this.backPanel.Focus();
                     this.lastFought = new Point(-1, -1);

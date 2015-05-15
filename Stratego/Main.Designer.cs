@@ -153,16 +153,7 @@
             this.OptionsPanel.TabIndex = 9;
             this.OptionsPanel.Visible = false;
             // 
-<<<<<<< HEAD
-            // OptionsLabel
-            // 
-            this.OptionsLabel.AutoSize = true;
-            this.OptionsLabel.Location = new System.Drawing.Point(251, 42);
-            this.OptionsLabel.Name = "OptionsLabel";
-            this.OptionsLabel.Size = new System.Drawing.Size(43, 13);
-            this.OptionsLabel.TabIndex = 0;
-            this.OptionsLabel.Text = "Options";
-=======
+
             // xButton
             // 
             this.xButton.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -194,7 +185,7 @@
             this.returnToMenuButton.TabIndex = 17;
             this.returnToMenuButton.Text = "Quit to Main Menu";
             this.returnToMenuButton.UseVisualStyleBackColor = true;
->>>>>>> origin/master
+
             // 
             // SaveButton
             // 

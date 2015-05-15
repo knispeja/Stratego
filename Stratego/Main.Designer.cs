@@ -147,11 +147,12 @@
             this.OptionsPanel.Controls.Add(this.pauseLabel);
             this.OptionsPanel.Controls.Add(this.optionsGroup);
             this.OptionsPanel.Controls.Add(this.PauseMenuExitButton);
-            this.OptionsPanel.Location = new System.Drawing.Point(510, 186);
+            this.OptionsPanel.Location = new System.Drawing.Point(516, 126);
             this.OptionsPanel.Name = "OptionsPanel";
             this.OptionsPanel.Size = new System.Drawing.Size(553, 552);
             this.OptionsPanel.TabIndex = 9;
             this.OptionsPanel.Visible = false;
+            // 
             // xButton
             // 
             this.xButton.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -183,6 +184,7 @@
             this.returnToMenuButton.TabIndex = 17;
             this.returnToMenuButton.Text = "Quit to Main Menu";
             this.returnToMenuButton.UseVisualStyleBackColor = true;
+            this.returnToMenuButton.Click += new System.EventHandler(this.returnToMenuButton_Click);
             // 
             // SaveButton
             // 
@@ -231,7 +233,7 @@
             // 
             this.NextTurnButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.NextTurnButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NextTurnButton.Location = new System.Drawing.Point(745, 457);
+            this.NextTurnButton.Location = new System.Drawing.Point(745, 423);
             this.NextTurnButton.Name = "NextTurnButton";
             this.NextTurnButton.Size = new System.Drawing.Size(129, 70);
             this.NextTurnButton.TabIndex = 2;

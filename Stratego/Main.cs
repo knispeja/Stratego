@@ -543,6 +543,7 @@ namespace Stratego
         /// <returns>Whether or not the placement was successful</returns>
         public bool? placePiece(int piece, int x, int y)
         {
+            if (turn == 0 || Math.Abs(turn) == 2) return false;
             if (Math.Abs(piece) > 12 || x<0 || y<0 || x>this.panelWidth || y>this.panelHeight) throw new ArgumentException();
             if ((Math.Sign(piece) != Math.Sign(this.turn)) &&(piece!=0)) return false;
             Boolean retVal = true;

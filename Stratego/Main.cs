@@ -157,6 +157,7 @@ namespace Stratego
                     else if (this.turn == 2)
                         this.NextTurnButton.Text = "Player 2's Turn";
                     this.NextTurnButton.Visible = true;
+                    this.preGameActive = false;
                     this.backPanel.Focus();
                     this.lastFought = new Point(-1, -1);
 
@@ -965,6 +966,8 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
+            if (this.turn == 0) return;
+
             if (preGameActive)
             {
                 bool? piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
@@ -1355,6 +1358,24 @@ namespace Stratego
         private void concedeButton_Click(object sender, EventArgs e)
         {
             this.backPanel.Focus();
+        }
+
+        private void returnToMenuButton_Click(object sender, EventArgs e)
+        {
+            this.preGameActive = false;
+            this.turn = 0;
+            this.boardState = new int[this.boardState.GetLength(0), this.boardState.GetLength(1)];
+            this.placements = (int[])this.defaults.Clone();
+            this.backPanel.BackgroundImage = Properties.Resources.AniFire;
+            this.LoadButton.Visible = true;
+            this.SinglePlayerButton.Visible = true;
+            this.SidePanelOpenButton.Visible = false;
+            this.NextTurnButton.Visible = false;
+            this.SidePanel.Visible = false;
+            this.OptionsPanel.Visible = false;
+            this.TitlePictureBox.Visible = true;
+            this.StartButton.Visible = true;
+            this.backPanel.Invalidate();
         }
     }
 }

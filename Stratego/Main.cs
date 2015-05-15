@@ -758,7 +758,7 @@ namespace Stratego
                 else
                     this.EndGameTextBox.Text = "RED PLAYER WINS.";
 
-                this.backPanel.Enabled = false;
+ 
                 this.EndGamePanel.Visible = true;
                 this.EndGamePanel.Enabled = true;
                 this.EndGamePanel.Focus();
@@ -770,7 +770,6 @@ namespace Stratego
                 else
                     this.EndGameTextBox.Text = "BLUE PLAYER WINS.";
 
-                //this.backPanel.Enabled = false;
                 this.EndGamePanel.Visible = true;
                 this.EndGamePanel.Enabled = true;
                 this.EndGamePanel.Focus();

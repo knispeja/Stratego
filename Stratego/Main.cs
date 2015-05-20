@@ -1034,26 +1034,21 @@ namespace Stratego
                 string keyChar = kc.ConvertToString(e.KeyCode);
                 if (e.KeyCode == Keys.Escape)
                 {
-                    //this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
+                    // Change the pause panel's visibility to whatever it's not
                     this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
-                    //Make the escape/pause/whatever panel visible
                 }
                 else if(e.KeyCode == Keys.ShiftKey && this.preGameActive)
                 {
-                    if (this.SidePanel.Visible && !this.testing)
-                    {
+                    if (this.SidePanel.Visible)
                         this.SidePanelOpenButton.Text = "Open Side";
-                    }
-                    else if(!this.testing)
-                    {
+                    else
                         this.SidePanelOpenButton.Text = "Close Side";
-                    }
                     this.SidePanel.Visible = !this.SidePanel.Visible;
                 }
-                else if(e.KeyCode == Keys.Enter&& Math.Abs(turn)==2)
+                else if(e.KeyCode == Keys.Enter && Math.Abs(turn) == 2)
                 {
                     NextTurnButton.Visible = false;
-            this.nextTurn();
+                    this.nextTurn();
                 }
             }
             else if (this.preGameActive)
@@ -1344,27 +1339,28 @@ namespace Stratego
 
         private void concedeButton_Click(object sender, EventArgs e)
         {
+            // This should always be true, but if 0 was passed into gameOver() bad things would happen
+            if (Math.Abs(this.turn) == 1)
+                gameOver(-1*this.turn);
             this.backPanel.Focus();
         }
 
+        /// <summary>
+        /// Returns to the main menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void returnToMenuButton_Click(object sender, EventArgs e)
         {
-            this.preGameActive = false;
-            this.turn = 0;
-            this.boardState = new int[this.boardState.GetLength(0), this.boardState.GetLength(1)];
-            this.placements = (int[])this.defaults.Clone();
-            this.backPanel.BackgroundImage = Properties.Resources.AniFire;
-            this.LoadButton.Visible = true;
-            this.SinglePlayerButton.Visible = true;
-            this.SidePanelOpenButton.Visible = false;
-            this.NextTurnButton.Visible = false;
-            this.SidePanel.Visible = false;
-            this.OptionsPanel.Visible = false;
-            this.TitlePictureBox.Visible = true;
-            this.StartButton.Visible = true;
-            this.backPanel.Invalidate();
+            // Just restart the application, since the main menu opens right at the beginning anyway
+            Application.Restart();
         }
 
+        /// <summary>
+        /// Changes the difficulty variable whenever the difficulty in the options menu is altered
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AIDifficultyChanger_SelectedItemChanged(object sender, EventArgs e)
         {
             if (this.ai != null)
@@ -1377,25 +1373,30 @@ namespace Stratego
         /// <param name="winnerTeam"></param>
         public void gameOver(int winnerTeam)
         {
-            if (winnerTeam == 1)
+            if (!this.testing)
             {
-                if (this.isSinglePlayer)
-                    this.victoryLabel.Text = "YOU ARE VICTORIOUS, PLAYER 1.";
+                this.OptionsPanel.Visible = false;
+
+                if (winnerTeam == 1)
+                {
+                    if (this.isSinglePlayer)
+                        this.victoryLabel.Text = "YOU ARE VICTORIOUS, PLAYER 1.";
+                    else
+                        this.victoryLabel.Text = "BLUE PLAYER WINS.";
+                }
                 else
-                    this.victoryLabel.Text = "BLUE PLAYER WINS.";
-            }
-            else
-            {
-                if (this.isSinglePlayer)
-                    this.victoryLabel.Text = "WOW, YOU LOST TO THAT? ...SERIOUSLY?";
-                else
-                    this.victoryLabel.Text = "RED PLAYER WINS.";
-            }
+                {
+                    if (this.isSinglePlayer)
+                        this.victoryLabel.Text = "WOW, YOU LOST TO THAT? ...SERIOUSLY?";
+                    else
+                        this.victoryLabel.Text = "RED PLAYER WINS.";
+                }
 
 
-            this.EndGamePanel.Visible = true;
-            this.EndGamePanel.Enabled = true;
-            this.EndGamePanel.Focus();
+                this.EndGamePanel.Visible = true;
+                this.EndGamePanel.Enabled = true;
+                this.EndGamePanel.Focus();
+            }
         }
     }
 }

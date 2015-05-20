@@ -344,7 +344,7 @@ namespace Stratego
                                     Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55))/2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                     if (turn == 1 ||this.lastFought.Equals(new Point (x, y)))
                                     {
-                                        Image imag = Properties.Resources.BlueScoutN;
+                                        Image imag = Properties.Resources.BlueScout;
                                         e.Graphics.DrawImage(imag, r);
                                         if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
                                             pen.Color = Color.FromArgb(10, 255, 10);

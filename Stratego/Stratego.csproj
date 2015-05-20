@@ -70,19 +70,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -111,9 +111,6 @@
     <None Include="Resources\Stratego-logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Captu4re.PNG" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Stratego-logo1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -129,22 +126,16 @@
     <None Include="Resources\Options.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\stregm.jpg" />
+    <None Include="Resources\BlueBomb.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Scout.png" />
+    <None Include="Resources\BlueCaptain.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BlueScout.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BlueBomb.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\BlueSpy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\BlueScoutN.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RedBomb.png" />
@@ -157,9 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RedSpy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\BlueCaptain.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BoardUpdate.png" />

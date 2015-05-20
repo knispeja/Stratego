@@ -112,16 +112,6 @@ namespace Stratego.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BlueScoutN {
-            get {
-                object obj = ResourceManager.GetObject("BlueScoutN", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap BlueSpy {
             get {
                 object obj = ResourceManager.GetObject("BlueSpy", resourceCulture);
@@ -132,29 +122,9 @@ namespace Stratego.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Board {
-            get {
-                object obj = ResourceManager.GetObject("Board", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap BoardUpdate {
             get {
                 object obj = ResourceManager.GetObject("BoardUpdate", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Captu4re {
-            get {
-                object obj = ResourceManager.GetObject("Captu4re", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -204,16 +174,6 @@ namespace Stratego.Properties {
         internal static System.Drawing.Bitmap RedSpy {
             get {
                 object obj = ResourceManager.GetObject("RedSpy", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Scout {
-            get {
-                object obj = ResourceManager.GetObject("Scout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

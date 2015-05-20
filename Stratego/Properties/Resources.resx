@@ -130,23 +130,11 @@
   <data name="AniFire" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AniFire.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Captu4re" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Captu4re.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="StartButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StartButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="StartButtonClick" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StartButtonClick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Board" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\stregm.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BlueScout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlueScout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Scout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ScoutVlaue" xml:space="preserve">
     <value>1</value>
@@ -158,11 +146,14 @@
   <data name="BlueCaptain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BlueCaptain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BlueScoutN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlueScoutN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BlueScout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueScout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BlueSpy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BlueSpy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BoardUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BoardUpdate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RedBomb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RedBomb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,8 +166,5 @@
   </data>
   <data name="RedSpy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RedSpy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BoardUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BoardUpdate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

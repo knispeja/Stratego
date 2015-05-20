@@ -765,30 +765,16 @@ namespace Stratego
             this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
             if (defender == 12)
             {
-                if (this.isSinglePlayer)
-                    this.EndGameTextBox.Text = "YOU LOST! HA! DUMMY!";
-                else
-                    this.EndGameTextBox.Text = "RED PLAYER WINS.";
-
- 
-                this.EndGamePanel.Visible = true;
-                this.EndGamePanel.Enabled = true;
-                this.EndGamePanel.Focus();
+                gameOver(-1);
             }
             else if (defender == -12)
             {
-                if (this.isSinglePlayer)
-                    this.EndGameTextBox.Text = "YOU ARE VICTORIOUS. READY PLAYER 1.";
-                else
-                    this.EndGameTextBox.Text = "BLUE PLAYER WINS.";
-
-                this.EndGamePanel.Visible = true;
-                this.EndGamePanel.Enabled = true;
-                this.EndGamePanel.Focus();
+                gameOver(1);
             }
             else { this.nextTurn(); }
             return true;
         }
+
         /// <summary>
         /// Loads a gamestate from the given reader 
         /// </summary>
@@ -1076,19 +1062,18 @@ namespace Stratego
                 string keyChar = kc.ConvertToString(e.KeyCode);
                 if(e.KeyCode==Keys.Escape)
                 {
-                    //this.PauseMenuExitButton.Visible = !this.PauseMenuExitButton.Visible;
+                    //Make the escape/pause/options panel visible
                     this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
-
-                    //Make the escape/pause/whatever panel visible
                 }
                 else if (e.KeyCode == Keys.ShiftKey)
                 {
-                    if (this.SidePanel.Visible && !this.testing)
+                    // Either open or close the side panel depending on whatever
+                    if (this.SidePanel.Visible)
                     {
                         this.backPanel.Focus();
                         this.SidePanelOpenButton.Text = "Open Side";
                     }
-                    else if (!this.testing)
+                    else
                     {
                         this.SidePanelOpenButton.Text = "Close Side";
                     }
@@ -1269,7 +1254,7 @@ namespace Stratego
             this.backPanel.Invalidate();
         }
         /// <summary>
-        /// 
+        /// Handles what happens when the "save setup" button is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1300,7 +1285,7 @@ namespace Stratego
             }
         }
         /// <summary>
-        /// 
+        /// Handles what happens when the "load setup" button is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1384,6 +1369,33 @@ namespace Stratego
         {
             if (this.ai != null)
                 this.ai.difficulty = Convert.ToInt32(this.AIDifficultyChanger.SelectedItem);
+        }
+
+        /// <summary>
+        /// Handles the end of the game when player on the given team wins
+        /// </summary>
+        /// <param name="winnerTeam"></param>
+        public void gameOver(int winnerTeam)
+        {
+            if (winnerTeam == 1)
+            {
+                if (this.isSinglePlayer)
+                    this.victoryLabel.Text = "YOU ARE VICTORIOUS, PLAYER 1.";
+                else
+                    this.victoryLabel.Text = "BLUE PLAYER WINS.";
+            }
+            else
+            {
+                if (this.isSinglePlayer)
+                    this.victoryLabel.Text = "WOW, YOU LOST TO THAT? ...SERIOUSLY?";
+                else
+                    this.victoryLabel.Text = "RED PLAYER WINS.";
+            }
+
+
+            this.EndGamePanel.Visible = true;
+            this.EndGamePanel.Enabled = true;
+            this.EndGamePanel.Focus();
         }
     }
 }

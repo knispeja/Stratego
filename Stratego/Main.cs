@@ -872,7 +872,7 @@ namespace Stratego
             {
                 this.backPanel.Invalidate();
 
-                for (i = 0; i < this.placements.Length; i++)
+                for (i = 1; i < this.placements.Length; i++)
                 {
                     if (this.placements[i] != 0)
                     {

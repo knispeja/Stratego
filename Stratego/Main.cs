@@ -583,19 +583,22 @@ namespace Stratego
         }
 
         /// <summary>
-        /// 
+        /// Looks at the current turn, and changes it to whatever the next turn should be.
+        /// Handles global game variables like the stage of the game and so on.
+        /// Also sends a call to the AI to notify it that it's time to take its turn when necessary.
         /// </summary>
         public void nextTurn() 
         {
             if(!testing)
                 this.backPanel.Invalidate();
 
-            //this.backPanel.Update();
+            // We just came here from the main menu
             if(this.turn == 0)
             {
                 preGameActive = true;
                 this.turn = 1;
             }
+            // It's blue player's turn
             else if (this.turn == 1)
             {
                 if (this.preGameActive)
@@ -617,6 +620,7 @@ namespace Stratego
                     this.turn = 2;
                 }
             }
+            // It's red player's turn
             else if(this.turn == -1)
             {
                 if (this.preGameActive)
@@ -712,7 +716,8 @@ namespace Stratego
                     return false;
             }
             else
-            { //Check for the special 9 cases.
+            { 
+                //Check for the scout's special cases
                 if(Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) > 1)
                 {
                     if (((x / scaleX) - this.pieceSelectedCoords.X) > 1)
@@ -990,6 +995,7 @@ namespace Stratego
                     for (int y = 0; y < this.boardState.GetLength(1); y++)
                         if (pieceMoves[x, y] == 1)
                             this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
+
                 Rectangle r = new Rectangle(this.pieceSelectedCoords.X * scaleX, this.pieceSelectedCoords.Y * scaleY, scaleX, scaleY);
                 this.backPanel.Invalidate(r);
                 this.MovePiece(e.X, e.Y);
@@ -1069,16 +1075,12 @@ namespace Stratego
                         this.SidePanelOpenButton.Text = "Open Side";
                     }
                     else
-                    {
                         this.SidePanelOpenButton.Text = "Close Side";
-                    }
                     this.SidePanel.Visible = !this.SidePanel.Visible;
                 }
                 double num;
                 if (double.TryParse(keyChar, out num))
-                {
                     this.piecePlacing = ((int)num) * this.turn;
-                }
                 else
                 {
                     if (keyChar == "S")

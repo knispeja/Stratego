@@ -26,8 +26,6 @@ namespace Stratego
         private static int MAX_RECURSION_DEPTH = 1;
         private static int MAX_TURNS_FORWARD = 20;
 
-        //private int targetPiece;
-
         /// <summary>
         /// Initializes this AI player
         /// </summary>
@@ -193,9 +191,21 @@ namespace Stratego
             int? attackVal = Piece.attack(piece, boardState[move.newX, move.newY]);
             if(attackVal == null)
                 throw new Exception();
-            boardState[move.newX, move.newY] = (int) attackVal;
+
+            // We aren't currently doing an evaluateMoveRecursive()...
+            if (this.recursionLevel == 0)
+            {
+                // Check if the AI just won the game
+                if (boardState[move.newX, move.newY] == this.team * -12)
+                {
+                    this.win.gameOver(this.team);
+                    return;
+                }
+            }
             
-            if(this.recursionLevel == 0)
+            boardState[move.newX, move.newY] = (int) attackVal;
+
+            if (this.recursionLevel == 0)
                 win.nextTurn();
         }
 
@@ -591,7 +601,18 @@ namespace Stratego
         public void executeHighestPriorityMove(List<Move> moves, int[,] boardState)
         {
             if (moves.Count == 0)
-                return;
+            {
+                if(this.recursionLevel == 0)
+                {
+                    this.win.gameOver(-1 * this.team);
+                    return;
+                }
+                else if(!this.boardValDisabled)
+                {
+                    // We're currently in move recursion and just lost pretty bad, so...
+                    this.boardValue -= 1000;
+                }
+            }
 
             List<Move> intermediateMoves = new List<Move>();
             List<Move> finalMoves = new List<Move>();

@@ -611,6 +611,13 @@ namespace Stratego
                 {
                     // We're currently in move recursion and just lost pretty bad, so...
                     this.boardValue -= 1000;
+                    return;
+                }
+                else
+                {
+                    // I don't think this case should ever happen, but I'm leaving it here for safety
+                    Console.Error.WriteLine("AI: Special case occurred in executeHighestPriorityMove()!");
+                    return;
                 }
             }
 

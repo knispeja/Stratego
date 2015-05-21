@@ -1316,7 +1316,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            if (this.turn == 0) return;
+            if (this.turn == 0 || this.OptionsPanel.Visible) return;
 
             if (preGameActive)
             {

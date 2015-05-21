@@ -46,6 +46,7 @@
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
             this.NextTurnButton = new System.Windows.Forms.Button();
             this.EndGamePanel = new System.Windows.Forms.Panel();
+            this.victoryLabel = new System.Windows.Forms.Label();
             this.EndGameExitButton = new System.Windows.Forms.Button();
             this.PlayAgainButton = new System.Windows.Forms.Button();
             this.SinglePlayerButton = new System.Windows.Forms.Button();
@@ -69,7 +70,8 @@
             this.place1Button = new System.Windows.Forms.Button();
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
-            this.victoryLabel = new System.Windows.Forms.Label();
+            this.movableBombCB = new System.Windows.Forms.CheckBox();
+            this.movableFlagCB = new System.Windows.Forms.CheckBox();
             this.backPanel.SuspendLayout();
             this.OptionsPanel.SuspendLayout();
             this.optionsGroup.SuspendLayout();
@@ -198,6 +200,7 @@
             this.SaveButton.TabIndex = 14;
             this.SaveButton.Text = "Save Game";
             this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // pauseLabel
             // 
@@ -211,6 +214,8 @@
             // 
             // optionsGroup
             // 
+            this.optionsGroup.Controls.Add(this.movableFlagCB);
+            this.optionsGroup.Controls.Add(this.movableBombCB);
             this.optionsGroup.Controls.Add(this.label1);
             this.optionsGroup.Controls.Add(this.AIDifficultyChanger);
             this.optionsGroup.Font = new System.Drawing.Font("Palatino Linotype", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -285,6 +290,16 @@
             this.EndGamePanel.TabIndex = 8;
             this.EndGamePanel.Visible = false;
             // 
+            // victoryLabel
+            // 
+            this.victoryLabel.Font = new System.Drawing.Font("Palatino Linotype", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.victoryLabel.Location = new System.Drawing.Point(24, 29);
+            this.victoryLabel.Name = "victoryLabel";
+            this.victoryLabel.Size = new System.Drawing.Size(414, 250);
+            this.victoryLabel.TabIndex = 3;
+            this.victoryLabel.Text = "This should never display.";
+            this.victoryLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // EndGameExitButton
             // 
             this.EndGameExitButton.Location = new System.Drawing.Point(291, 296);
@@ -327,6 +342,7 @@
             this.LoadButton.Text = "Load Game";
             this.LoadButton.UseVisualStyleBackColor = true;
             this.LoadButton.Visible = false;
+            this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
             // 
             // SidePanel
             // 
@@ -547,15 +563,25 @@
             this.FireBox.TabStop = false;
             this.FireBox.Visible = false;
             // 
-            // victoryLabel
+            // movableBombCB
             // 
-            this.victoryLabel.Font = new System.Drawing.Font("Palatino Linotype", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.victoryLabel.Location = new System.Drawing.Point(24, 29);
-            this.victoryLabel.Name = "victoryLabel";
-            this.victoryLabel.Size = new System.Drawing.Size(414, 250);
-            this.victoryLabel.TabIndex = 3;
-            this.victoryLabel.Text = "This should never display.";
-            this.victoryLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.movableBombCB.AutoSize = true;
+            this.movableBombCB.Location = new System.Drawing.Point(33, 47);
+            this.movableBombCB.Name = "movableBombCB";
+            this.movableBombCB.Size = new System.Drawing.Size(189, 32);
+            this.movableBombCB.TabIndex = 2;
+            this.movableBombCB.Text = "Movable Bombs";
+            this.movableBombCB.UseVisualStyleBackColor = true;
+            // 
+            // movableFlagCB
+            // 
+            this.movableFlagCB.AutoSize = true;
+            this.movableFlagCB.Location = new System.Drawing.Point(33, 102);
+            this.movableFlagCB.Name = "movableFlagCB";
+            this.movableFlagCB.Size = new System.Drawing.Size(173, 32);
+            this.movableFlagCB.TabIndex = 3;
+            this.movableFlagCB.Text = "Movable Flags";
+            this.movableFlagCB.UseVisualStyleBackColor = true;
             // 
             // StrategoWin
             // 
@@ -628,6 +654,8 @@
         private System.Windows.Forms.DomainUpDown AIDifficultyChanger;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label victoryLabel;
+        private System.Windows.Forms.CheckBox movableFlagCB;
+        private System.Windows.Forms.CheckBox movableBombCB;
     }
 }
 

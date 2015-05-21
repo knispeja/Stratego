@@ -34,6 +34,7 @@ namespace Stratego
         public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
         public Boolean isSinglePlayer { get; set; }         //Whether player 2 is an AI or not
         public Boolean movableBombs { get; set; }           // If bombs can be moved
+        public Boolean movableFlags { get; set; }           // If flags can be moved
         public Point lastFought { get; set; }             //Coordinates of the last piece to win a battle
 
         public AI ai;
@@ -59,9 +60,8 @@ namespace Stratego
             this.preGameActive = false;
             this.isSinglePlayer = false;
             this.lastFought = new Point(-1, -1);
-            this.LoadButton.Click +=LoadButton_Click;  // Why do we have these two lines instead of just setting the
-            this.SaveButton.Click +=SaveButton_Click;  // property using the GUI??
             this.movableBombs = false;
+            this.movableFlags = false;
             t.Start();
 
             // Initialize the board state with invalid spaces in the enemy player's side
@@ -90,6 +90,7 @@ namespace Stratego
             this.isSinglePlayer = false;
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
+            this.movableFlags = false;
             this.ai = new AI(this, -1);
         }
 

@@ -41,6 +41,8 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.pauseLabel = new System.Windows.Forms.Label();
             this.optionsGroup = new System.Windows.Forms.GroupBox();
+            this.movableFlagCB = new System.Windows.Forms.CheckBox();
+            this.movableBombCB = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.AIDifficultyChanger = new System.Windows.Forms.DomainUpDown();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
@@ -70,8 +72,6 @@
             this.place1Button = new System.Windows.Forms.Button();
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
-            this.movableBombCB = new System.Windows.Forms.CheckBox();
-            this.movableFlagCB = new System.Windows.Forms.CheckBox();
             this.backPanel.SuspendLayout();
             this.OptionsPanel.SuspendLayout();
             this.optionsGroup.SuspendLayout();
@@ -225,6 +225,28 @@
             this.optionsGroup.TabIndex = 15;
             this.optionsGroup.TabStop = false;
             this.optionsGroup.Text = "Options";
+            // 
+            // movableFlagCB
+            // 
+            this.movableFlagCB.AutoSize = true;
+            this.movableFlagCB.Location = new System.Drawing.Point(33, 102);
+            this.movableFlagCB.Name = "movableFlagCB";
+            this.movableFlagCB.Size = new System.Drawing.Size(173, 32);
+            this.movableFlagCB.TabIndex = 3;
+            this.movableFlagCB.Text = "Movable Flags";
+            this.movableFlagCB.UseVisualStyleBackColor = true;
+            this.movableFlagCB.CheckedChanged += new System.EventHandler(this.movableFlagCB_CheckedChanged);
+            // 
+            // movableBombCB
+            // 
+            this.movableBombCB.AutoSize = true;
+            this.movableBombCB.Location = new System.Drawing.Point(33, 47);
+            this.movableBombCB.Name = "movableBombCB";
+            this.movableBombCB.Size = new System.Drawing.Size(189, 32);
+            this.movableBombCB.TabIndex = 2;
+            this.movableBombCB.Text = "Movable Bombs";
+            this.movableBombCB.UseVisualStyleBackColor = true;
+            this.movableBombCB.CheckedChanged += new System.EventHandler(this.movableBombCB_CheckedChanged);
             // 
             // label1
             // 
@@ -562,26 +584,6 @@
             this.FireBox.TabIndex = 3;
             this.FireBox.TabStop = false;
             this.FireBox.Visible = false;
-            // 
-            // movableBombCB
-            // 
-            this.movableBombCB.AutoSize = true;
-            this.movableBombCB.Location = new System.Drawing.Point(33, 47);
-            this.movableBombCB.Name = "movableBombCB";
-            this.movableBombCB.Size = new System.Drawing.Size(189, 32);
-            this.movableBombCB.TabIndex = 2;
-            this.movableBombCB.Text = "Movable Bombs";
-            this.movableBombCB.UseVisualStyleBackColor = true;
-            // 
-            // movableFlagCB
-            // 
-            this.movableFlagCB.AutoSize = true;
-            this.movableFlagCB.Location = new System.Drawing.Point(33, 102);
-            this.movableFlagCB.Name = "movableFlagCB";
-            this.movableFlagCB.Size = new System.Drawing.Size(173, 32);
-            this.movableFlagCB.TabIndex = 3;
-            this.movableFlagCB.Text = "Movable Flags";
-            this.movableFlagCB.UseVisualStyleBackColor = true;
             // 
             // StrategoWin
             // 

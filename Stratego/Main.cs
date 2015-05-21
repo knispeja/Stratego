@@ -690,8 +690,8 @@ namespace Stratego
                 this.pieceIsSelected = false;
                 return false;
             }
-            if (((Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 11 && !this.movableBombs) || Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 12) ||
-                Math.Sign(this.boardState[x / scaleX, y / scaleY]) != Math.Sign(this.turn))
+            if (((Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 11 && !this.movableBombs) || (Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 12) && !this.movableFlags) ||
+                  Math.Sign(this.boardState[x / scaleX, y / scaleY]) != Math.Sign(this.turn))
             {
                 return false;
             }
@@ -1191,7 +1191,7 @@ namespace Stratego
         public int[,] GetPieceMoves(int X, int Y, int[,] boardState)
         {
             int[,] moveArray = new int[boardState.GetLength(1), boardState.GetLength(0)];
-            if ((Math.Abs(boardState[X, Y]) == 0) || (Math.Abs(boardState[X, Y]) == 11) || (Math.Abs(boardState[X, Y]) == 12) || (Math.Abs(boardState[X, Y]) == 42))
+            if ((Math.Abs(boardState[X, Y]) == 0) || (Math.Abs(boardState[X, Y]) == 11 && !this.movableBombs) || (Math.Abs(boardState[X, Y]) == 12 && !this.movableFlags) || (Math.Abs(boardState[X, Y]) == 42))
                 return moveArray;
             if (Math.Abs(boardState[X, Y]) == 9)
             {
@@ -1262,6 +1262,8 @@ namespace Stratego
             this.EndGamePanel.Visible = false;
             this.EndGamePanel.Enabled = false;
             this.SidePanelOpenButton.Visible = true;
+            this.SidePanel.Visible = false;
+            this.SidePanelOpenButton.Text = "Open Side";
             this.backPanel.Enabled = true;
             this.backPanel.Focus();
             this.backPanel.Invalidate();
@@ -1416,6 +1418,28 @@ namespace Stratego
                 this.EndGamePanel.Enabled = true;
                 this.EndGamePanel.Focus();
             }
+        }
+
+        /// <summary>
+        /// What to do if the movable bomb check box in the options menu is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void movableBombCB_CheckedChanged(object sender, EventArgs e)
+        {
+            this.movableBombs = !this.movableBombs;
+            this.backPanel.Focus();
+        }
+
+        /// <summary>
+        /// What to do if the movable flag check box in the options menu is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void movableFlagCB_CheckedChanged(object sender, EventArgs e)
+        {
+            this.movableFlags = !this.movableFlags;
+            this.backPanel.Focus();
         }
     }
 }

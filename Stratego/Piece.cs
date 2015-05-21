@@ -22,13 +22,17 @@ namespace Stratego
         {
             if((Math.Sign(first) == Math.Sign(second) || first == 42 || second == 42) && first != 0 && second != 0) return null;
             
-
             if (Math.Abs(first) == 11)
             {
-            if (Math.Abs(second) != 8)
-                return first;
-            else
-                return second;
+                if (Math.Abs(second) != 11)
+                {
+                    if (Math.Abs(second) != 8)
+                        return first;
+                    else
+                        return second;
+                }
+                else
+                    return 0;
             }
             else if (Math.Abs(second) == 11)
             {

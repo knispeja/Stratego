@@ -33,6 +33,7 @@ namespace Stratego
         public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selected in the array
         public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
         public Boolean isSinglePlayer { get; set; }         //Whether player 2 is an AI or not
+        public Boolean movableBombs { get; set; }           // If bombs can be moved
         public Point lastFought { get; set; }             //Coordinates of the last piece to win a battle
 
         public AI ai;
@@ -60,6 +61,7 @@ namespace Stratego
             this.lastFought = new Point(-1, -1);
             this.LoadButton.Click +=LoadButton_Click;  // Why do we have these two lines instead of just setting the
             this.SaveButton.Click +=SaveButton_Click;  // property using the GUI??
+            this.movableBombs = false;
             t.Start();
 
             // Initialize the board state with invalid spaces in the enemy player's side
@@ -87,9 +89,10 @@ namespace Stratego
             this.preGameActive = false;
             this.isSinglePlayer = false;
             this.lastFought = new Point(-1, -1);
-
+            this.movableBombs = false;
             this.ai = new AI(this, -1);
         }
+
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -118,6 +121,7 @@ namespace Stratego
 
             this.backPanel.Focus();
         }
+
         private void LoadButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -685,7 +689,7 @@ namespace Stratego
                 this.pieceIsSelected = false;
                 return false;
             }
-            if ((Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 11 || Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 12) ||
+            if (((Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 11 && !this.movableBombs) || Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 12) ||
                 Math.Sign(this.boardState[x / scaleX, y / scaleY]) != Math.Sign(this.turn))
             {
                 return false;
@@ -832,6 +836,7 @@ namespace Stratego
         /// <returns></returns> True if Successful
         public bool loadSetUp(TextReader reader)
         {
+            if (!this.testing) this.loadSetUpButton.UseVisualStyleBackColor = true;
             if (!this.preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10) || (Math.Abs(turn)==2)) return false;
             string[] lines = new string[4]; 
             string line = reader.ReadLine();
@@ -921,6 +926,7 @@ namespace Stratego
         /// <returns></returns>
         public bool saveSetUp(TextWriter writer)
         {
+            if (!this.testing) this.saveSetUpButton.UseVisualStyleBackColor = true;
             string buffer = "";
             if (!preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10)||(Math.Abs(turn)==2)) return false;
             if (turn > 0)
@@ -1259,6 +1265,7 @@ namespace Stratego
             this.backPanel.Focus();
             this.backPanel.Invalidate();
         }
+
         /// <summary>
         /// Handles what happens when the "save setup" button is clicked
         /// </summary>

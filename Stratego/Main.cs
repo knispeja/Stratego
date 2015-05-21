@@ -184,20 +184,19 @@ namespace Stratego
         /// <param name="e"></param>
         private void StartButton_Click(object sender, EventArgs e)
         {
-            //if (ticks < 40)
-            //    return;
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
             this.placements = (int[])this.defaults.Clone();
             this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
-            // Start the game!
+
             nextTurn();
             this.LoadButton.Visible = false;
             this.SinglePlayerButton.Visible = false;
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
-                if(button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
+                if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
+                    button.Click += SidePanelButtonClick;
 
             this.backPanel.Focus();
         }
@@ -1298,6 +1297,8 @@ namespace Stratego
                 saveSetUp(writer);
                 writer.Close();
             }
+
+            this.backPanel.Focus();
         }
         /// <summary>
         /// Handles what happens when the "load setup" button is clicked
@@ -1341,6 +1342,8 @@ namespace Stratego
                     MessageBox.Show("Error loading file: " + ex.Message);
                 }
             }
+
+            this.backPanel.Focus();
         }
 
         private void NextTurnButton_Click(object sender, EventArgs e)

@@ -726,24 +726,25 @@ namespace Stratego
                                             g.DrawRectangle(pen, r);
                                         }
                                         break;
-                                /*else
-                                {
-                                    // Piece is something else, display as circle (to be changed later)
-                                    g.FillEllipse(b, cornerX, cornerY, diameter, diameter);
-                                    if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                        pen.Color = Color.FromArgb(10, 255, 10);
-                                    g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
+                                    default:
+                                        //SHOULD NO LONGER REACH THIS POINT
+                                        // Piece is something else, display as circle (to be changed later)
+                                        g.FillEllipse(b, cornerX, cornerY, diameter, diameter);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
 
-                                    // Draw the text (the name of the piece) onto the circle
-                                    if ((turn == -1 && piece < 0) || (turn == 1 && piece > 0) || this.lastFought.Equals(new Point(x, y)))
-                                    {
-                                        string drawString = Piece.toString(piece);
-                                        System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
-                                        System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-                                        g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 8, cornerY + diameter / 4);
-                                        drawFont.Dispose();
-                                        drawBrush.Dispose();
-                                    }*/
+                                        // Draw the text (the name of the piece) onto the circle
+                                        if ((turn == -1 && piece < 0) || (turn == 1 && piece > 0) || this.lastFought.Equals(new Point(x, y)))
+                                        {
+                                            string drawString = Piece.toString(piece);
+                                            System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
+                                            System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+                                            g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 8, cornerY + diameter / 4);
+                                            drawFont.Dispose();
+                                            drawBrush.Dispose();
+                                        }
+                                        break;
                                 }
                                 // Dispose of the brush
                                 b.Dispose();

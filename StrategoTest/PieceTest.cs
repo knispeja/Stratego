@@ -117,6 +117,9 @@ namespace StrategoTest
 
         [TestCase(10, -1, Result = 10)] // Test that Spy beats marshall if it attacks
         [TestCase(-10, 1, Result = -10)]
+
+        [TestCase(11, -11, Result = 0)] // Test that movable bombs kill one another
+        [TestCase(-11, 11, Result = 0)]
         // Tests the various cases for the attack function for pieces.
         public int TestAttack(int a, int b)
         {

@@ -339,12 +339,12 @@ namespace Stratego
 
                                 int cornerX = x * col_inc + paddingX;
                                 int cornerY = y * row_inc + paddingY;
+                                Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                 switch(piece)
                                 {
                                     case 9:
                                         // Piece is a blue scout (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55))/2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                        if (turn == 1 ||this.lastFought.Equals(new Point (x, y)))
+                                        if (turn == 1 || this.lastFought.Equals(new Point (x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueScout;
                                             e.Graphics.DrawImage(imag, r);
@@ -360,7 +360,6 @@ namespace Stratego
                                         break;
                                     case -9:
                                         // Piece is a red scout (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedScout;
@@ -377,7 +376,6 @@ namespace Stratego
                                         break;
                                     case 11:
                                         // Piece is a blue bomb (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn ==1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueBomb;
@@ -394,7 +392,6 @@ namespace Stratego
                                         break;
                                     case -11:
                                         // Piece is a red bomb (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedBomb;
@@ -411,7 +408,6 @@ namespace Stratego
                                         break;
                                     case 10:
                                         // Piece is a blue spy (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn ==1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueSpy;
@@ -428,7 +424,6 @@ namespace Stratego
                                         break;
                                     case -10:
                                         // Piece is a red spy (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedSpy;
@@ -445,7 +440,6 @@ namespace Stratego
                                         break;
                                     case 5:
                                         // Piece is a blue captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn ==1|| this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueCaptain;
@@ -462,7 +456,6 @@ namespace Stratego
                                         break;
                                     case -5:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedCaptain;
@@ -479,7 +472,6 @@ namespace Stratego
                                         break;
                                     case -6:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedLieutenant;
@@ -496,7 +488,6 @@ namespace Stratego
                                         break;
                                     case 6:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueLieutenant;
@@ -513,7 +504,6 @@ namespace Stratego
                                         break;
                                     case 1:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueMarshal;
@@ -530,7 +520,6 @@ namespace Stratego
                                         break;
                                     case -1:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedMarshal;
@@ -547,7 +536,6 @@ namespace Stratego
                                         break;
                                     case -2:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedGeneral;
@@ -564,7 +552,6 @@ namespace Stratego
                                         break;
                                     case 2:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueGeneral;
@@ -581,7 +568,6 @@ namespace Stratego
                                         break;
                                     case -3:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedColonel;
@@ -598,7 +584,6 @@ namespace Stratego
                                         break;
                                     case 3:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueColonel;
@@ -615,7 +600,6 @@ namespace Stratego
                                         break;
                                     case -4:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedMajor;
@@ -632,7 +616,6 @@ namespace Stratego
                                         break;
                                     case 4:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueMajor;
@@ -649,7 +632,6 @@ namespace Stratego
                                         break;
                                     case -7:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedSergeant;
@@ -666,7 +648,6 @@ namespace Stratego
                                         break;
                                     case 7:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueSergeant;
@@ -683,7 +664,6 @@ namespace Stratego
                                         break;
                                     case -8:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedMiner;
@@ -700,7 +680,6 @@ namespace Stratego
                                         break;
                                     case 8:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueMiner;
@@ -717,7 +696,6 @@ namespace Stratego
                                         break;
                                     case -12:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.RedFlag;
@@ -734,7 +712,6 @@ namespace Stratego
                                         break;
                                     case 12:
                                         // Piece is a red captain (displaying as image)
-                                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                                         if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
                                         {
                                             Image imag = Properties.Resources.BlueFlag;

@@ -145,6 +145,7 @@
             // 
             // CampaignButton
             // 
+            this.CampaignButton.Enabled = false;
             this.CampaignButton.Location = new System.Drawing.Point(1098, 551);
             this.CampaignButton.Name = "CampaignButton";
             this.CampaignButton.Size = new System.Drawing.Size(96, 27);
@@ -371,6 +372,7 @@
             // 
             // LoadButton
             // 
+            this.LoadButton.Enabled = false;
             this.LoadButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoadButton.Location = new System.Drawing.Point(1352, 488);
             this.LoadButton.Name = "LoadButton";

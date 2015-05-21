@@ -36,28 +36,9 @@ namespace Stratego
         /// Whether or not the game is in testing mode
         /// </summary>
         bool testing = false;
-<<<<<<< HEAD
-        int piecePlacing = 0;                     // The piece currently being placed by the user
-        int activeSidePanelButton = 0;            // Placeholder for which button on the placement side panel is being used
-        int ticks = 0;                            // Used by the timer to keep track of the title screen's music & sounds
-        public int panelWidth { get; set; }       // Width of the enclosing panel   
-        public int panelHeight { get; set; }      // Height of the enclosing panel
-        public int[,] boardState { get; set; }    // The 2DArray full of all pieces on the board
-        public int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
-        public bool preGameActive { get; set; }   // Whether or not the pre game has begun
-        public int turn { get; set; }             // -1 for player2 and 1 for player 1. 0 when game isn't started. 
-                                                  // 2 for transition from player1 to player2; -2 for transition from player2 to player1
-        public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selected in the array
-        public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
-        public Boolean isSinglePlayer { get; set; }         //Whether player 2 is an AI or not
-        public Boolean movableBombs { get; set; }           // If bombs can be moved
-        public Boolean movableFlags { get; set; }           // If flags can be moved
-        public Point lastFought { get; set; }             //Coordinates of the last piece to win a battle
+       
         public int level { get; set; }         // Current level of the game. Equals 0 if not in campaign mode
         private Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map };
-        private string[] levelFiles = new string[] { Properties.Resources.Level1, Properties.Resources.Level2 };
-=======
->>>>>>> origin/master
 
         /// <summary>
         /// The piece currently being placed by the user
@@ -268,7 +249,9 @@ namespace Stratego
                     this.FireBox.Dispose();
                     this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
                     this.LoadButton.Visible = false;
+                    this.LoadButton.Enabled = false;
                     this.CampaignButton.Visible = false;
+                    this.CampaignButton.Enabled = false;
                     this.SinglePlayerButton.Visible = false;
                     this.SidePanelOpenButton.Visible = false;
                     if (this.turn == 2 && isSinglePlayer)
@@ -276,6 +259,7 @@ namespace Stratego
                     else if (this.turn == 2)
                         this.NextTurnButton.Text = "Player 2's Turn";
                     this.NextTurnButton.Visible = true;
+                    this.NextTurnButton.Enabled = true;
                     this.preGameActive = false;
                     this.lastFought = new Point(-1, -1);
 
@@ -307,7 +291,9 @@ namespace Stratego
 
             nextTurn();
             this.LoadButton.Visible = false;
+            this.LoadButton.Enabled = false;
             this.CampaignButton.Visible = false;
+            this.CampaignButton.Enabled = false;
             this.SinglePlayerButton.Visible = false;
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -354,7 +340,9 @@ namespace Stratego
                 this.StartButton.Visible = true;
                 this.FireBox.Visible = true;
                 this.LoadButton.Visible = true;
+                this.LoadButton.Enabled = true;
                 this.CampaignButton.Visible = true;
+                this.CampaignButton.Enabled = true;
                 this.SinglePlayerButton.Visible = true;
                 this.startTimer.Dispose();
             }
@@ -978,6 +966,8 @@ namespace Stratego
                         else
                             NextTurnButton.Text = "AI's Turn";
                         NextTurnButton.Visible = true;
+                        this.NextTurnButton.Enabled = true;
+
                     }
                     this.turn = 2;
                 }
@@ -1007,6 +997,8 @@ namespace Stratego
                 {
                     NextTurnButton.Text = "Player 1's Turn";
                     NextTurnButton.Visible = true;
+                    this.NextTurnButton.Enabled = true;
+
                 }
                 if (!this.isSinglePlayer) this.turn = -2;
                 else this.turn = 1;
@@ -1431,6 +1423,7 @@ namespace Stratego
                 else if(e.KeyCode == Keys.Enter && Math.Abs(turn) == 2)
                 {
                     NextTurnButton.Visible = false;
+                    this.NextTurnButton.Enabled = false;
                     this.nextTurn();
                 }
             }
@@ -1642,19 +1635,26 @@ namespace Stratego
         /// <param name="e"></param>
         private void PlayAgainButton_Click(object sender, EventArgs e)
         {
-            this.boardState = new int[this.boardState.GetLength(0), this.boardState.GetLength(1)];
-            for (int row = 0; row < 6; row++) fillRow(42, row);
-            this.turn = 0;
-            this.preGameActive = true;
-            this.lastFought = new Point(-1, -1);
-            this.placements = (int[])this.defaults.Clone();
-            this.ai = new AI(this, -1);
-            nextTurn();
+            if (level != 0)
+            {
+                loadNextLevel();
+            }
+            else
+            {
+                this.boardState = new int[this.boardState.GetLength(0), this.boardState.GetLength(1)];
+                for (int row = 0; row < 6; row++) fillRow(42, row);
+                this.turn = 0;
+                this.preGameActive = true;
+                this.lastFought = new Point(-1, -1);
+                this.placements = (int[])this.defaults.Clone();
+                this.ai = new AI(this, -1);
+                nextTurn();
+                this.SidePanel.Visible = false;
+                this.SidePanelOpenButton.Text = "Open Side";
+            }
             this.EndGamePanel.Visible = false;
             this.EndGamePanel.Enabled = false;
             this.SidePanelOpenButton.Visible = true;
-            this.SidePanel.Visible = false;
-            this.SidePanelOpenButton.Text = "Open Side";
             this.backPanel.Enabled = true;
             this.backPanel.Invalidate();
         }
@@ -1743,6 +1743,7 @@ namespace Stratego
         private void NextTurnButton_Click(object sender, EventArgs e)
         {
             NextTurnButton.Visible = false;
+            this.NextTurnButton.Enabled = false;
             this.nextTurn();
 
         }
@@ -1810,7 +1811,15 @@ namespace Stratego
             if (!this.testing)
             {
                 this.OptionsPanel.Visible = false;
-
+                if(this.level!=0)
+                {
+                    this.PlayAgainButton.Text = "Next Level";
+                }
+                else
+                {
+                    this.PlayAgainButton.Text = "Play Again";
+                }
+                
                 if (winnerTeam == 1)
                 {
                     if (this.isSinglePlayer)
@@ -1889,6 +1898,7 @@ namespace Stratego
             if(this.turn==-2) this.NextTurnButton.Text = "Player 1's Turn";
             else this.NextTurnButton.Text = "AI's Turn";
             this.NextTurnButton.Visible = true;
+            this.NextTurnButton.Enabled = true;
         }
 
         private void CampaignButton_Click(object sender, EventArgs e)
@@ -1898,11 +1908,14 @@ namespace Stratego
             this.FireBox.Dispose();
             this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
             this.LoadButton.Visible = false;
+            this.LoadButton.Enabled = false;
             this.CampaignButton.Visible = false;
+            this.CampaignButton.Enabled = false;
             this.SinglePlayerButton.Visible = false;
             this.SidePanelOpenButton.Visible = false;
 
             loadNextLevel();
+            backPanel.Focus();
         }
     }
 }

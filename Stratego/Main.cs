@@ -15,11 +15,21 @@ namespace Stratego
 {
     public partial class StrategoWin : Form
     {
+        /// <summary>
+        /// The defualt amount of peices for all of the pieces. (EX: 0 0s; 1 1; 1 2; 2 3s; 4 4s; etc..)
+        /// </summary>
         public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
         //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
         //public readonly int[] defaults = new int[13] { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
+        /// <summary>
+        /// An array that holds the different keys for the Konami code cheat activation
+        /// </summary>
         private Keys[] konami = new Keys[8] {Keys.Up, Keys.Up, Keys.Down, Keys.Down, Keys.Left, Keys.Right, Keys.Left, Keys.Right};
+
+        /// <summary>
+        /// Stores how far through the Konami code the player has entered
+        /// </summary>
         private int konamiIndex = 0;
 
         /// <summary>
@@ -103,6 +113,9 @@ namespace Stratego
         /// </summary>
         public Point lastFought { get; set; }
 
+        /// <summary>
+        /// The AI that the player will play against, if they choose single player.
+        /// </summary>
         public AI ai;
 
         /// <summary>
@@ -163,6 +176,11 @@ namespace Stratego
             this.ai = new AI(this, -1);
         }
 
+        /// <summary>
+        /// A trigger that activates when the SaveButton in the main menu is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -190,6 +208,11 @@ namespace Stratego
             }
         }
 
+        /// <summary>
+        /// A trigger that activates when the LoadButton in the main manu is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoadButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -244,6 +267,7 @@ namespace Stratego
             }
             backPanel.Focus();
         }
+
         /// <summary>
         /// Called by the start button on the main menu.
         /// </summary>
@@ -1135,6 +1159,7 @@ namespace Stratego
             if (this.isSinglePlayer) this.ai = new AI(this, -1, difficulty);
                 return true;
         }
+
         /// <summary>
         /// Loads a premade piece setup onto the current team's side of the board
         /// </summary>
@@ -1196,6 +1221,7 @@ namespace Stratego
             return true;
 
         }
+
         /// <summary>
         /// Saves a gamestate into the string or file in the given writer
         /// </summary>
@@ -1224,6 +1250,7 @@ namespace Stratego
   
             return true;
         }
+
         /// <summary>
         /// Saves the set up of the current teams pieces into a file
         /// </summary>
@@ -1263,6 +1290,7 @@ namespace Stratego
             }
                 return true;
         }
+
         /// <summary>
         /// Receives clicks on the back panel and directs them to the game as needed
         /// </summary>
@@ -1415,6 +1443,11 @@ namespace Stratego
             }
         }
 
+        /// <summary>
+        /// Trigger that activates when the SidePanelOpenButton is clicked. Simply opens the side panel and changes the text on the button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SidePanelOpenButton_MouseClick(object sender, MouseEventArgs e)
         {
             //Makes the side panel open when the button is clicked
@@ -1429,6 +1462,11 @@ namespace Stratego
             this.SidePanel.Visible = !this.SidePanel.Visible;
         }
 
+        /// <summary>
+        /// Trigger that activates when the PauseMenuExitButton is pressed, exits the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PauseMenuExitButton_Click(object sender, EventArgs e)
         {
             //Makes the program close if the exit button is pressed
@@ -1436,6 +1474,11 @@ namespace Stratego
                 Application.Exit();
         }
 
+        /// <summary>
+        /// Moves the PauseMenuExitButton to change position based on screen size when it becomes visible/invisible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PauseMenuExitButton_VisibleChanged(object sender, EventArgs e)
         {
             //Sets the exit button to be in the center of the panel whenever it is made visible/not
@@ -1444,6 +1487,11 @@ namespace Stratego
             this.Location = new Point(this.panelWidth / 2 - ((Button)sender).Width / 2, this.panelHeight / 2 - ((Button)sender).Height / 2);
         }
 
+        /// <summary>
+        /// Trigger that activates when the removeCheckBox is checked or unchecked. Enables/disables deleting of pieces
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void removeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (this.removeCheckBox.Checked)
@@ -1476,6 +1524,11 @@ namespace Stratego
             //for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
         }
 
+        /// <summary>
+        /// Called when the SinglePlayerButton in the main menu is pressed, throws the player into a new single player game against the AI.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SinglePlayerButton_click(object sender, EventArgs e)
         {
             this.isSinglePlayer = true;
@@ -1611,6 +1664,7 @@ namespace Stratego
                 writer.Close();
             }
         }
+
         /// <summary>
         /// Handles what happens when the "load setup" button is clicked
         /// </summary>
@@ -1655,6 +1709,11 @@ namespace Stratego
             }
         }
 
+        /// <summary>
+        /// Trigger that is called when the next turn button is pressed. It flips the turn to the inbetween state, which waits for player confirmation to flip the turn to the other player.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NextTurnButton_Click(object sender, EventArgs e)
         {
             NextTurnButton.Visible = false;
@@ -1662,11 +1721,21 @@ namespace Stratego
 
         }
 
+        /// <summary>
+        /// Trigger that is called when the x button on the options panel is clicked, it makes the options panel no longer visible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void xButton_Click(object sender, EventArgs e)
         {
             this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
         }
 
+        /// <summary>
+        /// Trigger that is called when the convede button in the options manu is clicked, it causes the player who clicked the button to lost the game.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void concedeButton_Click(object sender, EventArgs e)
         {
             // This should always be true, but if 0 was passed into gameOver() bad things would happen
@@ -1696,6 +1765,11 @@ namespace Stratego
                 this.ai.difficulty = Convert.ToInt32(this.AIDifficultyChanger.SelectedItem);
         }
 
+        /// <summary>
+        /// Flips the focus back to the back panel whenever it loses focus.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void onBackPanelLostFocus(object sender, EventArgs e)
         {
             this.backPanel.Focus();

@@ -572,7 +572,6 @@
             this.Name = "StrategoWin";
             this.Text = "Stratego";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.StrategoWin_Load);
             this.backPanel.ResumeLayout(false);
             this.OptionsPanel.ResumeLayout(false);
             this.OptionsPanel.PerformLayout();

@@ -263,10 +263,6 @@ namespace Stratego
             this.StartButton.Image = Properties.Resources.StartButton;
         }
 
-        private void StrategoWin_Load(object sender, EventArgs e)
-        {
-        }
-
         /// <summary>
         /// Primary paint function.
         /// Draws all necessary things onto the back panel!
@@ -531,6 +527,11 @@ namespace Stratego
             return this.boardState[x,y];
         }
 
+        /// <summary>
+        /// Fills the given row in the board state with the given value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="row"></param>
         public void fillRow(int value, int row)
         {
             for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
@@ -1235,17 +1236,25 @@ namespace Stratego
             return moveArray;
         }
 
+        /// <summary>
+        /// Handles what happens when the user clicks the play again button after one game has finished.
+        /// Should basically reinitialize the entire board and everything.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayAgainButton_Click(object sender, EventArgs e)
         {
-           
             this.boardState = new int[this.boardState.GetLength(0), this.boardState.GetLength(1)];
+            for (int row = 0; row < 6; row++) fillRow(42, row);
             this.turn = 0;
             this.preGameActive = true;
             this.lastFought = new Point(-1, -1);
             this.placements = (int[])this.defaults.Clone();
+            this.ai = new AI(this, -1);
             nextTurn();
             this.EndGamePanel.Visible = false;
             this.EndGamePanel.Enabled = false;
+            this.SidePanelOpenButton.Visible = true;
             this.backPanel.Enabled = true;
             this.backPanel.Focus();
             this.backPanel.Invalidate();

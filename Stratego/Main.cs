@@ -167,7 +167,8 @@ namespace Stratego
                     this.lastFought = new Point(-1, -1);
 
                     foreach (var button in this.SidePanel.Controls.OfType<Button>())
-                        if (button.Name != donePlacingButton.Name) button.Click += SidePanelButtonClick;
+                        if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
+                            button.Click += SidePanelButtonClick;
   
                 }
                 catch (Exception ex)
@@ -837,7 +838,6 @@ namespace Stratego
         /// <returns></returns> True if Successful
         public bool loadSetUp(TextReader reader)
         {
-            if (!this.testing) this.loadSetUpButton.UseVisualStyleBackColor = true;
             if (!this.preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10) || (Math.Abs(turn)==2)) return false;
             string[] lines = new string[4]; 
             string line = reader.ReadLine();
@@ -927,7 +927,6 @@ namespace Stratego
         /// <returns></returns>
         public bool saveSetUp(TextWriter writer)
         {
-            if (!this.testing) this.saveSetUpButton.UseVisualStyleBackColor = true;
             string buffer = "";
             if (!preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10)||(Math.Abs(turn)==2)) return false;
             if (turn > 0)

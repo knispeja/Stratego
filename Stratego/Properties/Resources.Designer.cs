@@ -210,6 +210,62 @@ namespace Stratego.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1 1 5
+        ///0 -9 -7 0 0 0 -12
+        ///42 42 42 0 0 -3 0
+        ///-9 0 0 -4 0 0 0
+        ///0 0 0 0 -9 0 -6
+        ///0 0 42 42 42 42 42
+        ///0 0 0 0 0 3 5
+        ///0 0 0 0 9 9 3
+        ///.
+        /// </summary>
+        internal static string Level1 {
+            get {
+                return ResourceManager.GetString("Level1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Level1Map {
+            get {
+                object obj = ResourceManager.GetObject("Level1Map", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 1 5
+        ///0 0 0 -5 0 0 -5 0 42 42
+        ///0 -11 0 0 0 0 0 0 -12 0
+        ///0 0 0 0 -9 -9 0 -3 0 0
+        ///42 42 42 0 0 0 0 42 42 42
+        ///0 -7 0 0 0 0 0 0 -6 0
+        ///-5 0 0 0 0 0 -7 0 0 -8
+        ///0 0 42 -4 0 0 42 0 0 0
+        ///0 0 0 42 0 42 0 0 0 0
+        ///0 9 0 3 42 8 0 0 9 0
+        ///0 0 0 8 3 0 5 0 0 9.
+        /// </summary>
+        internal static string Level2 {
+            get {
+                return ResourceManager.GetString("Level2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Level2Map {
+            get {
+                object obj = ResourceManager.GetObject("Level2Map", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream no {

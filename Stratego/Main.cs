@@ -17,7 +17,7 @@ namespace Stratego
     {
         public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
         //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
-        //public readonly int[] defaults = new int[13] { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+        //public readonly int[] defaults = new int[13] { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 
 
         private Keys[] konami = new Keys[8] {Keys.Up, Keys.Up, Keys.Down, Keys.Down, Keys.Left, Keys.Right, Keys.Left, Keys.Right};
         private int konamiIndex = 0;
@@ -39,6 +39,9 @@ namespace Stratego
         public Boolean movableBombs { get; set; }           // If bombs can be moved
         public Boolean movableFlags { get; set; }           // If flags can be moved
         public Point lastFought { get; set; }             //Coordinates of the last piece to win a battle
+        public int level { get; set; }         // Current level of the game. Equals 0 if not in campaign mode
+        private Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map };
+        private string[] levelFiles = new string[] { Properties.Resources.Level1, Properties.Resources.Level2 };
 
         public AI ai;
 
@@ -65,6 +68,7 @@ namespace Stratego
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
+            this.level = 0;
             this.backPanel.LostFocus += onBackPanelLostFocus;
             t.Start();
 
@@ -159,6 +163,7 @@ namespace Stratego
                     this.FireBox.Dispose();
                     this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
                     this.LoadButton.Visible = false;
+                    this.CampaignButton.Visible = false;
                     this.SinglePlayerButton.Visible = false;
                     this.SidePanelOpenButton.Visible = false;
                     if (this.turn == 2 && isSinglePlayer)
@@ -196,6 +201,7 @@ namespace Stratego
 
             nextTurn();
             this.LoadButton.Visible = false;
+            this.CampaignButton.Visible = false;
             this.SinglePlayerButton.Visible = false;
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -242,6 +248,7 @@ namespace Stratego
                 this.StartButton.Visible = true;
                 this.FireBox.Visible = true;
                 this.LoadButton.Visible = true;
+                this.CampaignButton.Visible = true;
                 this.SinglePlayerButton.Visible = true;
                 this.startTimer.Dispose();
             }
@@ -1696,6 +1703,50 @@ namespace Stratego
         {
             this.movableBombCB.Enabled = true;
             this.movableFlagCB.Enabled = true;
+        }
+
+        /// <summary>
+        /// Loads the next level of the campaign. If the game is not in campaign mode, it starts at the first level of the campaign
+        /// </summary>
+        private void loadNextLevel()
+        {
+            if (this.level < 0 && (this.level+1)>=this.levelImages.Length) return;
+            this.level++;
+            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
+            {
+                for (int i = 0; i < path.Length - 3; i++)
+                {
+                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n'))
+                    {
+                        path = path.Substring(0, i);
+                        break;
+                    }
+                }
+            }
+            path += @"\Resources\SaveGames\Levels\Level" + this.level + ".txt";
+            Console.WriteLine(path);
+            loadGame(new StreamReader(path));
+            this.backPanel.BackgroundImage = this.levelImages[level-1];
+            this.preGameActive = false;
+            this.lastFought = new Point(-1, -1);
+            if(this.turn==-2) this.NextTurnButton.Text = "Player 1's Turn";
+            else this.NextTurnButton.Text = "AI's Turn";
+            this.NextTurnButton.Visible = true;
+        }
+
+        private void CampaignButton_Click(object sender, EventArgs e)
+        {
+            SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
+            sound.Play();
+            this.FireBox.Dispose();
+            this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
+            this.LoadButton.Visible = false;
+            this.CampaignButton.Visible = false;
+            this.SinglePlayerButton.Visible = false;
+            this.SidePanelOpenButton.Visible = false;
+
+            loadNextLevel();
         }
     }
 }

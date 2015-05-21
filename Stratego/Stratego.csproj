@@ -200,6 +200,18 @@
   <ItemGroup>
     <None Include="Resources\RedGeneral.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Level1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Level2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveGames\Levels\Level1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveGames\Levels\Level2.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

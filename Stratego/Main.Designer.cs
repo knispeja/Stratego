@@ -145,8 +145,9 @@
             // 
             // CampaignButton
             // 
+            this.CampaignButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CampaignButton.Enabled = false;
-            this.CampaignButton.Location = new System.Drawing.Point(1098, 551);
+            this.CampaignButton.Location = new System.Drawing.Point(1212, 488);
             this.CampaignButton.Name = "CampaignButton";
             this.CampaignButton.Size = new System.Drawing.Size(96, 27);
             this.CampaignButton.TabIndex = 10;
@@ -157,6 +158,7 @@
             // 
             // OptionsPanel
             // 
+            this.OptionsPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.OptionsPanel.BackColor = System.Drawing.Color.DarkGray;
             this.OptionsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.OptionsPanel.Controls.Add(this.xButton);
@@ -166,7 +168,7 @@
             this.OptionsPanel.Controls.Add(this.pauseLabel);
             this.OptionsPanel.Controls.Add(this.optionsGroup);
             this.OptionsPanel.Controls.Add(this.PauseMenuExitButton);
-            this.OptionsPanel.Location = new System.Drawing.Point(516, 126);
+            this.OptionsPanel.Location = new System.Drawing.Point(539, 153);
             this.OptionsPanel.Name = "OptionsPanel";
             this.OptionsPanel.Size = new System.Drawing.Size(553, 552);
             this.OptionsPanel.TabIndex = 9;
@@ -222,7 +224,7 @@
             this.pauseLabel.Font = new System.Drawing.Font("Palatino Linotype", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pauseLabel.Location = new System.Drawing.Point(172, 12);
             this.pauseLabel.Name = "pauseLabel";
-            this.pauseLabel.Size = new System.Drawing.Size(274, 80);
+            this.pauseLabel.Size = new System.Drawing.Size(219, 64);
             this.pauseLabel.TabIndex = 16;
             this.pauseLabel.Text = "PAUSED";
             // 
@@ -246,7 +248,7 @@
             this.movableFlagCB.Enabled = false;
             this.movableFlagCB.Location = new System.Drawing.Point(33, 102);
             this.movableFlagCB.Name = "movableFlagCB";
-            this.movableFlagCB.Size = new System.Drawing.Size(221, 41);
+            this.movableFlagCB.Size = new System.Drawing.Size(173, 32);
             this.movableFlagCB.TabIndex = 3;
             this.movableFlagCB.Text = "Movable Flags";
             this.movableFlagCB.UseVisualStyleBackColor = true;
@@ -258,7 +260,7 @@
             this.movableBombCB.Enabled = false;
             this.movableBombCB.Location = new System.Drawing.Point(33, 47);
             this.movableBombCB.Name = "movableBombCB";
-            this.movableBombCB.Size = new System.Drawing.Size(242, 41);
+            this.movableBombCB.Size = new System.Drawing.Size(189, 32);
             this.movableBombCB.TabIndex = 2;
             this.movableBombCB.Text = "Movable Bombs";
             this.movableBombCB.UseVisualStyleBackColor = true;
@@ -269,7 +271,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(225, 202);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(181, 37);
+            this.label1.Size = new System.Drawing.Size(139, 28);
             this.label1.TabIndex = 1;
             this.label1.Text = "AI Difficulty:";
             // 
@@ -284,7 +286,7 @@
             this.AIDifficultyChanger.Location = new System.Drawing.Point(410, 201);
             this.AIDifficultyChanger.Name = "AIDifficultyChanger";
             this.AIDifficultyChanger.ReadOnly = true;
-            this.AIDifficultyChanger.Size = new System.Drawing.Size(39, 43);
+            this.AIDifficultyChanger.Size = new System.Drawing.Size(39, 36);
             this.AIDifficultyChanger.TabIndex = 0;
             this.AIDifficultyChanger.Text = "5";
             this.AIDifficultyChanger.SelectedItemChanged += new System.EventHandler(this.AIDifficultyChanger_SelectedItemChanged);
@@ -360,6 +362,7 @@
             // 
             // SinglePlayerButton
             // 
+            this.SinglePlayerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SinglePlayerButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SinglePlayerButton.Location = new System.Drawing.Point(1352, 566);
             this.SinglePlayerButton.Name = "SinglePlayerButton";
@@ -372,6 +375,7 @@
             // 
             // LoadButton
             // 
+            this.LoadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LoadButton.Enabled = false;
             this.LoadButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoadButton.Location = new System.Drawing.Point(1352, 488);
@@ -444,7 +448,7 @@
             this.removeCheckBox.AutoSize = true;
             this.removeCheckBox.Location = new System.Drawing.Point(12, 638);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
+            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;

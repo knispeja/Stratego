@@ -186,12 +186,6 @@ namespace Stratego
         /// <param name="y"></param>
         public void executeMove(Move move, int[,] boardState)
         {
-            int piece = boardState[move.origX, move.origY];
-            boardState[move.origX, move.origY] = 0;
-            int? attackVal = Piece.attack(piece, boardState[move.newX, move.newY]);
-            if(attackVal == null)
-                throw new Exception();
-
             // We aren't currently doing an evaluateMoveRecursive()...
             if (this.recursionLevel == 0)
             {
@@ -202,7 +196,13 @@ namespace Stratego
                     return;
                 }
             }
-            
+
+            int piece = boardState[move.origX, move.origY];
+            boardState[move.origX, move.origY] = 0;
+            int? attackVal = Piece.attack(piece, boardState[move.newX, move.newY]);
+            if (attackVal == null)
+                throw new Exception();
+
             boardState[move.newX, move.newY] = (int) attackVal;
 
             if (this.recursionLevel == 0)
@@ -490,7 +490,7 @@ namespace Stratego
                         dPiece = boardState[newx, newy];
                         if (first != 0)
                         {
-                            if (Math.Abs(dPiece) == 11)
+                            if (Math.Abs(dPiece) == 11 && !win.movableBombs)
                                 result = piece;
                             else
                                 result = Piece.attack(dPiece, piece);

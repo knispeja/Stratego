@@ -19,6 +19,9 @@ namespace Stratego
         //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
         //public readonly int[] defaults = new int[13] { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
+        private Keys[] konami = new Keys[8] {Keys.Up, Keys.Up, Keys.Down, Keys.Down, Keys.Left, Keys.Right, Keys.Left, Keys.Right};
+        private int konamiIndex = 0;
+
         bool testing = false;
         int piecePlacing = 0;                     // The piece currently being placed by the user
         int activeSidePanelButton = 0;            // Placeholder for which button on the placement side panel is being used
@@ -62,6 +65,7 @@ namespace Stratego
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
+            this.backPanel.LostFocus += onBackPanelLostFocus;
             t.Start();
 
             // Initialize the board state with invalid spaces in the enemy player's side
@@ -70,6 +74,8 @@ namespace Stratego
             for (int row = 0; row < 6; row++) fillRow(42, row);
 
             this.ai = new AI(this, -1);
+
+            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -119,8 +125,6 @@ namespace Stratego
                 saveGame(writer);
                 writer.Close();
             }
-
-            this.backPanel.Focus();
         }
 
         private void LoadButton_Click(object sender, EventArgs e)
@@ -163,7 +167,6 @@ namespace Stratego
                         this.NextTurnButton.Text = "Player 2's Turn";
                     this.NextTurnButton.Visible = true;
                     this.preGameActive = false;
-                    this.backPanel.Focus();
                     this.lastFought = new Point(-1, -1);
 
                     foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -197,8 +200,6 @@ namespace Stratego
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
                 if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
                     button.Click += SidePanelButtonClick;
-
-            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -216,7 +217,6 @@ namespace Stratego
                 this.piecePlacing = this.turn * Convert.ToInt32(((Button)sender).Tag);
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
-            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -621,7 +621,6 @@ namespace Stratego
                         else
                             NextTurnButton.Text = "AI's Turn";
                         NextTurnButton.Visible = true;
-                        this.backPanel.Focus();
                     }
                     this.turn = 2;
                 }
@@ -651,7 +650,6 @@ namespace Stratego
                 {
                     NextTurnButton.Text = "Player 1's Turn";
                     NextTurnButton.Visible = true;
-                    this.backPanel.Focus();
                 }
                 if (!this.isSinglePlayer) this.turn = -2;
                 else this.turn = 1;
@@ -970,7 +968,6 @@ namespace Stratego
             if (preGameActive)
             {
                 bool? piecePlaced = placePiece(this.piecePlacing, e.X, e.Y);
-                this.backPanel.Focus();
 
                 // Only run if the placement succeeded
                 if (piecePlaced.Value)
@@ -1040,6 +1037,19 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            if (this.konami[this.konamiIndex] == e.KeyCode)
+            {
+                konamiIndex++;
+                if (konamiIndex >= this.konami.Length)
+                {
+                    konamiIndex = 0;
+                    konamiCodeEntered();
+                }
+            }
+            else
+                konamiIndex = 0;
+
+
             if(this.turn != 0 && !this.preGameActive)
             {
                 KeysConverter kc = new KeysConverter();
@@ -1077,7 +1087,6 @@ namespace Stratego
                     // Either open or close the side panel depending on whatever
                     if (this.SidePanel.Visible)
                     {
-                        this.backPanel.Focus();
                         this.SidePanelOpenButton.Text = "Open Side";
                     }
                     else
@@ -1104,12 +1113,10 @@ namespace Stratego
             //Makes the side panel open when the button is clicked
             if (this.SidePanel.Visible && !this.testing)
             {
-                this.backPanel.Focus();
                 this.SidePanelOpenButton.Text = "Open Side";
             }
             else if (!this.testing)
             {
-                this.backPanel.Focus();
                 this.SidePanelOpenButton.Text = "Close Side";
             }
             this.SidePanel.Visible = !this.SidePanel.Visible;
@@ -1263,7 +1270,6 @@ namespace Stratego
             this.SidePanel.Visible = false;
             this.SidePanelOpenButton.Text = "Open Side";
             this.backPanel.Enabled = true;
-            this.backPanel.Focus();
             this.backPanel.Invalidate();
         }
 
@@ -1297,8 +1303,6 @@ namespace Stratego
                 saveSetUp(writer);
                 writer.Close();
             }
-
-            this.backPanel.Focus();
         }
         /// <summary>
         /// Handles what happens when the "load setup" button is clicked
@@ -1342,22 +1346,18 @@ namespace Stratego
                     MessageBox.Show("Error loading file: " + ex.Message);
                 }
             }
-
-            this.backPanel.Focus();
         }
 
         private void NextTurnButton_Click(object sender, EventArgs e)
         {
             NextTurnButton.Visible = false;
             this.nextTurn();
-            this.backPanel.Focus();
 
         }
 
         private void xButton_Click(object sender, EventArgs e)
         {
             this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
-            this.backPanel.Focus();
         }
 
         private void concedeButton_Click(object sender, EventArgs e)
@@ -1365,7 +1365,6 @@ namespace Stratego
             // This should always be true, but if 0 was passed into gameOver() bad things would happen
             if (Math.Abs(this.turn) == 1)
                 gameOver(-1*this.turn);
-            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -1388,6 +1387,11 @@ namespace Stratego
         {
             if (this.ai != null)
                 this.ai.difficulty = Convert.ToInt32(this.AIDifficultyChanger.SelectedItem);
+        }
+
+        private void onBackPanelLostFocus(object sender, EventArgs e)
+        {
+            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -1418,7 +1422,6 @@ namespace Stratego
 
                 this.EndGamePanel.Visible = true;
                 this.EndGamePanel.Enabled = true;
-                this.EndGamePanel.Focus();
             }
         }
 
@@ -1430,7 +1433,6 @@ namespace Stratego
         private void movableBombCB_CheckedChanged(object sender, EventArgs e)
         {
             this.movableBombs = !this.movableBombs;
-            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -1441,7 +1443,15 @@ namespace Stratego
         private void movableFlagCB_CheckedChanged(object sender, EventArgs e)
         {
             this.movableFlags = !this.movableFlags;
-            this.backPanel.Focus();
+        }
+
+        /// <summary>
+        /// What to do when the konami code is entered
+        /// </summary>
+        private void konamiCodeEntered()
+        {
+            this.movableBombCB.Enabled = true;
+            this.movableFlagCB.Enabled = true;
         }
     }
 }

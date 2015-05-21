@@ -229,6 +229,7 @@
             // movableFlagCB
             // 
             this.movableFlagCB.AutoSize = true;
+            this.movableFlagCB.Enabled = false;
             this.movableFlagCB.Location = new System.Drawing.Point(33, 102);
             this.movableFlagCB.Name = "movableFlagCB";
             this.movableFlagCB.Size = new System.Drawing.Size(173, 32);
@@ -240,6 +241,7 @@
             // movableBombCB
             // 
             this.movableBombCB.AutoSize = true;
+            this.movableBombCB.Enabled = false;
             this.movableBombCB.Location = new System.Drawing.Point(33, 47);
             this.movableBombCB.Name = "movableBombCB";
             this.movableBombCB.Size = new System.Drawing.Size(189, 32);

@@ -22,23 +22,86 @@ namespace Stratego
         private Keys[] konami = new Keys[8] {Keys.Up, Keys.Up, Keys.Down, Keys.Down, Keys.Left, Keys.Right, Keys.Left, Keys.Right};
         private int konamiIndex = 0;
 
+        /// <summary>
+        /// Whether or not the game is in testing mode
+        /// </summary>
         bool testing = false;
-        int piecePlacing = 0;                     // The piece currently being placed by the user
-        int activeSidePanelButton = 0;            // Placeholder for which button on the placement side panel is being used
-        int ticks = 0;                            // Used by the timer to keep track of the title screen's music & sounds
-        public int panelWidth { get; set; }       // Width of the enclosing panel   
-        public int panelHeight { get; set; }      // Height of the enclosing panel
-        public int[,] boardState { get; set; }    // The 2DArray full of all pieces on the board
-        public int[] placements;                         // The array which holds information on how many pieces of each type can still be placed
-        public bool preGameActive { get; set; }   // Whether or not the pre game has begun
-        public int turn { get; set; }             // -1 for player2 and 1 for player 1. 0 when game isn't started. 
-                                                  // 2 for transition from player1 to player2; -2 for transition from player2 to player1
-        public Point pieceSelectedCoords { get; set; }       // Coordinates of the piece that is currently selected in the array
-        public Boolean pieceIsSelected { get; set; }        //Just a boolean indicating if a piece is currently selected or not
-        public Boolean isSinglePlayer { get; set; }         //Whether player 2 is an AI or not
-        public Boolean movableBombs { get; set; }           // If bombs can be moved
-        public Boolean movableFlags { get; set; }           // If flags can be moved
-        public Point lastFought { get; set; }             //Coordinates of the last piece to win a battle
+
+        /// <summary>
+        /// The piece currently being placed by the user
+        /// </summary>
+        int piecePlacing = 0;
+
+        /// <summary>
+        /// Placeholder for which button on the placement side panel is being used
+        /// </summary>
+        int activeSidePanelButton = 0;
+
+        /// <summary>
+        /// Used by the timer to keep track of the title screen's music & sounds
+        /// </summary>
+        int ticks = 0;
+
+        /// <summary>
+        /// Width of the enclosing panel in pixels
+        /// </summary>
+        public int panelWidth { get; set; }
+
+        /// <summary>
+        /// Height of the enclosing panel in pixels
+        /// </summary>
+        public int panelHeight { get; set; }
+
+        /// <summary>
+        /// The 2DArray full of all pieces on the board
+        /// </summary>
+        public int[,] boardState { get; set; }
+
+        /// <summary>
+        /// The array which holds information on how many pieces of each type can still be placed
+        /// </summary>
+        public int[] placements;
+
+        /// <summary>
+        /// Whether or not the pre game has begun
+        /// </summary>
+        public bool preGameActive { get; set; }
+
+        /// <summary>
+        /// -1 for player2 and 1 for player 1. 0 when game isn't started. 
+        /// 2 for transition from player1 to player2; -2 for transition from player2 to player1.
+        /// </summary>
+        public int turn { get; set; }            
+
+        /// <summary>
+        /// Coordinates of the piece that is currently selected in the array
+        /// </summary>
+        public Point pieceSelectedCoords { get; set; }
+
+        /// <summary>
+        /// Just a boolean indicating if a piece is currently selected or not
+        /// </summary>
+        public Boolean pieceIsSelected { get; set; }
+
+        /// <summary>
+        /// Whether player 2 is an AI or not
+        /// </summary>
+        public Boolean isSinglePlayer { get; set; }
+
+        /// <summary>
+        /// If bombs can be moved
+        /// </summary>
+        public Boolean movableBombs { get; set; }
+
+        /// <summary>
+        /// If flags can be moved
+        /// </summary>
+        public Boolean movableFlags { get; set; }
+
+        /// <summary>
+        /// Coordinates of the last piece to win a battle
+        /// </summary>
+        public Point lastFought { get; set; }
 
         public AI ai;
 

@@ -146,8 +146,32 @@
   <data name="BlueCaptain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BlueCaptain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BlueColonel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueColonel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueFlag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueGeneral" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueGeneral.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueLieutenant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueLieutenant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueMajor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueMajor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueMarshal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueMarshal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueMiner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueMiner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BlueScout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BlueScout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlueSergeant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlueSergeant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BlueSpy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BlueSpy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -161,8 +185,32 @@
   <data name="RedCaptain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RedCaptain.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RedColonel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedColonel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedFlag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedGeneral" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedGeneral.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedLieutenant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedLieutenant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedMajor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedMajor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedMarshal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedMarshal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedMiner" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedMiner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="RedScout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RedScout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RedSergeant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RedSergeant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RedSpy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RedSpy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

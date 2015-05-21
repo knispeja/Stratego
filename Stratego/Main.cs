@@ -483,6 +483,294 @@ namespace Stratego
                                         g.DrawRectangle(pen, r);
                                     }
                                 }
+                                else if (piece == -6)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.RedLieutenant;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 6)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.BlueLieutenant;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 1)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.BlueMarshal;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == -1)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.RedMarshal;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == -2)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.RedGeneral;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 2)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.BlueGeneral;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == -3)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.RedColonel;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 3)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.BlueColonel;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == -4)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.RedMajor;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 4)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.BlueMajor;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == -7)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.RedSergeant;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 7)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.BlueSergeant;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == -8)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.RedMiner;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 8)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.BlueMiner;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == -12)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.RedFlag;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
+                                else if (piece == 12)
+                                {
+                                    // Piece is a red captain (displaying as image)
+                                    Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                                    if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
+                                    {
+                                        Image imag = Properties.Resources.BlueFlag;
+                                        e.Graphics.DrawImage(imag, r);
+                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
+                                            pen.Color = Color.FromArgb(10, 255, 10);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                    else
+                                    {
+                                        g.FillRectangle(b, r);
+                                        g.DrawRectangle(pen, r);
+                                    }
+                                }
                                 else
                                 {
                                     // Piece is something else, display as circle (to be changed later)

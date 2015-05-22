@@ -242,7 +242,9 @@ namespace Stratego
                 try
                 {
                     if((file = dialog.OpenFile())!= null){
-                        loadGame(new StreamReader(file));
+                        StreamReader reader = new StreamReader(file);
+                        loadGame(reader);
+                        reader.Close();
                     }
                     SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
                     sound.Play();
@@ -1659,7 +1661,11 @@ namespace Stratego
         /// <param name="e"></param>
         private void PlayAgainButton_Click(object sender, EventArgs e)
         {
-            if (level > -1)
+            if (this.level > this.levelImages.Length)
+            {
+                Application.Restart();
+            }
+            else if (this.level > -1)
             {
                 loadNextLevel();
             }
@@ -1838,7 +1844,16 @@ namespace Stratego
                 if(this.level>-1)
                 {
                     if (winnerTeam == 1)
-                        this.PlayAgainButton.Text = "Next Level";
+                    {
+                        if(this.level == this.levelImages.Length)
+                        {
+                            this.PlayAgainButton.Text = "Main Menu";
+                            this.victoryLabel.Text = "YOU BEAT THE CAMPAIGN!";
+                            this.level++;
+                        }
+                        else
+                            this.PlayAgainButton.Text = "Next Level";
+                    }
                     else
                     {
                         this.level--;
@@ -1849,20 +1864,22 @@ namespace Stratego
                 {
                     this.PlayAgainButton.Text = "Play Again";
                 }
-                
-                if (winnerTeam == 1)
+                if (this.level < this.levelImages.Length)
                 {
-                    if (this.isSinglePlayer)
-                        this.victoryLabel.Text = "YOU ARE VICTORIOUS, PLAYER 1.";
+                    if (winnerTeam == 1)
+                    {
+                        if (this.isSinglePlayer)
+                            this.victoryLabel.Text = "YOU ARE VICTORIOUS, PLAYER 1.";
+                        else
+                            this.victoryLabel.Text = "BLUE PLAYER WINS.";
+                    }
                     else
-                        this.victoryLabel.Text = "BLUE PLAYER WINS.";
-                }
-                else
-                {
-                    if (this.isSinglePlayer)
-                        this.victoryLabel.Text = "WOW, YOU LOST TO THAT? ...SERIOUSLY?";
-                    else
-                        this.victoryLabel.Text = "RED PLAYER WINS.";
+                    {
+                        if (this.isSinglePlayer)
+                            this.victoryLabel.Text = "WOW, YOU LOST TO THAT? ...SERIOUSLY?";
+                        else
+                            this.victoryLabel.Text = "RED PLAYER WINS.";
+                    }
                 }
 
 
@@ -1946,7 +1963,9 @@ namespace Stratego
             }
             path += @"\Resources\SaveGames\Levels\Level" + this.level + ".txt";
             Console.WriteLine(path);
-            loadGame(new StreamReader(path));
+            StreamReader reader = new StreamReader(path);
+            loadGame(reader);
+            reader.Close();
             this.backPanel.BackgroundImage = this.levelImages[level-1];
             this.preGameActive = false;
             this.lastFought = new Point(-1, -1);

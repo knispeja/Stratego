@@ -1014,7 +1014,7 @@ namespace Stratego
                     this.NextTurnButton.Enabled = true;
 
                 }
-                if (!this.isSinglePlayer) this.turn = -2;
+                if (!this.isSinglePlayer||(this.lastFought != new Point(-1,-1))) this.turn = -2;
                 else this.turn = 1;
             }
             else if(this.turn == -2)

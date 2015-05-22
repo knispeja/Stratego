@@ -129,19 +129,25 @@
     <None Include="Resources\BoardUpdate.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BlueLieutenant.png" />
+    <None Include="Resources\Level1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BlueMajor.png" />
+    <None Include="Resources\Level2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BlueMarshal.png" />
+    <None Include="Resources\SaveGames\Levels\Level1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BlueMiner.png" />
+    <None Include="Resources\SaveGames\Levels\Level2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BlueScout.png" />
+    <None Include="Resources\Level3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Level4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Level5.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BlueSergeant.png" />
@@ -163,6 +169,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BlueGeneral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueLieutenant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueMajor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueMarshal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueMiner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueScout.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RedLieutenant.png" />
@@ -199,27 +220,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RedGeneral.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Level1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Level2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SaveGames\Levels\Level1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SaveGames\Levels\Level2.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Level3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Level4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Level5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

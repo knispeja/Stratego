@@ -44,7 +44,8 @@ namespace Stratego
         /// <summary>
         /// List of all images for campaign levels
         /// </summary>
-        private Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map, Properties.Resources.Level3Map};
+        private Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map, Properties.Resources.Level3Map,
+            Properties.Resources.Level4Map, Properties.Resources.Level5Map};
 
         /// <summary>
         /// The piece currently being placed by the user
@@ -1450,7 +1451,7 @@ namespace Stratego
                     else
                         this.gameOver(1);
                 }
-                else if(e.KeyCode == Keys.PageDown && this.skippableLevels && this.level>1 &&!this.EndGamePanel.Visible)
+                else if(e.KeyCode == Keys.PageDown && this.skippableLevels && this.level>1 &&this.EndGamePanel.Visible)
                 {
                     Console.WriteLine("PageDown");
                     this.level-=2;

@@ -34,6 +34,10 @@
             this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.backPanel = new Stratego.BuffPanel();
+            this.EndGamePanel = new System.Windows.Forms.Panel();
+            this.victoryLabel = new System.Windows.Forms.Label();
+            this.EndGameExitButton = new System.Windows.Forms.Button();
+            this.PlayAgainButton = new System.Windows.Forms.Button();
             this.OptionsPanel = new System.Windows.Forms.Panel();
             this.xButton = new System.Windows.Forms.Button();
             this.concedeButton = new System.Windows.Forms.Button();
@@ -49,10 +53,6 @@
             this.ExitMainButton = new System.Windows.Forms.Button();
             this.CampaignButton = new System.Windows.Forms.Button();
             this.NextTurnButton = new System.Windows.Forms.Button();
-            this.EndGamePanel = new System.Windows.Forms.Panel();
-            this.victoryLabel = new System.Windows.Forms.Label();
-            this.EndGameExitButton = new System.Windows.Forms.Button();
-            this.PlayAgainButton = new System.Windows.Forms.Button();
             this.SinglePlayerButton = new System.Windows.Forms.Button();
             this.LoadButton = new System.Windows.Forms.Button();
             this.SidePanel = new System.Windows.Forms.Panel();
@@ -75,9 +75,9 @@
             this.TitlePictureBox = new System.Windows.Forms.PictureBox();
             this.FireBox = new System.Windows.Forms.PictureBox();
             this.backPanel.SuspendLayout();
+            this.EndGamePanel.SuspendLayout();
             this.OptionsPanel.SuspendLayout();
             this.optionsGroup.SuspendLayout();
-            this.EndGamePanel.SuspendLayout();
             this.SidePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FireBox)).BeginInit();
@@ -144,6 +144,52 @@
             this.backPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.backPanel_Paint);
             this.backPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.backPanel_MouseClick);
             this.backPanel.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.backPanel_PreviewKeyDown);
+            // 
+            // EndGamePanel
+            // 
+            this.EndGamePanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.EndGamePanel.BackColor = System.Drawing.Color.DarkGray;
+            this.EndGamePanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.EndGamePanel.Controls.Add(this.victoryLabel);
+            this.EndGamePanel.Controls.Add(this.EndGameExitButton);
+            this.EndGamePanel.Controls.Add(this.PlayAgainButton);
+            this.EndGamePanel.Location = new System.Drawing.Point(582, 126);
+            this.EndGamePanel.Name = "EndGamePanel";
+            this.EndGamePanel.Size = new System.Drawing.Size(457, 351);
+            this.EndGamePanel.TabIndex = 8;
+            this.EndGamePanel.Visible = false;
+            // 
+            // victoryLabel
+            // 
+            this.victoryLabel.Font = new System.Drawing.Font("Palatino Linotype", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.victoryLabel.Location = new System.Drawing.Point(3, 29);
+            this.victoryLabel.Name = "victoryLabel";
+            this.victoryLabel.Size = new System.Drawing.Size(447, 250);
+            this.victoryLabel.TabIndex = 3;
+            this.victoryLabel.Text = "This should never display.";
+            this.victoryLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // EndGameExitButton
+            // 
+            this.EndGameExitButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F);
+            this.EndGameExitButton.Location = new System.Drawing.Point(261, 283);
+            this.EndGameExitButton.Name = "EndGameExitButton";
+            this.EndGameExitButton.Size = new System.Drawing.Size(110, 48);
+            this.EndGameExitButton.TabIndex = 2;
+            this.EndGameExitButton.Text = "Exit";
+            this.EndGameExitButton.UseVisualStyleBackColor = true;
+            this.EndGameExitButton.Click += new System.EventHandler(this.PauseMenuExitButton_Click);
+            // 
+            // PlayAgainButton
+            // 
+            this.PlayAgainButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F);
+            this.PlayAgainButton.Location = new System.Drawing.Point(38, 283);
+            this.PlayAgainButton.Name = "PlayAgainButton";
+            this.PlayAgainButton.Size = new System.Drawing.Size(174, 48);
+            this.PlayAgainButton.TabIndex = 1;
+            this.PlayAgainButton.Text = "Play Again";
+            this.PlayAgainButton.UseVisualStyleBackColor = true;
+            this.PlayAgainButton.Click += new System.EventHandler(this.PlayAgainButton_Click);
             // 
             // OptionsPanel
             // 
@@ -213,7 +259,7 @@
             this.pauseLabel.Font = new System.Drawing.Font("Palatino Linotype", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pauseLabel.Location = new System.Drawing.Point(172, 12);
             this.pauseLabel.Name = "pauseLabel";
-            this.pauseLabel.Size = new System.Drawing.Size(219, 64);
+            this.pauseLabel.Size = new System.Drawing.Size(274, 80);
             this.pauseLabel.TabIndex = 16;
             this.pauseLabel.Text = "PAUSED";
             this.pauseLabel.Click += new System.EventHandler(this.pauseLabel_Click);
@@ -238,7 +284,7 @@
             this.movableFlagCB.Enabled = false;
             this.movableFlagCB.Location = new System.Drawing.Point(33, 102);
             this.movableFlagCB.Name = "movableFlagCB";
-            this.movableFlagCB.Size = new System.Drawing.Size(173, 32);
+            this.movableFlagCB.Size = new System.Drawing.Size(221, 41);
             this.movableFlagCB.TabIndex = 3;
             this.movableFlagCB.Text = "Movable Flags";
             this.movableFlagCB.UseVisualStyleBackColor = true;
@@ -250,7 +296,7 @@
             this.movableBombCB.Enabled = false;
             this.movableBombCB.Location = new System.Drawing.Point(33, 47);
             this.movableBombCB.Name = "movableBombCB";
-            this.movableBombCB.Size = new System.Drawing.Size(189, 32);
+            this.movableBombCB.Size = new System.Drawing.Size(242, 41);
             this.movableBombCB.TabIndex = 2;
             this.movableBombCB.Text = "Movable Bombs";
             this.movableBombCB.UseVisualStyleBackColor = true;
@@ -261,7 +307,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(225, 202);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(139, 28);
+            this.label1.Size = new System.Drawing.Size(181, 37);
             this.label1.TabIndex = 1;
             this.label1.Text = "AI Difficulty:";
             // 
@@ -276,7 +322,7 @@
             this.AIDifficultyChanger.Location = new System.Drawing.Point(410, 201);
             this.AIDifficultyChanger.Name = "AIDifficultyChanger";
             this.AIDifficultyChanger.ReadOnly = true;
-            this.AIDifficultyChanger.Size = new System.Drawing.Size(39, 36);
+            this.AIDifficultyChanger.Size = new System.Drawing.Size(39, 43);
             this.AIDifficultyChanger.TabIndex = 0;
             this.AIDifficultyChanger.Text = "5";
             this.AIDifficultyChanger.SelectedItemChanged += new System.EventHandler(this.AIDifficultyChanger_SelectedItemChanged);
@@ -334,52 +380,6 @@
             this.NextTurnButton.UseVisualStyleBackColor = true;
             this.NextTurnButton.Visible = false;
             this.NextTurnButton.Click += new System.EventHandler(this.NextTurnButton_Click);
-            // 
-            // EndGamePanel
-            // 
-            this.EndGamePanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.EndGamePanel.BackColor = System.Drawing.Color.DarkGray;
-            this.EndGamePanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.EndGamePanel.Controls.Add(this.victoryLabel);
-            this.EndGamePanel.Controls.Add(this.EndGameExitButton);
-            this.EndGamePanel.Controls.Add(this.PlayAgainButton);
-            this.EndGamePanel.Location = new System.Drawing.Point(582, 126);
-            this.EndGamePanel.Name = "EndGamePanel";
-            this.EndGamePanel.Size = new System.Drawing.Size(457, 351);
-            this.EndGamePanel.TabIndex = 8;
-            this.EndGamePanel.Visible = false;
-            // 
-            // victoryLabel
-            // 
-            this.victoryLabel.Font = new System.Drawing.Font("Palatino Linotype", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.victoryLabel.Location = new System.Drawing.Point(24, 29);
-            this.victoryLabel.Name = "victoryLabel";
-            this.victoryLabel.Size = new System.Drawing.Size(414, 250);
-            this.victoryLabel.TabIndex = 3;
-            this.victoryLabel.Text = "This should never display.";
-            this.victoryLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // EndGameExitButton
-            // 
-            this.EndGameExitButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F);
-            this.EndGameExitButton.Location = new System.Drawing.Point(261, 283);
-            this.EndGameExitButton.Name = "EndGameExitButton";
-            this.EndGameExitButton.Size = new System.Drawing.Size(110, 48);
-            this.EndGameExitButton.TabIndex = 2;
-            this.EndGameExitButton.Text = "Exit";
-            this.EndGameExitButton.UseVisualStyleBackColor = true;
-            this.EndGameExitButton.Click += new System.EventHandler(this.PauseMenuExitButton_Click);
-            // 
-            // PlayAgainButton
-            // 
-            this.PlayAgainButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F);
-            this.PlayAgainButton.Location = new System.Drawing.Point(38, 283);
-            this.PlayAgainButton.Name = "PlayAgainButton";
-            this.PlayAgainButton.Size = new System.Drawing.Size(174, 48);
-            this.PlayAgainButton.TabIndex = 1;
-            this.PlayAgainButton.Text = "Play Again";
-            this.PlayAgainButton.UseVisualStyleBackColor = true;
-            this.PlayAgainButton.Click += new System.EventHandler(this.PlayAgainButton_Click);
             // 
             // SinglePlayerButton
             // 
@@ -470,7 +470,7 @@
             this.removeCheckBox.AutoSize = true;
             this.removeCheckBox.Location = new System.Drawing.Point(12, 638);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
+            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;
@@ -644,11 +644,11 @@
             this.Text = "Stratego";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.backPanel.ResumeLayout(false);
+            this.EndGamePanel.ResumeLayout(false);
             this.OptionsPanel.ResumeLayout(false);
             this.OptionsPanel.PerformLayout();
             this.optionsGroup.ResumeLayout(false);
             this.optionsGroup.PerformLayout();
-            this.EndGamePanel.ResumeLayout(false);
             this.SidePanel.ResumeLayout(false);
             this.SidePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitlePictureBox)).EndInit();

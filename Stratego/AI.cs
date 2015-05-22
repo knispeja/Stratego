@@ -186,11 +186,13 @@ namespace Stratego
         /// <param name="y"></param>
         public void executeMove(Move move, int[,] boardState)
         {
+            int attackedPiece = boardState[move.newX, move.newY];
+
             // We aren't currently doing an evaluateMoveRecursive()...
             if (this.recursionLevel == 0)
             {
                 // Check if the AI just won the game
-                if (boardState[move.newX, move.newY] == this.team * -12)
+                if (attackedPiece == this.team * -12)
                 {
                     this.win.gameOver(this.team);
                     return;
@@ -206,7 +208,14 @@ namespace Stratego
             boardState[move.newX, move.newY] = (int) attackVal;
 
             if (this.recursionLevel == 0)
-                win.nextTurn();
+            {
+                if (attackedPiece != 0 && attackVal != 0)
+                    this.win.lastFought = new System.Drawing.Point(move.newX, move.newY);
+                else
+                    this.win.lastFought = new System.Drawing.Point(-1, -1);
+
+                this.win.nextTurn();
+            }
         }
 
         public List<Move> generateValidMoves()

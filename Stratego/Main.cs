@@ -973,17 +973,21 @@ namespace Stratego
                 }
                 else
                 {
-                    if (!testing)
-                    {
-                        if (!this.isSinglePlayer)
-                            NextTurnButton.Text = "Player 2's Turn";
-                        else
-                            NextTurnButton.Text = "AI's Turn";
-                        NextTurnButton.Visible = true;
-                        this.NextTurnButton.Enabled = true;
-
-                    }
                     this.turn = 2;
+                    if (!this.checkMoves())
+                        this.gameOver(1);
+                    else
+                    {
+                        if (!testing)
+                        {
+                            if (!this.isSinglePlayer)
+                                NextTurnButton.Text = "Player 2's Turn";
+                            else
+                                NextTurnButton.Text = "AI's Turn";
+                            NextTurnButton.Visible = true;
+                            this.NextTurnButton.Enabled = true;
+                        }
+                    }
                 }
             }
             // It's red player's turn
@@ -1007,15 +1011,21 @@ namespace Stratego
                         this.SidePanel.Visible = false;
                     }
                 }
-                if (!testing && !this.isSinglePlayer)
-                {
-                    NextTurnButton.Text = "Player 1's Turn";
-                    NextTurnButton.Visible = true;
-                    this.NextTurnButton.Enabled = true;
-
-                }
-                if (!this.isSinglePlayer||(this.lastFought != new Point(-1,-1))) this.turn = -2;
+                if (!this.isSinglePlayer || (this.lastFought != new Point(-1, -1))) this.turn = -2;
                 else this.turn = 1;
+                if (!this.checkMoves())
+                    this.gameOver(-1);
+                else
+                {
+                    if (!testing && (!this.isSinglePlayer || (this.lastFought != new Point(-1, -1))))
+                    {
+                        NextTurnButton.Text = "Player 1's Turn";
+                        NextTurnButton.Visible = true;
+                        this.NextTurnButton.Enabled = true;
+
+                    }
+                }
+                
             }
             else if(this.turn == -2)
             {
@@ -1854,6 +1864,30 @@ namespace Stratego
                 this.EndGamePanel.Enabled = true;
             }
         }
+        public Boolean checkMoves()
+        {
+            for (int x1 = 0; x1 < this.boardState.GetLength(0); x1++)
+            {
+                for (int y1 = 0; y1 < this.boardState.GetLength(1); y1++)
+                {
+                    int piece = boardState[x1, y1];
+                    if ((piece<0&&(this.turn==-1||this.turn==2))||(piece>0&&(this.turn==1||turn==-2)))
+                    {
+                        int[,] validPlaces = GetPieceMoves(x1, y1, this.boardState);
+                        for (int x2 = 0; x2 < this.boardState.GetLength(0); x2++)
+                        {
+                            for (int y2 = 0; y2 < this.boardState.GetLength(1); y2++)
+                            {
+                                if (validPlaces[x2, y2] == 1)
+                                    return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// What to do if the movable bomb check box in the options menu is changed
@@ -1933,6 +1967,11 @@ namespace Stratego
 
             loadNextLevel();
             backPanel.Focus();
+        }
+
+        private void pauseLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

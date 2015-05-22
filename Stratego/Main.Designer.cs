@@ -34,8 +34,6 @@
             this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.backPanel = new Stratego.BuffPanel();
-            this.ExitMainButton = new System.Windows.Forms.Button();
-            this.CampaignButton = new System.Windows.Forms.Button();
             this.OptionsPanel = new System.Windows.Forms.Panel();
             this.xButton = new System.Windows.Forms.Button();
             this.concedeButton = new System.Windows.Forms.Button();
@@ -48,6 +46,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.AIDifficultyChanger = new System.Windows.Forms.DomainUpDown();
             this.PauseMenuExitButton = new System.Windows.Forms.Button();
+            this.ExitMainButton = new System.Windows.Forms.Button();
+            this.CampaignButton = new System.Windows.Forms.Button();
             this.NextTurnButton = new System.Windows.Forms.Button();
             this.EndGamePanel = new System.Windows.Forms.Panel();
             this.victoryLabel = new System.Windows.Forms.Label();
@@ -125,9 +125,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.backPanel.BackColor = System.Drawing.Color.Transparent;
             this.backPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.backPanel.Controls.Add(this.OptionsPanel);
             this.backPanel.Controls.Add(this.ExitMainButton);
             this.backPanel.Controls.Add(this.CampaignButton);
-            this.backPanel.Controls.Add(this.OptionsPanel);
             this.backPanel.Controls.Add(this.NextTurnButton);
             this.backPanel.Controls.Add(this.EndGamePanel);
             this.backPanel.Controls.Add(this.SinglePlayerButton);
@@ -144,34 +144,6 @@
             this.backPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.backPanel_Paint);
             this.backPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.backPanel_MouseClick);
             this.backPanel.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.backPanel_PreviewKeyDown);
-            // 
-            // ExitMainButton
-            // 
-            this.ExitMainButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ExitMainButton.Enabled = false;
-            this.ExitMainButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExitMainButton.Location = new System.Drawing.Point(1324, 548);
-            this.ExitMainButton.Name = "ExitMainButton";
-            this.ExitMainButton.Size = new System.Drawing.Size(162, 77);
-            this.ExitMainButton.TabIndex = 11;
-            this.ExitMainButton.Text = "Close Stratego";
-            this.ExitMainButton.UseVisualStyleBackColor = true;
-            this.ExitMainButton.Visible = false;
-            this.ExitMainButton.Click += new System.EventHandler(this.PauseMenuExitButton_Click);
-            // 
-            // CampaignButton
-            // 
-            this.CampaignButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CampaignButton.Enabled = false;
-            this.CampaignButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F);
-            this.CampaignButton.Location = new System.Drawing.Point(1134, 470);
-            this.CampaignButton.Name = "CampaignButton";
-            this.CampaignButton.Size = new System.Drawing.Size(162, 59);
-            this.CampaignButton.TabIndex = 10;
-            this.CampaignButton.Text = "Campaign";
-            this.CampaignButton.UseVisualStyleBackColor = true;
-            this.CampaignButton.Visible = false;
-            this.CampaignButton.Click += new System.EventHandler(this.CampaignButton_Click);
             // 
             // OptionsPanel
             // 
@@ -244,6 +216,7 @@
             this.pauseLabel.Size = new System.Drawing.Size(274, 80);
             this.pauseLabel.TabIndex = 16;
             this.pauseLabel.Text = "PAUSED";
+            this.pauseLabel.Click += new System.EventHandler(this.pauseLabel_Click);
             // 
             // optionsGroup
             // 
@@ -321,13 +294,41 @@
             this.PauseMenuExitButton.VisibleChanged += new System.EventHandler(this.PauseMenuExitButton_VisibleChanged);
             this.PauseMenuExitButton.Click += new System.EventHandler(this.PauseMenuExitButton_Click);
             // 
+            // ExitMainButton
+            // 
+            this.ExitMainButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExitMainButton.Enabled = false;
+            this.ExitMainButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExitMainButton.Location = new System.Drawing.Point(1324, 548);
+            this.ExitMainButton.Name = "ExitMainButton";
+            this.ExitMainButton.Size = new System.Drawing.Size(162, 77);
+            this.ExitMainButton.TabIndex = 11;
+            this.ExitMainButton.Text = "Close Stratego";
+            this.ExitMainButton.UseVisualStyleBackColor = true;
+            this.ExitMainButton.Visible = false;
+            this.ExitMainButton.Click += new System.EventHandler(this.PauseMenuExitButton_Click);
+            // 
+            // CampaignButton
+            // 
+            this.CampaignButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CampaignButton.Enabled = false;
+            this.CampaignButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F);
+            this.CampaignButton.Location = new System.Drawing.Point(1134, 470);
+            this.CampaignButton.Name = "CampaignButton";
+            this.CampaignButton.Size = new System.Drawing.Size(162, 59);
+            this.CampaignButton.TabIndex = 10;
+            this.CampaignButton.Text = "Campaign";
+            this.CampaignButton.UseVisualStyleBackColor = true;
+            this.CampaignButton.Visible = false;
+            this.CampaignButton.Click += new System.EventHandler(this.CampaignButton_Click);
+            // 
             // NextTurnButton
             // 
             this.NextTurnButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.NextTurnButton.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NextTurnButton.Location = new System.Drawing.Point(745, 423);
             this.NextTurnButton.Name = "NextTurnButton";
-            this.NextTurnButton.Size = new System.Drawing.Size(129, 70);
+            this.NextTurnButton.Size = new System.Drawing.Size(133, 75);
             this.NextTurnButton.TabIndex = 2;
             this.NextTurnButton.Text = "Player 1\'s Turn";
             this.NextTurnButton.UseVisualStyleBackColor = true;

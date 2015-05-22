@@ -250,14 +250,21 @@ namespace Stratego
                     this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
                     this.LoadButton.Visible = false;
                     this.LoadButton.Enabled = false;
+                    this.ExitMainButton.Visible = false;
+                    this.ExitMainButton.Enabled = false;
                     this.CampaignButton.Visible = false;
                     this.CampaignButton.Enabled = false;
                     this.SinglePlayerButton.Visible = false;
+                    this.SinglePlayerButton.Enabled = false;
                     this.SidePanelOpenButton.Visible = false;
-                    if (this.turn == 2 && isSinglePlayer)
+                    if (this.turn == 2 && this.isSinglePlayer)
                         this.NextTurnButton.Text = "AI's Turn";
                     else if (this.turn == 2)
                         this.NextTurnButton.Text = "Player 2's Turn";
+                    if(this.isSinglePlayer)
+                    {
+                        this.AIDifficultyChanger.Text = this.ai.difficulty.ToString();
+                    }
                     this.NextTurnButton.Visible = true;
                     this.NextTurnButton.Enabled = true;
                     this.preGameActive = false;
@@ -292,13 +299,17 @@ namespace Stratego
             nextTurn();
             this.LoadButton.Visible = false;
             this.LoadButton.Enabled = false;
+            this.ExitMainButton.Visible = false;
+            this.ExitMainButton.Enabled = false;
             this.CampaignButton.Visible = false;
             this.CampaignButton.Enabled = false;
             this.SinglePlayerButton.Visible = false;
+            this.SinglePlayerButton.Enabled= false;
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
                 if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
                     button.Click += SidePanelButtonClick;
+            this.backPanel.Focus();
         }
 
         /// <summary>
@@ -328,7 +339,7 @@ namespace Stratego
             this.ticks++;
             if (this.ticks == 25)
             {
-                //this.StartButton.Visible = true;
+
                 this.TitlePictureBox.Visible = true;
             }
             else if (this.ticks == 40)
@@ -341,9 +352,12 @@ namespace Stratego
                 this.FireBox.Visible = true;
                 this.LoadButton.Visible = true;
                 this.LoadButton.Enabled = true;
+                this.ExitMainButton.Visible = true;
+                this.ExitMainButton.Enabled = true;
                 this.CampaignButton.Visible = true;
                 this.CampaignButton.Enabled = true;
                 this.SinglePlayerButton.Visible = true;
+                this.SinglePlayerButton.Enabled = true;
                 this.startTimer.Dispose();
             }
         }
@@ -1909,9 +1923,12 @@ namespace Stratego
             this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
             this.LoadButton.Visible = false;
             this.LoadButton.Enabled = false;
+            this.ExitMainButton.Visible = false;
+            this.ExitMainButton.Enabled = false;
             this.CampaignButton.Visible = false;
             this.CampaignButton.Enabled = false;
             this.SinglePlayerButton.Visible = false;
+            this.SinglePlayerButton.Enabled = false;
             this.SidePanelOpenButton.Visible = false;
 
             loadNextLevel();

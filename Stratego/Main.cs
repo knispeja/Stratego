@@ -37,7 +37,13 @@ namespace Stratego
         /// </summary>
         bool testing = false;
        
-        public int level { get; set; }         // Current level of the game. Equals 0 if not in campaign mode
+        /// <summary>
+        /// Current level of the game. Equals -1 if not in campaign mode
+        /// </summary>
+        public int level { get; set; }    
+        /// <summary>
+        /// List of all images for campaign levels
+        /// </summary>
         private Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map };
 
         /// <summary>
@@ -122,6 +128,11 @@ namespace Stratego
         public AI ai;
 
         /// <summary>
+        /// If levels can be skipped using keypresses
+        /// </summary>
+        private Boolean skippableLevels { get; set; }
+
+        /// <summary>
         /// Initializer for normal play (initializes GUI).
         /// Not to be used for testing!
         /// </summary>
@@ -140,6 +151,7 @@ namespace Stratego
             this.panelHeight = this.backPanel.Height;
             this.turn = 0;
             this.preGameActive = false;
+            this.skippableLevels = false;
             this.isSinglePlayer = false;
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
@@ -1342,7 +1354,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            if (this.turn == 0 || this.OptionsPanel.Visible) return;
+            if (this.turn == 0 || this.OptionsPanel.Visible|| this.EndGamePanel.Visible) return;
 
             if (preGameActive)
             {
@@ -1431,9 +1443,20 @@ namespace Stratego
 
             if(this.turn != 0 && !this.preGameActive)
             {
-                KeysConverter kc = new KeysConverter();
-                string keyChar = kc.ConvertToString(e.KeyCode);
-                if (e.KeyCode == Keys.Escape)
+                if (e.KeyCode == Keys.PageUp && this.skippableLevels && this.level>0)
+                {
+                    if (this.level < this.levelImages.Length)
+                        this.loadNextLevel();
+                    else
+                        this.gameOver(1);
+                }
+                else if(e.KeyCode == Keys.PageDown && this.skippableLevels && this.level>1)
+                {
+                    Console.WriteLine("PageDown");
+                    this.level-=2;
+                    this.loadNextLevel();
+                }
+                else if (e.KeyCode == Keys.Escape)
                 {
                     // Change the pause panel's visibility to whatever it's not
                     this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
@@ -1939,6 +1962,7 @@ namespace Stratego
         {
             this.movableBombCB.Enabled = true;
             this.movableFlagCB.Enabled = true;
+            this.skippableLevels = true;
         }
 
         /// <summary>
@@ -1966,13 +1990,19 @@ namespace Stratego
             StreamReader reader = new StreamReader(path);
             loadGame(reader);
             reader.Close();
-            this.backPanel.BackgroundImage = this.levelImages[level-1];
             this.preGameActive = false;
             this.lastFought = new Point(-1, -1);
-            if(this.turn==-2) this.NextTurnButton.Text = "Player 1's Turn";
-            else this.NextTurnButton.Text = "AI's Turn";
-            this.NextTurnButton.Visible = true;
-            this.NextTurnButton.Enabled = true;
+
+            if (!this.testing)
+            {
+                this.backPanel.BackgroundImage = this.levelImages[level - 1];
+                if (this.turn == -2) this.NextTurnButton.Text = "Player 1's Turn";
+                else this.NextTurnButton.Text = "AI's Turn";
+                this.NextTurnButton.Visible = true;
+                this.NextTurnButton.Enabled = true;
+                this.backPanel.Invalidate();
+
+            }
         }
 
         private void CampaignButton_Click(object sender, EventArgs e)

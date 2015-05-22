@@ -16,7 +16,7 @@ namespace Stratego
     public partial class StrategoWin : Form
     {
         /// <summary>
-        /// The defualt amount of peices for all of the pieces. (EX: 0 0s; 1 1; 1 2; 2 3s; 4 4s; etc..)
+        /// The default amount of pieces for each piece. (EX: 0 0s; 1 1; 1 2; 2 3s; 4 4s; etc..)
         /// </summary>
         public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
         //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
@@ -44,7 +44,7 @@ namespace Stratego
         /// <summary>
         /// List of all images for campaign levels
         /// </summary>
-        private Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map };
+        private Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map, Properties.Resources.Level3Map};
 
         /// <summary>
         /// The piece currently being placed by the user
@@ -1450,7 +1450,7 @@ namespace Stratego
                     else
                         this.gameOver(1);
                 }
-                else if(e.KeyCode == Keys.PageDown && this.skippableLevels && this.level>1)
+                else if(e.KeyCode == Keys.PageDown && this.skippableLevels && this.level>1 &&!this.EndGamePanel.Visible)
                 {
                     Console.WriteLine("PageDown");
                     this.level-=2;

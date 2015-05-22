@@ -144,7 +144,7 @@ namespace Stratego
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
-            this.level = 0;
+            this.level = -1;
             this.backPanel.LostFocus += onBackPanelLostFocus;
             t.Start();
 
@@ -1659,7 +1659,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void PlayAgainButton_Click(object sender, EventArgs e)
         {
-            if (level != 0)
+            if (level > -1)
             {
                 loadNextLevel();
             }
@@ -1674,11 +1674,11 @@ namespace Stratego
                 this.ai = new AI(this, -1);
                 nextTurn();
                 this.SidePanel.Visible = false;
+                this.SidePanelOpenButton.Visible = true;
                 this.SidePanelOpenButton.Text = "Open Side";
             }
             this.EndGamePanel.Visible = false;
             this.EndGamePanel.Enabled = false;
-            this.SidePanelOpenButton.Visible = true;
             this.backPanel.Enabled = true;
             this.backPanel.Invalidate();
         }
@@ -1835,9 +1835,15 @@ namespace Stratego
             if (!this.testing)
             {
                 this.OptionsPanel.Visible = false;
-                if(this.level!=0)
+                if(this.level>-1)
                 {
-                    this.PlayAgainButton.Text = "Next Level";
+                    if (winnerTeam == 1)
+                        this.PlayAgainButton.Text = "Next Level";
+                    else
+                    {
+                        this.level--;
+                        this.PlayAgainButton.Text = "Try Again";
+                    }
                 }
                 else
                 {
@@ -1923,8 +1929,9 @@ namespace Stratego
         /// </summary>
         private void loadNextLevel()
         {
-            if (this.level < 0 && (this.level+1)>=this.levelImages.Length) return;
+            if (this.level < -1 && (this.level+1)>=this.levelImages.Length) return;
             this.level++;
+            if (this.level == 0) this.level++;
             string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
             if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
             {

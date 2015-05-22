@@ -210,6 +210,16 @@ namespace Stratego.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cursor {
+            get {
+                object obj = ResourceManager.GetObject("cursor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1 1 5
         ///0 -9 -7 0 0 0 -12
         ///42 42 42 0 0 -3 0
@@ -460,6 +470,16 @@ namespace Stratego.Properties {
             get {
                 object obj = ResourceManager.GetObject("Stratego-logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] sword {
+            get {
+                object obj = ResourceManager.GetObject("sword", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

@@ -125,11 +125,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.backPanel.BackColor = System.Drawing.Color.Transparent;
             this.backPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.backPanel.Controls.Add(this.EndGamePanel);
             this.backPanel.Controls.Add(this.OptionsPanel);
             this.backPanel.Controls.Add(this.ExitMainButton);
             this.backPanel.Controls.Add(this.CampaignButton);
             this.backPanel.Controls.Add(this.NextTurnButton);
-            this.backPanel.Controls.Add(this.EndGamePanel);
             this.backPanel.Controls.Add(this.SinglePlayerButton);
             this.backPanel.Controls.Add(this.LoadButton);
             this.backPanel.Controls.Add(this.SidePanel);
@@ -213,7 +213,7 @@
             this.pauseLabel.Font = new System.Drawing.Font("Palatino Linotype", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pauseLabel.Location = new System.Drawing.Point(172, 12);
             this.pauseLabel.Name = "pauseLabel";
-            this.pauseLabel.Size = new System.Drawing.Size(274, 80);
+            this.pauseLabel.Size = new System.Drawing.Size(219, 64);
             this.pauseLabel.TabIndex = 16;
             this.pauseLabel.Text = "PAUSED";
             this.pauseLabel.Click += new System.EventHandler(this.pauseLabel_Click);
@@ -238,7 +238,7 @@
             this.movableFlagCB.Enabled = false;
             this.movableFlagCB.Location = new System.Drawing.Point(33, 102);
             this.movableFlagCB.Name = "movableFlagCB";
-            this.movableFlagCB.Size = new System.Drawing.Size(221, 41);
+            this.movableFlagCB.Size = new System.Drawing.Size(173, 32);
             this.movableFlagCB.TabIndex = 3;
             this.movableFlagCB.Text = "Movable Flags";
             this.movableFlagCB.UseVisualStyleBackColor = true;
@@ -250,7 +250,7 @@
             this.movableBombCB.Enabled = false;
             this.movableBombCB.Location = new System.Drawing.Point(33, 47);
             this.movableBombCB.Name = "movableBombCB";
-            this.movableBombCB.Size = new System.Drawing.Size(242, 41);
+            this.movableBombCB.Size = new System.Drawing.Size(189, 32);
             this.movableBombCB.TabIndex = 2;
             this.movableBombCB.Text = "Movable Bombs";
             this.movableBombCB.UseVisualStyleBackColor = true;
@@ -261,7 +261,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(225, 202);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(181, 37);
+            this.label1.Size = new System.Drawing.Size(139, 28);
             this.label1.TabIndex = 1;
             this.label1.Text = "AI Difficulty:";
             // 
@@ -276,7 +276,7 @@
             this.AIDifficultyChanger.Location = new System.Drawing.Point(410, 201);
             this.AIDifficultyChanger.Name = "AIDifficultyChanger";
             this.AIDifficultyChanger.ReadOnly = true;
-            this.AIDifficultyChanger.Size = new System.Drawing.Size(39, 43);
+            this.AIDifficultyChanger.Size = new System.Drawing.Size(39, 36);
             this.AIDifficultyChanger.TabIndex = 0;
             this.AIDifficultyChanger.Text = "5";
             this.AIDifficultyChanger.SelectedItemChanged += new System.EventHandler(this.AIDifficultyChanger_SelectedItemChanged);
@@ -337,12 +337,13 @@
             // 
             // EndGamePanel
             // 
+            this.EndGamePanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.EndGamePanel.BackColor = System.Drawing.Color.DarkGray;
             this.EndGamePanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.EndGamePanel.Controls.Add(this.victoryLabel);
             this.EndGamePanel.Controls.Add(this.EndGameExitButton);
             this.EndGamePanel.Controls.Add(this.PlayAgainButton);
-            this.EndGamePanel.Location = new System.Drawing.Point(206, 342);
+            this.EndGamePanel.Location = new System.Drawing.Point(582, 126);
             this.EndGamePanel.Name = "EndGamePanel";
             this.EndGamePanel.Size = new System.Drawing.Size(457, 351);
             this.EndGamePanel.TabIndex = 8;
@@ -469,7 +470,7 @@
             this.removeCheckBox.AutoSize = true;
             this.removeCheckBox.Location = new System.Drawing.Point(12, 638);
             this.removeCheckBox.Name = "removeCheckBox";
-            this.removeCheckBox.Size = new System.Drawing.Size(82, 21);
+            this.removeCheckBox.Size = new System.Drawing.Size(66, 17);
             this.removeCheckBox.TabIndex = 12;
             this.removeCheckBox.Text = "Remove";
             this.removeCheckBox.UseVisualStyleBackColor = true;

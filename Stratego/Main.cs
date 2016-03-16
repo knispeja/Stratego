@@ -193,8 +193,8 @@ namespace Stratego
             this.ai = new AI(this, -1);
            // Image imag = Properties.Resources.cursor.Tag;
             //System.Windows.Forms.Cursor.Current = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("sword"));
-            System.Windows.Forms.Cursor.Current = new Cursor(GetType(), "sword.cur");
-            this.Cursor = new Cursor(GetType(), "sword.cur");
+            //System.Windows.Forms.Cursor.Current = new Cursor(GetType(), "sword.cur");
+            //this.Cursor = new Cursor(GetType(), "sword.cur");
         }
 
         /// <summary>

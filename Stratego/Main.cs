@@ -147,7 +147,6 @@ namespace Stratego
             this.StartButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(0, Color.Red);
             this.StartButton.FlatAppearance.BorderSize = 0;
             this.StartButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(0, Color.Red);
-            Timer t = new Timer();
             this.panelWidth = this.backPanel.Width;
             this.panelHeight = this.backPanel.Height;
             this.turn = 0;
@@ -159,7 +158,6 @@ namespace Stratego
             this.movableFlags = false;
             this.level = -1;
             this.backPanel.LostFocus += onBackPanelLostFocus;
-            t.Start();
 
             // Initialize the board state with invalid spaces in the enemy player's side
             // of the board and empty spaces everywhere else. To be changed later!

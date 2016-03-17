@@ -602,7 +602,7 @@
             this.TitlePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.TitlePictureBox.BackColor = System.Drawing.Color.Transparent;
             this.TitlePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.TitlePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("TitlePictureBox.Image")));
+            // this.TitlePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("TitlePictureBox.Image")));
             this.TitlePictureBox.Location = new System.Drawing.Point(1169, 342);
             this.TitlePictureBox.Name = "TitlePictureBox";
             this.TitlePictureBox.Size = new System.Drawing.Size(321, 95);
@@ -638,7 +638,7 @@
             this.Controls.Add(this.backPanel);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            // this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "StrategoWin";
             this.Text = "Stratego";

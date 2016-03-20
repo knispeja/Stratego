@@ -18,6 +18,7 @@ namespace Stratego
     {
         private static readonly string[] names= new string[] {"Empty", "Marshall", "General", "Colonel", "Major", "Captain", "Lieutenant",
                                     "Sergeant", "Miner", "Scout", "Spy", "Bomb", "Flag"};
+
         public static int? attack(int first, int second)
         {
             if((Math.Sign(first) == Math.Sign(second) || first == 42 || second == 42) && first != 0 && second != 0) return null;

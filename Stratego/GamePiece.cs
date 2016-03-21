@@ -4,28 +4,55 @@ namespace Stratego
 {
     abstract class GamePiece
     {
-        public static readonly String NULL_NAME = "null";
-        public static readonly int NULL_NUM = 0;
-        private string pieceName;
-        private int pieceRank;
-        private int teamCode;
-        private Boolean lifeStatus;
+        public static readonly String NULL_NAME = "NULL_NAME";
+        public static readonly int NULL_NUM = 42;
+        protected string pieceName;
+        protected int pieceRank;
+        protected int teamCode;
+        protected Boolean lifeStatus;
 
-        public GamePiece(int teamNum)
+        public GamePiece(int teamCode)
         {
             this.pieceRank = NULL_NUM;
             this.pieceName = NULL_NAME;
-            this.teamCode = teamNum;
+            this.teamCode = teamCode;
             this.lifeStatus = true;
         }
 
-        public abstract int attack(GamePiece otherPiece);
+        public virtual void attack(GamePiece otherPiece)
+        {
+            int otherRank = otherPiece.getPieceRank();
+            if (otherRank > this.pieceRank)
+            {
+                this.killPiece();
+            }
+            else if (otherRank == this.pieceRank)
+            {
+                this.killPiece();
+            }
+        }
 
-        public abstract int defend(GamePiece otherPiece);
+        public virtual void defend(GamePiece otherPiece)
+        {
+            int otherRank = otherPiece.getPieceRank();
+            if (otherRank > this.pieceRank)
+            {
+                this.killPiece();
+            }
+            else if (otherRank == this.pieceRank)
+            {
+                this.killPiece();
+            }
+        }
 
         public Boolean isAlive()
         {
             return lifeStatus;
+        }
+
+        protected void killPiece()
+        {
+            this.lifeStatus = false;
         }
 
         public int getPieceRank()

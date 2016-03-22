@@ -18,7 +18,8 @@ namespace Stratego
 
         public override void attack(GamePiece otherPiece)
         {
-            if (otherPiece.getPieceRank() == this.pieceRank)
+            int otherRank = otherPiece.getPieceRank();
+            if (otherRank == BombPiece.BOMB_RANK || otherRank == SPY_RANK)
             {
                 this.killPiece();
             }
@@ -26,10 +27,7 @@ namespace Stratego
 
         public override void defend(GamePiece otherPiece)
         {
-            if(otherPiece.getPieceRank() != FlagPiece.FLAG_RANK)
-            {
-                this.killPiece();
-            }
+            this.killPiece();
         }
     }
 }

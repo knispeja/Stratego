@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace Stratego
 {
@@ -19,7 +18,7 @@ namespace Stratego
 
         public override void attack(GamePiece otherPiece)
         {
-            // This Piece Cannot Attack
+            this.killPiece();
         }
 
         public override void defend(GamePiece otherPiece)

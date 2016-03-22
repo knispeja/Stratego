@@ -32,11 +32,9 @@ namespace Stratego
         public virtual void attack(GamePiece otherPiece)
         {
             int otherRank = otherPiece.getPieceRank();
-            if (otherRank > this.pieceRank)
-            {
-                this.killPiece();
-            }
-            else if (otherRank == this.pieceRank)
+            int comparisonValue = this.compareRanks(otherRank);
+            if (otherRank != SpyPiece.SPY_RANK && (comparisonValue <= 0 
+                || otherRank == BombPiece.BOMB_RANK))
             {
                 this.killPiece();
             }
@@ -45,13 +43,27 @@ namespace Stratego
         public virtual void defend(GamePiece otherPiece)
         {
             int otherRank = otherPiece.getPieceRank();
-            if (otherRank > this.pieceRank)
+            int comparisonValue = this.compareRanks(otherRank);
+            if (comparisonValue <= 0 || otherRank == BombPiece.BOMB_RANK 
+                || otherRank == SpyPiece.SPY_RANK)
             {
                 this.killPiece();
             }
-            else if (otherRank == this.pieceRank)
+        }
+
+        public virtual int compareRanks(int otherRank)
+        {
+            if (otherRank == this.pieceRank)
             {
-                this.killPiece();
+                return 0;   
+            }
+            else if (otherRank > this.pieceRank)
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
             }
         }
 

@@ -1,22 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace Stratego
 {
     abstract class GamePiece
     {
-        public static readonly String NULL_NAME = "NULL_NAME";
-        public static readonly int NULL_NUM = 42;
+        public static readonly Dictionary<int, Color> colorDict = new Dictionary<int, Color>();
+
+        protected Dictionary<int, Image> imageDict = new Dictionary<int, Image>();
         protected string pieceName;
         protected int pieceRank;
         protected int teamCode;
         protected Boolean lifeStatus;
+        protected Color pieceColor;
+        protected Image pieceImage;
 
         public GamePiece(int teamCode)
         {
-            this.pieceRank = NULL_NUM;
-            this.pieceName = NULL_NAME;
+            colorDict.Add(0, Color.FromArgb(25, 25, 175));
+            colorDict.Add(1, Color.FromArgb(175, 25, 25));
+
+            this.pieceRank = 42;
+            this.pieceName = "null";
             this.teamCode = teamCode;
             this.lifeStatus = true;
+            this.pieceImage = null;
+            this.pieceColor = colorDict[teamCode];
         }
 
         public virtual void attack(GamePiece otherPiece)
@@ -68,6 +78,16 @@ namespace Stratego
         public int getTeamCode()
         {
             return teamCode;
+        }
+
+        public Image getPieceImage()
+        {
+            return this.pieceImage;
+        }
+
+        public Color getPieceColor()
+        {
+            return this.pieceColor;
         }
     }
 }

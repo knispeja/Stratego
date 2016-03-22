@@ -4,13 +4,16 @@ namespace Stratego
 {
     class SpyPiece : GamePiece
     {
-        public static readonly int SPY_NUM = 1;
         public static readonly String SPY_NAME = "Spy";
+        public static readonly int SPY_RANK = 1;
 
         public SpyPiece (int teamCode) : base(teamCode)
         {
-            this.pieceRank = SPY_NUM;
+            this.imageDict.Add(0, Properties.Resources.BlueSpy);
+            this.imageDict.Add(1, Properties.Resources.RedSpy);
+            this.pieceRank = SPY_RANK;
             this.pieceName = SPY_NAME;
+            this.pieceImage = this.imageDict[teamCode];
         }
 
         public override void attack(GamePiece otherPiece)

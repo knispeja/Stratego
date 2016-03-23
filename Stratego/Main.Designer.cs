@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StrategoWin));
             this.startTimer = new System.Windows.Forms.Timer(this.components);
             this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
@@ -262,7 +261,6 @@
             this.pauseLabel.Size = new System.Drawing.Size(274, 80);
             this.pauseLabel.TabIndex = 16;
             this.pauseLabel.Text = "PAUSED";
-            this.pauseLabel.Click += new System.EventHandler(this.pauseLabel_Click);
             // 
             // optionsGroup
             // 
@@ -602,7 +600,6 @@
             this.TitlePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.TitlePictureBox.BackColor = System.Drawing.Color.Transparent;
             this.TitlePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            // this.TitlePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("TitlePictureBox.Image")));
             this.TitlePictureBox.Location = new System.Drawing.Point(1169, 342);
             this.TitlePictureBox.Name = "TitlePictureBox";
             this.TitlePictureBox.Size = new System.Drawing.Size(321, 95);
@@ -638,7 +635,6 @@
             this.Controls.Add(this.backPanel);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            // this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "StrategoWin";
             this.Text = "Stratego";

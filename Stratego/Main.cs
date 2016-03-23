@@ -211,8 +211,7 @@ namespace Stratego
         private void SaveButton_Click(object sender, EventArgs e)
         {
             // if ((this.turn == 0) || (this.preGameActive) || (Math.Abs(this.turn) == 2)) return; // TODO: this line may be necessary?
-
-            SaveLoadOperations.displaySaveDialog(getSaveData());
+            SaveLoadOperations.saveGame(getSaveData());
         }
 
         /// <summary>
@@ -222,33 +221,14 @@ namespace Stratego
         /// <param name="e"></param>
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
+            SaveData? saveData = SaveLoadOperations.loadGame();
 
-            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-            if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
+            if(saveData != null)
             {
-                for (int i = 0; i < path.Length - 3; i++)
-                {
-                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n'))
-                    {
-                        path = path.Substring(0, i);
-                        break;
-                    }
-                }
-            }
-            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\SaveGames");
-            dialog.RestoreDirectory = true;
-            if(dialog.ShowDialog()== DialogResult.OK)
-            {
-                Stream file = null;
+                loadSaveData(saveData ?? default(SaveData));
+
                 try
                 {
-                    if((file = dialog.OpenFile())!= null){
-                        StreamReader reader = new StreamReader(file);
-                        loadGame(reader);
-                        reader.Close();
-                    }
                     SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
                     sound.Play();
                     this.FireBox.Dispose();
@@ -1165,51 +1145,6 @@ namespace Stratego
         }
 
         /// <summary>
-        /// Loads a gamestate from the given reader 
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <returns> True if successful </returns> 
-        public bool loadGame(TextReader reader) 
-        {
-            string[] lines = new string[100]; //Make a Standard max size later
-            string line = reader.ReadLine();
-            lines[0] = line;
-            int i = 0;
-            while (line != null) 
-            {
-                lines[i] = line;
-                line = reader.ReadLine();
-                i++;
-            }
-
-            int difficulty = 5;
-            string[] numbers = lines[0].Split(' ');
-            this.turn = -2*Convert.ToInt32(numbers[0]);
-            if (numbers[1] == "0")
-                this.isSinglePlayer = false;
-            else
-            {
-                this.isSinglePlayer = true;
-                difficulty = Convert.ToInt32(numbers[2]);
-            }
-
-            numbers = lines[1].Split(' ');
-            int[,] newBoard = new int[numbers.Length, i - 1];
-
-            for (int k = 1; k< i; k++ )
-            {
-                numbers = lines[k].Split(' ');
-                for(int j =0; j< numbers.Length; j++)
-                {
-                    newBoard[j, k-1] = Convert.ToInt32(numbers[j]);
-                }
-            }
-            this.boardState = newBoard;
-            if (this.isSinglePlayer) this.ai = new AI(this, -1, difficulty);
-                return true;
-        }
-
-        /// <summary>
         /// Loads a premade piece setup onto the current team's side of the board
         /// </summary>
         /// <param name="reader"></param>
@@ -1951,9 +1886,8 @@ namespace Stratego
             }
             path += @"\Resources\SaveGames\Levels\Level" + this.level + ".txt";
 
-            StreamReader reader = new StreamReader(path);
-            loadGame(reader);
-            reader.Close();
+            loadSaveData(SaveLoadOperations.loadSaveData(path));
+
             this.preGameActive = false;
             this.lastFought = new Point(-1, -1);
 
@@ -1989,12 +1923,7 @@ namespace Stratego
             backPanel.Focus();
         }
 
-        private void pauseLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        public SaveData getSaveData()
+        private SaveData getSaveData()
         {
             return new SaveData(
                     this.boardState,
@@ -2002,6 +1931,17 @@ namespace Stratego
                     this.turn,
                     this.isSinglePlayer
                 );
+        }
+
+        private void loadSaveData(SaveData data)
+        {
+            this.boardState = data.boardState;
+            this.turn = data.turn;
+            this.isSinglePlayer = data.isSinglePlayer;
+            this.ai.difficulty = data.difficulty;
+
+            if (this.isSinglePlayer)
+                this.ai = new AI(this, -1, data.difficulty);
         }
     }
 }

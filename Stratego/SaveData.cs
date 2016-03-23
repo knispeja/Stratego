@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 
 namespace Stratego
 {
-    struct SaveData
+    /// <summary>
+    /// Simple data structure to hold any save data passed to and from save/load operations
+    /// </summary>
+    public struct SaveData
     {
         public int[,] boardState { get; private set; }
         public int difficulty { get; private set; }
         public int turn { get; private set; }
         public bool isSinglePlayer { get; private set; }
 
-        public SaveData(int[,] boardState, int difficulty, int turn, bool isSinglePlayer)
+        public SaveData(int[,] boardState, int difficulty, int turn, bool isSinglePlayer) : this()
         {
             this.boardState = boardState;
             this.difficulty = difficulty;
+            this.turn = turn;
             this.isSinglePlayer = isSinglePlayer;
         }
     }

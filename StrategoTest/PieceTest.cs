@@ -65,6 +65,17 @@ namespace StrategoTest
             Assert.AreEqual(r2, returnExpectedOnAttack(a2Scout, d2Spy));
         }
 
+        [TestCase(1, 3)]
+        public void TestSpyVMinerBattle(int r1, int r2)
+        {
+            GamePiece a1Spy = new SpyPiece(0);
+            GamePiece d1Miner = new ScoutPiece(1);
+            Assert.AreEqual(r1, returnExpectedOnAttack(a1Spy, d1Miner));
+            GamePiece a2Miner= new ScoutPiece(0);
+            GamePiece d2Spy = new SpyPiece(1);
+            Assert.AreEqual(r2, returnExpectedOnAttack(a2Miner, d2Spy));
+        }
+
         public int returnExpectedOnAttack(GamePiece a, GamePiece b)
         {
             a.attack(b);

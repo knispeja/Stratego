@@ -123,6 +123,8 @@
     <Compile Include="MajorPiece.cs" />
     <Compile Include="MarshallPiece.cs" />
     <Compile Include="MinerPiece.cs" />
+    <Compile Include="SaveData.cs" />
+    <Compile Include="SaveLoadOperations.cs" />
     <Compile Include="ScoutPiece.cs" />
     <Compile Include="SergeantPiece.cs" />
     <Compile Include="SoundPlayerAsync.cs" />

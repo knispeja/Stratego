@@ -5,7 +5,7 @@ namespace Stratego
     class BombPiece : GamePiece
     {
         public static readonly String BOMB_NAME = "Bomb";
-        public static readonly int BOMB_RANK = 0;
+        public static readonly int BOMB_RANK = 0; // TODO: talk to Jacob about this because he had a question
 
         public BombPiece (int teamCode) : base (teamCode)
         {
@@ -18,11 +18,7 @@ namespace Stratego
 
         public override void attack(GamePiece otherPiece)
         {
-            int otherRank = otherPiece.getPieceRank();
-            if (otherRank == MinerPiece.MINER_RANK || otherRank == BOMB_RANK)
-            {
-                this.killPiece();
-            }
+            defend(otherPiece);
         }
 
         public override void defend(GamePiece otherPiece)

@@ -29,16 +29,17 @@ namespace Stratego
         /// <summary>
         /// Whether or not the game is in testing mode
         /// </summary>
-        bool testing = false;
+        bool testing = false; // TODO: We should really probably get rid of this :| it basically disables the GUI for the automated tests, but...
+                              // at the very least, it's being used way too often. It should really only be used as a GUI-disabler
        
         /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>
-        public int level { get; set; }    
+        public int level { get; set; }  
         /// <summary>
         /// List of all images for campaign levels
         /// </summary>
-        private Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map, Properties.Resources.Level3Map,
+        private readonly Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map, Properties.Resources.Level3Map,
             Properties.Resources.Level4Map, Properties.Resources.Level5Map};
 
         /// <summary>
@@ -209,29 +210,9 @@ namespace Stratego
         /// <param name="e"></param>
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-            if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
-            {
-                for (int i = 0; i < path.Length - 3; i++)
-                {
-                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n'))
-                    {
-                        path = path.Substring(0, i);
-                        break;
-                    }
-                }
-            }
-            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\SaveGames");
-            dialog.RestoreDirectory = true;
+            // if ((this.turn == 0) || (this.preGameActive) || (Math.Abs(this.turn) == 2)) return; // TODO: this line may be necessary?
 
-            if(dialog.ShowDialog() == DialogResult.OK)
-            {
-                StreamWriter writer = new StreamWriter(dialog.FileName);
-                saveGame(writer);
-                writer.Close();
-            }
+            SaveLoadOperations.displaySaveDialog(getSaveData());
         }
 
         /// <summary>
@@ -1291,35 +1272,6 @@ namespace Stratego
         }
 
         /// <summary>
-        /// Saves a gamestate into the string or file in the given writer
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <returns> True if successful </returns> 
-        public bool saveGame(TextWriter writer)
-        {
-            if ((this.turn == 0)||(this.preGameActive)||(Math.Abs(this.turn)==2)) return false;
-
-            string buffer = "";
-            if (isSinglePlayer)
-                buffer = " 1 "+this.ai.difficulty;
-            else
-                buffer = " 0";
-            writer.WriteLine(this.turn + buffer);
-            for (int i = 0; i < boardState.GetLength(1); i++ )
-            {
-                buffer = "";
-                for (int j = 0; j < boardState.GetLength(0)-1; j++)
-                {
-                    buffer += boardState[j, i] + " ";
-                }
-                buffer += boardState[boardState.GetLength(0) - 1, i];
-                writer.WriteLine(buffer);
-            }
-  
-            return true;
-        }
-
-        /// <summary>
         /// Saves the set up of the current teams pieces into a file
         /// </summary>
         /// <param name="writer"></param>
@@ -2040,6 +1992,16 @@ namespace Stratego
         private void pauseLabel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public SaveData getSaveData()
+        {
+            return new SaveData(
+                    this.boardState,
+                    this.ai.difficulty,
+                    this.turn,
+                    this.isSinglePlayer
+                );
         }
     }
 }

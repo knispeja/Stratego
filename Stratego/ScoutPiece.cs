@@ -2,7 +2,7 @@
 
 namespace Stratego
 {
-    class ScoutPiece : GamePiece
+    public class ScoutPiece : GamePiece
     {
         public static readonly String SCOUT_NAME = "Scout";
         public static readonly int SCOUT_RANK = 2;

@@ -4,11 +4,11 @@ using System.Drawing;
 
 namespace Stratego
 {
-    abstract class GamePiece
+    public abstract class GamePiece
     {
-        public static readonly Dictionary<int, Color> colorDict = new Dictionary<int, Color>();
+        protected Dictionary<int, Color> colorDict;
 
-        protected Dictionary<int, Image> imageDict = new Dictionary<int, Image>();
+        protected Dictionary<int, Image> imageDict;
         protected string pieceName;
         protected int pieceRank;
         protected int teamCode;
@@ -18,6 +18,9 @@ namespace Stratego
 
         public GamePiece(int teamCode)
         {
+            colorDict = new Dictionary<int, Color>();
+            imageDict = new Dictionary<int, Image>();
+
             colorDict.Add(0, Color.FromArgb(25, 25, 175));
             colorDict.Add(1, Color.FromArgb(175, 25, 25));
 

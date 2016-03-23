@@ -1,7 +1,7 @@
 ﻿using System;
 using Stratego;
 using NUnit.Framework;
-using System.Windows.Forms;
+using NUnit.Core;
 using System.Drawing;
 using System.IO;
 
@@ -10,39 +10,39 @@ namespace StrategoTest
     [TestFixture()]
     class MainTest
     {
-        [TestCase(1, 100, 100, Result = false)] //Here we test that the piece value does not 
-        [TestCase(2, 100, 100, Result = false)] // affect whether it will be placed.
-        [TestCase(3, 100, 100, Result = false)] //Note that these cases are all at the top-left corner of squares
-        [TestCase(4, 100, 100, Result = false)]
-        [TestCase(5, 100, 100, Result = false)]
-        [TestCase(6, 100, 100, Result = false)]
-        [TestCase(7, 100, 100, Result = false)]
-        [TestCase(8, 100, 100, Result = false)]
-        [TestCase(9, 100, 100, Result = false)]
-        [TestCase(10, 100, 100, Result = false)]
-        [TestCase(11, 100, 100, Result = false)]
-        [TestCase(12, 100, 100, Result = false)]
-        [TestCase(-1, 100, 100, Result = false)]
-        [TestCase(-2, 100, 100, Result = false)]
-        [TestCase(-3, 100, 100, Result = false)]
-        [TestCase(-4, 100, 100, Result = false)]
-        [TestCase(-5, 100, 100, Result = false)]
-        [TestCase(-6, 100, 100, Result = false)]
-        [TestCase(-7, 100, 100, Result = false)]
-        [TestCase(-8, 100, 100, Result = false)]
-        [TestCase(-9, 100, 100, Result = false)]
-        [TestCase(-10, 100, 100, Result = false)]
-        [TestCase(-11, 100, 100, Result = false)]
+        [TestCase(1, 100, 100, ExpectedResult = false)] //Here we test that the piece value does not 
+        [TestCase(2, 100, 100, ExpectedResult = false)] // affect whether it will be placed.
+        [TestCase(3, 100, 100, ExpectedResult = false)] //Note that these cases are all at the top-left corner of squares
+        [TestCase(4, 100, 100, ExpectedResult = false)]
+        [TestCase(5, 100, 100, ExpectedResult = false)]
+        [TestCase(6, 100, 100, ExpectedResult = false)]
+        [TestCase(7, 100, 100, ExpectedResult = false)]
+        [TestCase(8, 100, 100, ExpectedResult = false)]
+        [TestCase(9, 100, 100, ExpectedResult = false)]
+        [TestCase(10, 100, 100, ExpectedResult = false)]
+        [TestCase(11, 100, 100, ExpectedResult = false)]
+        [TestCase(12, 100, 100, ExpectedResult = false)]
+        [TestCase(-1, 100, 100, ExpectedResult = false)]
+        [TestCase(-2, 100, 100, ExpectedResult = false)]
+        [TestCase(-3, 100, 100, ExpectedResult = false)]
+        [TestCase(-4, 100, 100, ExpectedResult = false)]
+        [TestCase(-5, 100, 100, ExpectedResult = false)]
+        [TestCase(-6, 100, 100, ExpectedResult = false)]
+        [TestCase(-7, 100, 100, ExpectedResult = false)]
+        [TestCase(-8, 100, 100, ExpectedResult = false)]
+        [TestCase(-9, 100, 100, ExpectedResult = false)]
+        [TestCase(-10, 100, 100, ExpectedResult = false)]
+        [TestCase(-11, 100, 100, ExpectedResult = false)]
 
-        [TestCase(-12, 100, 100, Result = false)] //Here we test that the function acts appropriately 
-        [TestCase(-12, 200, 200, Result = false)] // for placing in any diagonal space.
-        [TestCase(-12, 300, 300, Result = false)]
-        [TestCase(-12, 400, 400, Result = false)]
+        [TestCase(-12, 100, 100, ExpectedResult = false)] //Here we test that the function acts appropriately 
+        [TestCase(-12, 200, 200, ExpectedResult = false)] // for placing in any diagonal space.
+        [TestCase(-12, 300, 300, ExpectedResult = false)]
+        [TestCase(-12, 400, 400, ExpectedResult = false)]
 
-        [TestCase(-12, 101, 101, Result = false)] // Here we test that the function recognizes the  
-        [TestCase(-12, 201, 201, Result = false)] // correct square for coordinates not on the top-left corner.
-        [TestCase(-12, 301, 301, Result = false)]
-        [TestCase(-12, 401, 401, Result = false)]
+        [TestCase(-12, 101, 101, ExpectedResult = false)] // Here we test that the function recognizes the  
+        [TestCase(-12, 201, 201, ExpectedResult = false)] // correct square for coordinates not on the top-left corner.
+        [TestCase(-12, 301, 301, ExpectedResult = false)]
+        [TestCase(-12, 401, 401, ExpectedResult = false)]
         // This tests that pieces will not be placed on an obstacle space on a 1000 x 1000 pixel board.
         public bool? TestThatNothingCanBePlacedOnObstacle(int piece, int x, int y)
         {
@@ -95,43 +95,43 @@ namespace StrategoTest
             if (piece < 0)
                 game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
-            Assert.AreEqual(game.getPiece(x/100, y/100),piece);
+            NUnitFramework.Assert.AreEqual(game.getPiece(x/100, y/100),piece);
             Assert.IsTrue(result.Value); 
         }
 
-        [TestCase(1, 100, 100, Result = false)]//Here we test that the piece value does not 
-        [TestCase(2, 100, 100, Result = false)] // affect whether it will be placed.
-        [TestCase(3, 100, 100, Result = false)] //Note that these cases are all at the top-left corner of squares
-        [TestCase(4, 100, 100, Result = false)]
-        [TestCase(5, 100, 100, Result = false)]
-        [TestCase(6, 100, 100, Result = false)]
-        [TestCase(7, 100, 100, Result = false)]
-        [TestCase(8, 100, 100, Result = false)]
-        [TestCase(9, 100, 100, Result = false)]
-        [TestCase(10, 100, 100, Result = false)]
-        [TestCase(11, 100, 100, Result = false)]
-        [TestCase(12, 100, 100, Result = false)]
-        [TestCase(-1, 100, 100, Result = false)]
-        [TestCase(-2, 100, 100, Result = false)]
-        [TestCase(-3, 100, 100, Result = false)]
-        [TestCase(-4, 100, 100, Result = false)]
-        [TestCase(-5, 100, 100, Result = false)]
-        [TestCase(-6, 100, 100, Result = false)]
-        [TestCase(-7, 100, 100, Result = false)]
-        [TestCase(-8, 100, 100, Result = false)]
-        [TestCase(-9, 100, 100, Result = false)]
-        [TestCase(-10, 100, 100, Result = false)]
-        [TestCase(-11, 100, 100, Result = false)]
+        [TestCase(1, 100, 100, ExpectedResult = false)]//Here we test that the piece value does not 
+        [TestCase(2, 100, 100, ExpectedResult = false)] // affect whether it will be placed.
+        [TestCase(3, 100, 100, ExpectedResult = false)] //Note that these cases are all at the top-left corner of squares
+        [TestCase(4, 100, 100, ExpectedResult = false)]
+        [TestCase(5, 100, 100, ExpectedResult = false)]
+        [TestCase(6, 100, 100, ExpectedResult = false)]
+        [TestCase(7, 100, 100, ExpectedResult = false)]
+        [TestCase(8, 100, 100, ExpectedResult = false)]
+        [TestCase(9, 100, 100, ExpectedResult = false)]
+        [TestCase(10, 100, 100, ExpectedResult = false)]
+        [TestCase(11, 100, 100, ExpectedResult = false)]
+        [TestCase(12, 100, 100, ExpectedResult = false)]
+        [TestCase(-1, 100, 100, ExpectedResult = false)]
+        [TestCase(-2, 100, 100, ExpectedResult = false)]
+        [TestCase(-3, 100, 100, ExpectedResult = false)]
+        [TestCase(-4, 100, 100, ExpectedResult = false)]
+        [TestCase(-5, 100, 100, ExpectedResult = false)]
+        [TestCase(-6, 100, 100, ExpectedResult = false)]
+        [TestCase(-7, 100, 100, ExpectedResult = false)]
+        [TestCase(-8, 100, 100, ExpectedResult = false)]
+        [TestCase(-9, 100, 100, ExpectedResult = false)]
+        [TestCase(-10, 100, 100, ExpectedResult = false)]
+        [TestCase(-11, 100, 100, ExpectedResult = false)]
 
-        [TestCase(-12, 100, 100, Result = false)] //Here we test that the function acts appropriately 
-        [TestCase(-12, 200, 200, Result = false)] // for placing in any diagonal space.
-        [TestCase(-12, 300, 300, Result = false)]
-        [TestCase(-12, 400, 400, Result = false)]
+        [TestCase(-12, 100, 100, ExpectedResult = false)] //Here we test that the function acts appropriately 
+        [TestCase(-12, 200, 200, ExpectedResult = false)] // for placing in any diagonal space.
+        [TestCase(-12, 300, 300, ExpectedResult = false)]
+        [TestCase(-12, 400, 400, ExpectedResult = false)]
 
-        [TestCase(-12, 101, 101, Result = false)] // Here we test that the function recognizes the  
-        [TestCase(-12, 201, 201, Result = false)] // correct square for coordinates not on the top-left corner.
-        [TestCase(-12, 301, 301, Result = false)]
-        [TestCase(-12, 401, 401, Result = false)]
+        [TestCase(-12, 101, 101, ExpectedResult = false)] // Here we test that the function recognizes the  
+        [TestCase(-12, 201, 201, ExpectedResult = false)] // correct square for coordinates not on the top-left corner.
+        [TestCase(-12, 301, 301, ExpectedResult = false)]
+        [TestCase(-12, 401, 401, ExpectedResult = false)]
         // This tests that pieces will not be placed on an occupied space on a 1000 x 1000 pixel board.
         public bool? TestThatNothingCanBePlacedInFilledSpace(int piece, int x, int y)
         {
@@ -143,30 +143,30 @@ namespace StrategoTest
             return game.placePiece(piece, x, y);
         }
 
-        [TestCase(1, 200, 200, Result = false)] //Here we test that the function acts appropriately
-        [TestCase(1, 400, 400, Result = false)] // for placing in any diagonal space.
-        [TestCase(1, 600, 600, Result = false)]
-        [TestCase(1, 800, 800, Result = false)]
+        [TestCase(1, 200, 200, ExpectedResult = false)] //Here we test that the function acts appropriately
+        [TestCase(1, 400, 400, ExpectedResult = false)] // for placing in any diagonal space.
+        [TestCase(1, 600, 600, ExpectedResult = false)]
+        [TestCase(1, 800, 800, ExpectedResult = false)]
 
-        [TestCase(1, 201, 201, Result = false)] // Here we test that the function recognizes the
-        [TestCase(1, 401, 401, Result = false)] // correct square for coordinates not on the top-left corner
-        [TestCase(1, 601, 601, Result = false)]
-        [TestCase(1, 801, 801, Result = false)]
+        [TestCase(1, 201, 201, ExpectedResult = false)] // Here we test that the function recognizes the
+        [TestCase(1, 401, 401, ExpectedResult = false)] // correct square for coordinates not on the top-left corner
+        [TestCase(1, 601, 601, ExpectedResult = false)]
+        [TestCase(1, 801, 801, ExpectedResult = false)]
 
-        [TestCase(1, 200, 201, Result = false)] //Coordinates on top edge of square
-        [TestCase(1, 400, 401, Result = false)]
-        [TestCase(1, 600, 601, Result = false)]
-        [TestCase(1, 800, 801, Result = false)]
+        [TestCase(1, 200, 201, ExpectedResult = false)] //Coordinates on top edge of square
+        [TestCase(1, 400, 401, ExpectedResult = false)]
+        [TestCase(1, 600, 601, ExpectedResult = false)]
+        [TestCase(1, 800, 801, ExpectedResult = false)]
 
-        [TestCase(1, 201, 200, Result = false)] //Coordinates on left edge of square
-        [TestCase(1, 401, 400, Result = false)]
-        [TestCase(1, 601, 600, Result = false)]
-        [TestCase(1, 801, 800, Result = false)]
+        [TestCase(1, 201, 200, ExpectedResult = false)] //Coordinates on left edge of square
+        [TestCase(1, 401, 400, ExpectedResult = false)]
+        [TestCase(1, 601, 600, ExpectedResult = false)]
+        [TestCase(1, 801, 800, ExpectedResult = false)]
 
-        [TestCase(1, 0, 201, Result = false)] //Left edge of grid
-        [TestCase(1, 0, 401, Result = false)]
-        [TestCase(1, 0, 601, Result = false)]
-        [TestCase(1, 0, 801, Result = false)]
+        [TestCase(1, 0, 201, ExpectedResult = false)] //Left edge of grid
+        [TestCase(1, 0, 401, ExpectedResult = false)]
+        [TestCase(1, 0, 601, ExpectedResult = false)]
+        [TestCase(1, 0, 801, ExpectedResult = false)]
         // This tests that pieces will not be placed on an obstacle space on a 2000 x 2000 pixel board.
         public bool? TestThatNothingCanBePlacedOnObstacleV2(int piece, int x, int y)
         {
@@ -178,30 +178,30 @@ namespace StrategoTest
             return game.placePiece(piece, x, y);
         }
 
-        [TestCase(1, 200, 200, Result = false)] //Here we test that the function acts appropriately
-        [TestCase(1, 400, 400, Result = false)] // for placing in any diagonal space.
-        [TestCase(1, 600, 600, Result = false)]
-        [TestCase(1, 800, 800, Result = false)]
+        [TestCase(1, 200, 200, ExpectedResult = false)] //Here we test that the function acts appropriately
+        [TestCase(1, 400, 400, ExpectedResult = false)] // for placing in any diagonal space.
+        [TestCase(1, 600, 600, ExpectedResult = false)]
+        [TestCase(1, 800, 800, ExpectedResult = false)]
 
-        [TestCase(1, 201, 201, Result = false)]// Here we test that the function recognizes the
-        [TestCase(1, 401, 401, Result = false)] // correct square for coordinates not on the top-left corner
-        [TestCase(1, 601, 601, Result = false)]
-        [TestCase(1, 801, 801, Result = false)]
+        [TestCase(1, 201, 201, ExpectedResult = false)]// Here we test that the function recognizes the
+        [TestCase(1, 401, 401, ExpectedResult = false)] // correct square for coordinates not on the top-left corner
+        [TestCase(1, 601, 601, ExpectedResult = false)]
+        [TestCase(1, 801, 801, ExpectedResult = false)]
 
-        [TestCase(1, 200, 201, Result = false)]//Coordinates on top edge of square
-        [TestCase(1, 400, 401, Result = false)]
-        [TestCase(1, 600, 601, Result = false)]
-        [TestCase(1, 800, 801, Result = false)]
+        [TestCase(1, 200, 201, ExpectedResult = false)]//Coordinates on top edge of square
+        [TestCase(1, 400, 401, ExpectedResult = false)]
+        [TestCase(1, 600, 601, ExpectedResult = false)]
+        [TestCase(1, 800, 801, ExpectedResult = false)]
 
-        [TestCase(1, 201, 200, Result = false)]//Coordinates on left edge of square
-        [TestCase(1, 401, 400, Result = false)]
-        [TestCase(1, 601, 600, Result = false)]
-        [TestCase(1, 801, 800, Result = false)]
+        [TestCase(1, 201, 200, ExpectedResult = false)]//Coordinates on left edge of square
+        [TestCase(1, 401, 400, ExpectedResult = false)]
+        [TestCase(1, 601, 600, ExpectedResult = false)]
+        [TestCase(1, 801, 800, ExpectedResult = false)]
 
-        [TestCase(1, 0, 201, Result = false)] //Left edge of grid
-        [TestCase(1, 0, 401, Result = false)]
-        [TestCase(1, 0, 601, Result = false)]
-        [TestCase(1, 0, 801, Result = false)]
+        [TestCase(1, 0, 201, ExpectedResult = false)] //Left edge of grid
+        [TestCase(1, 0, 401, ExpectedResult = false)]
+        [TestCase(1, 0, 601, ExpectedResult = false)]
+        [TestCase(1, 0, 801, ExpectedResult = false)]
         // This tests that pieces will not be placed on an occupied space on a 2000 x 2000 pixel board.
         public bool? TestThatNothingCanBePlacedInFilledSpaceV2(int piece, int x, int y)
         {
@@ -262,11 +262,11 @@ namespace StrategoTest
             Assert.IsTrue(result.Value);
         }
 
-        [TestCase(1, 200, 100, Result = false)] //These tests work with a non-square board grid
-        [TestCase(1, 200, 200, Result = false)]
-        [TestCase(1, 400, 200, Result = false)]
-        [TestCase(1, 600, 300, Result = false)]
-        [TestCase(1, 0, 200, Result = false)]
+        [TestCase(1, 200, 100, ExpectedResult = false)] //These tests work with a non-square board grid
+        [TestCase(1, 200, 200, ExpectedResult = false)]
+        [TestCase(1, 400, 200, ExpectedResult = false)]
+        [TestCase(1, 600, 300, ExpectedResult = false)]
+        [TestCase(1, 0, 200, ExpectedResult = false)]
         // This tests that pieces will not be placed on an occupied space on a 2000 x 1000 pixel board.
         public bool? TestThatNothingCanBePlacedInFilledSpaceV3(int piece, int x, int y)
         {
@@ -278,11 +278,11 @@ namespace StrategoTest
             return game.placePiece(piece, x, y);
         }
 
-        [TestCase(1, 200, 100, Result = false)] //These tests work with a non-square board grid
-        [TestCase(1, 200, 200, Result = false)]
-        [TestCase(1, 400, 200, Result = false)]
-        [TestCase(1, 600, 300, Result = false)]
-        [TestCase(1, 0, 200, Result = false)]
+        [TestCase(1, 200, 100, ExpectedResult = false)] //These tests work with a non-square board grid
+        [TestCase(1, 200, 200, ExpectedResult = false)]
+        [TestCase(1, 400, 200, ExpectedResult = false)]
+        [TestCase(1, 600, 300, ExpectedResult = false)]
+        [TestCase(1, 0, 200, ExpectedResult = false)]
         // This tests that pieces will not be placed on an obstacle space on a 2000 x 1000 pixel board.
         public bool? TestThatNothingCanBePlacedOnObstacleV3(int piece, int x, int y)
         {
@@ -294,9 +294,9 @@ namespace StrategoTest
             return game.placePiece(piece, x, y);
         }
 
-        [TestCase(1, 123, 254, Result = false)] //These tests work with a non-square board grid 
-        [TestCase(1, 246, 508, Result = false)]
-        [TestCase(1, 369, 762, Result = false)]
+        [TestCase(1, 123, 254, ExpectedResult = false)] //These tests work with a non-square board grid 
+        [TestCase(1, 246, 508, ExpectedResult = false)]
+        [TestCase(1, 369, 762, ExpectedResult = false)]
         // This tests that pieces will not be placed on an obstacle space on a 1230 x 2540 pixel board.
         public bool? TestThatNothingCanBePlacedOnObstacleV4(int piece, int x, int y)
         {
@@ -308,9 +308,9 @@ namespace StrategoTest
             return game.placePiece(piece, x, y);
         }
 
-        [TestCase(1, 123, 254, Result = false)] //These tests work with a non-square board grid
-        [TestCase(1, 246, 508, Result = false)]
-        [TestCase(1, 369, 762, Result = false)]
+        [TestCase(1, 123, 254, ExpectedResult = false)] //These tests work with a non-square board grid
+        [TestCase(1, 246, 508, ExpectedResult = false)]
+        [TestCase(1, 369, 762, ExpectedResult = false)]
         // This tests that pieces will not be placed on an occupied space on a 1230 x 2540 pixel board.
         public bool? TestThatNothingCanBePlacedInFilledSpaceV4(int piece, int x, int y)
         {

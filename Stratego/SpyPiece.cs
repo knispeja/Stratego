@@ -14,20 +14,8 @@ namespace Stratego
             this.pieceRank = SPY_RANK;
             this.pieceName = SPY_NAME;
             this.pieceImage = this.imageDict[teamCode];
-        }
-
-        public override void attack(GamePiece otherPiece)
-        {
-            int otherRank = otherPiece.getPieceRank();
-            if (otherRank == BombPiece.BOMB_RANK || otherRank == SPY_RANK)
-            {
-                this.killPiece();
-            }
-        }
-
-        public override void defend(GamePiece otherPiece)
-        {
-            this.killPiece();
+            this.attackBehavior = new ImperviousToMarshall();
+            this.defendBehavior = new SimplyDie();
         }
     }
 }

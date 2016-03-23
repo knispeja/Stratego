@@ -14,6 +14,7 @@ namespace Stratego
             this.pieceRank = MARSHALL_RANK;
             this.pieceName = MARSHALL_NAME;
             this.pieceImage = this.imageDict[teamCode];
+            this.defendBehavior = new DiesToSpy();
         }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Stratego
 {
-    class BombPiece : GamePiece
+    public class BombPiece : GamePiece
     {
         public static readonly String BOMB_NAME = "Bomb";
-        public static readonly int BOMB_RANK = 0; // TODO: talk to Jacob about this because he had a question
+        public static readonly int BOMB_RANK = int.MaxValue;
 
         public BombPiece (int teamCode) : base (teamCode)
         {
@@ -14,20 +14,8 @@ namespace Stratego
             this.pieceRank = BOMB_RANK;
             this.pieceName = BOMB_NAME;
             this.pieceImage = this.imageDict[teamCode];
-        }
-
-        public override void attack(GamePiece otherPiece)
-        {
-            defend(otherPiece);
-        }
-
-        public override void defend(GamePiece otherPiece)
-        {
-            int otherRank = otherPiece.getPieceRank();
-            if (otherRank == MinerPiece.MINER_RANK || otherRank == BOMB_RANK)
-            {
-                this.killPiece();
-            }
+            this.attackBehavior = new DiestoMinerandBomb();
+            this.defendBehavior = new DiestoMinerandBomb();
         }
     }
 }

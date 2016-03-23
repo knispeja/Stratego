@@ -777,6 +777,7 @@ namespace StrategoTest
             for (int x = 0; x < width; x++) Assert.AreEqual(value, game.boardState[x, row]);
         }
 
+        /*
         [Test()]
         public void TestSaveGame()
         {
@@ -944,6 +945,7 @@ namespace StrategoTest
             Assert.AreEqual(5, game.ai.difficulty);
             reader.Close();
         }
+        */
 
         [Test()]
         //Tests that game initializes with the lastFought at the point -1, -1
@@ -1590,7 +1592,8 @@ namespace StrategoTest
             Assert.IsFalse(game.saveSetUp(writer));
             Assert.AreEqual("", writer.ToString());
         }
-
+        
+        /*
         [Test()]
         public void TestThatSaveGameWorksForNonstandardSize()
         {
@@ -1619,6 +1622,7 @@ namespace StrategoTest
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());
         }
+        */
 
         [Test()]
         public void TestLoadSetUp()
@@ -1711,6 +1715,7 @@ namespace StrategoTest
 
         }
 
+        /*
         [Test()]
         public void TestThatPlayersCannotActDuringTransition()
         {
@@ -1867,6 +1872,7 @@ namespace StrategoTest
             Assert.IsTrue(game.saveGame(writer));
             Assert.AreEqual(result, writer.ToString());
         }
+        */
     }
 
 

@@ -16,6 +16,9 @@ namespace Stratego
         protected Color pieceColor;
         protected Image pieceImage;
 
+        protected BattleBehavior attackBehavior;
+        protected BattleBehavior defendBehavior;
+
         public GamePiece(int teamCode)
         {
             colorDict = new Dictionary<int, Color>();
@@ -30,32 +33,29 @@ namespace Stratego
             this.lifeStatus = true;
             this.pieceImage = null;
             this.pieceColor = colorDict[teamCode];
+            this.attackBehavior = new DefaultComparativeFate();
+            this.defendBehavior = new DefaultComparativeFate();
         }
 
-        public virtual void attack(GamePiece otherPiece)
+        public void attack(GamePiece otherPiece)
         {
-            int otherRank = otherPiece.getPieceRank();
-            int comparisonValue = this.compareRanks(otherRank);
-            if (otherRank != SpyPiece.SPY_RANK && (comparisonValue <= 0 
-                || otherRank == BombPiece.BOMB_RANK))
+            if(this.attackBehavior.decideFate(this, otherPiece))
             {
                 this.killPiece();
             }
         }
 
-        public virtual void defend(GamePiece otherPiece)
+        public void defend(GamePiece otherPiece)
         {
-            int otherRank = otherPiece.getPieceRank();
-            int comparisonValue = this.compareRanks(otherRank);
-            if (comparisonValue <= 0 || otherRank == BombPiece.BOMB_RANK 
-                || otherRank == SpyPiece.SPY_RANK)
+            if(this.defendBehavior.decideFate(this, otherPiece))
             {
                 this.killPiece();
             }
         }
 
-        public virtual int compareRanks(int otherRank)
+        public int compareRanks(GamePiece otherPiece)
         {
+            int otherRank = otherPiece.getPieceRank();
             if (otherRank == this.pieceRank)
             {
                 return 0;   

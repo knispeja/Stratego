@@ -14,25 +14,8 @@ namespace Stratego
             this.pieceRank = MINER_RANK;
             this.pieceName = MINER_NAME;
             this.pieceImage = this.imageDict[teamCode];
-        }
-
-        public override void attack(GamePiece otherPiece)
-        {
-            int otherRank = otherPiece.getPieceRank();
-            int comparisonValue = this.compareRanks(otherRank);
-            if (otherRank != BombPiece.BOMB_RANK)
-            {
-                base.attack(otherPiece);
-            }
-        }
-
-        public override void defend(GamePiece otherPiece)
-        {
-            int otherRank = otherPiece.getPieceRank();
-            if (otherRank != BombPiece.BOMB_RANK)
-            {
-                base.defend(otherPiece);
-            }
+            this.attackBehavior = new ImperviousToBombs();
+            this.defendBehavior = new ImperviousToBombs();
         }
     }
 }

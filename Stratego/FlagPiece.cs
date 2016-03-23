@@ -2,7 +2,7 @@
 
 namespace Stratego
 {
-    class FlagPiece : GamePiece
+    public class FlagPiece : GamePiece
     {
         public static readonly String FLAG_NAME = "Flag";
         public static readonly int FLAG_RANK = -1;
@@ -14,16 +14,8 @@ namespace Stratego
             this.pieceRank = FLAG_RANK;
             this.pieceName = FLAG_NAME;
             this.pieceImage = this.imageDict[teamCode];
-        }
-
-        public override void attack(GamePiece otherPiece)
-        {
-            this.killPiece();
-        }
-
-        public override void defend(GamePiece otherPiece)
-        {
-            this.killPiece();
+            this.attackBehavior = new DiesToAllSaveFlag();
+            this.defendBehavior = new SimplyDie();
         }
     }
 }

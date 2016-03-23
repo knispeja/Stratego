@@ -1816,7 +1816,7 @@ namespace Stratego
                 this.ai = new AI(this, -1, data.difficulty);
         }
 
-        private SetupData getSetupData()
+        public SetupData getSetupData()
         {
             return new SetupData(
                 this.boardState,

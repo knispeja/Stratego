@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Stratego
 {
-    class SaveLoadOperations
+    public class SaveLoadOperations
     {
         public static bool saveSetup(SetupData saveData)
         {
@@ -155,7 +155,7 @@ namespace Stratego
         /// </summary>
         /// <param name="writer"></param>
         /// <returns></returns>
-        private static void storeSetupData(string fileName, SetupData data)
+        public static void storeSetupData(string fileName, SetupData data)
         {
             StreamWriter writer = new StreamWriter(fileName);
 

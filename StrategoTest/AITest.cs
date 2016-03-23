@@ -82,7 +82,7 @@ namespace StrategoTest
             // Therefore, we should only test this if the team is -1 to begin with
             if (team != 1)
             {
-                for (int i = 0; i < win.defaults.Length; i++)
+                for (int i = 0; i < StrategoWin.defaults.Length; i++)
                     Assert.AreEqual(0, win.getPiecesLeft(i));
             }
 

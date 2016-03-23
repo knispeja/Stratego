@@ -107,9 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BombPiece.cs" />
-    <Compile Include="BuffPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="CaptainPiece.cs" />
     <Compile Include="ColonelPiece.cs" />
     <Compile Include="FlagPiece.cs" />
@@ -122,6 +119,7 @@
     <Compile Include="SaveLoadOperations.cs" />
     <Compile Include="ScoutPiece.cs" />
     <Compile Include="SergeantPiece.cs" />
+    <Compile Include="SetupData.cs" />
     <Compile Include="SoundPlayerAsync.cs" />
     <Compile Include="SpyPiece.cs" />
     <Compile Include="GamePiece.cs" />

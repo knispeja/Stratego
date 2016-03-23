@@ -12,7 +12,7 @@ namespace Stratego
         /// <summary>
         /// The default amount of pieces for each piece. (EX: 0 0s; 1 1; 1 2; 2 3s; 4 4s; etc..)
         /// </summary>
-        public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+        public static readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
         //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
         //public readonly int[] defaults = new int[13] { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 
 
@@ -190,7 +190,7 @@ namespace Stratego
             this.panelWidth = windowWidth;
             this.panelHeight = windowHeight;
             this.boardState = boardState;
-            this.placements = (int[]) this.defaults.Clone();
+            this.placements = StrategoWin.defaults;
             this.preGameActive = false;
             this.isSinglePlayer = false;
             this.lastFought = new Point(-1, -1);
@@ -201,71 +201,6 @@ namespace Stratego
             //System.Windows.Forms.Cursor.Current = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("sword"));
             //System.Windows.Forms.Cursor.Current = new Cursor(GetType(), "sword.cur");
             //this.Cursor = new Cursor(GetType(), "sword.cur");
-        }
-
-        /// <summary>
-        /// A trigger that activates when the SaveButton in the main menu is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            // if ((this.turn == 0) || (this.preGameActive) || (Math.Abs(this.turn) == 2)) return; // TODO: this line may be necessary?
-            SaveLoadOperations.saveGame(getSaveData());
-        }
-
-        /// <summary>
-        /// A trigger that activates when the LoadButton in the main manu is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LoadButton_Click(object sender, EventArgs e)
-        {
-            SaveData? saveData = SaveLoadOperations.loadGame();
-
-            if(saveData != null)
-            {
-                loadSaveData(saveData ?? default(SaveData));
-
-                try
-                {
-                    SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
-                    sound.Play();
-                    this.FireBox.Dispose();
-                    this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
-                    this.LoadButton.Visible = false;
-                    this.LoadButton.Enabled = false;
-                    this.ExitMainButton.Visible = false;
-                    this.ExitMainButton.Enabled = false;
-                    this.CampaignButton.Visible = false;
-                    this.CampaignButton.Enabled = false;
-                    this.SinglePlayerButton.Visible = false;
-                    this.SinglePlayerButton.Enabled = false;
-                    this.SidePanelOpenButton.Visible = false;
-                    if (this.turn == 2 && this.isSinglePlayer)
-                        this.NextTurnButton.Text = "AI's Turn";
-                    else if (this.turn == 2)
-                        this.NextTurnButton.Text = "Player 2's Turn";
-                    if(this.isSinglePlayer)
-                    {
-                        this.AIDifficultyChanger.Text = this.ai.difficulty.ToString();
-                    }
-                    this.NextTurnButton.Visible = true;
-                    this.NextTurnButton.Enabled = true;
-                    this.preGameActive = false;
-                    this.lastFought = new Point(-1, -1);
-
-                    foreach (var button in this.SidePanel.Controls.OfType<Button>())
-                        if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
-                            button.Click += SidePanelButtonClick;
-  
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading file: " + ex.Message);
-                }
-            }
-            backPanel.Focus();
         }
 
         /// <summary>
@@ -282,7 +217,7 @@ namespace Stratego
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
-            this.placements = (int[])this.defaults.Clone();
+            this.placements = StrategoWin.defaults;
             this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
             nextTurn();
             this.LoadButton.Visible = false;
@@ -956,7 +891,7 @@ namespace Stratego
                 if (this.preGameActive)
                 {
                     this.turn = -1;
-                    this.placements = this.defaults;
+                    this.placements = StrategoWin.defaults;
                 }
                 else
                 {
@@ -1149,50 +1084,17 @@ namespace Stratego
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns> True if Successful
-        public bool loadSetUp(TextReader reader)
+        public bool loadSetup(string fileName)
         {
             if (!this.preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10) || (Math.Abs(turn)==2)) return false;
-            string[] lines = new string[4]; 
-            string line = reader.ReadLine();
-            lines[0] = line;
-            int i = 0;
-            while (line != null)
-            {
-                lines[i] = line;
-                line = reader.ReadLine();
-                i++;
-            }
-            string[] numbers;
-            this.placements = (int[])this.defaults.Clone(); 
-            if (turn > 0)
-            {
-                for (int j = 6; j < 10; j++)
-                {
-                    numbers = lines[j - 6].Split(' ');
-                    for (int k = 0; k < 10; k++)
-                    {
-                        boardState[k, j] = Convert.ToInt32(numbers[k]);
-                        if(Convert.ToInt32(numbers[k])!=0) this.placements[Math.Abs(boardState[k, j])] -= 1;
-                    }
-                }
-            }
-            else
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    numbers = lines[j].Split(' ');
-                    for (int k = 0; k < 10; k++)
-                    {
-                        boardState[9-k, 3-j] = turn*Convert.ToInt32(numbers[k]);
-                        if (Convert.ToInt32(numbers[k]) != 0) this.placements[Math.Abs(boardState[9 - k, 3 - j])] -= 1;
-                    }
-                }
-            }
+
+            loadSetupData(fileName);
+
             if(!this.testing)
             {
                 this.backPanel.Invalidate();
 
-                for (i = 1; i < this.placements.Length; i++)
+                for (int i = 1; i < this.placements.Length; i++)
                 {
                     if (this.placements[i] != 0)
                     {
@@ -1203,47 +1105,6 @@ namespace Stratego
                 this.donePlacingButton.Enabled = true;
             }
             return true;
-
-        }
-
-        /// <summary>
-        /// Saves the set up of the current teams pieces into a file
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <returns></returns>
-        public bool saveSetUp(TextWriter writer)
-        {
-            string buffer = "";
-            if (!preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10)||(Math.Abs(turn)==2)) return false;
-            if (turn > 0)
-            {
-                for (int i = 6; i < 10; i++)
-                {
-
-                    for (int j = 0; j < 9; j++)
-                    {
-                        buffer += boardState[j, i] + " ";
-
-                    }
-                    buffer += boardState[9, i];
-                    writer.WriteLine(buffer);
-                    buffer = "";
-                }
-            }
-            else
-            {
-                for(int i =0; i< 4; i++)
-                {
-                    for (int j = 0; j < 9; j++)
-                    {
-                        buffer += Math.Abs(boardState[9 - j, 3 - i])+ " ";
-                    }
-                    buffer += Math.Abs(boardState[0, 3 - i]);
-                    writer.WriteLine(buffer);
-                    buffer = "";
-                }
-            }
-                return true;
         }
 
         /// <summary>
@@ -1597,7 +1458,7 @@ namespace Stratego
                 this.turn = 0;
                 this.preGameActive = true;
                 this.lastFought = new Point(-1, -1);
-                this.placements = (int[])this.defaults.Clone();
+                this.placements = StrategoWin.defaults;
                 this.ai = new AI(this, -1);
                 nextTurn();
                 this.SidePanel.Visible = false;
@@ -1611,35 +1472,15 @@ namespace Stratego
         }
 
         /// <summary>
-        /// Handles what happens when the "save setup" button is clicked
+        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void saveSetUpButton_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "strat files (*.strat)|*.strat|All files (*.*)|*.*";
-            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-            if(path.EndsWith("\\bin\\Debug")||path.EndsWith("\\bin\\Release"))
-            {
-                for(int i =0; i<path.Length-3; i++)
-                {
-                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n')) 
-                    {
-                        path = path.Substring(0, i);
-                        break;
-                    }
-                }
-            }
-            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\Presets");
-            dialog.RestoreDirectory = true;
+            if (!preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10) || (Math.Abs(turn) == 2)) return;
 
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                StreamWriter writer = new StreamWriter(dialog.FileName);
-                saveSetUp(writer);
-                writer.Close();
-            }
+            SaveLoadOperations.saveSetup(getSetupData());
         }
 
         /// <summary>
@@ -1649,41 +1490,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void loadSetUpButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-
-            dialog.Filter = "strat files (*.strat)|*.strat|All files (*.*)|*.*";
-            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-            if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
-            {
-                for (int i = 0; i < path.Length - 3; i++)
-                {
-                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n'))
-                    {
-                        path = path.Substring(0, i);
-                        break;
-                    }
-                }
-            }
-            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\Presets");
-            dialog.RestoreDirectory = true;
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                Stream file = null;
-                try
-                {
-                    if ((file = dialog.OpenFile()) != null)
-                    {
-                        StreamReader reader = new StreamReader(file);
-                        loadSetUp(reader);
-                        reader.Close();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading file: " + ex.Message);
-                }
-            }
+            loadSetup(SaveLoadOperations.loadSetup());
         }
 
         /// <summary>
@@ -1923,13 +1730,78 @@ namespace Stratego
             backPanel.Focus();
         }
 
+        /// <summary>
+        /// A trigger that activates when the SaveButton in the main menu is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            // if ((this.turn == 0) || (this.preGameActive) || (Math.Abs(this.turn) == 2)) return; // TODO: this line may be necessary?
+            SaveLoadOperations.saveGame(getSaveData());
+        }
+
+        /// <summary>
+        /// A trigger that activates when the LoadButton in the main manu is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LoadButton_Click(object sender, EventArgs e)
+        {
+            SaveData? saveData = SaveLoadOperations.loadGame();
+
+            if (saveData != null)
+            {
+                loadSaveData(saveData ?? default(SaveData));
+
+                try
+                {
+                    SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
+                    sound.Play();
+                    this.FireBox.Dispose();
+                    this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
+                    this.LoadButton.Visible = false;
+                    this.LoadButton.Enabled = false;
+                    this.ExitMainButton.Visible = false;
+                    this.ExitMainButton.Enabled = false;
+                    this.CampaignButton.Visible = false;
+                    this.CampaignButton.Enabled = false;
+                    this.SinglePlayerButton.Visible = false;
+                    this.SinglePlayerButton.Enabled = false;
+                    this.SidePanelOpenButton.Visible = false;
+                    if (this.turn == 2 && this.isSinglePlayer)
+                        this.NextTurnButton.Text = "AI's Turn";
+                    else if (this.turn == 2)
+                        this.NextTurnButton.Text = "Player 2's Turn";
+                    if (this.isSinglePlayer)
+                    {
+                        this.AIDifficultyChanger.Text = this.ai.difficulty.ToString();
+                    }
+                    this.NextTurnButton.Visible = true;
+                    this.NextTurnButton.Enabled = true;
+                    this.preGameActive = false;
+                    this.lastFought = new Point(-1, -1);
+
+                    foreach (var button in this.SidePanel.Controls.OfType<Button>())
+                        if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
+                            button.Click += SidePanelButtonClick;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading file: " + ex.Message);
+                }
+            }
+            backPanel.Focus();
+        }
+
         private SaveData getSaveData()
         {
             return new SaveData(
-                    this.boardState,
-                    this.ai.difficulty,
-                    this.turn,
-                    this.isSinglePlayer
+                this.boardState,
+                this.ai.difficulty,
+                this.turn,
+                this.isSinglePlayer
                 );
         }
 
@@ -1942,6 +1814,59 @@ namespace Stratego
 
             if (this.isSinglePlayer)
                 this.ai = new AI(this, -1, data.difficulty);
+        }
+
+        private SetupData getSetupData()
+        {
+            return new SetupData(
+                this.boardState,
+                this.placements,
+                this.turn
+                );
+        }
+
+        private void loadSetupData(string fileName)
+        {
+            StreamReader reader = new StreamReader(fileName);
+
+            string[] lines = new string[4];
+            string line = reader.ReadLine();
+            lines[0] = line;
+            int i = 0;
+            while (line != null)
+            {
+                lines[i] = line;
+                line = reader.ReadLine();
+                i++;
+            }
+            string[] numbers;
+            int[] placements = StrategoWin.defaults;
+            if (turn > 0)
+            {
+                for (int j = 6; j < 10; j++)
+                {
+                    numbers = lines[j - 6].Split(' ');
+                    for (int k = 0; k < 10; k++)
+                    {
+                        boardState[k, j] = Convert.ToInt32(numbers[k]);
+                        if (Convert.ToInt32(numbers[k]) != 0) placements[Math.Abs(boardState[k, j])] -= 1;
+                    }
+                }
+            }
+            else
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    numbers = lines[j].Split(' ');
+                    for (int k = 0; k < 10; k++)
+                    {
+                        boardState[9 - k, 3 - j] = turn * Convert.ToInt32(numbers[k]);
+                        if (Convert.ToInt32(numbers[k]) != 0) this.placements[Math.Abs(boardState[9 - k, 3 - j])] -= 1;
+                    }
+                }
+            }
+
+            reader.Close();
         }
     }
 }

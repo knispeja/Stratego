@@ -111,7 +111,7 @@ namespace Stratego
             }
 
             // Place some scout clusters near the front
-            for (int i = 0; i < win.defaults[9]; i++ )
+            for (int i = 0; i < StrategoWin.defaults[9]; i++ )
             {
                 x = rnd.Next(this.boardX-1);
                 y = rnd.Next(1)+2;
@@ -119,7 +119,7 @@ namespace Stratego
             }
 
             // Scatter miners, but don't put them at the front
-            for (int i = 0; i < win.defaults[8]; i++)
+            for (int i = 0; i < StrategoWin.defaults[8]; i++)
             {
                 x = rnd.Next(this.boardX-1);
                 y = rnd.Next(2);
@@ -127,7 +127,7 @@ namespace Stratego
             }
 
             // Place any remaining pieces
-            for (int piece = win.defaults.Length-1; piece > 0; piece--)
+            for (int piece = StrategoWin.defaults.Length-1; piece > 0; piece--)
             {
                 // Try to scatter them at first
                 for (int i = 0; i < win.getPiecesLeft(piece); i++ )

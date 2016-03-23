@@ -123,16 +123,11 @@
     <Compile Include="MajorPiece.cs" />
     <Compile Include="MarshallPiece.cs" />
     <Compile Include="MinerPiece.cs" />
-    <Compile Include="SaveData.cs" />
-    <Compile Include="SaveLoadOperations.cs" />
     <Compile Include="ScoutPiece.cs" />
     <Compile Include="SergeantPiece.cs" />
-    <Compile Include="SoundPlayerAsync.cs" />
     <Compile Include="SpyPiece.cs" />
     <Compile Include="GamePiece.cs" />
-    <Compile Include="Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Main.cs" />
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
@@ -140,6 +135,7 @@
     <Compile Include="Piece.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StrategoGame.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

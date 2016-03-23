@@ -10,11 +10,14 @@ namespace Stratego
 {
     public class SaveLoadOperations
     {
+        private static string SAVE_FILE_EXTENSION = "strat";
+        private static string SETUP_FILE_EXTENSION = "stgostup";
+
         public static bool saveSetup(SetupData saveData)
         {
             FileDialog dialog = new SaveFileDialog();
 
-            if (displayFileDialog(dialog) == DialogResult.OK)
+            if (displayFileDialog(dialog, SETUP_FILE_EXTENSION) == DialogResult.OK)
             {
                 storeSetupData(dialog.FileName, saveData);
                 return true;
@@ -27,7 +30,7 @@ namespace Stratego
         {
             FileDialog dialog = new SaveFileDialog();
 
-            if (displayFileDialog(dialog) == DialogResult.OK)
+            if (displayFileDialog(dialog, SAVE_FILE_EXTENSION) == DialogResult.OK)
             {
                 storeSaveData(dialog.FileName, saveData);
                 return true;
@@ -40,7 +43,7 @@ namespace Stratego
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
-            if (displayFileDialog(dialog) == DialogResult.OK)
+            if (displayFileDialog(dialog, SETUP_FILE_EXTENSION) == DialogResult.OK)
             {
                 // Check if the file is present already
                 Stream file;
@@ -59,7 +62,7 @@ namespace Stratego
             OpenFileDialog dialog = new OpenFileDialog();
 
             // Only return normally if the user didn't cancel out of the menu
-            if (displayFileDialog(dialog) == DialogResult.OK)
+            if (displayFileDialog(dialog, SAVE_FILE_EXTENSION) == DialogResult.OK)
             {
                 // Check if the file is present already
                 Stream file;
@@ -73,9 +76,9 @@ namespace Stratego
             return null;
         }
 
-        private static DialogResult displayFileDialog(FileDialog dialog)
+        private static DialogResult displayFileDialog(FileDialog dialog, string extension)
         {
-            dialog.Filter = "strat files (*.strat)|*.strat|All files (*.*)|*.*";
+            dialog.Filter = extension + " files (*." + extension + ")|*." + extension + "|All files (*.*)|*.*";
             dialog.InitialDirectory = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath));
             dialog.RestoreDirectory = true;
 

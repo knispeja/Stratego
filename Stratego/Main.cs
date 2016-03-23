@@ -1618,7 +1618,7 @@ namespace Stratego
         private void saveSetUpButton_Click(object sender, EventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.Filter = "strat files (*.strat)|*.strat|All files (*.*)|*.*";
             string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
             if(path.EndsWith("\\bin\\Debug")||path.EndsWith("\\bin\\Release"))
             {
@@ -1651,7 +1651,7 @@ namespace Stratego
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
-            dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.Filter = "strat files (*.strat)|*.strat|All files (*.*)|*.*";
             string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
             if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
             {
@@ -1884,7 +1884,7 @@ namespace Stratego
                     }
                 }
             }
-            path += @"\Resources\SaveGames\Levels\Level" + this.level + ".txt";
+            path += @"\Resources\SaveGames\Levels\Level" + this.level + ".strat";
 
             loadSaveData(SaveLoadOperations.loadSaveData(path));
 

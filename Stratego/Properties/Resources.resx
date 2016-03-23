@@ -215,14 +215,8 @@
   <data name="RedSpy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RedSpy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Level1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SaveGames\Levels\Level1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="Level1Map" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Level1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Level2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SaveGames\Levels\Level2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Level2Map" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Level2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

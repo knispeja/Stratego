@@ -118,11 +118,11 @@
     <Compile Include="MajorPiece.cs" />
     <Compile Include="MarshallPiece.cs" />
     <Compile Include="MinerPiece.cs" />
-	<Compile Include="SaveData.cs" />
+    <Compile Include="SaveData.cs" />
     <Compile Include="SaveLoadOperations.cs" />
     <Compile Include="ScoutPiece.cs" />
     <Compile Include="SergeantPiece.cs" />
-	<Compile Include="SoundPlayerAsync.cs" />
+    <Compile Include="SoundPlayerAsync.cs" />
     <Compile Include="SpyPiece.cs" />
     <Compile Include="GamePiece.cs" />
     <Compile Include="Main.cs">
@@ -173,6 +173,11 @@
     <None Include="Resources\BattleDramatic.wav" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SaveGames\Levels\Level1.strat" />
+    <None Include="Resources\SaveGames\Levels\Level2.strat" />
+    <None Include="Resources\SaveGames\Levels\Level3.strat" />
+    <None Include="Resources\SaveGames\Levels\Level4.strat" />
+    <None Include="Resources\SaveGames\Levels\Level5.strat" />
     <None Include="Resources\Stratego-logo.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -204,12 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Level2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SaveGames\Levels\Level1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SaveGames\Levels\Level2.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Level3.png" />

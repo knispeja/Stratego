@@ -2,6 +2,15 @@
 {
     partial class StrategoWin
     {
+        private class BuffPanel : System.Windows.Forms.Panel
+        {
+            public BuffPanel()
+            {
+                this.DoubleBuffered = true;
+                this.ResizeRedraw = true;
+            }
+        };
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -32,7 +41,7 @@
             this.startTimer = new System.Windows.Forms.Timer(this.components);
             this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
-            this.backPanel = new Stratego.BuffPanel();
+            this.backPanel = new BuffPanel();
             this.EndGamePanel = new System.Windows.Forms.Panel();
             this.victoryLabel = new System.Windows.Forms.Label();
             this.EndGameExitButton = new System.Windows.Forms.Button();

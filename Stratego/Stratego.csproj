@@ -125,9 +125,12 @@
     <Compile Include="MinerPiece.cs" />
     <Compile Include="ScoutPiece.cs" />
     <Compile Include="SergeantPiece.cs" />
+    <Compile Include="SoundPlayerAsync.cs" />
     <Compile Include="SpyPiece.cs" />
     <Compile Include="GamePiece.cs" />
-    <Compile Include="Main.cs" />
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>

@@ -1,7 +1,6 @@
 ﻿using System;
 using Stratego;
 using NUnit.Framework;
-using NUnit.Core;
 using System.Collections.Generic;
 
 namespace StrategoTest

@@ -1,7 +1,6 @@
 ﻿using System;
 using Stratego;
 using NUnit.Framework;
-using NUnit.Core;
 using System.Drawing;
 using System.IO;
 
@@ -95,7 +94,7 @@ namespace StrategoTest
             if (piece < 0)
                 game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
-            NUnitFramework.Assert.AreEqual(game.getPiece(x/100, y/100),piece);
+            Assert.AreEqual(game.getPiece(x/100, y/100),piece);
             Assert.IsTrue(result.Value); 
         }
 

@@ -14,6 +14,7 @@ namespace Stratego
             this.pieceRank = SCOUT_RANK;
             this.pieceName = SCOUT_NAME;
             this.pieceImage = this.imageDict[teamCode];
+            this.limitToMovement = int.MaxValue;
         }
     }
 }

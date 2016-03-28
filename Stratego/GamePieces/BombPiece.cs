@@ -16,6 +16,7 @@ namespace Stratego
             this.pieceImage = this.imageDict[teamCode];
             this.attackBehavior = new DiestoMinerandBomb();
             this.defendBehavior = new DiestoMinerandBomb();
+            this.limitToMovement = 0;
         }
     }
 }

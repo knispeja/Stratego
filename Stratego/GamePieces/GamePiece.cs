@@ -19,6 +19,8 @@ namespace Stratego
         protected BattleBehavior attackBehavior;
         protected BattleBehavior defendBehavior;
 
+        protected int limitToMovement;
+
         public GamePiece(int teamCode)
         {
             colorDict = new Dictionary<int, Color>();
@@ -35,6 +37,8 @@ namespace Stratego
             this.pieceColor = colorDict[teamCode];
             this.attackBehavior = new DefaultComparativeFate();
             this.defendBehavior = new DefaultComparativeFate();
+
+            this.limitToMovement = 1;
         }
 
         public void attack(GamePiece otherPiece)
@@ -103,6 +107,11 @@ namespace Stratego
         public Color getPieceColor()
         {
             return this.pieceColor;
+        }
+
+        public int getLimitToMovement()
+        {
+            return limitToMovement;
         }
     }
 }

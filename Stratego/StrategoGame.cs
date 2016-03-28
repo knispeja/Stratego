@@ -366,9 +366,21 @@ namespace Stratego
         /// <param name="Y">Y position in the board state (not in pixels)</param>
         /// <param name="boardState">A 2D array representing the state of the board.</param>
         /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
-        public int[,] GetPieceMoves(int X, int Y, int[,] boardState)
+        public int[,] GetPieceMoves(int X, int Y, GamePiece[,] boardState)
         {
-            int[,] moveArray = new int[boardState.GetLength(1), boardState.GetLength(0)];
+            int xDirLength = boardState.GetLength(0);
+            int yDirLength = boardState.GetLength(1);
+            int[,] moveArray = new int[xDirLength, yDirLength];
+            for (int i = 0; i < xDirLength; i++)
+            {
+                for(int j = 0; j < yDirLength; j++)
+                {
+                    moveArray[i, j] = 0;
+                }
+            }
+            GamePiece selectedPiece = boardState[X, Y];
+            return moveArray;
+            /*
             if ((Math.Abs(boardState[X, Y]) == 0) || (Math.Abs(boardState[X, Y]) == 11 && !this.movableBombs) || (Math.Abs(boardState[X, Y]) == 12 && !this.movableFlags) || (Math.Abs(boardState[X, Y]) == 42))
                 return moveArray;
             if (Math.Abs(boardState[X, Y]) == 9)
@@ -418,10 +430,11 @@ namespace Stratego
             if (X > 0)
                 if ((Math.Sign(boardState[X - 1, Y]) != Math.Sign(boardState[X, Y])) && boardState[X - 1, Y] != 42)
                     moveArray[X - 1, Y] = 1;
-            return moveArray;
+            */
         }
         public Boolean checkMoves()
         {
+            /*
             for (int x1 = 0; x1 < this.boardState.GetLength(0); x1++)
             {
                 for (int y1 = 0; y1 < this.boardState.GetLength(1); y1++)
@@ -441,6 +454,7 @@ namespace Stratego
                     }
                 }
             }
+            */
 
             return false;
         }

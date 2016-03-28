@@ -106,33 +106,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BattleBehavior.cs" />
-    <Compile Include="BombPiece.cs" />
-    <Compile Include="BuffPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CaptainPiece.cs" />
-    <Compile Include="ColonelPiece.cs" />
-    <Compile Include="DefaultComparativeFate.cs" />
-    <Compile Include="DiesToAllSaveFlag.cs" />
-    <Compile Include="DiestoMinerandBomb.cs" />
-    <Compile Include="DiesToSpy.cs" />
-    <Compile Include="FlagPiece.cs" />
-    <Compile Include="GeneralPiece.cs" />
-    <Compile Include="ImperviousToBombs.cs" />
-    <Compile Include="ImperviousToMarshall.cs" />
-    <Compile Include="LieutenantPiece.cs" />
-    <Compile Include="MajorPiece.cs" />
-    <Compile Include="MarshallPiece.cs" />
-    <Compile Include="MinerPiece.cs" />
+    <Compile Include="BattleBehaviors\BattleBehavior.cs" />
+    <Compile Include="GamePieces\BombPiece.cs" />
+    <Compile Include="GamePieces\CaptainPiece.cs" />
+    <Compile Include="GamePieces\ColonelPiece.cs" />
+    <Compile Include="BattleBehaviors\DefaultComparativeFate.cs" />
+    <Compile Include="BattleBehaviors\DiesToAllSaveFlag.cs" />
+    <Compile Include="BattleBehaviors\DiestoMinerandBomb.cs" />
+    <Compile Include="BattleBehaviors\DiesToSpy.cs" />
+    <Compile Include="GamePieces\FlagPiece.cs" />
+    <Compile Include="GamePieces\GeneralPiece.cs" />
+    <Compile Include="BattleBehaviors\ImperviousToBombs.cs" />
+    <Compile Include="BattleBehaviors\ImperviousToMarshall.cs" />
+    <Compile Include="GamePieces\LieutenantPiece.cs" />
+    <Compile Include="GamePieces\MajorPiece.cs" />
+    <Compile Include="GamePieces\MarshallPiece.cs" />
+    <Compile Include="GamePieces\MinerPiece.cs" />
     <Compile Include="SaveData.cs" />
     <Compile Include="SaveLoadOperations.cs" />
-    <Compile Include="ScoutPiece.cs" />
-    <Compile Include="SergeantPiece.cs" />
-    <Compile Include="SimplyDie.cs" />
+    <Compile Include="GamePieces\ScoutPiece.cs" />
+    <Compile Include="GamePieces\SergeantPiece.cs" />
+    <Compile Include="BattleBehaviors\SimplyDie.cs" />
     <Compile Include="SoundPlayerAsync.cs" />
-    <Compile Include="SpyPiece.cs" />
-    <Compile Include="GamePiece.cs" />
+    <Compile Include="GamePieces\SpyPiece.cs" />
+    <Compile Include="GamePieces\GamePiece.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

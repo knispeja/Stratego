@@ -130,6 +130,7 @@
     <Compile Include="SoundPlayerAsync.cs" />
     <Compile Include="GamePieces\SpyPiece.cs" />
     <Compile Include="GamePieces\GamePiece.cs" />
+	<Compile Include="SetupData.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

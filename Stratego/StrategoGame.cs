@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +23,8 @@ namespace Stratego
         /// </summary>
         public int panelWidth { get; set; }
 
+        public Dictionary<int, Type> pieceTypes = new Dictionary<int, Type>();
+
         /// <summary>
         /// Height of the enclosing panel in pixels
         /// </summary>
@@ -30,7 +33,7 @@ namespace Stratego
         /// <summary>
         /// The 2DArray full of all pieces on the board
         /// </summary>
-        public int[,] boardState { get; set; }
+        public GamePiece[,] boardState { get; set; }
 
         /// <summary>
         /// The array which holds information on how many pieces of each type can still be placed
@@ -93,7 +96,8 @@ namespace Stratego
         /// </summary>
         public int level { get; set; }
 
-        public StrategoGame() {
+        public StrategoGame()
+        {
             this.turn = 0;
             this.preGameActive = false;
             this.skippableLevels = false;
@@ -103,25 +107,24 @@ namespace Stratego
             this.movableFlags = false;
             this.level = -1;
 
-            boardState = new int[10, 10];
-            for (int row = 0; row < 6; row++) fillRow(42, row);
+            boardState = new GamePiece[10, 10];
 
             //    this.ai = new AI(this, -1);
 
         }
-      //  public StrategoGame(int windowWidth, int windowHeight, int[,] boardState)
-      //  {
-      //      this.boardState = boardState;
-      //      this.panelWidth = windowWidth;
-      //      this.panelHeight = windowHeight;
-      //      this.placements = (int[])this.defaults.Clone();
-      //      this.preGameActive = false;
-      //      this.isSinglePlayer = false;
-      //      this.lastFought = new Point(-1, -1);
-      //      this.movableBombs = false;
-      //      this.movableFlags = false;
-      ////      this.ai = new AI(this, -1);
-      //  }
+        public StrategoGame(int windowWidth, int windowHeight, GamePiece[,] boardState)
+        {
+            this.boardState = boardState;
+            this.panelWidth = windowWidth;
+            this.panelHeight = windowHeight;
+            this.placements = (int[])this.defaults.Clone();
+            this.preGameActive = false;
+            this.isSinglePlayer = false;
+            this.lastFought = new Point(-1, -1);
+            this.movableBombs = false;
+            this.movableFlags = false;
+            //      this.ai = new AI(this, -1);
+        }
 
         /// <summary>
         /// Gets the piece at a given board cell
@@ -129,7 +132,7 @@ namespace Stratego
         /// <param name="x">x-coordinate of the cell we want</param>
         /// <param name="y">y-coordinate of the cell we want</param>
         /// <returns>The number of the piece located at (x,y)</returns>
-        public int getPiece(int x, int y)
+        public GamePiece getPiece(int x, int y)
         {
             return this.boardState[x, y];
         }
@@ -139,7 +142,7 @@ namespace Stratego
         /// </summary>
         /// <param name="value"></param>
         /// <param name="row"></param>
-        public void fillRow(int value, int row)
+        public void fillRow(GamePiece value, int row)
         {
             for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
         }
@@ -165,28 +168,35 @@ namespace Stratego
         public bool? placePiece(int piece, int x, int y)
         {
             if (turn == 0 || Math.Abs(turn) == 2) return false;
-            if (Math.Abs(piece) > 12 || x < 0 || y < 0 || x > this.panelWidth || y > this.panelHeight) throw new ArgumentException();
+            if (!(pieceTypes.ContainsKey(piece)) || x < 0 || y < 0 || x > this.panelWidth || y > this.panelHeight) throw new ArgumentException();
             if ((Math.Sign(piece) != Math.Sign(this.turn)) && (piece != 0)) return false;
             Boolean retVal = true;
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
-            int pieceAtPos = this.boardState[x / scaleX, y / scaleY];
-
-            if (piece == 0 && pieceAtPos != 42)
+            GamePiece pieceAtPos = this.boardState[x / scaleX, y / scaleY];
+            if ((piece == 0 && pieceAtPos == null))
+            {
+                retVal = false;
+                this.placements[Math.Abs(piece)]++;
+            }
+            else if (piece == 0 && !pieceAtPos.GetType().Equals(null))
             {
                 // We are trying to remove
-                if (Math.Sign(pieceAtPos) != Math.Sign(this.turn)) return false;
-                if (pieceAtPos == 0) retVal = false;
-                this.placements[Math.Abs(pieceAtPos)]++;
+                if (Math.Sign(pieceAtPos.getTeamCode()) != Math.Sign(this.turn)) return false;
+                this.placements[Math.Abs(piece)]++;
             }
-            else if (pieceAtPos == 0 && this.placements[Math.Abs(piece)] > 0)
+            else if (pieceAtPos == null && this.placements[Math.Abs(piece)] > 0)
             {
                 // We are trying to add
                 this.placements[Math.Abs(piece)] -= 1;
             }
             else retVal = false;
 
-            if (retVal) this.boardState[x / scaleX, y / scaleY] = piece;
+            if (retVal)
+            {
+                ConstructorInfo ctor = this.pieceTypes[piece].GetConstructor(new[] { this.pieceTypes[piece] });
+                this.boardState[x / scaleX, y / scaleY] = (GamePiece) ctor.Invoke(new object[] { 0 });
+            }
             return retVal;
         }
 
@@ -224,11 +234,11 @@ namespace Stratego
                     for (int i = 4; i < 6; i++)
                     {
                         for (int x = 0; x < 2; x++)
-                            this.boardState[x, i] = 0;
+                            this.boardState[x, i] = null;
                         for (int x = 4; x < 6; x++)
-                            this.boardState[x, i] = 0;
+                            this.boardState[x, i] = null;
                         for (int x = 8; x < 10; x++)
-                            this.boardState[x, i] = 0;
+                            this.boardState[x, i] = null;
                     }
                     this.preGameActive = false;
                 }
@@ -268,8 +278,9 @@ namespace Stratego
                 this.pieceIsSelected = false;
                 return false;
             }
-            if (((Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 11 && !this.movableBombs) || (Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 12) && !this.movableFlags) ||
-                  Math.Sign(this.boardState[x / scaleX, y / scaleY]) != Math.Sign(this.turn))
+            if ((this.boardState[x / scaleX, y / scaleY].getPieceName().Equals("Bomb") && !this.movableBombs) 
+                || (this.boardState[x / scaleX, y / scaleY].getPieceName().Equals("Flag") && !this.movableFlags) ||
+                  this.boardState[x / scaleX, y / scaleY].getTeamCode()!= Math.Sign(this.turn))
             {
                 return false;
             }
@@ -291,10 +302,10 @@ namespace Stratego
             if (!this.pieceIsSelected)
                 return false;
             this.pieceIsSelected = false;
-            if (Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y],
-                this.boardState[x / scaleX, y / scaleY]) == null)
-                return false;
-            if (Math.Abs(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y]) != 9)
+            //if (Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y],
+            //    this.boardState[x / scaleX, y / scaleY]) == null)
+            //    return false;
+            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y].getPieceName().Equals("Scout"))
             {
                 if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) > 1 || Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) > 1)
                     return false;
@@ -308,7 +319,7 @@ namespace Stratego
                     {
                         for (int i = 1; i < (x / scaleX) - this.pieceSelectedCoords.X; i++)
                         {
-                            if (this.boardState[this.pieceSelectedCoords.X + i, this.pieceSelectedCoords.Y] != 0)
+                            if (this.boardState[this.pieceSelectedCoords.X + i, this.pieceSelectedCoords.Y] !=null)
                                 return false;
                         }
                     }
@@ -316,7 +327,7 @@ namespace Stratego
                     {
                         for (int i = -1; i > (x / scaleX) - this.pieceSelectedCoords.X; i--)
                         {
-                            if (this.boardState[this.pieceSelectedCoords.X + i, this.pieceSelectedCoords.Y] != 0)
+                            if (this.boardState[this.pieceSelectedCoords.X + i, this.pieceSelectedCoords.Y] != null)
                                 return false;
                         }
                     }
@@ -327,7 +338,7 @@ namespace Stratego
                     {
                         for (int i = 1; i < (y / scaleY) - this.pieceSelectedCoords.Y; i++)
                         {
-                            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y + i] != 0)
+                            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y + i] != null)
                                 return false;
                         }
                     }
@@ -335,7 +346,7 @@ namespace Stratego
                     {
                         for (int i = -1; i > (y / scaleY) - this.pieceSelectedCoords.Y; i--)
                         {
-                            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y + i] != 0)
+                            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y + i] != null)
                                 return false;
                         }
                     }
@@ -345,14 +356,14 @@ namespace Stratego
                 return false;
             if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) == 0 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) == 0)
                 return false;
-            int defender = this.boardState[x / scaleX, y / scaleY];
-            this.boardState[x / scaleX, y / scaleY] = Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y], this.boardState[x / scaleX, y / scaleY]).Value;
-            if ((defender == 0) || this.boardState[x / scaleX, y / scaleY] == 0)
+           GamePiece defender = this.boardState[x / scaleX, y / scaleY];
+    //        this.boardState[x / scaleX, y / scaleY] = Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y], this.boardState[x / scaleX, y / scaleY]).Value;
+            if ((defender == null) || this.boardState[x / scaleX, y / scaleY] == null)
                 this.lastFought = new Point(-1, -1);
             else
                 this.lastFought = new Point(x / scaleX, y / scaleY);
-            this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
-            if (Math.Abs(defender) != 12)
+            this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = null;
+            if (defender.getPieceName().Equals("Flag"))
             {
                 this.nextTurn();
             }
@@ -439,16 +450,16 @@ namespace Stratego
             {
                 for (int y1 = 0; y1 < this.boardState.GetLength(1); y1++)
                 {
-                    int piece = boardState[x1, y1];
-                    if ((piece < 0 && (this.turn == -1 || this.turn == 2)) || (piece > 0 && (this.turn == 1 || turn == -2)))
+                    GamePiece piece = boardState[x1, y1];
+                    if ((piece.getTeamCode() < 0 && (this.turn == -1 || this.turn == 2)) || (piece.getTeamCode() > 0 && (this.turn == 1 || turn == -2)))
                     {
-                        int[,] validPlaces = GetPieceMoves(x1, y1, this.boardState);
+               //         int[,] validPlaces = GetPieceMoves(x1, y1, this.boardState);
                         for (int x2 = 0; x2 < this.boardState.GetLength(0); x2++)
                         {
                             for (int y2 = 0; y2 < this.boardState.GetLength(1); y2++)
                             {
-                                if (validPlaces[x2, y2] == 1)
-                                    return true;
+                                //if (validPlaces[x2, y2] == 1)
+                                //    return true;
                             }
                         }
                     }

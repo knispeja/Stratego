@@ -8,13 +8,29 @@ using System.IO;
 
 namespace Stratego
 {
-    class SaveLoadOperations
+    public class SaveLoadOperations
     {
+        private static string SAVE_FILE_EXTENSION = "strat";
+        private static string SETUP_FILE_EXTENSION = "stgostup";
+
+        public static bool saveSetup(SetupData saveData)
+        {
+            FileDialog dialog = new SaveFileDialog();
+
+            if (displayFileDialog(dialog, SETUP_FILE_EXTENSION) == DialogResult.OK)
+            {
+                storeSetupData(dialog.FileName, saveData);
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool saveGame(SaveData saveData)
         {
             FileDialog dialog = new SaveFileDialog();
 
-            if (displayFileDialog(dialog) == DialogResult.OK)
+            if (displayFileDialog(dialog, SAVE_FILE_EXTENSION) == DialogResult.OK)
             {
                 storeSaveData(dialog.FileName, saveData);
                 return true;
@@ -23,16 +39,34 @@ namespace Stratego
             return false;
         }
 
-        public static SaveData? loadGame()
+        public static string loadSetup()
         {
-            FileDialog dialog = new OpenFileDialog();
+            OpenFileDialog dialog = new OpenFileDialog();
 
-            // Only return normally if the user didn't cancel out of the menu
-            if (displayFileDialog(dialog) == DialogResult.OK)
+            if (displayFileDialog(dialog, SETUP_FILE_EXTENSION) == DialogResult.OK)
             {
                 // Check if the file is present already
                 Stream file;
-                if ((file = ((OpenFileDialog)dialog).OpenFile()) != null)
+                if ((file = dialog.OpenFile()) != null)
+                {
+                    file.Close();
+                    return dialog.FileName;
+                }
+            }
+
+            return null;
+        }
+
+        public static SaveData? loadGame()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            // Only return normally if the user didn't cancel out of the menu
+            if (displayFileDialog(dialog, SAVE_FILE_EXTENSION) == DialogResult.OK)
+            {
+                // Check if the file is present already
+                Stream file;
+                if ((file = dialog.OpenFile()) != null)
                 {
                     file.Close();
                     return loadSaveData(dialog.FileName);
@@ -42,22 +76,10 @@ namespace Stratego
             return null;
         }
 
-        private static DialogResult displayFileDialog(FileDialog dialog)
+        private static DialogResult displayFileDialog(FileDialog dialog, string extension)
         {
-            dialog.Filter = "strat files (*.strat)|*.strat|All files (*.*)|*.*";
-            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-            if (path.EndsWith("\\bin\\Debug") || path.EndsWith("\\bin\\Release"))
-            {
-                for (int i = 0; i < path.Length - 3; i++)
-                {
-                    if ((path[i] == '\\') && (path[i + 1] == 'b') && (path[i + 2] == 'i') && (path[i + 3] == 'n'))
-                    {
-                        path = path.Substring(0, i);
-                        break;
-                    }
-                }
-            }
-            dialog.InitialDirectory = System.IO.Path.Combine(path, @"Resources\SaveGames"); // TODO: lots of hardcoded file path crap in here, fix it
+            dialog.Filter = extension + " files (*." + extension + ")|*." + extension + "|All files (*.*)|*.*";
+            dialog.InitialDirectory = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath));
             dialog.RestoreDirectory = true;
 
             return dialog.ShowDialog();
@@ -86,7 +108,7 @@ namespace Stratego
         public static SaveData loadSaveData(string fileName)
         {
             StreamReader reader = new StreamReader(fileName);
-            Console.WriteLine(fileName);
+
             string[] lines = new string[100]; // TODO: Make a Standard max size later
             string line = reader.ReadLine();
             lines[0] = line;
@@ -124,11 +146,52 @@ namespace Stratego
             reader.Close();
 
             return new SaveData(
-                    newBoard,
-                    difficulty,
-                    turn,
-                    isSinglePlayer
+                newBoard,
+                difficulty,
+                turn,
+                isSinglePlayer
                 );
+        }
+
+        /// <summary>
+        /// Saves the set up of the current teams pieces into a file
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <returns></returns>
+        public static void storeSetupData(string fileName, SetupData data)
+        {
+            StreamWriter writer = new StreamWriter(fileName);
+
+            string buffer = "";
+
+            if (data.turn > 0)
+            {
+                for (int i = 6; i < 10; i++)
+                {
+                    for (int j = 0; j < 9; j++)
+                        buffer += data.boardState[j, i] + " ";
+
+                    buffer += data.boardState[9, i];
+                    writer.WriteLine(buffer);
+                    buffer = "";
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 9; j++)
+                        buffer += Math.Abs(data.boardState[9 - j, 3 - i]) + " ";
+
+                    buffer += Math.Abs(data.boardState[0, 3 - i]);
+                    writer.WriteLine(buffer);
+                    buffer = "";
+                }
+            }
+
+            writer.Close();
+
+            return;
         }
     }
 }

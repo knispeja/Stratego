@@ -19,15 +19,22 @@ namespace Stratego
         protected BattleBehavior attackBehavior;
         protected BattleBehavior defendBehavior;
 
+        protected Boolean essential;
+
         protected int limitToMovement;
+
+        protected Boolean movable;
+
+        private int xVal;
+        private int yVal;
 
         public GamePiece(int teamCode)
         {
             colorDict = new Dictionary<int, Color>();
             imageDict = new Dictionary<int, Image>();
 
-            colorDict.Add(0, Color.FromArgb(25, 25, 175));
-            colorDict.Add(1, Color.FromArgb(175, 25, 25));
+            colorDict.Add(1, Color.FromArgb(25, 25, 175));
+            colorDict.Add(2, Color.FromArgb(175, 25, 25));
 
             this.pieceRank = 42;
             this.pieceName = "null";
@@ -39,6 +46,17 @@ namespace Stratego
             this.defendBehavior = new DefaultComparativeFate();
 
             this.limitToMovement = 1;
+
+            this.movable = true;
+            this.xVal = -1;
+            this.yVal = -1;
+
+            this.essential = false;
+        }
+
+        public Boolean isEssential()
+        {
+            return this.essential;
         }
 
         public void attack(GamePiece otherPiece)
@@ -112,6 +130,36 @@ namespace Stratego
         public int getLimitToMovement()
         {
             return limitToMovement;
+        }
+
+        public Boolean isMovable()
+        {
+            return this.movable;
+        }
+
+        public void setMovable(Boolean movability)
+        {
+            this.movable = movability;
+        }
+
+        public int getXVal()
+        {
+            return this.xVal;
+        }
+
+        public int getYVal()
+        {
+            return this.yVal;
+        }
+
+        public void setXVal(int newX)
+        {
+            this.xVal = newX;
+        }
+
+        public void setYVal(int newY)
+        {
+            this.yVal = newY;
         }
     }
 }

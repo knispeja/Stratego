@@ -70,7 +70,7 @@ namespace Stratego
         /// <summary>
         /// The 2DArray full of all pieces on the board
         /// </summary>
-        public int[,] boardState { get; set; }
+        public GamePiece[,] boardState { get; set; }
 
         /// <summary>
         /// The array which holds information on how many pieces of each type can still be placed
@@ -87,16 +87,6 @@ namespace Stratego
         /// 2 for transition from player1 to player2; -2 for transition from player2 to player1.
         /// </summary>
         public int turn { get; set; }            
-
-        /// <summary>
-        /// Coordinates of the piece that is currently selected in the array
-        /// </summary>
-        public Point pieceSelectedCoords { get; set; }
-
-        /// <summary>
-        /// Just a boolean indicating if a piece is currently selected or not
-        /// </summary>
-        public Boolean pieceIsSelected { get; set; }
 
         /// <summary>
         /// Whether player 2 is an AI or not
@@ -128,6 +118,10 @@ namespace Stratego
         /// </summary>
         private Boolean skippableLevels { get; set; }
 
+        private GamePiece selectedGamePiece;
+
+        private int currTeam;
+
         /// <summary>
         /// Initializer for normal play (initializes GUI).
         /// Not to be used for testing!
@@ -152,10 +146,11 @@ namespace Stratego
             this.movableFlags = false;
             this.level = -1;
             this.backPanel.LostFocus += onBackPanelLostFocus;
-
+            this.selectedGamePiece = null;
+            this.currTeam = 0;
             // Initialize the board state with invalid spaces in the enemy player's side
             // of the board and empty spaces everywhere else. To be changed later!
-            boardState = new int[10, 10];
+            boardState = new GamePiece[10, 10];
             for (int row = 0; row < 6; row++) fillRow(42, row);
 
             this.ai = new AI(this, -1);
@@ -184,7 +179,7 @@ namespace Stratego
         /// <param name="windowWidth">Used for a simulated GUI window width</param>
         /// <param name="windowHeight">Used for a simulated GUI window height</param>
         /// <param name="boardState">Modified initial board state for ease of testing</param>
-        public StrategoWin(int windowWidth, int windowHeight, int[,] boardState)
+        public StrategoWin(int windowWidth, int windowHeight, GamePiece[,] boardState)
         {
             this.testing = true;
             this.panelWidth = windowWidth;
@@ -340,6 +335,7 @@ namespace Stratego
                 }
 
                 int[,] pieceMoves = new int[num_rows, num_cols];
+
                 if (pieceIsSelected)
                     pieceMoves = this.GetPieceMoves(this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y);
 
@@ -353,445 +349,33 @@ namespace Stratego
                     {
                         int scaleX = this.panelWidth / this.boardState.GetLength(0);
                         int scaleY = this.panelHeight / this.boardState.GetLength(1);
-                        int piece = this.boardState[x, y];
-                        if (piece != 0)
-                        {
-                            Brush b;
-                            if (piece != 42)
-                            {
-                                if (piece > 0)
-                                {
-                                    // Piece is on the blue team, so we change the brush color to blue
-                                    //b = new SolidBrush(Color.FromArgb(25, 25, 15 * Math.Abs(piece)));
-                                    b = new SolidBrush(Color.FromArgb(25, 25, 175));
-                                    pen.Color = Color.FromArgb(200, 200, 255);
-                                }
-                                else
-                                {
-                                    // Piece is on the red team, so we change the brush to reflect that
-                                    //b = new SolidBrush(Color.FromArgb(15 * Math.Abs(piece), 25, 25));
-                                    b = new SolidBrush(Color.FromArgb(175, 25, 25));
-                                    pen.Color = Color.FromArgb(255, 200, 200);
-                                }
-
-                                int cornerX = x * col_inc + paddingX;
-                                int cornerY = y * row_inc + paddingY;
-                                Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                                switch(piece)
-                                {
-                                    case 9:
-                                        // Piece is a blue scout (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point (x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueScout;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.DrawRectangle(pen, r);
-                                            g.FillRectangle(b, r);
-                                        }
-                                        break;
-                                    case -9:
-                                        // Piece is a red scout (displaying as image)
-                                        if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedScout;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 11:
-                                        // Piece is a blue bomb (displaying as image)
-                                        if (turn ==1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueBomb;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.DrawRectangle(pen, r);
-                                            g.FillRectangle(b, r);
-                                        }
-                                        break;
-                                    case -11:
-                                        // Piece is a red bomb (displaying as image)
-                                        if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedBomb;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 10:
-                                        // Piece is a blue spy (displaying as image)
-                                        if (turn ==1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueSpy;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.DrawRectangle(pen, r);
-                                            g.FillRectangle(b, r);
-                                        }
-                                        break;
-                                    case -10:
-                                        // Piece is a red spy (displaying as image)
-                                        if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedSpy;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 5:
-                                        // Piece is a blue captain (displaying as image)
-                                        if (turn ==1|| this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueCaptain;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -5:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn ==-1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedCaptain;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -6:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedLieutenant;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 6:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueLieutenant;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 1:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueMarshal;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -1:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedMarshal;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -2:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedGeneral;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 2:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueGeneral;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -3:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedColonel;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 3:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueColonel;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -4:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedMajor;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 4:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueMajor;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -7:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedSergeant;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 7:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueSergeant;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -8:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedMiner;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 8:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueMiner;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case -12:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == -1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.RedFlag;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    case 12:
-                                        // Piece is a red captain (displaying as image)
-                                        if (turn == 1 || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            Image imag = Properties.Resources.BlueFlag;
-                                            e.Graphics.DrawImage(imag, r);
-                                            if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                                pen.Color = Color.FromArgb(10, 255, 10);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        else
-                                        {
-                                            g.FillRectangle(b, r);
-                                            g.DrawRectangle(pen, r);
-                                        }
-                                        break;
-                                    default:
-                                        //SHOULD NO LONGER REACH THIS POINT
-                                        // Piece is something else, display as circle (to be changed later)
-                                        g.FillEllipse(b, cornerX, cornerY, diameter, diameter);
-                                        if (this.pieceIsSelected && this.pieceSelectedCoords.X == x && this.pieceSelectedCoords.Y == y)
-                                            pen.Color = Color.FromArgb(10, 255, 10);
-                                        g.DrawEllipse(pen, cornerX, cornerY, diameter, diameter);
-
-                                        // Draw the text (the name of the piece) onto the circle
-                                        if ((turn == -1 && piece < 0) || (turn == 1 && piece > 0) || this.lastFought.Equals(new Point(x, y)))
-                                        {
-                                            string drawString = Piece.toString(piece);
-                                            System.Drawing.Font drawFont = new System.Drawing.Font("Arial", 16);
-                                            System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.White);
-                                            g.DrawString(drawString, drawFont, drawBrush, cornerX + diameter / 8, cornerY + diameter / 4);
-                                            drawFont.Dispose();
-                                            drawBrush.Dispose();
-                                        }
-                                        break;
-                                }
-                                // Dispose of the brush
-                                b.Dispose();
-                            }
-                        }
+                        GamePiece piece = this.boardState[x, y];
+                        Brush b = new SolidBrush(piece.getPieceColor());
+                        pen.Color = Color.FromArgb(200, 200, 255);
+                        // pen.Color = Color.FromArgb(255, 200, 200);
+                        int cornerX = x * col_inc + paddingX;
+                        int cornerY = y * row_inc + paddingY;
+                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
                         if (pieceMoves[x, y] == 1)
                         {
-                            Rectangle r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
+                            r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
                             //b.Color = Color.FromArgb(90, 90, 255);
                             g.FillRectangle(new SolidBrush(Color.FromArgb(100, 130, 130, 130)), r);
+                        }
+                        else if (this.currTeam == piece.getTeamCode() || this.lastFought.Equals(new Point(x, y)))
+                        {
+                            Image imag = piece.getPieceImage();
+                            e.Graphics.DrawImage(imag, r);
+                            if (this.selectedGamePiece.Equals(piece))
+                            {
+                                pen.Color = Color.FromArgb(10, 255, 10);
+                            }
+                            g.DrawRectangle(pen, r);
+                        }
+                        else
+                        {
+                            g.DrawRectangle(pen, r);
+                            g.FillRectangle(b, r);
                         }
                     }
                 }
@@ -808,7 +392,7 @@ namespace Stratego
         /// <param name="x">x-coordinate of the cell we want</param>
         /// <param name="y">y-coordinate of the cell we want</param>
         /// <returns>The number of the piece located at (x,y)</returns>
-        public int getPiece(int x, int y) 
+        public GamePiece getPiece(int x, int y) 
         {
             return this.boardState[x,y];
         }
@@ -876,11 +460,13 @@ namespace Stratego
         /// </summary>
         public void nextTurn() 
         {
-            if(!testing)
+            /*
+            if (!testing)
                 this.backPanel.Invalidate();
+            */
 
             // We just came here from the main menu
-            if(this.turn == 0)
+            if(this.currTeam == 0)
             {
                 preGameActive = true;
                 this.turn = 1;
@@ -973,23 +559,36 @@ namespace Stratego
         /// <param name="x">x coords of the click in pixels</param>
         /// <param name="y">y coord of the click in pixels</param>
         /// <returns></returns>
-        public bool? SelectPiece(int x, int y)
+        public bool SelectPiece(int x, int y)
         {
-            if ((Math.Abs(turn) == 2)||(turn ==-1 &&isSinglePlayer)) return false;
+            /*
+                The if-block immediate below is NOT what we want, but haven't changed it yet to remind us
+                to change the general strategy other places too. We'll need to come back and spot-check this stuff.
+            */
+            if ((Math.Abs(turn) == 2) || (turn == -1 && isSinglePlayer))
+            {
+                return false;
+            }
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
-            if ((this.pieceSelectedCoords == new Point(x / scaleX, y / scaleY))&&this.pieceIsSelected)
+            int boardX = x / scaleY;
+            int boardY = y / scaleY;
+            if (this.selectedGamePiece != null)
             {
-                this.pieceIsSelected = false;
+                return true;
+            }
+            GamePiece potentialSel = this.boardState[boardX, boardY];
+            if (potentialSel == null)
+            {
+                this.selectedGamePiece = null;
                 return false;
             }
-            if (((Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 11 && !this.movableBombs) || (Math.Abs(this.boardState[x / scaleX, y / scaleY]) == 12) && !this.movableFlags) ||
-                  Math.Sign(this.boardState[x / scaleX, y / scaleY]) != Math.Sign(this.turn))
+            if ((!potentialSel.isMovable() || potentialSel.getTeamCode() != this.currTeam))
             {
+                this.selectedGamePiece = null;
                 return false;
             }
-            this.pieceSelectedCoords = new Point(x/scaleX, y/scaleY);
-            this.pieceIsSelected = true;
+            this.selectedGamePiece = potentialSel;
             return true;
         }
 
@@ -1003,80 +602,78 @@ namespace Stratego
         {
             int scaleX = this.panelWidth / this.boardState.GetLength(0);
             int scaleY = this.panelHeight / this.boardState.GetLength(1);
-            if (!this.pieceIsSelected)
-                return false;
-            this.pieceIsSelected = false;
-            if (Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y],
-                this.boardState[x / scaleX, y / scaleY]) == null)
-                return false;
-            if (Math.Abs(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y]) != 9)
+            int boardX = x / scaleX;
+            int boardY = y / scaleY;
+            GamePiece defender = this.boardState[boardX, boardY];
+            if (this.selectedGamePiece == null)
             {
-                if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) > 1 || Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) > 1)
-                    return false;
-            }
-            else
-            { 
-                //Check for the scout's special cases
-                if(Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) > 1)
-                {
-                    if (((x / scaleX) - this.pieceSelectedCoords.X) > 1)
-                    {
-                        for(int i = 1; i < (x / scaleX) - this.pieceSelectedCoords.X; i++)
-                        {
-                            if(this.boardState[this.pieceSelectedCoords.X+i, this.pieceSelectedCoords.Y] != 0)
-                                return false;
-                        }
-                    }
-                    else if (((x / scaleX) - this.pieceSelectedCoords.X) < -1)
-                    {
-                        for(int i = -1; i > (x / scaleX) - this.pieceSelectedCoords.X; i--)
-                        {
-                            if(this.boardState[this.pieceSelectedCoords.X+i, this.pieceSelectedCoords.Y] != 0)
-                                return false;
-                        }
-                    }
-                }
-                else if (Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) > 1)
-                {
-                    if (((y / scaleY) - this.pieceSelectedCoords.Y) > 1)
-                    {
-                        for (int i = 1; i < (y / scaleY) - this.pieceSelectedCoords.Y; i++)
-                        {
-                            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y + i] != 0)
-                                return false;
-                        }
-                    }
-                    else if (((y / scaleY) - this.pieceSelectedCoords.Y) < -1)
-                    {
-                        for (int i = -1; i > (y / scaleY) - this.pieceSelectedCoords.Y; i--)
-                        {
-                            if (this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y + i] != 0)
-                                return false;
-                        }
-                    }
-                }
-            }
-            if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) >= 1 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) >= 1)
                 return false;
-            if (Math.Abs((x / scaleX) - this.pieceSelectedCoords.X) == 0 && Math.Abs((y / scaleY) - this.pieceSelectedCoords.Y) == 0)
+            }
+            else if(this.selectedGamePiece.getXVal() == boardX && this.selectedGamePiece.getYVal() == boardY)
+            {
+                // Initialize "Selection Phase"
+                this.selectedGamePiece = null;
                 return false;
-            int defender = this.boardState[x / scaleX, y / scaleY];
-            this.boardState[x / scaleX, y / scaleY] = Piece.attack(this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y], this.boardState[x / scaleX, y / scaleY]).Value;
-            if ((defender == 0) || this.boardState[x / scaleX, y / scaleY]==0)
+            }
+            else if (defender == null)
+            {
                 this.lastFought = new Point(-1, -1);
+                this.boardState[boardX, boardY] = this.selectedGamePiece;
+                this.boardState[this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal()] = null;
+                this.selectedGamePiece.setXVal(boardX);
+                this.selectedGamePiece.setYVal(boardY);
+                this.selectedGamePiece = null;
+                return true;
+            }
             else
-                this.lastFought = new Point(x / scaleX, y / scaleY);
-            this.boardState[this.pieceSelectedCoords.X, this.pieceSelectedCoords.Y] = 0;
-            if (defender == 12)
             {
-                gameOver(-1);
+                if (this.selectedGamePiece.getTeamCode() == defender.getTeamCode())
+                {
+                    this.selectedGamePiece = null;
+                    return false;
+                }
+                int numOfSpacesPoss = this.selectedGamePiece.getLimitToMovement();
+                int deltaX = Math.Abs(boardX - this.selectedGamePiece.getXVal());
+                int deltaY = Math.Abs(boardY - this.selectedGamePiece.getYVal());
+                if(numOfSpacesPoss < deltaX || numOfSpacesPoss < deltaY)
+                {
+                    this.selectedGamePiece = null;
+                    return false;
+                }
             }
-            else if (defender == -12)
+            battlePieces(this.selectedGamePiece, defender);
+            this.lastFought = new Point(boardX, boardY);
+            if (!defender.isAlive() && defender.isEssential())
             {
-                gameOver(1);
+                gameOver(this.selectedGamePiece.getTeamCode());
             }
-            else { this.nextTurn(); }
+            if (!this.selectedGamePiece.isAlive() && this.selectedGamePiece.isEssential())
+            {
+                gameOver(defender.getTeamCode());
+            }
+            else {
+                this.nextTurn();
+            }
+            this.selectedGamePiece = null;
             return true;
+        }
+
+        private void battlePieces(GamePiece attacker, GamePiece defender)
+        {
+            attacker.attack(defender);
+            defender.defend(attacker);
+            if (!defender.isAlive())
+            {
+                this.boardState[defender.getXVal(), defender.getYVal()] = null;
+            }
+            if (!attacker.isAlive())
+            {
+                this.boardState[attacker.getXVal(), attacker.getYVal()] = null;
+            }
+            else
+            {
+                this.boardState[defender.getXVal(), defender.getYVal()] = attacker;
+            }
         }
 
         /// <summary>
@@ -1380,58 +977,21 @@ namespace Stratego
         /// <param name="Y">Y position in the board state (not in pixels)</param>
         /// <param name="boardState">A 2D array representing the state of the board.</param>
         /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
-        public int[,] GetPieceMoves(int X, int Y, int[,] boardState)
+        public int[,] GetPieceMoves(int X, int Y, GamePiece[,] boardState)
         {
             int[,] moveArray = new int[boardState.GetLength(1), boardState.GetLength(0)];
-            if ((Math.Abs(boardState[X, Y]) == 0) || (Math.Abs(boardState[X, Y]) == 11 && !this.movableBombs) || (Math.Abs(boardState[X, Y]) == 12 && !this.movableFlags) || (Math.Abs(boardState[X, Y]) == 42))
-                return moveArray;
-            if (Math.Abs(boardState[X, Y]) == 9)
+
+            GamePiece pieceInQuestion = boardState[X, Y];
+            if (pieceInQuestion.isMovable() || pieceInQuestion.getLimitToMovement() == 0)
             {
-                //for (int yD = Y + 1; yD < boardState.GetLength(1) && boardState[X, yD] == 0; yD++)
-                //    moveArray[X, yD] = 1;
-                //for (int yU = Y - 1; yU >= 0 && boardState[X, yU] == 0; yU--)
-                //    moveArray[X, yU] = 1;
-                //for (int xR = X + 1; xR < boardState.GetLength(0) && boardState[xR, Y] == 0; xR++)
-                //    moveArray[xR, Y] = 1;
-                //for (int xL = X - 1; xL >= 0 && boardState[xL, Y] == 0; xL--)
-                //    moveArray[xL, Y] = 1;
-                for (int yD = Y + 1; yD < boardState.GetLength(1) && ((Math.Sign(boardState[X, yD]) != Math.Sign(boardState[X, Y])) && boardState[X, yD] != 42); yD++)
-                {
-                    moveArray[X, yD] = 1;
-                    if ((Math.Sign(boardState[X, yD]) != Math.Sign(boardState[X, Y])) && (Math.Sign(boardState[X, yD]) != 0))
-                        break;
-                }
-                for (int yU = Y - 1; yU >= 0 && ((Math.Sign(boardState[X, yU]) != Math.Sign(boardState[X, Y])) && boardState[X, yU] != 42); yU--)
-                {
-                    moveArray[X, yU] = 1;
-                    if ((Math.Sign(boardState[X, yU]) != Math.Sign(boardState[X, Y])) && (Math.Sign(boardState[X, yU]) != 0))
-                        break;
-                }
-                for (int xR = X + 1; xR < boardState.GetLength(0) && ((Math.Sign(boardState[xR, Y]) != Math.Sign(boardState[X, Y])) && boardState[xR, Y] != 42); xR++)
-                {
-                    moveArray[xR, Y] = 1;
-                    if ((Math.Sign(boardState[xR, Y]) != Math.Sign(boardState[X, Y])) && (Math.Sign(boardState[xR, Y]) != 0))
-                        break;
-                }
-                for (int xL = X - 1; xL >= 0 && ((Math.Sign(boardState[xL, Y]) != Math.Sign(boardState[X, Y])) && boardState[xL, Y] != 42); xL--)
-                {
-                    moveArray[xL, Y] = 1;
-                    if ((Math.Sign(boardState[xL, Y]) != Math.Sign(boardState[X, Y])) && (Math.Sign(boardState[xL, Y]) != 0))
-                        break;
-                }
+                return moveArray;
             }
-            if (Y > 0)
-                if ((Math.Sign(boardState[X, Y - 1]) != Math.Sign(boardState[X, Y])) && boardState[X, Y - 1] != 42)
-                    moveArray[X, Y - 1] = 1;
-            if (Y < boardState.GetLength(1) - 1)
-                if ((Math.Sign(boardState[X, Y + 1]) != Math.Sign(boardState[X, Y])) && boardState[X, Y + 1] != 42)
-                    moveArray[X, Y + 1] = 1;
-            if (X < boardState.GetLength(0) - 1)
-                if ((Math.Sign(boardState[X + 1, Y]) != Math.Sign(boardState[X, Y])) && boardState[X + 1, Y] != 42)
-                    moveArray[X + 1, Y] = 1;
-            if (X > 0)
-                if ((Math.Sign(boardState[X - 1, Y]) != Math.Sign(boardState[X, Y])) && boardState[X - 1, Y] != 42)
-                    moveArray[X - 1, Y] = 1;
+            int startingX = pieceInQuestion.getXVal();
+            int startingY = pieceInQuestion.getYVal();
+            int spacesPossible = pieceInQuestion.getLimitToMovement();
+            for(int k = startingX; k <= startingX + spacesPossible; k++)
+            {
+            }
             return moveArray;
         }
 

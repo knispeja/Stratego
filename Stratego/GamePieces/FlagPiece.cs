@@ -16,6 +16,8 @@ namespace Stratego
             this.pieceImage = this.imageDict[teamCode];
             this.attackBehavior = new DiesToAllSaveFlag();
             this.defendBehavior = new SimplyDie();
+            this.movable = false;
+            this.essential = true;
         }
     }
 }

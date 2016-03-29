@@ -17,6 +17,7 @@ namespace Stratego
             this.attackBehavior = new DiestoMinerandBomb();
             this.defendBehavior = new DiestoMinerandBomb();
             this.limitToMovement = 0;
+            this.movable = false;
         }
     }
 }

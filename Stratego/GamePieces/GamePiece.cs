@@ -8,10 +8,13 @@ namespace Stratego
     public abstract class GamePiece
     {
         [NonSerialized]
-        protected Dictionary<int, Color> colorDict;
+        public static readonly string NULL_PIECE_NAME = "null_piece";
 
         [NonSerialized]
-        protected Dictionary<int, Image> imageDict;
+        public static readonly Color BLUE_TEAM_COLOR = Color.FromArgb(25, 25, 175);
+
+        [NonSerialized]
+        public static readonly Color RED_TEAM_COLOR = Color.FromArgb(175, 25, 25);
 
         protected string pieceName;
         protected int pieceRank;
@@ -34,18 +37,12 @@ namespace Stratego
 
         public GamePiece(int teamCode)
         {
-            colorDict = new Dictionary<int, Color>();
-            imageDict = new Dictionary<int, Image>();
-
-            colorDict.Add(StrategoGame.BLUE_TEAM_CODE, Color.FromArgb(25, 25, 175));
-            colorDict.Add(StrategoGame.RED_TEAM_CODE, Color.FromArgb(175, 25, 25));
-
             this.pieceRank = 42;
             this.pieceName = "null";
             this.teamCode = teamCode;
             this.lifeStatus = true;
             this.pieceImage = null;
-            this.pieceColor = colorDict[teamCode];
+            this.pieceColor = (teamCode == StrategoGame.BLUE_TEAM_CODE) ? BLUE_TEAM_COLOR : RED_TEAM_COLOR;
             this.attackBehavior = new DefaultComparativeFate();
             this.defendBehavior = new DefaultComparativeFate();
 

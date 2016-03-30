@@ -122,6 +122,7 @@
     <Compile Include="BattleBehaviors\DiestoMinerandBomb.cs" />
     <Compile Include="BattleBehaviors\DiesToSpy.cs" />
     <Compile Include="GamePieces\FlagPiece.cs" />
+    <Compile Include="GamePieces\GamePieceFactory.cs" />
     <Compile Include="GamePieces\GeneralPiece.cs" />
     <Compile Include="BattleBehaviors\ImperviousToBombs.cs" />
     <Compile Include="BattleBehaviors\ImperviousToMarshall.cs" />

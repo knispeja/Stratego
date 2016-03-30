@@ -4,8 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Media;
 using System.IO;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace Stratego
 {
@@ -52,6 +50,8 @@ namespace Stratego
         /// </summary>
         public int panelHeight { get; set; }
 
+        private GamePieces.GamePieceFactory factory;
+
         private StrategoGame game;
 
         /// <summary>
@@ -75,6 +75,7 @@ namespace Stratego
 
             this.backPanel.LostFocus += onBackPanelLostFocus;
             this.backPanel.Focus();
+            this.factory = new GamePieces.GamePieceFactory();
         }
 
         /*
@@ -102,7 +103,7 @@ namespace Stratego
         {
             this.panelWidth = windowWidth;
             this.panelHeight = windowHeight;
-            
+            this.factory = new GamePieces.GamePieceFactory();
             // Image imag = Properties.Resources.cursor.Tag;
             //System.Windows.Forms.Cursor.Current = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("sword"));
             //System.Windows.Forms.Cursor.Current = new Cursor(GetType(), "sword.cur");
@@ -152,7 +153,7 @@ namespace Stratego
             {
                 foreach (var button in this.SidePanel.Controls.OfType<Button>())
                     button.UseVisualStyleBackColor = true;
-                this.game.piecePlacing = this.constructPieceToPlace(Convert.ToInt32(((Button)sender).Tag));
+                this.game.piecePlacing = this.factory.getPiece(Convert.ToInt32(((Button)sender).Tag), this.game.turn);
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
         }
@@ -447,22 +448,11 @@ namespace Stratego
                 double num;
                 if (double.TryParse(keyChar, out num))
                 {
-                    this.game.piecePlacing = this.constructPieceToPlace((int)num);
+                    this.game.piecePlacing = this.factory.getPiece((int)num, this.game.turn);
                 }
                 else
                 {
-                    if (keyChar == "S")
-                    {
-                        this.game.piecePlacing = this.constructPieceToPlace(2);
-                    }
-                    else if (keyChar == "B")
-                    {
-                        this.game.piecePlacing = this.constructPieceToPlace(1);
-                    }
-                    else if (keyChar == "F")
-                    {
-                        this.game.piecePlacing = this.constructPieceToPlace(3);
-                    }
+                    this.factory.getPiece(keyChar, this.game.turn);
                 }
             }
         }
@@ -522,11 +512,11 @@ namespace Stratego
             {
                 //this.activeSidePanelButton = this.piecePlacing;
                 this.activeSidePanelButton = 0;
-                this.game.piecePlacing = this.constructPieceToPlace(0);
+                this.game.piecePlacing = this.factory.getPiece(0, this.game.turn);
             }
             else
             {
-                this.game.piecePlacing = this.constructPieceToPlace(this.activeSidePanelButton);
+                this.game.piecePlacing = this.factory.getPiece(this.activeSidePanelButton, this.game.turn);
             }
         }
 
@@ -959,21 +949,6 @@ namespace Stratego
         {
             this.SidePanelOpenButton.Visible = visible;
             this.SidePanel.Visible = visible;
-        }
-
-        public GamePiece constructPieceToPlace(int index)
-        {
-            if (index == 0)
-            {
-                return null;
-            }
-            Type type = this.game.checkboxFactorySim[(int)index];
-
-            // get public constructors
-            var ctors = type.GetConstructors();
-
-            // invoke the first public constructor with no parameters.
-            return (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
         }
     }
 }

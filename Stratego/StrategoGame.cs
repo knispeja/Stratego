@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Stratego
 {
@@ -19,14 +15,6 @@ namespace Stratego
             { ScoutPiece.SCOUT_NAME, 8 }, { MinerPiece.MINER_NAME, 5 }, { SergeantPiece.SERGEANT_NAME, 4 },
             {LieutenantPiece.LIEUTENANT_NAME, 4 }, {CaptainPiece.CAPTAIN_NAME, 4 }, { MajorPiece.MAJOR_NAME, 3}, { ColonelPiece.COLONEL_NAME, 2},
             { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
-        };
-
-        public Dictionary<int, Type> checkboxFactorySim = new Dictionary<int, Type>() {
-             {1, typeof(BombPiece) }, { 2, typeof(SpyPiece) },
-            { 3, typeof(ScoutPiece) }, { 4, typeof(MinerPiece) }, { 5, typeof(SergeantPiece) },
-            { 6, typeof(LieutenantPiece) }, { 7, typeof(CaptainPiece) }, { 8, typeof(MajorPiece) },
-            { 9, typeof(ColonelPiece) }, { 10, typeof(GeneralPiece) }, { 11, typeof(MarshallPiece) },
-            { 12, typeof(FlagPiece) }
         };
 
         public Dictionary<int, Type> pieceTypes = new Dictionary<int, Type>();

@@ -23,7 +23,7 @@ namespace Stratego
         /// <summary>
         /// An array that holds the different keys for the Konami code cheat activation
         /// </summary>
-        private Keys[] konami = new Keys[8] {Keys.Up, Keys.Up, Keys.Down, Keys.Down, Keys.Left, Keys.Right, Keys.Left, Keys.Right};
+        private Keys[] konami = new Keys[8] { Keys.Up, Keys.Up, Keys.Down, Keys.Down, Keys.Left, Keys.Right, Keys.Left, Keys.Right };
 
         /// <summary>
         /// Stores how far through the Konami code the player has entered
@@ -35,11 +35,11 @@ namespace Stratego
         /// </summary>
         bool testing = false; // TODO: We should really probably get rid of this :| it basically disables the GUI for the automated tests, but...
                               // at the very least, it's being used way too often. It should really only be used as a GUI-disabler
-       
+
         /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>
-        public int level { get; set; }  
+        public int level { get; set; }
         /// <summary>
         /// List of all images for campaign levels
         /// </summary>
@@ -90,7 +90,7 @@ namespace Stratego
         /// -1 for player2 and 1 for player 1. 0 when game isn't started. 
         /// 2 for transition from player1 to player2; -2 for transition from player2 to player1.
         /// </summary>
-        public int turn { get; set; }            
+        public int turn { get; set; }
 
         /// <summary>
         /// Whether player 2 is an AI or not
@@ -106,11 +106,6 @@ namespace Stratego
         /// If flags can be moved
         /// </summary>
         public Boolean movableFlags { get; set; }
-
-        /// <summary>
-        /// Coordinates of the last piece to win a battle
-        /// </summary>
-        public Point lastFought { get; set; }
 
         /// <summary>
         /// The AI that the player will play against, if they choose single player.
@@ -147,7 +142,6 @@ namespace Stratego
             this.preGameActive = false;
             this.skippableLevels = false;
             this.isSinglePlayer = false;
-            this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
             this.level = -1;
@@ -194,7 +188,6 @@ namespace Stratego
             this.placements = StrategoWin.defaults;
             this.preGameActive = false;
             this.isSinglePlayer = false;
-            this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
             this.ai = new AI_Old(this, -1);
@@ -254,7 +247,7 @@ namespace Stratego
             this.CampaignButton.Visible = false;
             this.CampaignButton.Enabled = false;
             this.SinglePlayerButton.Visible = false;
-            this.SinglePlayerButton.Enabled= false;
+            this.SinglePlayerButton.Enabled = false;
             this.SidePanelOpenButton.Visible = true;
             foreach (var button in this.SidePanel.Controls.OfType<Button>())
                 if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
@@ -269,7 +262,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void SidePanelButtonClick(object sender, EventArgs e)
         {
-           // this.piecePlacing = Convert.ToInt32(((Button)sender).Text); No longer used, as I use the Tag text of the buttons instead.
+            // this.piecePlacing = Convert.ToInt32(((Button)sender).Text); No longer used, as I use the Tag text of the buttons instead.
             if (!this.removeCheckBox.Checked)
             {
                 foreach (var button in this.SidePanel.Controls.OfType<Button>())
@@ -365,13 +358,13 @@ namespace Stratego
                 // Draw vertical gridlines
                 for (int i = 0; i < num_cols + 1; i++)
                 {
-                    g.DrawLine(pen, col_inc*i, 0, col_inc*i, panelHeight);
+                    g.DrawLine(pen, col_inc * i, 0, col_inc * i, panelHeight);
                 }
 
                 // Draw horizontal gridlines
                 for (int j = 0; j < num_rows + 1; j++)
                 {
-                    g.DrawLine(pen, 0, row_inc*j, panelWidth, row_inc*j);
+                    g.DrawLine(pen, 0, row_inc * j, panelWidth, row_inc * j);
                 }
 
                 int[,] pieceMoves = new int[num_rows, num_cols];
@@ -382,12 +375,12 @@ namespace Stratego
                 }
 
                 // Large loop which draws the necessary circles/images that represent pieces
-                int diameter = Math.Min(col_inc,row_inc);
+                int diameter = Math.Min(col_inc, row_inc);
                 int paddingX = (col_inc - diameter) / 2;
                 int paddingY = (row_inc - diameter) / 2;
                 for (int x = 0; x < this.boardState.getWidth(); x++)
                 {
-                    for(int y = 0; y < this.boardState.getHeight(); y++)
+                    for (int y = 0; y < this.boardState.getHeight(); y++)
                     {
                         int scaleX = this.panelWidth / this.boardState.getWidth();
                         int scaleY = this.panelHeight / this.boardState.getHeight();
@@ -404,7 +397,7 @@ namespace Stratego
                             //b.Color = Color.FromArgb(90, 90, 255);
                             g.FillRectangle(new SolidBrush(Color.FromArgb(100, 130, 130, 130)), r);
                         }
-                        else if (this.turn == piece.getTeamCode() || this.lastFought.Equals(new Point(x, y)))
+                        else if (this.turn == piece.getTeamCode() || this.boardState.getLastFought().Equals(new Point(x, y)))
                         {
                             Image imag = piece.getPieceImage();
                             e.Graphics.DrawImage(imag, r);
@@ -425,7 +418,7 @@ namespace Stratego
             }
         }
 
-        
+
 
         /// <summary>
         /// Retrieves the number of pieces still available for
@@ -448,11 +441,11 @@ namespace Stratego
         public bool? placePiece(GamePiece piece, int x, int y)
         {
             if (turn == 0 || Math.Abs(turn) == 2) return false;
-            if (piece == null || x<0 || y<0 || x>this.panelWidth || y>this.panelHeight) throw new ArgumentException();
+            if (piece == null || x < 0 || y < 0 || x > this.panelWidth || y > this.panelHeight) throw new ArgumentException();
             if (piece.getTeamCode() != turn && piece != null) return false;
             Boolean retVal = true;
             int scaleX = this.panelWidth / this.boardState.getWidth();
-            int scaleY= this.panelHeight / this.boardState.getHeight();
+            int scaleY = this.panelHeight / this.boardState.getHeight();
             int boardX = x / scaleX;
             int boardY = y / scaleY;
             GamePiece pieceAtPos = this.boardState.getPiece(boardX, boardY);
@@ -480,15 +473,15 @@ namespace Stratego
         /// Handles global game variables like the stage of the game and so on.
         /// Also sends a call to the AI to notify it that it's time to take its turn when necessary.
         /// </summary>
-        public void nextTurn() 
+        public void nextTurn()
         {
-            
+
             if (!testing)
                 this.backPanel.Invalidate();
-            
+
 
             // We just came here from the main menu
-            if(this.turn == NO_TEAM_CODE)
+            if (this.turn == NO_TEAM_CODE)
             {
                 preGameActive = true;
                 this.turn = BLUE_TEAM_CODE;
@@ -521,7 +514,7 @@ namespace Stratego
                 }
             }
             // It's red player's turn
-            else if(this.turn == RED_TEAM_CODE)
+            else if (this.turn == RED_TEAM_CODE)
             {
                 if (this.preGameActive)
                 {
@@ -541,13 +534,13 @@ namespace Stratego
                         this.SidePanel.Visible = false;
                     }
                 }
-                if (!this.isSinglePlayer || (this.lastFought != new Point(-1, -1))) this.turn = -2;
+                if (!this.isSinglePlayer || !this.boardState.getLastFought().Equals(BoardPosition.NULL_BOARD_POSITION)) this.turn = -2;
                 else this.turn = BLUE_TEAM_CODE;
                 if (!this.checkMoves())
                     this.gameOver(RED_TEAM_CODE);
                 else
                 {
-                    if (!testing && (!this.isSinglePlayer || (this.lastFought != new Point(-1, -1))))
+                    if (!testing && (!this.isSinglePlayer || !this.boardState.getLastFought().Equals(BoardPosition.NULL_BOARD_POSITION)))
                     {
                         NextTurnButton.Text = "Player 1's Turn";
                         NextTurnButton.Visible = true;
@@ -555,13 +548,13 @@ namespace Stratego
 
                     }
                 }
-                
+
             }
-            else if(this.turn == -2)
+            else if (this.turn == -2)
             {
                 turn = BLUE_TEAM_CODE;
             }
-            else 
+            else
             {
                 turn = RED_TEAM_CODE;
             }
@@ -631,71 +624,25 @@ namespace Stratego
             {
                 return false;
             }
-            else if(this.selectedGamePiece.getXVal() == boardX && this.selectedGamePiece.getYVal() == boardY)
+            else if (this.selectedGamePiece.getXVal() == boardX && this.selectedGamePiece.getYVal() == boardY)
             {
                 // Initialize "Selection Phase"
                 this.selectedGamePiece = null;
                 return false;
             }
-            else if (defender == null)
+            Move move = new Stratego.Move(this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal(), boardX, boardY);
+            bool res = this.boardState.move(move);
+
+            if (boardState.isGameOver())
             {
-                this.lastFought = new Point(-1, -1);
-                this.boardState.setPiece(boardX, boardY, this.selectedGamePiece);
-                this.boardState.setPiece(this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal(), null);
-                this.selectedGamePiece.setXVal(boardX);
-                this.selectedGamePiece.setYVal(boardY);
-                this.selectedGamePiece = null;
-                return true;
+                this.gameOver(boardState.getWinner());
             }
             else
             {
-                if (this.selectedGamePiece.getTeamCode() == defender.getTeamCode())
-                {
-                    this.selectedGamePiece = null;
-                    return false;
-                }
-                int numOfSpacesPoss = this.selectedGamePiece.getLimitToMovement();
-                int deltaX = Math.Abs(boardX - this.selectedGamePiece.getXVal());
-                int deltaY = Math.Abs(boardY - this.selectedGamePiece.getYVal());
-                if(numOfSpacesPoss < deltaX || numOfSpacesPoss < deltaY)
-                {
-                    this.selectedGamePiece = null;
-                    return false;
-                }
-            }
-            battlePieces(this.selectedGamePiece, defender);
-            this.lastFought = new Point(boardX, boardY);
-            if (!defender.isAlive() && defender.isEssential())
-            {
-                gameOver(this.selectedGamePiece.getTeamCode());
-            }
-            if (!this.selectedGamePiece.isAlive() && this.selectedGamePiece.isEssential())
-            {
-                gameOver(defender.getTeamCode());
-            }
-            else {
                 this.nextTurn();
             }
             this.selectedGamePiece = null;
-            return true;
-        }
-
-        private void battlePieces(GamePiece attacker, GamePiece defender)
-        {
-            attacker.attack(defender);
-            defender.defend(attacker);
-            if (!defender.isAlive())
-            {
-                this.boardState.setPiece(defender.getXVal(), defender.getYVal(), null);
-            }
-            if (!attacker.isAlive())
-            {
-                this.boardState.setPiece(attacker.getXVal(), attacker.getYVal(), null);
-            }
-            else
-            {
-                this.boardState.setPiece(defender.getXVal(), defender.getYVal(), attacker);
-            }
+            return res;
         }
 
         /// <summary>
@@ -705,11 +652,11 @@ namespace Stratego
         /// <returns></returns> True if Successful
         public bool loadSetup(string fileName)
         {
-            if (!this.preGameActive || (this.boardState.getWidth() != 10) || (this.boardState.getHeight() != 10) || (Math.Abs(turn)==2)) return false;
+            if (!this.preGameActive || (this.boardState.getWidth() != 10) || (this.boardState.getHeight() != 10) || (Math.Abs(turn) == 2)) return false;
 
             loadSetupData(fileName);
 
-            if(!this.testing)
+            if (!this.testing)
             {
                 this.backPanel.Invalidate();
 
@@ -733,7 +680,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_MouseClick(object sender, MouseEventArgs e)
         {
-            if (this.turn == 0 || this.OptionsPanel.Visible|| this.EndGamePanel.Visible) return;
+            if (this.turn == 0 || this.OptionsPanel.Visible || this.EndGamePanel.Visible) return;
 
             if (preGameActive)
             {
@@ -785,11 +732,11 @@ namespace Stratego
                 this.SelectPiece(e.X, e.Y);
                 int scaleX = this.panelWidth / this.boardState.getWidth();
                 int scaleY = this.panelHeight / this.boardState.getHeight();
-               // Rectangle r;
+                // Rectangle r;
                 //This makes it so it only repaints the rectangle where the piece is placed
                 int[,] pieceMoves = this.GetPieceMoves(this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal());
                 for (int x = 0; x < this.boardState.getWidth(); x++)
-                    for(int y = 0; y < this.boardState.getHeight(); y++)
+                    for (int y = 0; y < this.boardState.getHeight(); y++)
                         if (pieceMoves[x, y] == 1)
                             this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
                 if (this.selectedGamePiece != null)
@@ -820,18 +767,18 @@ namespace Stratego
                 konamiIndex = 0;
 
 
-            if(this.turn != 0 && !this.preGameActive)
+            if (this.turn != 0 && !this.preGameActive)
             {
-                if (e.KeyCode == Keys.PageUp && this.skippableLevels && this.level>0)
+                if (e.KeyCode == Keys.PageUp && this.skippableLevels && this.level > 0)
                 {
                     if (this.level < this.levelImages.Length)
                         this.loadNextLevel();
                     else
                         this.gameOver(1);
                 }
-                else if(e.KeyCode == Keys.PageDown && this.skippableLevels && this.level>1 &&this.EndGamePanel.Visible)
+                else if (e.KeyCode == Keys.PageDown && this.skippableLevels && this.level > 1 && this.EndGamePanel.Visible)
                 {
-                    this.level-=2;
+                    this.level -= 2;
                     this.loadNextLevel();
                 }
                 else if (e.KeyCode == Keys.Escape)
@@ -839,7 +786,7 @@ namespace Stratego
                     // Change the pause panel's visibility to whatever it's not
                     this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
                 }
-                else if(e.KeyCode == Keys.ShiftKey && this.preGameActive)
+                else if (e.KeyCode == Keys.ShiftKey && this.preGameActive)
                 {
                     if (this.SidePanel.Visible)
                         this.SidePanelOpenButton.Text = "Open Side";
@@ -847,7 +794,7 @@ namespace Stratego
                         this.SidePanelOpenButton.Text = "Close Side";
                     this.SidePanel.Visible = !this.SidePanel.Visible;
                 }
-                else if(e.KeyCode == Keys.Enter && Math.Abs(turn) == 2)
+                else if (e.KeyCode == Keys.Enter && Math.Abs(turn) == 2)
                 {
                     NextTurnButton.Visible = false;
                     this.NextTurnButton.Enabled = false;
@@ -858,7 +805,7 @@ namespace Stratego
             {
                 KeysConverter kc = new KeysConverter();
                 string keyChar = kc.ConvertToString(e.KeyCode);
-                if(e.KeyCode==Keys.Escape)
+                if (e.KeyCode == Keys.Escape)
                 {
                     //Make the escape/pause/options panel visible
                     this.OptionsPanel.Visible = !this.OptionsPanel.Visible;
@@ -1065,20 +1012,20 @@ namespace Stratego
             int startingY = pieceInQuestion.getYVal();
             int spacesPossible = pieceInQuestion.getLimitToMovement();
             GamePiece potenPiece = null;
-            for(int k = startingX; k <= startingX + spacesPossible; k++)
+            for (int k = startingX; k <= startingX + spacesPossible; k++)
             {
                 if (k >= boardState.getWidth())
                 {
                     break;
                 }
                 potenPiece = boardState.getPiece(k, startingY);
-                if(potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
+                if (potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
                 {
                     break;
                 }
                 moveArray[k, startingY] = 1;
             }
-            for(int i = startingX; i >= startingX - spacesPossible; i--)
+            for (int i = startingX; i >= startingX - spacesPossible; i--)
             {
                 if (i < 0)
                 {
@@ -1091,7 +1038,7 @@ namespace Stratego
                 }
                 moveArray[i, startingY] = 1;
             }
-            for(int j = startingY; j <= startingY + spacesPossible; j++)
+            for (int j = startingY; j <= startingY + spacesPossible; j++)
             {
                 if (j >= boardState.getHeight())
                 {
@@ -1142,7 +1089,6 @@ namespace Stratego
                 for (int row = 0; row < 6; row++) this.boardState.fillRow(null, row);
                 this.turn = 0;
                 this.preGameActive = true;
-                this.lastFought = new Point(-1, -1);
                 this.placements = StrategoWin.defaults;
                 this.ai = new AI_Old(this, -1);
                 nextTurn();
@@ -1210,7 +1156,7 @@ namespace Stratego
         {
             // This should always be true, but if 0 was passed into gameOver() bad things would happen
             if (Math.Abs(this.turn) == 1)
-                gameOver(-1*this.turn);
+                gameOver(-1 * this.turn);
         }
 
         /// <summary>
@@ -1254,11 +1200,11 @@ namespace Stratego
             if (!this.testing)
             {
                 this.OptionsPanel.Visible = false;
-                if(this.level>-1)
+                if (this.level > -1)
                 {
                     if (winnerTeam == 1)
                     {
-                        if(this.level == this.levelImages.Length)
+                        if (this.level == this.levelImages.Length)
                         {
                             this.PlayAgainButton.Text = "Main Menu";
                             this.victoryLabel.Text = "YOU BEAT THE CAMPAIGN!";
@@ -1361,7 +1307,7 @@ namespace Stratego
         /// </summary>
         private void loadNextLevel()
         {
-            if (this.level < -1 && (this.level+1)>=this.levelImages.Length) return;
+            if (this.level < -1 && (this.level + 1) >= this.levelImages.Length) return;
             this.level++;
             if (this.level == 0) this.level++;
             string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
@@ -1381,7 +1327,6 @@ namespace Stratego
             loadSaveData(SaveLoadOperations.loadSaveData(path));
 
             this.preGameActive = false;
-            this.lastFought = new Point(-1, -1);
 
             if (!this.testing)
             {
@@ -1465,7 +1410,6 @@ namespace Stratego
                     this.NextTurnButton.Visible = true;
                     this.NextTurnButton.Enabled = true;
                     this.preGameActive = false;
-                    this.lastFought = new Point(-1, -1);
 
                     foreach (var button in this.SidePanel.Controls.OfType<Button>())
                         if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)

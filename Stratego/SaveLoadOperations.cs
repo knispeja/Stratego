@@ -38,7 +38,7 @@ namespace Stratego
             return false;
         }
 
-        public static string loadSetup()
+        public static SetupData loadSetup()
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
@@ -49,7 +49,7 @@ namespace Stratego
                 if ((file = dialog.OpenFile()) != null)
                 {
                     file.Close();
-                    return dialog.FileName; //TODO: some stuff is still not extracted into this file
+                    return loadSetupData(dialog.FileName); //TODO: some stuff is still not extracted into this file
                 }
             }
 
@@ -97,6 +97,15 @@ namespace Stratego
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
             SaveData data = (SaveData)formatter.Deserialize(stream);
+            stream.Close();
+            return data;
+        }
+
+        public static SetupData loadSetupData(string fileName)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            SetupData data = (SetupData)formatter.Deserialize(stream);
             stream.Close();
             return data;
         }

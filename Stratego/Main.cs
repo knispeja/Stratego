@@ -297,32 +297,6 @@ namespace Stratego
         }    
 
         /// <summary>
-        /// Loads a premade piece setup onto the current team's side of the board
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns> True if Successful
-        public bool loadSetup(string fileName)
-        {
-            if (!this.game.preGameActive || (this.game.boardState.getWidth() != 10) || (this.game.boardState.getHeight() != 10) || (Math.Abs(this.game.turn) == 2)) return false;
-
-            loadSetupData(fileName);
-
-            this.backPanel.Invalidate();
-
-            foreach (String key in this.game.placements.Keys)
-            {
-                if (this.game.placements[key] != 0)
-                {
-                    this.donePlacingButton.Enabled = false;
-                    return true;
-                }
-            }
-            this.donePlacingButton.Enabled = true;
-            
-            return true;
-        }
-
-        /// <summary>
         /// Receives clicks on the back panel and directs them to the game as needed
         /// </summary>
         /// <param name="sender"></param>
@@ -642,7 +616,24 @@ namespace Stratego
         /// <param name="e"></param>
         private void loadSetUpButton_Click(object sender, EventArgs e)
         {
-            loadSetup(SaveLoadOperations.loadSetup());
+            if (!this.game.preGameActive || (this.game.boardState.getWidth() != 10) || (this.game.boardState.getHeight() != 10) || (Math.Abs(this.game.turn) == 2))
+                return;
+
+            loadSetupData(SaveLoadOperations.loadSetup());
+
+            this.backPanel.Invalidate();
+
+            foreach (String key in this.game.placements.Keys)
+            {
+                if (this.game.placements[key] != 0)
+                {
+                    this.donePlacingButton.Enabled = false;
+                    return;
+                }
+            }
+            this.donePlacingButton.Enabled = true;
+
+            return;
         }
 
         /// <summary>
@@ -944,52 +935,12 @@ namespace Stratego
                 );
         }
 
-        private void loadSetupData(string fileName)
+        private void loadSetupData(SetupData data)
         {
-            StreamReader reader = new StreamReader(fileName);
+            // TODO: need to modify this.game.boardState to match the placements 
 
-            string[] lines = new string[4];
-            string line = reader.ReadLine();
-            lines[0] = line;
-            int i = 0;
-            while (line != null)
-            {
-                lines[i] = line;
-                line = reader.ReadLine();
-                i++;
-            }
-            string[] numbers;
-            Dictionary<String, int> placements = this.game.placements;
-            if (this.game.turn > 0)
-            {
-                /*
-                for (int j = 6; j < 10; j++)
-                {
-                    numbers = lines[j - 6].Split(' ');
-                    for (int k = 0; k < 10; k++)
-                    {
-                        boardState[k, j] = Convert.ToInt32(numbers[k]);
-                        if (Convert.ToInt32(numbers[k]) != 0) placements[Math.Abs(boardState[k, j])] -= 1;
-                    }
-                }
-                */
-            }
-            else
-            {
-                /*
-                for (int j = 0; j < 4; j++)
-                {
-                    numbers = lines[j].Split(' ');
-                    for (int k = 0; k < 10; k++)
-                    {
-                        boardState[9 - k, 3 - j] = turn * Convert.ToInt32(numbers[k]);
-                        if (Convert.ToInt32(numbers[k]) != 0) this.placements[Math.Abs(boardState[9 - k, 3 - j])] -= 1;
-                    }
-                }
-                */
-            }
-
-            reader.Close();
+            this.game.placements = data.placements;
+            this.game.turn = data.turn;
         }
 
         public void adjustTurnButtonState(string buttonText)

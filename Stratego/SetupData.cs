@@ -9,8 +9,10 @@ namespace Stratego
     [Serializable]
     public class SetupData
     {
+        [NonSerialized]
+        public Dictionary<String, int> placements;
+
         public Gameboard boardState { get; private set; }
-        public Dictionary<String, int> placements { get; private set; } //TODO: this will make serialization fail
         public int turn { get; private set; }
 
         public SetupData(Gameboard boardState, Dictionary<String, int> placements, int turn)

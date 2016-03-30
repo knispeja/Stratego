@@ -41,7 +41,7 @@
             this.startTimer = new System.Windows.Forms.Timer(this.components);
             this.SidePanelOpenButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
-            this.backPanel = new BuffPanel();
+            this.backPanel = new Stratego.StrategoWin.BuffPanel();
             this.EndGamePanel = new System.Windows.Forms.Panel();
             this.victoryLabel = new System.Windows.Forms.Label();
             this.EndGameExitButton = new System.Windows.Forms.Button();
@@ -608,6 +608,7 @@
             // 
             this.TitlePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.TitlePictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.TitlePictureBox.BackgroundImage = global::Stratego.Properties.Resources.Stratego_logo;
             this.TitlePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.TitlePictureBox.Location = new System.Drawing.Point(1169, 342);
             this.TitlePictureBox.Name = "TitlePictureBox";
@@ -616,6 +617,7 @@
             this.TitlePictureBox.TabStop = false;
             this.TitlePictureBox.Visible = false;
             this.TitlePictureBox.WaitOnLoad = true;
+            this.TitlePictureBox.Click += new System.EventHandler(this.TitlePictureBox_Click);
             // 
             // FireBox
             // 

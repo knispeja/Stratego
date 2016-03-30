@@ -84,7 +84,7 @@ namespace Stratego
         /// <summary>
         /// The AI that the player will play against, if they choose single player.
         /// </summary>
-        public AI ai;
+        public AI_Old ai;
 
         /// <summary>
         /// If levels can be skipped using keypresses

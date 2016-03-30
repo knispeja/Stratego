@@ -16,7 +16,7 @@ namespace StrategoTest
         {
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
-            AI ai = new AI(win, team, difficulty);
+            AI_Old ai = new AI_Old(win, team, difficulty);
             Assert.AreEqual(team, ai.team);
             Assert.AreEqual(difficulty, ai.difficulty);
             Assert.AreEqual(gameBoard, ai.knownBoardState);
@@ -35,7 +35,7 @@ namespace StrategoTest
         {
             int[,] gameBoard = new int[10, 10];
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
-            Assert.Throws<ArgumentException>(() => new AI(win, invalidTeam));
+            Assert.Throws<ArgumentException>(() => new AI_Old(win, invalidTeam));
         }
 
         [TestCase(1)]
@@ -55,7 +55,7 @@ namespace StrategoTest
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
             win.nextTurn();
             if(team < 0) win.nextTurn();
-            AI ai = new AI(win, team);
+            AI_Old ai = new AI_Old(win, team);
 
             Assert.Throws<InvalidOperationException>(() => ai.placePieces());
         }
@@ -74,7 +74,7 @@ namespace StrategoTest
 
             int initialTurn = win.turn;
 
-            AI ai = new AI(win, team);
+            AI_Old ai = new AI_Old(win, team);
 
             ai.placePieces();
 
@@ -167,12 +167,12 @@ namespace StrategoTest
             }
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
 
-            AI ai = new AI(win, team);
-            System.Collections.Generic.List<AI.Move> moves = ai.generateValidMoves();
+            AI_Old ai = new AI_Old(win, team);
+            System.Collections.Generic.List<AI_Old.Move> moves = ai.generateValidMoves();
             Assert.AreNotEqual(null, moves);
             Assert.IsNotEmpty(moves);
             
-            foreach (AI.Move move in moves)
+            foreach (AI_Old.Move move in moves)
             {
                 int first = win.getPiece(move.origX, move.origY);
                 int second = win.getPiece(move.newX, move.newY);
@@ -205,12 +205,12 @@ namespace StrategoTest
             if (team < 0) win.nextTurn();
             int initialTurn = win.turn;
 
-            AI ai = new AI(win, team);
-            System.Collections.Generic.List<AI.Move> moves = ai.generateValidMoves();
+            AI_Old ai = new AI_Old(win, team);
+            System.Collections.Generic.List<AI_Old.Move> moves = ai.generateValidMoves();
 
-            foreach (AI.Move move in moves)
+            foreach (AI_Old.Move move in moves)
                 move.priority = highestPriority - 1;
-            moves[0] = new AI.Move(0, 0, 1, 0);
+            moves[0] = new AI_Old.Move(0, 0, 1, 0);
             moves[0].priority = highestPriority;
             ai.executeHighestPriorityMove(moves);
             Assert.AreEqual(0, win.boardState[0, 0]);
@@ -237,7 +237,7 @@ namespace StrategoTest
 
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
 
-            AI ai = new AI(win, team);
+            AI_Old ai = new AI_Old(win, team);
             Assert.AreEqual(expected, ai.isEnemyPiece(piece));
         }
 
@@ -260,7 +260,7 @@ namespace StrategoTest
 
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
 
-            AI ai = new AI(win, team);
+            AI_Old ai = new AI_Old(win, team);
             Assert.AreEqual(expected, ai.isFriendlyPiece(piece));
         }
 
@@ -318,7 +318,7 @@ namespace StrategoTest
 
             StrategoWin win = new StrategoWin(1000, 1000, gameBoard);
 
-            AI ai = new AI(win, team);
+            AI_Old ai = new AI_Old(win, team);
             Assert.AreEqual(expected, ai.safetyCheck(x, y, piece, gameBoard));
         }
     }

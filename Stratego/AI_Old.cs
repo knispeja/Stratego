@@ -9,7 +9,7 @@ namespace Stratego
     /// <summary>
     /// Holds methods and classes relating to the AI player.
     /// </summary>
-    public class AI
+    public class AI_Old
     {
         private StrategoWin win;
         public int team { get; set; }
@@ -32,7 +32,7 @@ namespace Stratego
         /// <param name="win">The window upon which to perform most game functions directly</param>
         /// <param name="team">This AI player's team, either -1 or 1 (typically that translates to red or blue)</param>
         /// <param name="difficulty">This is the AI player's difficulty. A higher number indicates the AI is more difficult, 5 being insanity</param>
-        public AI(StrategoWin win, int team, int difficulty = 5)
+        public AI_Old(StrategoWin win, int team, int difficulty = 5)
         {
             if (Math.Abs(team) != 1) throw new ArgumentException();
             this.team = team;

@@ -115,7 +115,7 @@ namespace Stratego
         /// <summary>
         /// The AI that the player will play against, if they choose single player.
         /// </summary>
-        public AI ai;
+        public AI_Old ai;
 
         /// <summary>
         /// If levels can be skipped using keypresses
@@ -158,7 +158,7 @@ namespace Stratego
             boardState = new GamePiece[10, 10];
             for (int row = 0; row < 6; row++) fillRow(null, row);
 
-            this.ai = new AI(this, -1);
+            this.ai = new AI_Old(this, -1);
 
             this.backPanel.Focus();
         }
@@ -196,7 +196,7 @@ namespace Stratego
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
-            this.ai = new AI(this, -1);
+            this.ai = new AI_Old(this, -1);
             this.placements = StrategoWin.defaults;
             this.placements.Add(FlagPiece.FLAG_NAME, 1);
             this.placements.Add(BombPiece.BOMB_NAME, 6);
@@ -1162,7 +1162,7 @@ namespace Stratego
                 this.preGameActive = true;
                 this.lastFought = new Point(-1, -1);
                 this.placements = StrategoWin.defaults;
-                this.ai = new AI(this, -1);
+                this.ai = new AI_Old(this, -1);
                 nextTurn();
                 this.SidePanel.Visible = false;
                 this.SidePanelOpenButton.Visible = true;
@@ -1516,7 +1516,7 @@ namespace Stratego
             this.ai.difficulty = data.difficulty;
 
             if (this.isSinglePlayer)
-                this.ai = new AI(this, -1, data.difficulty);
+                this.ai = new AI_Old(this, -1, data.difficulty);
         }
 
         public SetupData getSetupData()

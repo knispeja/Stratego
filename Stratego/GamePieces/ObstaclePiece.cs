@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Stratego
 {
+    [Serializable]
     class ObstaclePiece : GamePiece
     {
         public static readonly String OBSTACLE_NAME = "Obstacle";
-        public static readonly int OBSTACLE_RANK = 3;
+        public static readonly int OBSTACLE_RANK = -1;
 
         public ObstaclePiece(int teamCode) : base(teamCode)
         {

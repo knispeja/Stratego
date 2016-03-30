@@ -1,5 +1,8 @@
-﻿namespace Stratego
+﻿using System;
+
+namespace Stratego
 {
+    [Serializable]
     class ImperviousToBombs : BattleBehavior
     {
         public ImperviousToBombs() : base()

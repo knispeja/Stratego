@@ -1,5 +1,8 @@
-﻿namespace Stratego
+﻿using System;
+
+namespace Stratego
 {
+    [Serializable]
     public class DiesToAllSaveFlag : BattleBehavior
     {
         public DiesToAllSaveFlag() : base()

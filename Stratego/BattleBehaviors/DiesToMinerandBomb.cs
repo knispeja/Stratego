@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Stratego
 {
+    [Serializable]
     class DiestoMinerandBomb : BattleBehavior
     {
         public DiestoMinerandBomb() : base()

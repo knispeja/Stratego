@@ -7,24 +7,27 @@ namespace Stratego
     [Serializable]
     public abstract class GamePiece
     {
+        [NonSerialized]
         protected Dictionary<int, Color> colorDict;
 
+        [NonSerialized]
         protected Dictionary<int, Image> imageDict;
+
         protected string pieceName;
         protected int pieceRank;
         protected int teamCode;
-        protected Boolean lifeStatus;
+        protected bool lifeStatus;
         protected Color pieceColor;
         protected Image pieceImage;
 
         protected BattleBehavior attackBehavior;
         protected BattleBehavior defendBehavior;
 
-        protected Boolean essential;
+        protected bool essential;
 
         protected int limitToMovement;
 
-        protected Boolean movable;
+        protected bool movable;
 
         private int xVal;
         private int yVal;

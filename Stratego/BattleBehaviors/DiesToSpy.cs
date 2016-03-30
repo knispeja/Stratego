@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Stratego
 {
+    [Serializable]
     public class DiesToSpy : BattleBehavior
     {
         public DiesToSpy() : base()

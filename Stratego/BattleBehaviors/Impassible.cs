@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Stratego.BattleBehaviors
 {
+    [Serializable]
     class Impassible : BattleBehavior
     {
         public override bool decideFate(GamePiece affectedPiece, GamePiece affectingPiece)

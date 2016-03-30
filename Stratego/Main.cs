@@ -917,7 +917,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            SaveData? saveData = SaveLoadOperations.loadGame();
+            SaveData saveData = SaveLoadOperations.loadGame();
 
             if (saveData != null)
             {

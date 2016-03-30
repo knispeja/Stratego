@@ -56,7 +56,7 @@ namespace Stratego
             return null;
         }
 
-        public static SaveData? loadGame()
+        public static SaveData loadGame()
         {
             OpenFileDialog dialog = new OpenFileDialog();
 

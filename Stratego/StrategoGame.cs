@@ -174,7 +174,7 @@ namespace Stratego
             }
             else retVal = false;
 
-            if (retVal) this.boardState.setPiece(x / scaleX, y / scaleY, piece);
+            if (retVal) this.boardState.setPiece(x, y, piece);
             return retVal;
         }
 

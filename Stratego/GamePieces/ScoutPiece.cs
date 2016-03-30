@@ -10,11 +10,10 @@ namespace Stratego
 
         public ScoutPiece(int teamCode) : base(teamCode)
         {
-            this.imageDict.Add(0, Properties.Resources.BlueScout);
-            this.imageDict.Add(1, Properties.Resources.RedScout);
+            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueScout : Properties.Resources.RedScout;
+
             this.pieceRank = SCOUT_RANK;
             this.pieceName = SCOUT_NAME;
-            this.pieceImage = this.imageDict[teamCode];
             this.limitToMovement = int.MaxValue;
         }
     }

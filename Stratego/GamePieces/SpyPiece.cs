@@ -10,11 +10,10 @@ namespace Stratego
 
         public SpyPiece (int teamCode) : base(teamCode)
         {
-            this.imageDict.Add(0, Properties.Resources.BlueSpy);
-            this.imageDict.Add(1, Properties.Resources.RedSpy);
+            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueSpy : Properties.Resources.RedSpy;
+
             this.pieceRank = SPY_RANK;
             this.pieceName = SPY_NAME;
-            this.pieceImage = this.imageDict[teamCode];
             this.attackBehavior = new ImperviousToMarshall();
             this.defendBehavior = new SimplyDie();
         }

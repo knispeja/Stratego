@@ -10,11 +10,10 @@ namespace Stratego
 
         public BombPiece (int teamCode) : base (teamCode)
         {
-            this.imageDict.Add(0, Properties.Resources.BlueBomb);
-            this.imageDict.Add(1, Properties.Resources.RedBomb);
+            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueBomb : Properties.Resources.RedBomb;
+
             this.pieceRank = BOMB_RANK;
             this.pieceName = BOMB_NAME;
-            this.pieceImage = this.imageDict[teamCode];
             this.attackBehavior = new DiestoMinerandBomb();
             this.defendBehavior = new DiestoMinerandBomb();
             this.limitToMovement = 0;

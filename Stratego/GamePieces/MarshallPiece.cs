@@ -10,11 +10,10 @@ namespace Stratego
 
         public MarshallPiece (int teamCode) : base (teamCode)
         {
-            this.imageDict.Add(0, Properties.Resources.BlueMarshal);
-            this.imageDict.Add(1, Properties.Resources.RedMarshal);
+            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueMarshall : Properties.Resources.RedMarshall;
+
             this.pieceRank = MARSHALL_RANK;
             this.pieceName = MARSHALL_NAME;
-            this.pieceImage = this.imageDict[teamCode];
             this.defendBehavior = new DiesToSpy();
         }
     }

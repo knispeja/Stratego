@@ -10,11 +10,10 @@ namespace Stratego
 
         public MajorPiece (int teamCode) : base (teamCode)
         {
-            this.imageDict.Add(0, Properties.Resources.BlueMajor);
-            this.imageDict.Add(1, Properties.Resources.RedMajor);
+            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueMajor : Properties.Resources.RedMajor;
+
             this.pieceRank = MAJOR_RANK;
             this.pieceName = MAJOR_NAME;
-            this.pieceImage = this.imageDict[teamCode];
         }
     }
 }

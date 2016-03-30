@@ -131,6 +131,11 @@
     <Compile Include="GamePieces\MinerPiece.cs" />
     <Compile Include="GamePieces\ObstaclePiece.cs" />
     <Compile Include="GUICallback.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SaveData.cs" />
     <Compile Include="SaveLoadOperations.cs" />
     <Compile Include="GamePieces\ScoutPiece.cs" />
@@ -162,11 +167,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -260,7 +260,7 @@
     <None Include="Resources\BlueMajor.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BlueMarshal.png" />
+    <None Include="Resources\BlueMarshall.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\BlueMiner.png" />
@@ -275,7 +275,7 @@
     <None Include="Resources\RedMajor.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\RedMarshal.png" />
+    <None Include="Resources\RedMarshall.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RedMiner.png" />

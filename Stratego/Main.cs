@@ -74,7 +74,7 @@ namespace Stratego
         /// <summary>
         /// The 2DArray full of all pieces on the board
         /// </summary>
-        public GamePiece[,] boardState { get; set; }
+        public Gameboard boardState { get; set; }
 
         /// <summary>
         /// The array which holds information on how many pieces of each type can still be placed
@@ -155,8 +155,9 @@ namespace Stratego
             this.selectedGamePiece = null;
             // Initialize the board state with invalid spaces in the enemy player's side
             // of the board and empty spaces everywhere else. To be changed later!
-            boardState = new GamePiece[10, 10];
-            for (int row = 0; row < 6; row++) fillRow(null, row);
+            //boardState = new GamePiece[10, 10];
+            boardState = new Gameboard(10, 10);
+            for (int row = 0; row < 6; row++) this.boardState.fillRow(null, row);
 
             this.ai = new AI_Old(this, -1);
 
@@ -184,7 +185,7 @@ namespace Stratego
         /// <param name="windowWidth">Used for a simulated GUI window width</param>
         /// <param name="windowHeight">Used for a simulated GUI window height</param>
         /// <param name="boardState">Modified initial board state for ease of testing</param>
-        public StrategoWin(int windowWidth, int windowHeight, GamePiece[,] boardState)
+        public StrategoWin(int windowWidth, int windowHeight, Gameboard boardState)
         {
             this.testing = true;
             this.panelWidth = windowWidth;
@@ -356,8 +357,8 @@ namespace Stratego
                 Pen pen = new Pen(Color.White, 1);
                 Graphics g = e.Graphics;
 
-                int num_cols = this.boardState.GetLength(0);
-                int num_rows = this.boardState.GetLength(1);
+                int num_cols = this.boardState.getWidth();
+                int num_rows = this.boardState.getHeight();
                 int col_inc = panelWidth / num_cols;
                 int row_inc = panelHeight / num_rows;
 
@@ -384,13 +385,13 @@ namespace Stratego
                 int diameter = Math.Min(col_inc,row_inc);
                 int paddingX = (col_inc - diameter) / 2;
                 int paddingY = (row_inc - diameter) / 2;
-                for (int x = 0; x < this.boardState.GetLength(0); x++)
+                for (int x = 0; x < this.boardState.getWidth(); x++)
                 {
-                    for(int y = 0; y < this.boardState.GetLength(1); y++)
+                    for(int y = 0; y < this.boardState.getHeight(); y++)
                     {
-                        int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                        int scaleY = this.panelHeight / this.boardState.GetLength(1);
-                        GamePiece piece = this.boardState[x, y];
+                        int scaleX = this.panelWidth / this.boardState.getWidth();
+                        int scaleY = this.panelHeight / this.boardState.getHeight();
+                        GamePiece piece = this.boardState.getPiece(x, y);
                         Brush b = new SolidBrush(piece.getPieceColor());
                         pen.Color = Color.FromArgb(200, 200, 255);
                         // pen.Color = Color.FromArgb(255, 200, 200);
@@ -424,26 +425,7 @@ namespace Stratego
             }
         }
 
-        /// <summary>
-        /// Gets the piece at a given board cell
-        /// </summary>
-        /// <param name="x">x-coordinate of the cell we want</param>
-        /// <param name="y">y-coordinate of the cell we want</param>
-        /// <returns>The number of the piece located at (x,y)</returns>
-        public GamePiece getPiece(int x, int y) 
-        {
-            return this.boardState[x,y];
-        }
-
-        /// <summary>
-        /// Fills the given row in the board state with the given value
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="row"></param>
-        public void fillRow(GamePiece value, int row)
-        {
-            for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
-        }
+        
 
         /// <summary>
         /// Retrieves the number of pieces still available for
@@ -469,11 +451,11 @@ namespace Stratego
             if (piece == null || x<0 || y<0 || x>this.panelWidth || y>this.panelHeight) throw new ArgumentException();
             if (piece.getTeamCode() != turn && piece != null) return false;
             Boolean retVal = true;
-            int scaleX = this.panelWidth / this.boardState.GetLength(0);
-            int scaleY= this.panelHeight / this.boardState.GetLength(1);
+            int scaleX = this.panelWidth / this.boardState.getWidth();
+            int scaleY= this.panelHeight / this.boardState.getHeight();
             int boardX = x / scaleX;
             int boardY = y / scaleY;
-            GamePiece pieceAtPos = this.boardState[boardX, boardY];
+            GamePiece pieceAtPos = this.boardState.getPiece(boardX, boardY);
 
             if (piece == null && pieceAtPos.getTeamCode() != NO_TEAM_CODE)
             {
@@ -489,7 +471,7 @@ namespace Stratego
             }
             else retVal = false;
 
-            if (retVal) this.boardState[x / scaleX, y / scaleY] = piece;
+            if (retVal) this.boardState.setPiece(x / scaleX, y / scaleY, piece);
             return retVal;
         }
 
@@ -546,11 +528,11 @@ namespace Stratego
                     for (int i = 4; i < 6; i++)
                     {
                         for (int x = 0; x < 2; x++)
-                            this.boardState[x, i] = null;
+                            this.boardState.setPiece(x, i, null);
                         for (int x = 4; x < 6; x++)
-                            this.boardState[x, i] = null;
+                            this.boardState.setPiece(x, i, null);
                         for (int x = 8; x < 10; x++)
-                            this.boardState[x, i] = null;
+                            this.boardState.setPiece(x, i, null);
                     }
                     this.preGameActive = false;
                     if (!this.testing)
@@ -609,15 +591,15 @@ namespace Stratego
             {
                 return false;
             }
-            int scaleX = this.panelWidth / this.boardState.GetLength(0);
-            int scaleY = this.panelHeight / this.boardState.GetLength(1);
+            int scaleX = this.panelWidth / this.boardState.getWidth();
+            int scaleY = this.panelHeight / this.boardState.getHeight();
             int boardX = x / scaleY;
             int boardY = y / scaleY;
             if (this.selectedGamePiece != null)
             {
                 return true;
             }
-            GamePiece potentialSel = this.boardState[boardX, boardY];
+            GamePiece potentialSel = this.boardState.getPiece(boardX, boardY);
             if (potentialSel == null)
             {
                 this.selectedGamePiece = null;
@@ -640,11 +622,11 @@ namespace Stratego
         /// <returns>true if a piece was moved, false otherwise</returns>
         public bool MovePiece(int x, int y)
         {
-            int scaleX = this.panelWidth / this.boardState.GetLength(0);
-            int scaleY = this.panelHeight / this.boardState.GetLength(1);
+            int scaleX = this.panelWidth / this.boardState.getWidth();
+            int scaleY = this.panelHeight / this.boardState.getHeight();
             int boardX = x / scaleX;
             int boardY = y / scaleY;
-            GamePiece defender = this.boardState[boardX, boardY];
+            GamePiece defender = this.boardState.getPiece(boardX, boardY);
             if (this.selectedGamePiece == null)
             {
                 return false;
@@ -658,8 +640,8 @@ namespace Stratego
             else if (defender == null)
             {
                 this.lastFought = new Point(-1, -1);
-                this.boardState[boardX, boardY] = this.selectedGamePiece;
-                this.boardState[this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal()] = null;
+                this.boardState.setPiece(boardX, boardY, this.selectedGamePiece);
+                this.boardState.setPiece(this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal(), null);
                 this.selectedGamePiece.setXVal(boardX);
                 this.selectedGamePiece.setYVal(boardY);
                 this.selectedGamePiece = null;
@@ -704,15 +686,15 @@ namespace Stratego
             defender.defend(attacker);
             if (!defender.isAlive())
             {
-                this.boardState[defender.getXVal(), defender.getYVal()] = null;
+                this.boardState.setPiece(defender.getXVal(), defender.getYVal(), null);
             }
             if (!attacker.isAlive())
             {
-                this.boardState[attacker.getXVal(), attacker.getYVal()] = null;
+                this.boardState.setPiece(attacker.getXVal(), attacker.getYVal(), null);
             }
             else
             {
-                this.boardState[defender.getXVal(), defender.getYVal()] = attacker;
+                this.boardState.setPiece(defender.getXVal(), defender.getYVal(), attacker);
             }
         }
 
@@ -723,7 +705,7 @@ namespace Stratego
         /// <returns></returns> True if Successful
         public bool loadSetup(string fileName)
         {
-            if (!this.preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10) || (Math.Abs(turn)==2)) return false;
+            if (!this.preGameActive || (this.boardState.getWidth() != 10) || (this.boardState.getHeight() != 10) || (Math.Abs(turn)==2)) return false;
 
             loadSetupData(fileName);
 
@@ -760,8 +742,8 @@ namespace Stratego
                 // Only run if the placement succeeded
                 if (piecePlaced.Value)
                 {
-                    int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                    int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                    int scaleX = this.panelWidth / this.boardState.getWidth();
+                    int scaleY = this.panelHeight / this.boardState.getHeight();
                     //This makes it so it only repaints the rectangle where the piece is placed
                     Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
                     this.backPanel.Invalidate(r);
@@ -779,11 +761,11 @@ namespace Stratego
             }
             else if (this.selectedGamePiece != null)
             {
-                int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                int scaleX = this.panelWidth / this.boardState.getWidth();
+                int scaleY = this.panelHeight / this.boardState.getHeight();
                 int[,] pieceMoves = this.GetPieceMoves(this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal());
-                for (int x = 0; x < this.boardState.GetLength(0); x++)
-                    for (int y = 0; y < this.boardState.GetLength(1); y++)
+                for (int x = 0; x < this.boardState.getWidth(); x++)
+                    for (int y = 0; y < this.boardState.getHeight(); y++)
                         if (pieceMoves[x, y] == 1)
                             this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
 
@@ -801,13 +783,13 @@ namespace Stratego
             else
             {
                 this.SelectPiece(e.X, e.Y);
-                int scaleX = this.panelWidth / this.boardState.GetLength(0);
-                int scaleY = this.panelHeight / this.boardState.GetLength(1);
+                int scaleX = this.panelWidth / this.boardState.getWidth();
+                int scaleY = this.panelHeight / this.boardState.getHeight();
                // Rectangle r;
                 //This makes it so it only repaints the rectangle where the piece is placed
                 int[,] pieceMoves = this.GetPieceMoves(this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal());
-                for (int x = 0; x < this.boardState.GetLength(0); x++)
-                    for(int y = 0; y < this.boardState.GetLength(1); y++)
+                for (int x = 0; x < this.boardState.getWidth(); x++)
+                    for(int y = 0; y < this.boardState.getHeight(); y++)
                         if (pieceMoves[x, y] == 1)
                             this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
                 if (this.selectedGamePiece != null)
@@ -982,8 +964,8 @@ namespace Stratego
         private void PauseMenuExitButton_VisibleChanged(object sender, EventArgs e)
         {
             //Sets the exit button to be in the center of the panel whenever it is made visible/not
-            int scaleX = this.panelWidth / this.boardState.GetLength(0);
-            int scaleY = this.panelHeight / this.boardState.GetLength(1);
+            int scaleX = this.panelWidth / this.boardState.getWidth();
+            int scaleY = this.panelHeight / this.boardState.getHeight();
             this.Location = new Point(this.panelWidth / 2 - ((Button)sender).Width / 2, this.panelHeight / 2 - ((Button)sender).Height / 2);
         }
 
@@ -1034,11 +1016,11 @@ namespace Stratego
             if (turn == BLUE_TEAM_CODE)
                 for (int i = 0; i < 4; i++)
                     for (int x = 0; x < 10; x++)
-                        this.boardState[x, i] = null;
+                        this.boardState.setPiece(x, i, null);
             //if (this.turn == -1)
             ((Button)sender).Enabled = false;
             nextTurn();
-            //for (int x = 0; x < this.boardState.GetLength(0); x++) this.boardState[x, row] = value;
+            //for (int x = 0; x < this.boardState.getWidth(); x++) this.boardState.getPiece(x, row] = value;
         }
 
         /// <summary>
@@ -1070,11 +1052,11 @@ namespace Stratego
         /// <param name="Y">Y position in the board state (not in pixels)</param>
         /// <param name="boardState">A 2D array representing the state of the board.</param>
         /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
-        public int[,] GetPieceMoves(int X, int Y, GamePiece[,] boardState)
+        public int[,] GetPieceMoves(int X, int Y, Gameboard boardState)
         {
-            int[,] moveArray = new int[boardState.GetLength(1), boardState.GetLength(0)];
+            int[,] moveArray = new int[boardState.getHeight(), boardState.getWidth()];
 
-            GamePiece pieceInQuestion = boardState[X, Y];
+            GamePiece pieceInQuestion = boardState.getPiece(X, Y);
             if (pieceInQuestion.isMovable() || pieceInQuestion.getLimitToMovement() == 0)
             {
                 return moveArray;
@@ -1085,11 +1067,11 @@ namespace Stratego
             GamePiece potenPiece = null;
             for(int k = startingX; k <= startingX + spacesPossible; k++)
             {
-                if (k >= boardState.GetLength(0))
+                if (k >= boardState.getWidth())
                 {
                     break;
                 }
-                potenPiece = boardState[k, startingY];
+                potenPiece = boardState.getPiece(k, startingY);
                 if(potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
                 {
                     break;
@@ -1102,7 +1084,7 @@ namespace Stratego
                 {
                     break;
                 }
-                potenPiece = boardState[i, startingY];
+                potenPiece = boardState.getPiece(i, startingY);
                 if (potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
                 {
                     break;
@@ -1111,11 +1093,11 @@ namespace Stratego
             }
             for(int j = startingY; j <= startingY + spacesPossible; j++)
             {
-                if (j >= boardState.GetLength(1))
+                if (j >= boardState.getHeight())
                 {
                     break;
                 }
-                potenPiece = boardState[startingX, j];
+                potenPiece = boardState.getPiece(startingX, j);
                 if (potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
                 {
                     break;
@@ -1128,7 +1110,7 @@ namespace Stratego
                 {
                     break;
                 }
-                potenPiece = boardState[startingX, d];
+                potenPiece = boardState.getPiece(startingX, d);
                 if (potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
                 {
                     break;
@@ -1156,8 +1138,8 @@ namespace Stratego
             }
             else
             {
-                this.boardState = new GamePiece[this.boardState.GetLength(0), this.boardState.GetLength(1)];
-                for (int row = 0; row < 6; row++) fillRow(null, row);
+                this.boardState = new Gameboard(this.boardState.getWidth(), this.boardState.getHeight());
+                for (int row = 0; row < 6; row++) this.boardState.fillRow(null, row);
                 this.turn = 0;
                 this.preGameActive = true;
                 this.lastFought = new Point(-1, -1);
@@ -1181,7 +1163,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void saveSetUpButton_Click(object sender, EventArgs e)
         {
-            if (!preGameActive || (this.boardState.GetLength(0) != 10) || (this.boardState.GetLength(1) != 10) || (Math.Abs(turn) == 2)) return;
+            if (!preGameActive || (this.boardState.getWidth() != 10) || (this.boardState.getHeight() != 10) || (Math.Abs(turn) == 2)) return;
 
             SaveLoadOperations.saveSetup(getSetupData());
         }
@@ -1321,17 +1303,17 @@ namespace Stratego
 
         public Boolean checkMoves()
         {
-            for (int x1 = 0; x1 < this.boardState.GetLength(0); x1++)
+            for (int x1 = 0; x1 < this.boardState.getWidth(); x1++)
             {
-                for (int y1 = 0; y1 < this.boardState.GetLength(1); y1++)
+                for (int y1 = 0; y1 < this.boardState.getHeight(); y1++)
                 {
-                    GamePiece piece = boardState[x1, y1];
+                    GamePiece piece = this.boardState.getPiece(x1, y1);
                     if (piece.getTeamCode() == this.turn)
                     {
                         int[,] validPlaces = GetPieceMoves(x1, y1, this.boardState);
-                        for (int x2 = 0; x2 < this.boardState.GetLength(0); x2++)
+                        for (int x2 = 0; x2 < this.boardState.getWidth(); x2++)
                         {
-                            for (int y2 = 0; y2 < this.boardState.GetLength(1); y2++)
+                            for (int y2 = 0; y2 < this.boardState.getHeight(); y2++)
                             {
                                 if (validPlaces[x2, y2] == 1)
                                     return true;

@@ -106,12 +106,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\AIGameboard.cs" />
+	<Compile Include="AI\AIGameboard.cs" />
     <Compile Include="AI\AIv2.cs" />
     <Compile Include="AI\GameTree.cs" />
     <Compile Include="AI\Move.cs" />
     <Compile Include="BattleBehaviors\BattleBehavior.cs" />
-    <Compile Include="Gameboard.cs" />
+	<Compile Include="Gameboard.cs" />
+    <Compile Include="BattleBehaviors\Impassible.cs" />
     <Compile Include="GamePieces\BombPiece.cs" />
     <Compile Include="GamePieces\CaptainPiece.cs" />
     <Compile Include="GamePieces\ColonelPiece.cs" />
@@ -127,7 +128,7 @@
     <Compile Include="GamePieces\MajorPiece.cs" />
     <Compile Include="GamePieces\MarshallPiece.cs" />
     <Compile Include="GamePieces\MinerPiece.cs" />
-    <Compile Include="ObstaclePiece.cs" />
+    <Compile Include="GamePieces\ObstaclePiece.cs" />
     <Compile Include="SaveData.cs" />
     <Compile Include="SaveLoadOperations.cs" />
     <Compile Include="GamePieces\ScoutPiece.cs" />
@@ -143,7 +144,7 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="AI_Old.cs" />
+	<Compile Include="AI_Old.cs" />
     <Compile Include="Piece.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

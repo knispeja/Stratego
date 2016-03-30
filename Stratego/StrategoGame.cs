@@ -125,7 +125,7 @@ namespace Stratego
         {
             this.piecePlacing = null;
             this.boardState = boardState;
-          //  this.placements = (int[])this.defaults.Clone();
+            this.turn = NO_TEAM_CODE;
             this.preGameActive = false;
             this.isSinglePlayer = false;
             this.lastFought = new Point(-1, -1);

@@ -38,7 +38,7 @@ namespace Stratego
         /// <summary>
         /// The piece currently being placed by the user
         /// </summary>
-        GamePiece piecePlacing = null;
+        public GamePiece piecePlacing { get; set;} = null;
 
         /// <summary>
         /// The 2DArray full of all pieces on the board
@@ -89,9 +89,9 @@ namespace Stratego
         /// <summary>
         /// If levels can be skipped using keypresses
         /// </summary>
-        private Boolean skippableLevels { get; set; }
+        public Boolean skippableLevels { get; set; }
 
-        private GamePiece selectedGamePiece;
+        public GamePiece selectedGamePiece;
 
         public static readonly int NO_TEAM_CODE = 0;
         public static readonly int RED_TEAM_CODE = -1;
@@ -126,13 +126,16 @@ namespace Stratego
             this.movableBombs = false;
             this.movableFlags = false;
             //      this.ai = new AI(this, -1);
+            this.resetPlacements();
+        }
+        public void resetPlacements()
+        {
             this.placements = new Dictionary<string, int>();
             foreach (string key in StrategoGame.defaults.Keys)
             {
                 this.placements.Add(key, StrategoGame.defaults[key]);
             }
         }
-
         /// <summary>
         /// Retrieves the number of pieces still available for
         /// placement of a given type
@@ -197,11 +200,7 @@ namespace Stratego
                 if (this.preGameActive)
                 {
                     this.turn = -1;
-                    this.placements = new Dictionary<string, int>();
-                    foreach (string key in StrategoGame.defaults.Keys)
-                    {
-                        this.placements.Add(key, StrategoGame.defaults[key]);
-                    }
+                    this.resetPlacements();
                 }
                 else
                 {
@@ -307,6 +306,16 @@ namespace Stratego
             }
             this.selectedGamePiece = null;
             return res;
+        }
+        /// <summary>
+        /// Finds all of the possible moves for a piece with the given X and Y coordinates using the games board state.
+        /// </summary>
+        /// <param name="pieceX">X position in the board state (not in pixels)</param>
+        /// <param name="pieceY">Y position in the board state (not in pixels)</param>
+        /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
+        public int[,] GetPieceMoves(int pieceX, int pieceY)
+        {
+            return GetPieceMoves(pieceX, pieceY, this.boardState);
         }
 
         /// <summary>

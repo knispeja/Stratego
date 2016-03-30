@@ -23,7 +23,7 @@ namespace Stratego
         public Move chooseMove()
         {
             // TODO: thread this so length depends on difficulty
-            Move move = Move.NullMove;
+            Move move = Move.NULL_MOVE;
             for (int i = 0; i < 999999; i++)
             {
                 runMTCS(internalBoard, this.gameTree.getRoot());

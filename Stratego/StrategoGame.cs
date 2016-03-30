@@ -22,10 +22,11 @@ namespace Stratego
         };
 
         public Dictionary<int, Type> checkboxFactorySim = new Dictionary<int, Type>() {
-            { 0, typeof(FlagPiece) }, {1, typeof(BombPiece) }, { 2, typeof(SpyPiece) },
+             {1, typeof(BombPiece) }, { 2, typeof(SpyPiece) },
             { 3, typeof(ScoutPiece) }, { 4, typeof(MinerPiece) }, { 5, typeof(SergeantPiece) },
             { 6, typeof(LieutenantPiece) }, { 7, typeof(CaptainPiece) }, { 8, typeof(MajorPiece) },
-            { 9, typeof(ColonelPiece) }, { 10, typeof(GeneralPiece) }, { 11, typeof(MarshallPiece) }
+            { 9, typeof(ColonelPiece) }, { 10, typeof(GeneralPiece) }, { 11, typeof(MarshallPiece) },
+            { 12, typeof(FlagPiece) }
         };
 
         public Dictionary<int, Type> pieceTypes = new Dictionary<int, Type>();
@@ -84,7 +85,7 @@ namespace Stratego
         /// <summary>
         /// The AI that the player will play against, if they choose single player.
         /// </summary>
-        public AI_Old ai;
+  //      public AI_Old ai;
 
         /// <summary>
         /// If levels can be skipped using keypresses
@@ -162,19 +163,19 @@ namespace Stratego
         {
             if (turn == 0 || Math.Abs(turn) == 2) return false;
    //         if (piece == null || x < 0 || y < 0 || x > this.panelWidth || y > this.panelHeight) throw new ArgumentException();
-            if (piece.getTeamCode() != turn && piece != null) return false;
+            if (piece != null && piece.getTeamCode() != turn) return false;
             Boolean retVal = true;
 
             GamePiece pieceAtPos = this.boardState.getPiece(x, y);
 
-            if (piece == null && pieceAtPos.getTeamCode() != NO_TEAM_CODE)
+            if (piece == null && pieceAtPos!=null && pieceAtPos.getTeamCode() != NO_TEAM_CODE)
             {
                 // We are trying to remove
                 if (piece.getTeamCode() != this.turn) return false;
                 if (pieceAtPos == null) retVal = false;
                 this.placements[piece.getPieceName()]++;
             }
-            else if (pieceAtPos == null && this.placements[piece.getPieceName()] > 0)
+            else if (pieceAtPos == null && piece!=null && this.placements[piece.getPieceName()] > 0)
             {
                 // We are trying to add
                 this.placements[piece.getPieceName()] -= 1;
@@ -254,13 +255,13 @@ namespace Stratego
                 turn = RED_TEAM_CODE;
             }
 
-            if (this.isSinglePlayer && this.turn == this.ai.team)
-            {
-                if (this.preGameActive)
-                    this.ai.placePieces();
-                else
-                    this.ai.takeTurn();
-            }
+            //if (this.isSinglePlayer && this.turn == this.ai.team)
+            //{
+            //    if (this.preGameActive)
+            //        this.ai.placePieces();
+            //    else
+            //        this.ai.takeTurn();
+            //}
         }
         /// <summary>
         /// Selects a piece if no piece is selected.

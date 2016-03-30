@@ -152,15 +152,7 @@ namespace Stratego
             {
                 foreach (var button in this.SidePanel.Controls.OfType<Button>())
                     button.UseVisualStyleBackColor = true;
-                // get type information
-                var type = this.game.checkboxFactorySim[Convert.ToInt32(((Button)sender).Tag)];
-
-                // get public constructors
-                var ctors = type.GetConstructors(BindingFlags.Public);
-
-                // invoke the first public constructor with no parameters.
-                GamePiece obj = (GamePiece)ctors[0].Invoke(new object[] { this.game.turn});
-                this.game.piecePlacing = obj;
+                this.game.piecePlacing = this.constructPieceToPlace(Convert.ToInt32(((Button)sender).Tag));
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
         }
@@ -347,7 +339,7 @@ namespace Stratego
 
             if (this.game.preGameActive)
             {
-                bool? piecePlaced = this.game.placePiece(this.game.piecePlacing, e.X, e.Y);
+                bool? piecePlaced = this.game.placePiece(this.game.piecePlacing, boardX, boardY);
 
                 // Only run if the placement succeeded
                 if (piecePlaced.Value)
@@ -481,49 +473,21 @@ namespace Stratego
                 double num;
                 if (double.TryParse(keyChar, out num))
                 {
-                    Type type = this.game.checkboxFactorySim[(int)num];
-
-                    // get public constructors
-                    var ctors = type.GetConstructors(BindingFlags.Public);
-
-                    // invoke the first public constructor with no parameters.
-                    GamePiece obj = (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
-                    this.game.piecePlacing = obj;
+                    this.game.piecePlacing = this.constructPieceToPlace((int)num);
                 }
                 else
                 {
                     if (keyChar == "S")
                     {
-                        var type = this.game.checkboxFactorySim[2];
-
-                        // get public constructors
-                        var ctors = type.GetConstructors(BindingFlags.Public);
-
-                        // invoke the first public constructor with no parameters.
-                        GamePiece obj = (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
-                        this.game.piecePlacing = obj;
+                        this.game.piecePlacing = this.constructPieceToPlace(2);
                     }
                     else if (keyChar == "B")
                     {
-                        var type = this.game.checkboxFactorySim[1];
-
-                        // get public constructors
-                        var ctors = type.GetConstructors(BindingFlags.Public);
-
-                        // invoke the first public constructor with no parameters.
-                        GamePiece obj = (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
-                        this.game.piecePlacing = obj;
+                        this.game.piecePlacing = this.constructPieceToPlace(1);
                     }
                     else if (keyChar == "F")
                     {
-                        var type = this.game.checkboxFactorySim[3];
-
-                        // get public constructors
-                        var ctors = type.GetConstructors(BindingFlags.Public);
-
-                        // invoke the first public constructor with no parameters.
-                        GamePiece obj = (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
-                        this.game.piecePlacing = obj;
+                        this.game.piecePlacing = this.constructPieceToPlace(3);
                     }
                 }
             }
@@ -584,25 +548,11 @@ namespace Stratego
             {
                 //this.activeSidePanelButton = this.piecePlacing;
                 this.activeSidePanelButton = 0;
-                var type = this.game.checkboxFactorySim[0];
-
-                // get public constructors
-                var ctors = type.GetConstructors(BindingFlags.Public);
-
-                // invoke the first public constructor with no parameters.
-                GamePiece obj = (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
-                this.game.piecePlacing = obj;
+                this.game.piecePlacing = this.constructPieceToPlace(0);
             }
             else
             {
-                var type = this.game.checkboxFactorySim[this.activeSidePanelButton];
-
-                // get public constructors
-                var ctors = type.GetConstructors(BindingFlags.Public);
-
-                // invoke the first public constructor with no parameters.
-                GamePiece obj = (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
-                this.game.piecePlacing = obj;
+                this.game.piecePlacing = this.constructPieceToPlace(this.activeSidePanelButton);
             }
         }
 
@@ -661,7 +611,7 @@ namespace Stratego
                 this.game.turn = 0;
                 this.game.preGameActive = true;
                 this.game.resetPlacements();
-                this.game.ai = new AI_Old(this, -1);
+                //this.game.ai = new AI_Old(this, -1);
                 this.game.nextTurn();
                 this.SidePanel.Visible = false;
                 this.SidePanelOpenButton.Visible = true;
@@ -747,8 +697,8 @@ namespace Stratego
         /// <param name="e"></param>
         private void AIDifficultyChanger_SelectedItemChanged(object sender, EventArgs e)
         {
-            if (this.game.ai != null)
-                this.game.ai.difficulty = Convert.ToInt32(this.AIDifficultyChanger.SelectedItem);
+            //if (this.game.ai != null)
+            //    this.game.ai.difficulty = Convert.ToInt32(this.AIDifficultyChanger.SelectedItem);
         }
 
         /// <summary>
@@ -944,7 +894,7 @@ namespace Stratego
                         this.NextTurnButton.Text = "Player 2's Turn";
                     if (this.game.isSinglePlayer)
                     {
-                        this.AIDifficultyChanger.Text = this.game.ai.difficulty.ToString();
+                        //this.AIDifficultyChanger.Text = this.game.ai.difficulty.ToString();
                     }
                     this.NextTurnButton.Visible = true;
                     this.NextTurnButton.Enabled = true;
@@ -967,7 +917,8 @@ namespace Stratego
         {
             return new SaveData(
                 this.game.boardState,
-                this.game.ai.difficulty,
+                //this.game.ai.difficulty,
+                0,
                 this.game.turn,
                 this.game.isSinglePlayer
                 );
@@ -978,10 +929,10 @@ namespace Stratego
             this.game.boardState = data.boardState;
             this.game.turn = data.turn;
             this.game.isSinglePlayer = data.isSinglePlayer;
-            this.game.ai.difficulty = data.difficulty;
+            //this.game.ai.difficulty = data.difficulty;
 
-            if (this.game.isSinglePlayer)
-                this.game.ai = new AI_Old(this, -1, data.difficulty);
+            //if (this.game.isSinglePlayer)
+            //    this.game.ai = new AI_Old(this, -1, data.difficulty);
         }
 
         public SetupData getSetupData()
@@ -1057,6 +1008,21 @@ namespace Stratego
         {
             this.SidePanelOpenButton.Visible = visible;
             this.SidePanel.Visible = visible;
+        }
+
+        public GamePiece constructPieceToPlace(int index)
+        {
+            if (index == 0)
+            {
+                return null;
+            }
+            Type type = this.game.checkboxFactorySim[(int)index];
+
+            // get public constructors
+            var ctors = type.GetConstructors();
+
+            // invoke the first public constructor with no parameters.
+            return (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
         }
     }
 }

@@ -122,6 +122,7 @@
     <Compile Include="GamePieces\MajorPiece.cs" />
     <Compile Include="GamePieces\MarshallPiece.cs" />
     <Compile Include="GamePieces\MinerPiece.cs" />
+    <Compile Include="ObstaclePiece.cs" />
     <Compile Include="SaveData.cs" />
     <Compile Include="SaveLoadOperations.cs" />
     <Compile Include="GamePieces\ScoutPiece.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="SoundPlayerAsync.cs" />
     <Compile Include="GamePieces\SpyPiece.cs" />
     <Compile Include="GamePieces\GamePiece.cs" />
-	<Compile Include="SetupData.cs" />
+    <Compile Include="SetupData.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

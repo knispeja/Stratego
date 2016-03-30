@@ -7,7 +7,7 @@ using System.IO;
 namespace StrategoTest
 {
     [TestFixture()]
-    class MainTest
+    class StrategoGameTest
     {
         [TestCase(1, 100, 100, ExpectedResult = false)] //Here we test that the piece value does not 
         [TestCase(2, 100, 100, ExpectedResult = false)] // affect whether it will be placed.

@@ -105,7 +105,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainTest.cs" />
+    <Compile Include="StrategoGameTest.cs" />
     <Compile Include="MovementTest.cs" />
     <Compile Include="PieceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

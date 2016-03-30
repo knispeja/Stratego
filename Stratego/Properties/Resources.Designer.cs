@@ -152,9 +152,9 @@ namespace Stratego.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BlueMarshal {
+        internal static System.Drawing.Bitmap BlueMarshall {
             get {
-                object obj = ResourceManager.GetObject("BlueMarshal", resourceCulture);
+                object obj = ResourceManager.GetObject("BlueMarshall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -351,9 +351,9 @@ namespace Stratego.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap RedMarshal {
+        internal static System.Drawing.Bitmap RedMarshall {
             get {
-                object obj = ResourceManager.GetObject("RedMarshal", resourceCulture);
+                object obj = ResourceManager.GetObject("RedMarshall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

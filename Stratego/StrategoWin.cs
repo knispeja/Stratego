@@ -124,7 +124,9 @@ namespace Stratego
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
+            this.game.resetPlacements();
             this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
+
             this.game.nextTurn();
             this.LoadButton.Visible = false;
             this.LoadButton.Enabled = false;
@@ -227,6 +229,7 @@ namespace Stratego
 
                 Pen pen = new Pen(Color.White, 1);
                 Graphics g = e.Graphics;
+
                 Gameboard boardState = this.game.boardState;
                 int num_cols = boardState.getWidth();
                 int num_rows = boardState.getHeight();
@@ -244,7 +247,7 @@ namespace Stratego
                 {
                     g.DrawLine(pen, 0, row_inc * j, panelWidth, row_inc * j);
                 }
-
+                
                 int[,] pieceMoves = new int[num_rows, num_cols];
 
                 GamePiece selectedGamePiece = this.game.selectedGamePiece;
@@ -264,32 +267,37 @@ namespace Stratego
                         int scaleX = this.panelWidth / boardState.getWidth();
                         int scaleY = this.panelHeight / boardState.getHeight();
                         GamePiece piece = boardState.getPiece(x, y);
-                        Brush b = new SolidBrush(piece.getPieceColor());
-                        pen.Color = Color.FromArgb(200, 200, 255);
-                        // pen.Color = Color.FromArgb(255, 200, 200);
-                        int cornerX = x * col_inc + paddingX;
-                        int cornerY = y * row_inc + paddingY;
-                        Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                        if (pieceMoves[x, y] == 1)
+                        if(piece!=null && piece.getTeamCode()!=0)
                         {
-                            r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
-                            //b.Color = Color.FromArgb(90, 90, 255);
-                            g.FillRectangle(new SolidBrush(Color.FromArgb(100, 130, 130, 130)), r);
-                        }
-                        else if (this.game.turn == piece.getTeamCode() || boardState.getLastFought().Equals(new Point(x, y)))
-                        {
-                            Image imag = piece.getPieceImage();
-                            e.Graphics.DrawImage(imag, r);
-                            if (selectedGamePiece.Equals(piece))
+                            Brush b = new SolidBrush(piece.getPieceColor());
+                            pen.Color = Color.FromArgb(200, 200, 255);
+                            // pen.Color = Color.FromArgb(255, 200, 200);
+
+                            int cornerX = x * col_inc + paddingX;
+                            int cornerY = y * row_inc + paddingY;
+                            Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
+                     
+                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought()!=null && boardState.getLastFought().Equals(new Point(x, y)))
                             {
-                                pen.Color = Color.FromArgb(10, 255, 10);
+                                Image imag = piece.getPieceImage();
+                                e.Graphics.DrawImage(imag, r);
+                                if (piece == selectedGamePiece)
+                                {
+                                    pen.Color = Color.FromArgb(10, 255, 10);
+                                }
+                                g.DrawRectangle(pen, r);
                             }
-                            g.DrawRectangle(pen, r);
-                        }
-                        else
-                        {
-                            g.DrawRectangle(pen, r);
-                            g.FillRectangle(b, r);
+                            else
+                            {
+                                g.DrawRectangle(pen, r);
+                                g.FillRectangle(b, r);
+                            }
+                            if (pieceMoves[x, y] == 1)
+                            {
+                                r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
+                                //b.Color = Color.FromArgb(90, 90, 255);
+                                g.FillRectangle(new SolidBrush(Color.FromArgb(100, 130, 130, 130)), r);
+                            }
                         }
                     }
                 }

@@ -10,11 +10,10 @@ namespace Stratego
 
         public FlagPiece (int teamCode) : base(teamCode)
         {
-            this.imageDict.Add(0, Properties.Resources.BlueFlag);
-            this.imageDict.Add(1, Properties.Resources.RedFlag);
+            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueFlag : Properties.Resources.RedFlag;
+
             this.pieceRank = FLAG_RANK;
             this.pieceName = FLAG_NAME;
-            this.pieceImage = this.imageDict[teamCode];
             this.attackBehavior = new DiesToAllSaveFlag();
             this.defendBehavior = new SimplyDie();
             this.movable = false;

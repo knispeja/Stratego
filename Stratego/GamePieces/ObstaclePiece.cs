@@ -19,6 +19,7 @@ namespace Stratego
             this.pieceName = OBSTACLE_NAME;
             this.attackBehavior = new Impassible();
             this.defendBehavior = new Impassible();
+            this.movable = false;
         }
     }
 }

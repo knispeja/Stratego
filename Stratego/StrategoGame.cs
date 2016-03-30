@@ -14,21 +14,21 @@ namespace Stratego
         /// <summary>
         /// The default amount of pieces for each piece. (EX: 0 0s; 1 1; 1 2; 2 3s; 4 4s; etc..)
         /// </summary>
-        public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
+        public static readonly Dictionary<String, int> defaults = new Dictionary<String, int>();
+
+        // public readonly int[] defaults = new int[13] { 0, 1, 1, 2, 3, 4, 4, 4, 5, 8, 1, 6, 1 };
         //public readonly int[] defaults = new int[13] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
         //public readonly int[] defaults = new int[13] { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 
-
-        /// <summary>
-        /// Width of the enclosing panel in pixels
-        /// </summary>
-        public int panelWidth { get; set; }
+        public Dictionary<int, Type> checkboxFactorySim = new Dictionary<int, Type>();
 
         public Dictionary<int, Type> pieceTypes = new Dictionary<int, Type>();
 
         /// <summary>
-        /// Height of the enclosing panel in pixels
+        /// The piece currently being placed by the user
         /// </summary>
-        public int panelHeight { get; set; }
+        GamePiece piecePlacing = null;
+
+        private GamePiece selectedGamePiece;
 
         /// <summary>
         /// The 2DArray full of all pieces on the board
@@ -38,7 +38,7 @@ namespace Stratego
         /// <summary>
         /// The array which holds information on how many pieces of each type can still be placed
         /// </summary>
-        public int[] placements;
+        public Dictionary<String, int> placements;
 
         /// <summary>
         /// Whether or not the pre game has begun
@@ -46,20 +46,15 @@ namespace Stratego
         public bool preGameActive { get; set; }
 
         /// <summary>
+        /// Current level of the game. Equals -1 if not in campaign mode
+        /// </summary>
+        public int level { get; set; }
+
+        /// <summary>
         /// -1 for player2 and 1 for player 1. 0 when game isn't started. 
         /// 2 for transition from player1 to player2; -2 for transition from player2 to player1.
         /// </summary>
         public int turn { get; set; }
-
-        /// <summary>
-        /// Coordinates of the piece that is currently selected in the array
-        /// </summary>
-        public Point pieceSelectedCoords { get; set; }
-
-        /// <summary>
-        /// Just a boolean indicating if a piece is currently selected or not
-        /// </summary>
-        public Boolean pieceIsSelected { get; set; }
 
         /// <summary>
         /// Whether player 2 is an AI or not
@@ -91,14 +86,13 @@ namespace Stratego
         /// </summary>
         private Boolean skippableLevels { get; set; }
 
-        /// <summary>
-        /// Current level of the game. Equals -1 if not in campaign mode
-        /// </summary>
-        public int level { get; set; }
+        public static readonly int NO_TEAM_CODE = 0;
+        public static readonly int RED_TEAM_CODE = -1;
+        public static readonly int BLUE_TEAM_CODE = 1;
 
         public StrategoGame()
         {
-            this.turn = 0;
+            this.turn = NO_TEAM_CODE;
             this.preGameActive = false;
             this.skippableLevels = false;
             this.isSinglePlayer = false;
@@ -107,23 +101,50 @@ namespace Stratego
             this.movableFlags = false;
             this.level = -1;
 
+            this.selectedGamePiece = null;
+
             boardState = new GamePiece[10, 10];
+            for (int row = 0; row < 6; row++) fillRow(null, row);
 
             //    this.ai = new AI(this, -1);
 
         }
-        public StrategoGame(int windowWidth, int windowHeight, GamePiece[,] boardState)
+        public StrategoGame(GamePiece[,] boardState)
         {
             this.boardState = boardState;
-            this.panelWidth = windowWidth;
-            this.panelHeight = windowHeight;
-            this.placements = (int[])this.defaults.Clone();
+          //  this.placements = (int[])this.defaults.Clone();
             this.preGameActive = false;
             this.isSinglePlayer = false;
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
             //      this.ai = new AI(this, -1);
+            this.placements = StrategoWin.defaults;
+            this.placements.Add(FlagPiece.FLAG_NAME, 1);
+            this.placements.Add(BombPiece.BOMB_NAME, 6);
+            this.placements.Add(SpyPiece.SPY_NAME, 1);
+            this.placements.Add(ScoutPiece.SCOUT_NAME, 8);
+            this.placements.Add(MinerPiece.MINER_NAME, 5);
+            this.placements.Add(SergeantPiece.SERGEANT_NAME, 4);
+            this.placements.Add(LieutenantPiece.LIEUTENANT_NAME, 4);
+            this.placements.Add(CaptainPiece.CAPTAIN_NAME, 4);
+            this.placements.Add(MajorPiece.MAJOR_NAME, 3);
+            this.placements.Add(ColonelPiece.COLONEL_NAME, 2);
+            this.placements.Add(GeneralPiece.GENERAL_NAME, 1);
+            this.placements.Add(MarshallPiece.MARSHALL_NAME, 1);
+
+            this.checkboxFactorySim.Add(0, typeof(FlagPiece));
+            this.checkboxFactorySim.Add(1, typeof(BombPiece));
+            this.checkboxFactorySim.Add(2, typeof(SpyPiece));
+            this.checkboxFactorySim.Add(3, typeof(ScoutPiece));
+            this.checkboxFactorySim.Add(4, typeof(MinerPiece));
+            this.checkboxFactorySim.Add(5, typeof(SergeantPiece));
+            this.checkboxFactorySim.Add(6, typeof(LieutenantPiece));
+            this.checkboxFactorySim.Add(7, typeof(CaptainPiece));
+            this.checkboxFactorySim.Add(8, typeof(MajorPiece));
+            this.checkboxFactorySim.Add(9, typeof(ColonelPiece));
+            this.checkboxFactorySim.Add(10, typeof(GeneralPiece));
+            this.checkboxFactorySim.Add(11, typeof(MarshallPiece));
         }
 
         /// <summary>

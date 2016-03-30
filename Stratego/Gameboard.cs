@@ -109,19 +109,19 @@ namespace Stratego
             return this.width;
         }
 
-        private void setPiece(BoardPosition end, GamePiece attacker)
+        private void setPiece(BoardPosition pos, GamePiece piece)
         {
-            this.board[end.getX(), end.getY()] = attacker;
+            this.board[pos.getX(), pos.getY()] = piece;
         }
 
-        private GamePiece getPiece(BoardPosition start)
+        private GamePiece getPiece(BoardPosition pos)
         {
-            return this.board[start.getX(), start.getY()];
+            return this.board[pos.getX(), pos.getY()];
         }
 
-        internal void setPiece(int x, int y, GamePiece value)
+        internal void setPiece(int x, int y, GamePiece piece)
         {
-            this.board[x, y] = value;
+            this.board[x, y] = piece;
         }
 
         internal GamePiece getPiece(int x, int y)
@@ -132,12 +132,12 @@ namespace Stratego
         /// <summary>
         /// Fills the given row in the board state with the given value
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="piece"></param>
         /// <param name="row"></param>
-        public void fillRow(GamePiece value, int row)
+        public void fillRow(GamePiece piece, int row)
         {
             for (int x = 0; x < this.width; x++)
-                setPiece(x, row, value);
+                setPiece(x, row, piece);
         }
 
         internal object getLastFought()

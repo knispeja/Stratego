@@ -2,6 +2,7 @@
 
 namespace Stratego
 {
+    [Serializable]
     public class MarshallPiece : GamePiece
     {
         public static readonly String MARSHALL_NAME = "Marshall";

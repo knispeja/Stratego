@@ -4,6 +4,7 @@ using System.Drawing;
 
 namespace Stratego
 {
+    [Serializable]
     public abstract class GamePiece
     {
         protected Dictionary<int, Color> colorDict;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Stratego
 {
+    [Serializable]
     public class BoardPosition
     {
         public static readonly BoardPosition NULL_BOARD_POSITION = new BoardPosition(-1, -1);

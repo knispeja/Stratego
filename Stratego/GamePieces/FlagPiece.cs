@@ -2,6 +2,7 @@
 
 namespace Stratego
 {
+    [Serializable]
     public class FlagPiece : GamePiece
     {
         public static readonly String FLAG_NAME = "Flag";

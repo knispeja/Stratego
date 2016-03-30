@@ -33,8 +33,8 @@ namespace Stratego
             colorDict = new Dictionary<int, Color>();
             imageDict = new Dictionary<int, Image>();
 
-            colorDict.Add(1, Color.FromArgb(25, 25, 175));
-            colorDict.Add(2, Color.FromArgb(175, 25, 25));
+            colorDict.Add(StrategoWin.BLUE_TEAM_CODE, Color.FromArgb(25, 25, 175));
+            colorDict.Add(StrategoWin.RED_TEAM_CODE, Color.FromArgb(175, 25, 25));
 
             this.pieceRank = 42;
             this.pieceName = "null";

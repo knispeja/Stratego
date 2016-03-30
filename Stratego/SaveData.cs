@@ -11,12 +11,12 @@ namespace Stratego
     /// </summary>
     public struct SaveData
     {
-        public int[,] boardState { get; private set; }
+        public GamePiece[,] boardState { get; private set; }
         public int difficulty { get; private set; }
         public int turn { get; private set; }
         public bool isSinglePlayer { get; private set; }
 
-        public SaveData(int[,] boardState, int difficulty, int turn, bool isSinglePlayer) : this()
+        public SaveData(GamePiece[,] boardState, int difficulty, int turn, bool isSinglePlayer) : this()
         {
             this.boardState = boardState;
             this.difficulty = difficulty;

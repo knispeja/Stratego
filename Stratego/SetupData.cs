@@ -11,11 +11,11 @@ namespace Stratego
     /// </summary>
     public struct SetupData
     {
-        public int[,] boardState { get; private set; }
-        public int[] placements { get; private set; }
+        public GamePiece[,] boardState { get; private set; }
+        public Dictionary<String, int> placements { get; private set; }
         public int turn { get; private set; }
 
-        public SetupData(int[,] boardState, int[] placements, int turn) : this()
+        public SetupData(GamePiece[,] boardState, Dictionary<String, int> placements, int turn) : this()
         {
             this.boardState = boardState;
             this.placements = placements;

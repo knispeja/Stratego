@@ -93,11 +93,13 @@ namespace Stratego
 
         public GamePiece selectedGamePiece;
 
+        public GUICallback callback;
+
         public static readonly int NO_TEAM_CODE = 0;
         public static readonly int RED_TEAM_CODE = -1;
         public static readonly int BLUE_TEAM_CODE = 1;
 
-        public StrategoGame()
+        public StrategoGame(GUICallback callback)
         {
             this.turn = NO_TEAM_CODE;
             this.preGameActive = false;
@@ -107,6 +109,7 @@ namespace Stratego
             this.movableBombs = false;
             this.movableFlags = false;
             this.level = -1;
+            this.callback = callback;
 
             this.selectedGamePiece = null;
 
@@ -116,7 +119,7 @@ namespace Stratego
             //      this.ai = new AI_Old(this, -1);
 
         }
-        public StrategoGame(Gameboard boardState)
+        public StrategoGame(Gameboard boardState, GUICallback callback)
         {
             this.boardState = boardState;
           //  this.placements = (int[])this.defaults.Clone();
@@ -125,6 +128,7 @@ namespace Stratego
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
+            this.callback = callback;
             //      this.ai = new AI(this, -1);
             this.resetPlacements();
         }
@@ -188,11 +192,12 @@ namespace Stratego
         /// </summary>
         public void nextTurn()
         {
+            this.callback.invalidateBackpanel();
             // We just came here from the main menu
-            if (this.turn == 0)
+            if (this.turn == NO_TEAM_CODE)
             {
                 preGameActive = true;
-                this.turn = 1;
+                this.turn = BLUE_TEAM_CODE;
             }
             // It's blue player's turn
             else if (this.turn == BLUE_TEAM_CODE)
@@ -205,6 +210,15 @@ namespace Stratego
                 else
                 {
                     this.turn = 2;
+                    if (!this.checkMoves())
+                        this.callback.gameOver(StrategoGame.BLUE_TEAM_CODE);
+                    else
+                    {
+                        if (!this.isSinglePlayer)
+                            this.callback.adjustTurnButtonState("Player 2's Turn");
+                        else
+                            this.callback.adjustTurnButtonState("AI's Turn");
+                    }
                 }
             }
             // It's red player's turn
@@ -212,6 +226,7 @@ namespace Stratego
             {
                 if (this.preGameActive)
                 {
+                    this.callback.setSidePanelVisibility(false);
                     for (int i = 4; i < 6; i++)
                     {
                         for (int x = 0; x < 2; x++)
@@ -225,6 +240,10 @@ namespace Stratego
                 }
                 if (!this.isSinglePlayer || !this.boardState.getLastFought().Equals(BoardPosition.NULL_BOARD_POSITION)) this.turn = -2;
                 else this.turn = BLUE_TEAM_CODE;
+                if (!this.checkMoves())
+                    this.callback.gameOver(RED_TEAM_CODE);
+                else
+                    this.callback.adjustTurnButtonState("Player 1's Turn");
             }
             else if (this.turn == -2)
             {

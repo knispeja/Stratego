@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Stratego
 {
-    public partial class StrategoWin : Form
+    public partial class StrategoWin : Form , GUICallback
     {
 
         /// <summary>
@@ -21,12 +21,6 @@ namespace Stratego
         /// Stores how far through the Konami code the player has entered
         /// </summary>
         private int konamiIndex = 0;
-
-        /// <summary>
-        /// Whether or not the game is in testing mode
-        /// </summary>
-        bool testing = false; // TODO: We should really probably get rid of this :| it basically disables the GUI for the automated tests, but...
-                              // at the very least, it's being used way too often. It should really only be used as a GUI-disabler
 
         /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
@@ -76,7 +70,7 @@ namespace Stratego
             this.panelWidth = this.backPanel.Width;
             this.panelHeight = this.backPanel.Height;
 
-            this.game = new StrategoGame(new Gameboard(10, 10));
+            this.game = new StrategoGame(new Gameboard(10, 10), this);
             this.level = -1;
 
             this.backPanel.LostFocus += onBackPanelLostFocus;
@@ -106,7 +100,6 @@ namespace Stratego
         /// <param name="boardState">Modified initial board state for ease of testing</param>
         public StrategoWin(int windowWidth, int windowHeight, Gameboard boardState)
         {
-            this.testing = true;
             this.panelWidth = windowWidth;
             this.panelHeight = windowHeight;
             
@@ -131,7 +124,7 @@ namespace Stratego
             sound.Play();
             this.FireBox.Dispose();
             this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
-            nextTurn();
+            this.game.nextTurn();
             this.LoadButton.Visible = false;
             this.LoadButton.Enabled = false;
             this.ExitMainButton.Visible = false;
@@ -309,90 +302,7 @@ namespace Stratego
                 }
                 pen.Dispose();
             }
-        }
-
-        /// <summary>
-        /// Looks at the current turn, and changes it to whatever the next turn should be.
-        /// Handles global game variables like the stage of the game and so on.
-        /// Also sends a call to the AI to notify it that it's time to take its turn when necessary.
-        /// </summary>
-        public void nextTurn()
-        {
-
-            if (!testing)
-                this.backPanel.Invalidate();
-
-
-            // We just came here from the main menu
-            if (this.game.turn == StrategoGame.NO_TEAM_CODE)
-            {
-                this.game.preGameActive = true;
-                this.game.turn = StrategoGame.BLUE_TEAM_CODE;
-            }
-            // It's blue player's turn
-            else if (this.game.turn == StrategoGame.BLUE_TEAM_CODE)
-            {
-                if (this.game.preGameActive)
-                {
-          
-                }
-                else
-                {
-                    this.game.turn = 2;
-                    if (!this.game.checkMoves())
-                        this.gameOver(StrategoGame.BLUE_TEAM_CODE);
-                    else
-                    {
-                        if (!testing)
-                        {
-                            if (!this.game.isSinglePlayer)
-                                NextTurnButton.Text = "Player 2's Turn";
-                            else
-                                NextTurnButton.Text = "AI's Turn";
-                            NextTurnButton.Visible = true;
-                            this.NextTurnButton.Enabled = true;
-                        }
-                    }
-                }
-            }
-            // It's red player's turn
-            else if (this.game.turn == StrategoGame.RED_TEAM_CODE)
-            {
-                if (this.game.preGameActive)
-                {
-                    for (int i = 4; i < 6; i++)
-                    {
-                        for (int x = 0; x < 2; x++)
-                            this.game.boardState.setPiece(x, i, null);
-                        for (int x = 4; x < 6; x++)
-                            this.game.boardState.setPiece(x, i, null);
-                        for (int x = 8; x < 10; x++)
-                            this.game.boardState.setPiece(x, i, null);
-                    }
-                    this.game.preGameActive = false;
-                    if (!this.testing)
-                    {
-                        this.SidePanelOpenButton.Visible = false;
-                        this.SidePanel.Visible = false;
-                    }
-                }
-                if (!this.game.isSinglePlayer || !this.game.boardState.getLastFought().Equals(BoardPosition.NULL_BOARD_POSITION)) this.game.turn = -2;
-                else this.game.turn = StrategoGame.BLUE_TEAM_CODE;
-                if (!this.game.checkMoves())
-                    this.gameOver(StrategoGame.RED_TEAM_CODE);
-                else
-                {
-                    if (!testing && (!this.game.isSinglePlayer || !this.game.boardState.getLastFought().Equals(BoardPosition.NULL_BOARD_POSITION)))
-                    {
-                        NextTurnButton.Text = "Player 1's Turn";
-                        NextTurnButton.Visible = true;
-                        this.NextTurnButton.Enabled = true;
-
-                    }
-                }
-
-            }
-        }       
+        }    
 
         /// <summary>
         /// Loads a premade piece setup onto the current team's side of the board
@@ -405,20 +315,18 @@ namespace Stratego
 
             loadSetupData(fileName);
 
-            if (!this.testing)
-            {
-                this.backPanel.Invalidate();
+            this.backPanel.Invalidate();
 
-                foreach (String key in this.game.placements.Keys)
+            foreach (String key in this.game.placements.Keys)
+            {
+                if (this.game.placements[key] != 0)
                 {
-                    if (this.game.placements[key] != 0)
-                    {
-                        this.donePlacingButton.Enabled = false;
-                        return true;
-                    }
+                    this.donePlacingButton.Enabled = false;
+                    return true;
                 }
-                this.donePlacingButton.Enabled = true;
             }
+            this.donePlacingButton.Enabled = true;
+            
             return true;
         }
 
@@ -547,7 +455,7 @@ namespace Stratego
                 {
                     NextTurnButton.Visible = false;
                     this.NextTurnButton.Enabled = false;
-                    this.nextTurn();
+                    this.game.nextTurn();
                 }
             }
             else if (this.game.preGameActive)
@@ -629,11 +537,11 @@ namespace Stratego
         private void SidePanelOpenButton_MouseClick(object sender, MouseEventArgs e)
         {
             //Makes the side panel open when the button is clicked
-            if (this.SidePanel.Visible && !this.testing)
+            if (this.SidePanel.Visible)
             {
                 this.SidePanelOpenButton.Text = "Open Side";
             }
-            else if (!this.testing)
+            else 
             {
                 this.SidePanelOpenButton.Text = "Close Side";
             }
@@ -715,7 +623,7 @@ namespace Stratego
                         this.game.boardState.setPiece(x, i, null);
             //if (this.game.turn == -1)
             ((Button)sender).Enabled = false;
-            nextTurn();
+            this.game.nextTurn();
             //for (int x = 0; x < this.game.boardState.getWidth(); x++) this.game.boardState.getPiece(x, row] = value;
         }
 
@@ -754,7 +662,7 @@ namespace Stratego
                 this.game.preGameActive = true;
                 this.game.resetPlacements();
                 this.game.ai = new AI_Old(this, -1);
-                nextTurn();
+                this.game.nextTurn();
                 this.SidePanel.Visible = false;
                 this.SidePanelOpenButton.Visible = true;
                 this.SidePanelOpenButton.Text = "Open Side";
@@ -796,8 +704,7 @@ namespace Stratego
         {
             NextTurnButton.Visible = false;
             this.NextTurnButton.Enabled = false;
-            this.nextTurn();
-
+            this.game.nextTurn();
         }
 
         /// <summary>
@@ -860,54 +767,51 @@ namespace Stratego
         /// <param name="winnerTeam"></param>
         public void gameOver(int winnerTeam)
         {
-            if (!this.testing)
+            this.OptionsPanel.Visible = false;
+            if (this.level > -1)
             {
-                this.OptionsPanel.Visible = false;
-                if (this.level > -1)
+                if (winnerTeam == 1)
                 {
-                    if (winnerTeam == 1)
+                    if (this.level == this.levelImages.Length)
                     {
-                        if (this.level == this.levelImages.Length)
-                        {
-                            this.PlayAgainButton.Text = "Main Menu";
-                            this.victoryLabel.Text = "YOU BEAT THE CAMPAIGN!";
-                            this.level++;
-                        }
-                        else
-                            this.PlayAgainButton.Text = "Next Level";
+                        this.PlayAgainButton.Text = "Main Menu";
+                        this.victoryLabel.Text = "YOU BEAT THE CAMPAIGN!";
+                        this.level++;
                     }
                     else
-                    {
-                        this.level--;
-                        this.PlayAgainButton.Text = "Try Again";
-                    }
+                        this.PlayAgainButton.Text = "Next Level";
                 }
                 else
                 {
-                    this.PlayAgainButton.Text = "Play Again";
+                    this.level--;
+                    this.PlayAgainButton.Text = "Try Again";
                 }
-                if (this.level < this.levelImages.Length)
-                {
-                    if (winnerTeam == 1)
-                    {
-                        if (this.game.isSinglePlayer)
-                            this.victoryLabel.Text = "YOU ARE VICTORIOUS, PLAYER 1.";
-                        else
-                            this.victoryLabel.Text = "BLUE PLAYER WINS.";
-                    }
-                    else
-                    {
-                        if (this.game.isSinglePlayer)
-                            this.victoryLabel.Text = "WOW, YOU LOST TO THAT? ...SERIOUSLY?";
-                        else
-                            this.victoryLabel.Text = "RED PLAYER WINS.";
-                    }
-                }
-
-
-                this.EndGamePanel.Visible = true;
-                this.EndGamePanel.Enabled = true;
             }
+            else
+            {
+                this.PlayAgainButton.Text = "Play Again";
+            }
+            if (this.level < this.levelImages.Length)
+            {
+                if (winnerTeam == 1)
+                {
+                    if (this.game.isSinglePlayer)
+                        this.victoryLabel.Text = "YOU ARE VICTORIOUS, PLAYER 1.";
+                    else
+                        this.victoryLabel.Text = "BLUE PLAYER WINS.";
+                }
+                else
+                {
+                    if (this.game.isSinglePlayer)
+                        this.victoryLabel.Text = "WOW, YOU LOST TO THAT? ...SERIOUSLY?";
+                    else
+                        this.victoryLabel.Text = "RED PLAYER WINS.";
+                }
+            }
+
+
+            this.EndGamePanel.Visible = true;
+            this.EndGamePanel.Enabled = true;
         }
                
         /// <summary>
@@ -965,17 +869,14 @@ namespace Stratego
             loadSaveData(SaveLoadOperations.loadSaveData(path));
 
             this.game.preGameActive = false;
+            
+            this.backPanel.BackgroundImage = this.levelImages[level - 1];
+            if (this.game.turn == -2) this.NextTurnButton.Text = "Player 1's Turn";
+            else this.NextTurnButton.Text = "AI's Turn";
+            this.NextTurnButton.Visible = true;
+            this.NextTurnButton.Enabled = true;
+            this.backPanel.Invalidate();
 
-            if (!this.testing)
-            {
-                this.backPanel.BackgroundImage = this.levelImages[level - 1];
-                if (this.game.turn == -2) this.NextTurnButton.Text = "Player 1's Turn";
-                else this.NextTurnButton.Text = "AI's Turn";
-                this.NextTurnButton.Visible = true;
-                this.NextTurnButton.Enabled = true;
-                this.backPanel.Invalidate();
-
-            }
         }
 
         private void CampaignButton_Click(object sender, EventArgs e)
@@ -1138,6 +1039,24 @@ namespace Stratego
             }
 
             reader.Close();
+        }
+
+        public void adjustTurnButtonState(string buttonText)
+        {
+            NextTurnButton.Text = buttonText;
+            NextTurnButton.Visible = true;
+            this.NextTurnButton.Enabled = true;
+        }
+
+        public void invalidateBackpanel()
+        {
+            this.backPanel.Invalidate();
+        }
+
+        public void setSidePanelVisibility(bool visible)
+        {
+            this.SidePanelOpenButton.Visible = visible;
+            this.SidePanel.Visible = visible;
         }
     }
 }

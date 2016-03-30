@@ -26,18 +26,49 @@ namespace Stratego
         {
             return this.y;
         }
+
+        public bool isNull()
+        {
+            return this.Equals(BoardPosition.NULL_BOARD_POSITION);
+        }
+
+        public override bool Equals(Object other)
+        {
+            if (other == null)
+                return false;
+
+            if (other.GetType() != this.GetType())
+                return false;
+            
+            BoardPosition otherBP = (BoardPosition) other;
+            return this.x == otherBP.getX() && this.y == otherBP.getY();
+        }
     }
+
     public class Gameboard
     {
         private int width;
         private int height;
         private BoardPosition lastFought;
         private int winner = 0;
+        private GamePiece[,] board;
 
-        public Gameboard(int v1, int v2)
+        public Gameboard(int width, int height)
         {
-            this.width = v1;
-            this.height = v2;
+            resetBoard(width, height);
+        }
+
+        public void resetBoard()
+        {
+            // Board should be filled with null automatically (empty spaces)
+            this.board = new GamePiece[this.width, this.height];
+        }
+
+        public void resetBoard(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
+            resetBoard();
         }
 
         public bool move(Move move)
@@ -83,22 +114,10 @@ namespace Stratego
             return true;
         }
 
-        private void setPiece(BoardPosition end, GamePiece attacker)
-        {
-            throw new NotImplementedException();
-        }
-
-        private GamePiece getPiece(BoardPosition start)
-        {
-            throw new NotImplementedException();
-        }
-
         private void gameOver(int v)
         {
             this.winner = v;
         }
-
-
 
         private void battlePieces(GamePiece attacker, GamePiece defender)
         {
@@ -128,14 +147,24 @@ namespace Stratego
             return this.width;
         }
 
-        internal GamePiece getPiece(int x, int y)
+        private void setPiece(BoardPosition end, GamePiece attacker)
         {
-            throw new NotImplementedException();
+            this.board[end.getX(), end.getY()] = attacker;
         }
 
-        internal void setPiece(int x, int row, GamePiece value)
+        private GamePiece getPiece(BoardPosition start)
         {
-            throw new NotImplementedException();
+            return this.board[start.getX(), start.getY()];
+        }
+
+        internal void setPiece(int x, int y, GamePiece value)
+        {
+            this.board[x, y] = value;
+        }
+
+        internal GamePiece getPiece(int x, int y)
+        {
+            return this.board[x, y];
         }
 
         /// <summary>
@@ -145,7 +174,8 @@ namespace Stratego
         /// <param name="row"></param>
         public void fillRow(GamePiece value, int row)
         {
-            for (int x = 0; x < this.width; x++) setPiece(x, row, value);
+            for (int x = 0; x < this.width; x++)
+                setPiece(x, row, value);
         }
 
         internal object getLastFought()

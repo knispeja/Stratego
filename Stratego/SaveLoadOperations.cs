@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Stratego
 {
@@ -13,26 +15,23 @@ namespace Stratego
         private static string SAVE_FILE_EXTENSION = "strat";
         private static string SETUP_FILE_EXTENSION = "stgostup";
 
-        public static bool saveSetup(SetupData saveData)
+        public static bool saveSetup(SetupData setupData)
         {
-            FileDialog dialog = new SaveFileDialog();
-
-            if (displayFileDialog(dialog, SETUP_FILE_EXTENSION) == DialogResult.OK)
-            {
-                storeSetupData(dialog.FileName, saveData);
-                return true;
-            }
-
-            return false;
+            return saveSomething(setupData, SETUP_FILE_EXTENSION);
         }
 
         public static bool saveGame(SaveData saveData)
         {
+            return saveSomething(saveData, SAVE_FILE_EXTENSION);
+        }
+
+        private static bool saveSomething(Object data, string fileExtension)
+        {
             FileDialog dialog = new SaveFileDialog();
 
-            if (displayFileDialog(dialog, SAVE_FILE_EXTENSION) == DialogResult.OK)
+            if (displayFileDialog(dialog, fileExtension) == DialogResult.OK)
             {
-                storeSaveData(dialog.FileName, saveData);
+                storeData(dialog.FileName, data);
                 return true;
             }
 
@@ -50,7 +49,7 @@ namespace Stratego
                 if ((file = dialog.OpenFile()) != null)
                 {
                     file.Close();
-                    return dialog.FileName;
+                    return dialog.FileName; //TODO: some stuff is still not extracted into this file
                 }
             }
 
@@ -85,113 +84,21 @@ namespace Stratego
             return dialog.ShowDialog();
         }
 
-        private static void storeSaveData(string fileName, SaveData saveData)
+        private static void storeData(string fileName, Object data)
         {
-            string buffer = saveData.isSinglePlayer ? "1 " + saveData.difficulty : "0";
-
-            StreamWriter writer = new StreamWriter(fileName);
-            writer.WriteLine(saveData.turn + " " + buffer);
-            for (int i = 0; i < saveData.boardState.GetLength(1); i++)
-            {
-                buffer = "";
-                for (int j = 0; j < saveData.boardState.GetLength(0) - 1; j++)
-                    buffer += saveData.boardState[j, i] + " ";
-
-                buffer += saveData.boardState[saveData.boardState.GetLength(0) - 1, i];
-                writer.WriteLine(buffer);
-            }
-
-            writer.Close();
-            return;
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
+            formatter.Serialize(stream, data);
+            stream.Close();
         }
 
         public static SaveData loadSaveData(string fileName)
         {
-            StreamReader reader = new StreamReader(fileName);
-
-            string[] lines = new string[100]; // TODO: Make a Standard max size later
-            string line = reader.ReadLine();
-            lines[0] = line;
-            int i = 0;
-            while (line != null) 
-            {
-                lines[i] = line;
-                line = reader.ReadLine();
-                i++;
-            }
-
-            int difficulty = 5;
-            string[] numbers = lines[0].Split(' ');
-            int turn = -2*Convert.ToInt32(numbers[0]);
-            bool isSinglePlayer;
-            if (numbers[1] == "0")
-                isSinglePlayer = false;
-            else
-            {
-                isSinglePlayer = true;
-                difficulty = Convert.ToInt32(numbers[2]);
-            }
-
-            numbers = lines[1].Split(' ');
-            int[,] newBoard = new int[numbers.Length, i - 1];
-            for (int k = 1; k< i; k++ )
-            {
-                numbers = lines[k].Split(' ');
-                for(int j =0; j< numbers.Length; j++)
-                {
-                    newBoard[j, k-1] = Convert.ToInt32(numbers[j]);
-                }
-            }
-            
-            reader.Close();
-
-            return new SaveData(
-                newBoard,
-                difficulty,
-                turn,
-                isSinglePlayer
-                );
-        }
-
-        /// <summary>
-        /// Saves the set up of the current teams pieces into a file
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <returns></returns>
-        public static void storeSetupData(string fileName, SetupData data)
-        {
-            StreamWriter writer = new StreamWriter(fileName);
-
-            string buffer = "";
-
-            if (data.turn > 0)
-            {
-                for (int i = 6; i < 10; i++)
-                {
-                    for (int j = 0; j < 9; j++)
-                        buffer += data.boardState[j, i] + " ";
-
-                    buffer += data.boardState[9, i];
-                    writer.WriteLine(buffer);
-                    buffer = "";
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    for (int j = 0; j < 9; j++)
-                        buffer += Math.Abs(data.boardState[9 - j, 3 - i]) + " ";
-
-                    buffer += Math.Abs(data.boardState[0, 3 - i]);
-                    writer.WriteLine(buffer);
-                    buffer = "";
-                }
-            }
-
-            writer.Close();
-
-            return;
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            SaveData data = (SaveData)formatter.Deserialize(stream);
+            stream.Close();
+            return data;
         }
     }
 }

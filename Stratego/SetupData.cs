@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace Stratego
 {
-    /// <summary>
-    /// Simple data structure to hold any save data passed to and from setup save/load operations
-    /// </summary>
-    public struct SetupData
+    [Serializable]
+    public class SetupData
     {
         public Gameboard boardState { get; private set; }
-        public Dictionary<String, int> placements { get; private set; }
+        public Dictionary<String, int> placements { get; private set; } //TODO: this will make serialization fail
         public int turn { get; private set; }
 
-        public SetupData(Gameboard boardState, Dictionary<String, int> placements, int turn) : this()
+        public SetupData(Gameboard boardState, Dictionary<String, int> placements, int turn)
         {
             this.boardState = boardState;
             this.placements = placements;

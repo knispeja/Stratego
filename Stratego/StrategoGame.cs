@@ -87,6 +87,7 @@ namespace Stratego
         public static readonly int NO_TEAM_CODE = 0;
         public static readonly int RED_TEAM_CODE = -1;
         public static readonly int BLUE_TEAM_CODE = 1;
+        private string[] killFeed = new string[5];
 
         public StrategoGame(GUICallback callback)
         {
@@ -299,18 +300,27 @@ namespace Stratego
         public bool MovePiece(int x, int y)
         {
             GamePiece defender = this.boardState.getPiece(x, y);
-            if (this.selectedGamePiece == null)
+            GamePiece attacker = this.selectedGamePiece;
+            if (attacker == null)
             {
                 return false;
             }
-            else if (this.selectedGamePiece.getXVal() == x && this.selectedGamePiece.getYVal() == y)
+            else if (attacker.getXVal() == x && attacker.getYVal() == y)
             {
                 // Initialize "Selection Phase"
                 this.selectedGamePiece = null;
                 return false;
             }
-            Move move = new Stratego.Move(this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal(), x, y);
+            Move move = new Stratego.Move(attacker.getXVal(), attacker.getYVal(), x, y);
             bool res = this.boardState.move(move);
+            if (!defender.isAlive())
+            {
+                updateKillFeed(attacker, defender);
+            }
+            if (!attacker.isAlive())
+            {
+                updateKillFeed(defender, attacker);
+            }
 
             if (!boardState.isGameOver())
             {
@@ -319,6 +329,16 @@ namespace Stratego
             this.selectedGamePiece = null;
             return res;
         }
+
+        private void updateKillFeed(GamePiece killer, GamePiece killed)
+        {
+            for(int i = 1; i < 5; i++)
+            {
+                killFeed[i] = killFeed[i - 1];
+            }
+            killFeed[0] = killer.getPieceName() + "->" + killed.getPieceName();
+        }
+
         /// <summary>
         /// Finds all of the possible moves for a piece with the given X and Y coordinates using the games board state.
         /// </summary>
@@ -328,6 +348,11 @@ namespace Stratego
         public int[,] GetPieceMoves(int pieceX, int pieceY)
         {
             return GetPieceMoves(pieceX, pieceY, this.boardState);
+        }
+
+        internal string[] getKillFeed()
+        {
+            return this.killFeed;
         }
 
         /// <summary>

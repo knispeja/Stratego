@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Stratego
 {
-    public partial class StrategoWin : Form , GUICallback
+    public partial class StrategoWin : Form, GUICallback
     {
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Stratego
                 {
                     g.DrawLine(pen, 0, row_inc * j, panelWidth, row_inc * j);
                 }
-                
+
                 int[,] pieceMoves = new int[num_rows, num_cols];
 
                 GamePiece selectedGamePiece = this.game.selectedGamePiece;
@@ -267,7 +267,7 @@ namespace Stratego
                         int scaleX = this.panelWidth / boardState.getWidth();
                         int scaleY = this.panelHeight / boardState.getHeight();
                         GamePiece piece = boardState.getPiece(x, y);
-                        if(piece!=null && piece.getTeamCode()!=0)
+                        if (piece != null && piece.getTeamCode() != 0)
                         {
                             Brush b = new SolidBrush(piece.getPieceColor());
                             pen.Color = Color.FromArgb(200, 200, 255);
@@ -276,8 +276,8 @@ namespace Stratego
                             int cornerX = x * col_inc + paddingX;
                             int cornerY = y * row_inc + paddingY;
                             Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                     
-                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought()!=null && boardState.getLastFought().Equals(new Point(x, y)))
+
+                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
                             {
                                 Image imag = piece.getPieceImage();
                                 e.Graphics.DrawImage(imag, r);
@@ -301,9 +301,14 @@ namespace Stratego
                         }
                     }
                 }
+                String[] killFeed = this.game.getKillFeed();
+                for (int i = 0; i < 5; i++)
+                {
+                    g.DrawString(killFeed[i], new Font("Tahoma", 20), Brushes.Black, new RectangleF(0, 0 + 25*i, 550, 550));
+                }
                 pen.Dispose();
             }
-        }    
+        }
 
         /// <summary>
         /// Receives clicks on the back panel and directs them to the game as needed
@@ -477,7 +482,7 @@ namespace Stratego
             {
                 this.SidePanelOpenButton.Text = "Open Side";
             }
-            else 
+            else
             {
                 this.SidePanelOpenButton.Text = "Close Side";
             }
@@ -558,7 +563,7 @@ namespace Stratego
         {
             this.game.isSinglePlayer = true;
             StartButton_Click(sender, e);
-        }  
+        }
 
         /// <summary>
         /// Handles what happens when the user clicks the play again button after one game has finished.
@@ -752,7 +757,7 @@ namespace Stratego
             this.EndGamePanel.Visible = true;
             this.EndGamePanel.Enabled = true;
         }
-               
+
         /// <summary>
         /// What to do if the movable bomb check box in the options menu is changed
         /// </summary>
@@ -808,7 +813,7 @@ namespace Stratego
             loadSaveData(SaveLoadOperations.loadSaveData(path));
 
             this.game.preGameActive = false;
-            
+
             this.backPanel.BackgroundImage = this.levelImages[level - 1];
             if (this.game.turn == -2) this.NextTurnButton.Text = "Player 1's Turn";
             else this.NextTurnButton.Text = "AI's Turn";

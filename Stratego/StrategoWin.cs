@@ -21,6 +21,11 @@ namespace Stratego
         private int konamiIndex = 0;
 
         /// <summary>
+        /// The piece currently being placed by the user
+        /// </summary>
+        public GamePiece piecePlacing { get; set; }
+
+        /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>
         public int level { get; set; }
@@ -155,7 +160,7 @@ namespace Stratego
             {
                 foreach (var button in this.SidePanel.Controls.OfType<Button>())
                     button.UseVisualStyleBackColor = true;
-                this.game.piecePlacing = this.factory.getPiece(Convert.ToInt32(((Button)sender).Tag), this.game.turn);
+                this.piecePlacing = this.factory.getPiece(Convert.ToInt32(((Button)sender).Tag), this.game.turn);
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
         }
@@ -327,7 +332,7 @@ namespace Stratego
 
             if (this.game.preGameActive)
             {
-                bool? piecePlaced = this.game.placePiece(this.game.piecePlacing, boardX, boardY);
+                bool? piecePlaced = this.game.placePiece(this.piecePlacing, boardX, boardY);
 
                 // Only run if the placement succeeded
                 if (piecePlaced.Value)
@@ -461,7 +466,7 @@ namespace Stratego
                 double num;
                 if (double.TryParse(keyChar, out num))
                 {
-                    this.game.piecePlacing = this.factory.getPiece((int)num, this.game.turn);
+                    this.piecePlacing = this.factory.getPiece((int)num, this.game.turn);
                 }
                 else
                 {
@@ -525,11 +530,11 @@ namespace Stratego
             {
                 //this.activeSidePanelButton = this.piecePlacing;
                 this.activeSidePanelButton = 0;
-                this.game.piecePlacing = this.factory.getPiece(0, this.game.turn);
+                this.piecePlacing = this.factory.getPiece(0, this.game.turn);
             }
             else
             {
-                this.game.piecePlacing = this.factory.getPiece(this.activeSidePanelButton, this.game.turn);
+                this.piecePlacing = this.factory.getPiece(this.activeSidePanelButton, this.game.turn);
             }
         }
 

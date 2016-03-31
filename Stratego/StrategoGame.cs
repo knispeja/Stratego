@@ -25,11 +25,6 @@ namespace Stratego
         public int level { get; set; }
 
         /// <summary>
-        /// The piece currently being placed by the user
-        /// </summary>
-        public GamePiece piecePlacing { get; set;}
-
-        /// <summary>
         /// The 2DArray full of all pieces on the board
         /// </summary>
         public Gameboard boardState { get; set; }
@@ -91,7 +86,6 @@ namespace Stratego
 
         public StrategoGame(GUICallback callback)
         {
-            this.piecePlacing = null;
             this.turn = NO_TEAM_CODE;
             this.preGameActive = false;
             this.skippableLevels = false;
@@ -112,7 +106,6 @@ namespace Stratego
         }
         public StrategoGame(Gameboard boardState, GUICallback callback)
         {
-            this.piecePlacing = null;
             this.boardState = boardState;
             this.turn = NO_TEAM_CODE;
             this.preGameActive = false;

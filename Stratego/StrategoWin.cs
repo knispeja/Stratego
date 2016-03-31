@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Media;
 using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace Stratego
 {
@@ -306,10 +307,20 @@ namespace Stratego
                         }
                     }
                 }
+                GraphicsPath p = new GraphicsPath();
                 String[] killFeed = this.game.getKillFeed();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < StrategoGame.KILL_FEED_SIZE; i++)
                 {
-                    g.DrawString(killFeed[i], new Font("Tahoma", 20), Brushes.Black, new RectangleF(0, 0 + 25*i, 550, 550));
+                    p.AddString(
+                        killFeed[i],             // text to draw
+                        FontFamily.GenericSansSerif,  // or any other font family
+                        (int)FontStyle.Bold,      // font style (bold, italic, etc.)
+                        g.DpiY * 20 / 72,       // em size
+                        new Point(0, 25 * (i + 1)),              // location where to draw text
+                        new StringFormat());          // set options here (e.g. center alignment)
+                    g.DrawPath(Pens.Black, p);
+                    g.FillPath(Brushes.White, p);
+                    p.Reset();
                 }
                 pen.Dispose();
             }

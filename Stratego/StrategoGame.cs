@@ -82,7 +82,8 @@ namespace Stratego
         public static readonly int NO_TEAM_CODE = 0;
         public static readonly int RED_TEAM_CODE = -1;
         public static readonly int BLUE_TEAM_CODE = 1;
-        private string[] killFeed = new string[5];
+        public static readonly int KILL_FEED_SIZE = 5;
+        private string[] killFeed = new string[KILL_FEED_SIZE];
 
         public StrategoGame(GUICallback callback)
         {
@@ -95,6 +96,11 @@ namespace Stratego
             this.movableFlags = false;
             this.level = -1;
             this.callback = callback;
+
+            for(int i = 0; i < KILL_FEED_SIZE; i++)
+            {
+                killFeed[i] = "debug killfeed entry " + i;
+            }
 
             this.selectedGamePiece = null;
 

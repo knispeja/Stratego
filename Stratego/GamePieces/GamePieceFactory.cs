@@ -39,12 +39,15 @@ namespace Stratego.GamePieces
            
             this.stringDict.Add(SpyPiece.SPY_NAME, typeof(SpyPiece));
             this.stringDict.Add("S", typeof(SpyPiece));
+            this.stringDict.Add("s", typeof(SpyPiece));
 
             this.stringDict.Add(BombPiece.BOMB_NAME, typeof(BombPiece));
             this.stringDict.Add("B", typeof(BombPiece));
+            this.stringDict.Add("b", typeof(SpyPiece));
 
             this.stringDict.Add(FlagPiece.FLAG_NAME, typeof(FlagPiece));
             this.stringDict.Add("F", typeof(FlagPiece));
+            this.stringDict.Add("f", typeof(SpyPiece));
 
             this.stringDict.Add(ObstaclePiece.OBSTACLE_NAME, typeof(ObstaclePiece));
             this.intDict.Add(42, typeof(ObstaclePiece));
@@ -78,7 +81,20 @@ namespace Stratego.GamePieces
 
             var ctors = type.GetConstructors();
 
-            return (GamePiece)ctors[0].Invoke(new object[] { teamCode });   
+            return (GamePiece) ctors[0].Invoke(new object[] { teamCode });   
+        }
+
+        public Boolean canConstructFrom(Object obj)
+        {
+            if (obj.GetType().Equals(typeof(int)) && this.intDict.ContainsKey((int)obj))
+            {
+                return true;
+            }
+            else if (obj.GetType().Equals(typeof(String)) && this.stringDict.ContainsKey((String)obj))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

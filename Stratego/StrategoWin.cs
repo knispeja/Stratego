@@ -4,12 +4,10 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Media;
 using System.IO;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace Stratego
 {
-    public partial class StrategoWin : Form , GUICallback
+    public partial class StrategoWin : Form, GUICallback
     {
 
         /// <summary>
@@ -21,6 +19,11 @@ namespace Stratego
         /// Stores how far through the Konami code the player has entered
         /// </summary>
         private int konamiIndex = 0;
+
+        /// <summary>
+        /// The piece currently being placed by the user
+        /// </summary>
+        public GamePiece piecePlacing { get; set; }
 
         /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
@@ -52,6 +55,8 @@ namespace Stratego
         /// </summary>
         public int panelHeight { get; set; }
 
+        private GamePieces.GamePieceFactory factory;
+
         private StrategoGame game;
 
         /// <summary>
@@ -70,11 +75,12 @@ namespace Stratego
             this.panelWidth = this.backPanel.Width;
             this.panelHeight = this.backPanel.Height;
 
-            this.game = new StrategoGame(new Gameboard(10, 10), this);
+            this.game = new StrategoGame(this);
             this.level = -1;
 
             this.backPanel.LostFocus += onBackPanelLostFocus;
             this.backPanel.Focus();
+            this.factory = new GamePieces.GamePieceFactory();
         }
 
         /*
@@ -102,7 +108,7 @@ namespace Stratego
         {
             this.panelWidth = windowWidth;
             this.panelHeight = windowHeight;
-            
+            this.factory = new GamePieces.GamePieceFactory();
             // Image imag = Properties.Resources.cursor.Tag;
             //System.Windows.Forms.Cursor.Current = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("sword"));
             //System.Windows.Forms.Cursor.Current = new Cursor(GetType(), "sword.cur");
@@ -154,7 +160,7 @@ namespace Stratego
             {
                 foreach (var button in this.SidePanel.Controls.OfType<Button>())
                     button.UseVisualStyleBackColor = true;
-                this.game.piecePlacing = this.constructPieceToPlace(Convert.ToInt32(((Button)sender).Tag));
+                this.piecePlacing = this.factory.getPiece(Convert.ToInt32(((Button)sender).Tag), this.game.turn);
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
         }
@@ -246,7 +252,7 @@ namespace Stratego
                 {
                     g.DrawLine(pen, 0, row_inc * j, panelWidth, row_inc * j);
                 }
-                
+
                 int[,] pieceMoves = new int[num_rows, num_cols];
 
                 GamePiece selectedGamePiece = this.game.selectedGamePiece;
@@ -266,7 +272,7 @@ namespace Stratego
                         int scaleX = this.panelWidth / boardState.getWidth();
                         int scaleY = this.panelHeight / boardState.getHeight();
                         GamePiece piece = boardState.getPiece(x, y);
-                        if(piece!=null && piece.getTeamCode()!=0)
+                        if (piece != null && piece.getTeamCode() != 0)
                         {
                             Brush b = new SolidBrush(piece.getPieceColor());
                             pen.Color = Color.FromArgb(200, 200, 255);
@@ -275,12 +281,12 @@ namespace Stratego
                             int cornerX = x * col_inc + paddingX;
                             int cornerY = y * row_inc + paddingY;
                             Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
-                     
-                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought().Equals(new Point(x, y)))
+
+                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
                             {
                                 Image imag = piece.getPieceImage();
                                 e.Graphics.DrawImage(imag, r);
-                                if (selectedGamePiece.Equals(piece))
+                                if (piece == selectedGamePiece)
                                 {
                                     pen.Color = Color.FromArgb(10, 255, 10);
                                 }
@@ -300,9 +306,14 @@ namespace Stratego
                         }
                     }
                 }
+                String[] killFeed = this.game.getKillFeed();
+                for (int i = 0; i < 5; i++)
+                {
+                    g.DrawString(killFeed[i], new Font("Tahoma", 20), Brushes.Black, new RectangleF(0, 0 + 25*i, 550, 550));
+                }
                 pen.Dispose();
             }
-        }    
+        }
 
         /// <summary>
         /// Receives clicks on the back panel and directs them to the game as needed
@@ -321,7 +332,7 @@ namespace Stratego
 
             if (this.game.preGameActive)
             {
-                bool? piecePlaced = this.game.placePiece(this.game.piecePlacing, boardX, boardY);
+                bool? piecePlaced = this.game.placePiece(this.piecePlacing, boardX, boardY);
 
                 // Only run if the placement succeeded
                 if (piecePlaced.Value)
@@ -455,22 +466,11 @@ namespace Stratego
                 double num;
                 if (double.TryParse(keyChar, out num))
                 {
-                    this.game.piecePlacing = this.constructPieceToPlace((int)num);
+                    this.piecePlacing = this.factory.getPiece((int)num, this.game.turn);
                 }
                 else
                 {
-                    if (keyChar == "S")
-                    {
-                        this.game.piecePlacing = this.constructPieceToPlace(2);
-                    }
-                    else if (keyChar == "B")
-                    {
-                        this.game.piecePlacing = this.constructPieceToPlace(1);
-                    }
-                    else if (keyChar == "F")
-                    {
-                        this.game.piecePlacing = this.constructPieceToPlace(3);
-                    }
+                    this.factory.getPiece(keyChar, this.game.turn);
                 }
             }
         }
@@ -487,7 +487,7 @@ namespace Stratego
             {
                 this.SidePanelOpenButton.Text = "Open Side";
             }
-            else 
+            else
             {
                 this.SidePanelOpenButton.Text = "Close Side";
             }
@@ -530,11 +530,11 @@ namespace Stratego
             {
                 //this.activeSidePanelButton = this.piecePlacing;
                 this.activeSidePanelButton = 0;
-                this.game.piecePlacing = this.constructPieceToPlace(0);
+                this.piecePlacing = this.factory.getPiece(0, this.game.turn);
             }
             else
             {
-                this.game.piecePlacing = this.constructPieceToPlace(this.activeSidePanelButton);
+                this.piecePlacing = this.factory.getPiece(this.activeSidePanelButton, this.game.turn);
             }
         }
 
@@ -568,7 +568,7 @@ namespace Stratego
         {
             this.game.isSinglePlayer = true;
             StartButton_Click(sender, e);
-        }  
+        }
 
         /// <summary>
         /// Handles what happens when the user clicks the play again button after one game has finished.
@@ -762,7 +762,7 @@ namespace Stratego
             this.EndGamePanel.Visible = true;
             this.EndGamePanel.Enabled = true;
         }
-               
+
         /// <summary>
         /// What to do if the movable bomb check box in the options menu is changed
         /// </summary>
@@ -818,7 +818,7 @@ namespace Stratego
             loadSaveData(SaveLoadOperations.loadSaveData(path));
 
             this.game.preGameActive = false;
-            
+
             this.backPanel.BackgroundImage = this.levelImages[level - 1];
             if (this.game.turn == -2) this.NextTurnButton.Text = "Player 1's Turn";
             else this.NextTurnButton.Text = "AI's Turn";
@@ -967,26 +967,6 @@ namespace Stratego
         {
             this.SidePanelOpenButton.Visible = visible;
             this.SidePanel.Visible = visible;
-        }
-
-        public GamePiece constructPieceToPlace(int index)
-        {
-            if (index == 0)
-            {
-                return null;
-            }
-            Type type = this.game.checkboxFactorySim[(int)index];
-
-            // get public constructors
-            var ctors = type.GetConstructors();
-
-            // invoke the first public constructor with no parameters.
-            return (GamePiece)ctors[0].Invoke(new object[] { this.game.turn });
-        }
-
-        private void TitlePictureBox_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

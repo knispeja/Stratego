@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Stratego
 {
-    class StrategoGame
+    public class StrategoGame
     {
 
         /// <summary>
@@ -21,25 +17,12 @@ namespace Stratego
             { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
         };
 
-        public Dictionary<int, Type> checkboxFactorySim = new Dictionary<int, Type>() {
-             {1, typeof(BombPiece) }, { 2, typeof(SpyPiece) },
-            { 3, typeof(ScoutPiece) }, { 4, typeof(MinerPiece) }, { 5, typeof(SergeantPiece) },
-            { 6, typeof(LieutenantPiece) }, { 7, typeof(CaptainPiece) }, { 8, typeof(MajorPiece) },
-            { 9, typeof(ColonelPiece) }, { 10, typeof(GeneralPiece) }, { 11, typeof(MarshallPiece) },
-            { 12, typeof(FlagPiece) }
-        };
-
         public Dictionary<int, Type> pieceTypes = new Dictionary<int, Type>();
 
         /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>
         public int level { get; set; }
-
-        /// <summary>
-        /// The piece currently being placed by the user
-        /// </summary>
-        public GamePiece piecePlacing { get; set;}
 
         /// <summary>
         /// The 2DArray full of all pieces on the board
@@ -99,10 +82,10 @@ namespace Stratego
         public static readonly int NO_TEAM_CODE = 0;
         public static readonly int RED_TEAM_CODE = -1;
         public static readonly int BLUE_TEAM_CODE = 1;
+        private string[] killFeed = new string[5];
 
         public StrategoGame(GUICallback callback)
         {
-            this.piecePlacing = null;
             this.turn = NO_TEAM_CODE;
             this.preGameActive = false;
             this.skippableLevels = false;
@@ -116,14 +99,13 @@ namespace Stratego
             this.selectedGamePiece = null;
 
             boardState = new Gameboard(10, 10);
-            for (int row = 0; row < 6; row++) this.boardState.fillRow(null, row);
+            for (int row = 0; row < 6; row++) this.boardState.fillRow(new ObstaclePiece(0), row);
 
             //      this.ai = new AI_Old(this, -1);
 
         }
         public StrategoGame(Gameboard boardState, GUICallback callback)
         {
-            this.piecePlacing = null;
             this.boardState = boardState;
             this.turn = NO_TEAM_CODE;
             this.preGameActive = false;
@@ -135,6 +117,8 @@ namespace Stratego
             //      this.ai = new AI(this, -1);
             this.resetPlacements();
         }
+        
+
         public void resetPlacements()
         {
             this.placements = new Dictionary<string, int>();
@@ -164,18 +148,18 @@ namespace Stratego
         public bool? placePiece(GamePiece piece, int x, int y)
         {
             if (turn == 0 || Math.Abs(turn) == 2) return false;
-   //         if (piece == null || x < 0 || y < 0 || x > this.panelWidth || y > this.panelHeight) throw new ArgumentException();
             if (piece != null && piece.getTeamCode() != turn) return false;
             Boolean retVal = true;
 
             GamePiece pieceAtPos = this.boardState.getPiece(x, y);
 
-            if (piece == null && pieceAtPos!=null && pieceAtPos.getTeamCode() != NO_TEAM_CODE)
+            if (piece == null)
             {
                 // We are trying to remove
-                if (piece.getTeamCode() != this.turn) return false;
-                if (pieceAtPos == null) retVal = false;
-                this.placements[piece.getPieceName()]++;
+ 
+                if (pieceAtPos == null || pieceAtPos.getTeamCode() == NO_TEAM_CODE) return false;
+                if (pieceAtPos.getTeamCode() != this.turn) return false;
+                this.placements[pieceAtPos.getPieceName()]++;
             }
             else if (pieceAtPos == null && piece!=null && this.placements[piece.getPieceName()] > 0)
             {
@@ -309,18 +293,27 @@ namespace Stratego
         public bool MovePiece(int x, int y)
         {
             GamePiece defender = this.boardState.getPiece(x, y);
-            if (this.selectedGamePiece == null)
+            GamePiece attacker = this.selectedGamePiece;
+            if (attacker == null)
             {
                 return false;
             }
-            else if (this.selectedGamePiece.getXVal() == x && this.selectedGamePiece.getYVal() == y)
+            else if (attacker.getXVal() == x && attacker.getYVal() == y)
             {
                 // Initialize "Selection Phase"
                 this.selectedGamePiece = null;
                 return false;
             }
-            Move move = new Stratego.Move(this.selectedGamePiece.getXVal(), this.selectedGamePiece.getYVal(), x, y);
+            Move move = new Stratego.Move(attacker.getXVal(), attacker.getYVal(), x, y);
             bool res = this.boardState.move(move);
+            if (!defender.isAlive())
+            {
+                updateKillFeed(attacker, defender);
+            }
+            if (!attacker.isAlive())
+            {
+                updateKillFeed(defender, attacker);
+            }
 
             if (!boardState.isGameOver())
             {
@@ -329,6 +322,16 @@ namespace Stratego
             this.selectedGamePiece = null;
             return res;
         }
+
+        private void updateKillFeed(GamePiece killer, GamePiece killed)
+        {
+            for(int i = 1; i < 5; i++)
+            {
+                killFeed[i] = killFeed[i - 1];
+            }
+            killFeed[0] = killer.getPieceName() + "->" + killed.getPieceName();
+        }
+
         /// <summary>
         /// Finds all of the possible moves for a piece with the given X and Y coordinates using the games board state.
         /// </summary>
@@ -338,6 +341,11 @@ namespace Stratego
         public int[,] GetPieceMoves(int pieceX, int pieceY)
         {
             return GetPieceMoves(pieceX, pieceY, this.boardState);
+        }
+
+        internal string[] getKillFeed()
+        {
+            return this.killFeed;
         }
 
         /// <summary>
@@ -421,7 +429,7 @@ namespace Stratego
                 for (int y1 = 0; y1 < this.boardState.getHeight(); y1++)
                 {
                     GamePiece piece = this.boardState.getPiece(x1, y1);
-                    if (piece.getTeamCode() == this.turn)
+                    if (piece!=null && piece.getTeamCode() == this.turn)
                     {
                         int[,] validPlaces = GetPieceMoves(x1, y1, this.boardState);
                         for (int x2 = 0; x2 < this.boardState.getWidth(); x2++)

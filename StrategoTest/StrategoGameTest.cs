@@ -43,12 +43,12 @@ namespace StrategoTest
         [TestCase(-12, 301, 301, ExpectedResult = false)]
         [TestCase(-12, 401, 401, ExpectedResult = false)]
         // This tests that pieces will not be placed on an obstacle space on a 1000 x 1000 pixel board.
-        public bool? TestThatNothingCanBePlacedOnObstacle(int piece, int x, int y)
+        public bool? TestThatNothingCanBePlacedOnObstacle(GamePiece piece, int x, int y)
         {
             int[,] map = new int[10, 10];
             map[x/100, y/100] = 42;
 
-            StrategoWin game = new StrategoWin(1000, 1000, map);
+            StrategoGame game= new StrategoGame();
             game.nextTurn();
             return game.placePiece(piece, x, y);
         }

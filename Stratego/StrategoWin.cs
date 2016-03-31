@@ -70,7 +70,7 @@ namespace Stratego
             this.panelWidth = this.backPanel.Width;
             this.panelHeight = this.backPanel.Height;
 
-            this.game = new StrategoGame(new Gameboard(10, 10), this);
+            this.game = new StrategoGame(this);
             this.level = -1;
 
             this.backPanel.LostFocus += onBackPanelLostFocus;

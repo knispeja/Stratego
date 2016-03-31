@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace Stratego
 {
-    class StrategoGame
+    public class StrategoGame
     {
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Stratego
             this.selectedGamePiece = null;
 
             boardState = new Gameboard(10, 10);
-            for (int row = 0; row < 6; row++) this.boardState.fillRow(null, row);
+            for (int row = 0; row < 6; row++) this.boardState.fillRow(new ObstaclePiece(0), row);
 
             //      this.ai = new AI_Old(this, -1);
 
@@ -123,6 +123,8 @@ namespace Stratego
             //      this.ai = new AI(this, -1);
             this.resetPlacements();
         }
+        
+
         public void resetPlacements()
         {
             this.placements = new Dictionary<string, int>();
@@ -152,18 +154,18 @@ namespace Stratego
         public bool? placePiece(GamePiece piece, int x, int y)
         {
             if (turn == 0 || Math.Abs(turn) == 2) return false;
-   //         if (piece == null || x < 0 || y < 0 || x > this.panelWidth || y > this.panelHeight) throw new ArgumentException();
             if (piece != null && piece.getTeamCode() != turn) return false;
             Boolean retVal = true;
 
             GamePiece pieceAtPos = this.boardState.getPiece(x, y);
 
-            if (piece == null && pieceAtPos!=null && pieceAtPos.getTeamCode() != NO_TEAM_CODE)
+            if (piece == null)
             {
                 // We are trying to remove
-                if (piece.getTeamCode() != this.turn) return false;
-                if (pieceAtPos == null) retVal = false;
-                this.placements[piece.getPieceName()]++;
+ 
+                if (pieceAtPos == null || pieceAtPos.getTeamCode() == NO_TEAM_CODE) return false;
+                if (pieceAtPos.getTeamCode() != this.turn) return false;
+                this.placements[pieceAtPos.getPieceName()]++;
             }
             else if (pieceAtPos == null && piece!=null && this.placements[piece.getPieceName()] > 0)
             {
@@ -409,7 +411,7 @@ namespace Stratego
                 for (int y1 = 0; y1 < this.boardState.getHeight(); y1++)
                 {
                     GamePiece piece = this.boardState.getPiece(x1, y1);
-                    if (piece.getTeamCode() == this.turn)
+                    if (piece!=null && piece.getTeamCode() == this.turn)
                     {
                         int[,] validPlaces = GetPieceMoves(x1, y1, this.boardState);
                         for (int x2 = 0; x2 < this.boardState.getWidth(); x2++)

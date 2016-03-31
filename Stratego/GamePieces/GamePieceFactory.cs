@@ -74,6 +74,7 @@ namespace Stratego.GamePieces
         public GamePiece getPiece(int identifier, int teamCode)
         {
             Type type = this.intDict[identifier];
+            if (type == null) return null;
 
             var ctors = type.GetConstructors();
 

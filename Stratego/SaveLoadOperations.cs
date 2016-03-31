@@ -12,8 +12,8 @@ namespace Stratego
 {
     public class SaveLoadOperations
     {
-        private static string SAVE_FILE_EXTENSION = "strat";
-        private static string SETUP_FILE_EXTENSION = "stgostup";
+        public static readonly string SAVE_FILE_EXTENSION = "strat";
+        public static readonly string SETUP_FILE_EXTENSION = "stgostup";
 
         public static bool saveSetup(SetupData setupData)
         {
@@ -84,7 +84,7 @@ namespace Stratego
             return dialog.ShowDialog();
         }
 
-        private static void storeData(string fileName, Object data)
+        public static void storeData(string fileName, Object data)
         {
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);

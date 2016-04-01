@@ -174,7 +174,12 @@ namespace Stratego
             }
             else retVal = false;
 
-            if (retVal) this.boardState.setPiece(x, y, piece);
+            if (retVal)
+            {
+                this.boardState.setPiece(x, y, piece);
+                piece.setXVal(x);
+                piece.setYVal(y);
+            }
             return retVal;
         }
 
@@ -451,7 +456,7 @@ namespace Stratego
                 for (int y1 = 0; y1 < this.boardState.getHeight(); y1++)
                 {
                     GamePiece piece = this.boardState.getPiece(x1, y1);
-                    if (piece!=null && piece.getTeamCode() == this.turn)
+                    if (piece!=null && Math.Sign(piece.getTeamCode()) == Math.Sign(this.turn))
                     {
                         int[,] validPlaces = GetPieceMoves(x1, y1, this.boardState);
                         for (int x2 = 0; x2 < this.boardState.getWidth(); x2++)

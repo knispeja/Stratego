@@ -373,7 +373,7 @@ namespace Stratego
 
                 Rectangle r = new Rectangle(this.game.selectedGamePiece.getXVal() * scaleX, this.game.selectedGamePiece.getYVal() * scaleY, scaleX, scaleY);
                 this.backPanel.Invalidate(r);
-                this.game.MovePiece(e.X, e.Y);
+                this.game.MovePiece(boardX, boardY);
                 if (this.EndGamePanel.Enabled == true)
                     return;
                 //This makes it so it only repaints the rectangle where the piece is placed
@@ -384,7 +384,7 @@ namespace Stratego
             }
             else
             {
-                this.game.SelectPiece(e.X, e.Y);
+                this.game.SelectPiece(boardX, boardY);
                 // Rectangle r;
                 //This makes it so it only repaints the rectangle where the piece is placed
                 int[,] pieceMoves = this.game.GetPieceMoves(this.game.selectedGamePiece.getXVal(), this.game.selectedGamePiece.getYVal());

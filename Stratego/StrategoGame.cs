@@ -382,10 +382,12 @@ namespace Stratego
             int startingX = x;
             int startingY = y;
             int spacesPossible = pieceInQuestion.getLimitToMovement();
+            if (spacesPossible == int.MaxValue)
+                spacesPossible = Math.Max(this.boardState.getHeight(), this.boardState.getWidth());
             GamePiece potenPiece = null;
-            for (int k = startingX+1; k <= startingX + spacesPossible; k++)
+            for (int k = startingX+1; k < boardState.getWidth(); k++)
             {
-                if (k >= boardState.getWidth())
+                if ( k > startingX + spacesPossible)
                 {
                     break;
                 }
@@ -404,9 +406,9 @@ namespace Stratego
                     break;
                 }
             }
-            for (int i = startingX-1; i >= startingX - spacesPossible; i--)
+            for (int i = startingX-1; i>=0; i--)
             {
-                if (i < 0)
+                if (i < startingX - spacesPossible)
                 {
                     break;
                 }
@@ -425,9 +427,9 @@ namespace Stratego
                     break;
                 }
             }
-            for (int j = startingY+1; j <= startingY + spacesPossible; j++)
+            for (int j = startingY+1; j< boardState.getHeight(); j++)
             {
-                if (j >= boardState.getHeight())
+                if (j > startingY + spacesPossible)
                 {
                     break;
                 }
@@ -446,9 +448,9 @@ namespace Stratego
                     break;
                 }
             }
-            for (int d = startingY-1; d >= startingY - spacesPossible; d--)
+            for (int d = startingY-1; d >= 0; d--)
             {
-                if (d < 0)
+                if (d < startingY - spacesPossible)
                 {
                     break;
                 }

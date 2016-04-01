@@ -139,6 +139,7 @@ namespace Stratego
             }
             else
             {
+                this.setPiece(attackerPos, null);
                 this.setPiece(defenderPos, attacker);
             }
         }

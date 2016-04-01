@@ -31,7 +31,7 @@ namespace Stratego.GamePieces
             this.stringDict.Add(SergeantPiece.SERGEANT_NAME, typeof(SergeantPiece));
             this.intDict.Add(7, typeof(SergeantPiece));
 
-            this.stringDict.Add(MinerPiece.MINER_NAME, typeof(MarshallPiece));
+            this.stringDict.Add(MinerPiece.MINER_NAME, typeof(MinerPiece));
             this.intDict.Add(8, typeof(MinerPiece));
 
             this.stringDict.Add(ScoutPiece.SCOUT_NAME, typeof(ScoutPiece));

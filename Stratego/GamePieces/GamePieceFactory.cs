@@ -63,7 +63,7 @@ namespace Stratego.GamePieces
 
         public GamePiece getPiece(String identifier, int teamCode)
         {
-            if (identifier.Equals(GamePiece.NULL_PIECE_NAME) || this.stringDict.ContainsKey(identifier))
+            if (identifier.Equals(GamePiece.NULL_PIECE_NAME) || !this.stringDict.ContainsKey(identifier))
             {
                 return null;
             }

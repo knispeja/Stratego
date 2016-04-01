@@ -308,7 +308,7 @@ namespace Stratego
             else if (this.selectedPosition.getX() == x && this.selectedPosition.getY() == y)
             {
                 // Initialize "Selection Phase"
-                this.selectedPosition = new BoardPosition(-1, -1);
+                this.selectedPosition = BoardPosition.NULL_BOARD_POSITION;
                 return false;
             }
             Move move = new Stratego.Move(this.selectedPosition.getX(), this.selectedPosition.getY(), x, y);
@@ -321,12 +321,11 @@ namespace Stratego
             {
                 updateKillFeed(defender, attacker);
             }
-
-            if (!boardState.isGameOver())
+            this.selectedPosition = BoardPosition.NULL_BOARD_POSITION;
+            if (!boardState.isGameOver() && res)
             {
                 this.nextTurn();
             }
-            this.selectedPosition = new BoardPosition(-1, -1);
             return res;
         }
 
@@ -371,7 +370,7 @@ namespace Stratego
             int[,] moveArray = new int[boardState.getHeight(), boardState.getWidth()];
 
             GamePiece pieceInQuestion = boardState.getPiece(x, y);
-            if (!pieceInQuestion.isMovable() || pieceInQuestion.getLimitToMovement() == 0)
+            if (pieceInQuestion==null||!pieceInQuestion.isMovable() || pieceInQuestion.getLimitToMovement() == 0)
             {
                 return moveArray;
             }

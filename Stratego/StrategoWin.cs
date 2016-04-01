@@ -257,9 +257,8 @@ namespace Stratego
                 int[,] pieceMoves = new int[num_rows, num_cols];
 
                 GamePiece selectedGamePiece = null;
-                if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(new BoardPosition(-1, -1)))
+                if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
                 {
-                    this.game.boardState.getPiece(this.game.selectedPosition);
                     pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
                 }
 
@@ -267,14 +266,15 @@ namespace Stratego
                 int diameter = Math.Min(col_inc, row_inc);
                 int paddingX = (col_inc - diameter) / 2;
                 int paddingY = (row_inc - diameter) / 2;
+                int scaleX = this.panelWidth / boardState.getWidth();
+                int scaleY = this.panelHeight / boardState.getHeight();
+
                 for (int x = 0; x < boardState.getWidth(); x++)
                 {
                     for (int y = 0; y < boardState.getHeight(); y++)
                     {
-                        int scaleX = this.panelWidth / boardState.getWidth();
-                        int scaleY = this.panelHeight / boardState.getHeight();
                         GamePiece piece = boardState.getPiece(x, y);
-                        if (piece != null && piece.getTeamCode() != 0)
+                        if (piece != null && piece.getTeamCode() != StrategoGame.NO_TEAM_CODE)
                         {
                             Brush b = new SolidBrush(piece.getPieceColor());
                             pen.Color = Color.FromArgb(200, 200, 255);
@@ -284,11 +284,11 @@ namespace Stratego
                             int cornerY = y * row_inc + paddingY;
                             Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
 
-                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
+                            if (Math.Sign(this.game.turn) == Math.Sign(piece.getTeamCode()) || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
                             {
                                 Image imag = piece.getPieceImage();
                                 e.Graphics.DrawImage(imag, r);
-                                if (piece == selectedGamePiece)
+                                if (piece.Equals(selectedGamePiece))
                                 {
                                     pen.Color = Color.FromArgb(10, 255, 10);
                                 }
@@ -299,12 +299,14 @@ namespace Stratego
                                 g.DrawRectangle(pen, r);
                                 g.FillRectangle(b, r);
                             }
-                            if (pieceMoves[x, y] == 1)
-                            {
-                                r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
-                                //b.Color = Color.FromArgb(90, 90, 255);
-                                g.FillRectangle(new SolidBrush(Color.FromArgb(100, 130, 130, 130)), r);
-                            }
+                            b.Dispose();
+                            
+                        }
+                        if (pieceMoves[x, y] == 1)
+                        {
+                            Rectangle r = new Rectangle(x * scaleX + 1, y * scaleY + 1, scaleX - 2, scaleY - 2);
+                            //b.Color = Color.FromArgb(90, 90, 255);
+                            g.FillRectangle(new SolidBrush(Color.FromArgb(100, 130, 130, 130)), r);
                         }
                     }
                 }
@@ -364,38 +366,43 @@ namespace Stratego
                     this.donePlacingButton.Enabled = true;
                 }
             }
-            else if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(new BoardPosition(-1, -1)))
+            else if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
             {
                 int[,] pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
-                for (int x = 0; x < this.game.boardState.getWidth(); x++)
-                    for (int y = 0; y < this.game.boardState.getHeight(); y++)
-                        if (pieceMoves[x, y] == 1)
-                            this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
 
-                Rectangle r = new Rectangle(this.game.selectedPosition.getX() * scaleX, this.game.selectedPosition.getY() * scaleY, scaleX, scaleY);
-                this.backPanel.Invalidate(r);
-                this.game.MovePiece(boardX, boardY);
-                if (this.EndGamePanel.Enabled == true)
-                    return;
-                //This makes it so it only repaints the rectangle where the piece is placed
-                r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
-                this.backPanel.Invalidate(r);
+                //Rectangle r = new Rectangle(this.game.selectedPosition.getX() * scaleX, this.game.selectedPosition.getY() * scaleY, scaleX, scaleY);
+                //this.backPanel.Invalidate(r);
+                Rectangle r;
+                if (this.game.MovePiece(boardX, boardY))
+                {
+                    for (int x = 0; x < this.game.boardState.getWidth(); x++)
+                        for (int y = 0; y < this.game.boardState.getHeight(); y++)
+                            if (pieceMoves[x, y] == 1)
+                                this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
+
+                    if (this.EndGamePanel.Enabled == true)
+                        return;
+                    //This makes it so it only repaints the rectangle where the piece is placed
+                    r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
+                    this.backPanel.Invalidate(r);
+                }
+                
                 r = new Rectangle(this.game.selectedPosition.getX() * scaleX, this.game.selectedPosition.getY() * scaleY, scaleX, scaleY);
                 this.backPanel.Invalidate(r);
             }
             else if (this.game.SelectPiece(boardX, boardY).Value)
             {
-                // Rectangle r;
+                
                 //This makes it so it only repaints the rectangle where the piece is placed
                 int[,] pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
                 for (int x = 0; x < this.game.boardState.getWidth(); x++)
                     for (int y = 0; y < this.game.boardState.getHeight(); y++)
                         if (pieceMoves[x, y] == 1)
                             this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
-                if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(new BoardPosition(-1, -1)))
+                if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
                     pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
-                //r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
-                this.backPanel.Invalidate(new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY));
+
+                this.backPanel.Invalidate(new Rectangle((int) (e.X * scaleX) * scaleX, (int)(e.Y / scaleY) *scaleY, scaleX, scaleY));
             }
             //backPanel.Invalidate();
         }

@@ -161,6 +161,7 @@
             this.EndGamePanel.Controls.Add(this.victoryLabel);
             this.EndGamePanel.Controls.Add(this.EndGameExitButton);
             this.EndGamePanel.Controls.Add(this.PlayAgainButton);
+            this.EndGamePanel.Enabled = false;
             this.EndGamePanel.Location = new System.Drawing.Point(582, 126);
             this.EndGamePanel.Name = "EndGamePanel";
             this.EndGamePanel.Size = new System.Drawing.Size(457, 351);

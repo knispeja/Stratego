@@ -344,10 +344,10 @@ namespace Stratego
         /// <param name="pieceX">X position in the board state (not in pixels)</param>
         /// <param name="pieceY">Y position in the board state (not in pixels)</param>
         /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
-        public int[,] GetPieceMoves(int pieceX, int pieceY)
-        {
-            return GetPieceMoves(pieceX, pieceY, this.boardState);
-        }
+        //public int[,] GetPieceMoves(int pieceX, int pieceY)
+        //{
+        //    return GetPieceMoves(pieceX, pieceY, this.boardState);
+        //}
 
         internal string[] getKillFeed()
         {
@@ -361,12 +361,16 @@ namespace Stratego
         /// <param name="y">Y position in the board state (not in pixels)</param>
         /// <param name="boardState">A 2D array representing the state of the board.</param>
         /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
-        public int[,] GetPieceMoves(int x, int y, Gameboard boardState)
+        public int[,] GetPieceMoves(int x, int y, Gameboard boardState=null)
         {
+            if (this.boardState == null)
+            {
+                boardState = this.boardState;
+            }
             int[,] moveArray = new int[boardState.getHeight(), boardState.getWidth()];
 
             GamePiece pieceInQuestion = boardState.getPiece(x, y);
-            if (pieceInQuestion.isMovable() || pieceInQuestion.getLimitToMovement() == 0)
+            if (!pieceInQuestion.isMovable() || pieceInQuestion.getLimitToMovement() == 0)
             {
                 return moveArray;
             }

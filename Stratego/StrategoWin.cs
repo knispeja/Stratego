@@ -407,6 +407,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            System.Diagnostics.Debug.Write(e.KeyCode);
             if (this.konami[this.konamiIndex] == e.KeyCode)
             {
                 konamiIndex++;
@@ -481,7 +482,7 @@ namespace Stratego
                 }
                 else
                 {
-                    this.factory.getPiece(keyChar, this.game.turn);
+                    this.piecePlacing = this.factory.getPiece(keyChar, this.game.turn);
                 }
             }
         }

@@ -390,7 +390,7 @@ namespace Stratego
                     break;
                 }
                 potenPiece = boardState.getPiece(k, startingY);
-                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && pieceInQuestion.getTeamCode()!=NO_TEAM_CODE)
+                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode()!=NO_TEAM_CODE)
                 {
                     moveArray[k, startingY] = 1;
                 }
@@ -406,7 +406,7 @@ namespace Stratego
                     break;
                 }
                 potenPiece = boardState.getPiece(i, startingY);
-                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && pieceInQuestion.getTeamCode() != NO_TEAM_CODE)
+                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
                 {
                     moveArray[i, startingY] = 1;
                 }
@@ -422,7 +422,7 @@ namespace Stratego
                     break;
                 }
                 potenPiece = boardState.getPiece(startingX, j);
-                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && pieceInQuestion.getTeamCode() != NO_TEAM_CODE)
+                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
                 {
                     moveArray[startingX, j] = 1;
                 }
@@ -438,7 +438,7 @@ namespace Stratego
                     break;
                 }
                 potenPiece = boardState.getPiece(startingX, d);
-                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && pieceInQuestion.getTeamCode() != NO_TEAM_CODE)
+                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
                 {
                     moveArray[startingX, d] = 1;
                 }

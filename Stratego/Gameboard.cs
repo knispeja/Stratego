@@ -44,14 +44,12 @@ namespace Stratego
                 this.lastFought = BoardPosition.NULL_BOARD_POSITION;
                 this.setPiece(end, attacker);
                 this.setPiece(start, null);
-                attacker.setXVal(end.getX());
-                attacker.setYVal(end.getY());
                 attacker = null;
                 return true;
             }
             else
             {
-                if (attacker.getTeamCode() == defender.getTeamCode())
+                if (attacker.getTeamCode() == defender.getTeamCode()||defender.getTeamCode()==StrategoGame.NO_TEAM_CODE)
                 {
                     return false;
                 }

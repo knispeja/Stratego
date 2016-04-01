@@ -161,7 +161,7 @@ namespace Stratego
             {
                 foreach (var button in this.SidePanel.Controls.OfType<Button>())
                     button.UseVisualStyleBackColor = true;
-                this.piecePlacing = this.factory.getPiece(Convert.ToInt32(((Button)sender).Tag), this.game.turn);
+                this.piecePlacing = this.factory.getPiece(((Button)sender).Tag.ToString(), this.game.turn);
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
         }

@@ -489,7 +489,7 @@
             this.place12Button.Name = "place12Button";
             this.place12Button.Size = new System.Drawing.Size(96, 36);
             this.place12Button.TabIndex = 11;
-            this.place12Button.Tag = "12";
+            this.place12Button.Tag = "Flag";
             this.place12Button.Text = "Flag";
             this.place12Button.UseVisualStyleBackColor = true;
             // 
@@ -499,7 +499,7 @@
             this.place11Button.Name = "place11Button";
             this.place11Button.Size = new System.Drawing.Size(96, 36);
             this.place11Button.TabIndex = 10;
-            this.place11Button.Tag = "11";
+            this.place11Button.Tag = "Bomb";
             this.place11Button.Text = "Bomb";
             this.place11Button.UseVisualStyleBackColor = true;
             // 
@@ -509,7 +509,7 @@
             this.place10Button.Name = "place10Button";
             this.place10Button.Size = new System.Drawing.Size(96, 36);
             this.place10Button.TabIndex = 9;
-            this.place10Button.Tag = "10";
+            this.place10Button.Tag = "Spy";
             this.place10Button.Text = "Spy";
             this.place10Button.UseVisualStyleBackColor = true;
             // 
@@ -519,7 +519,7 @@
             this.place9Button.Name = "place9Button";
             this.place9Button.Size = new System.Drawing.Size(96, 36);
             this.place9Button.TabIndex = 8;
-            this.place9Button.Tag = "9";
+            this.place9Button.Tag = "Scout";
             this.place9Button.Text = "9";
             this.place9Button.UseVisualStyleBackColor = true;
             // 
@@ -529,7 +529,7 @@
             this.place8Button.Name = "place8Button";
             this.place8Button.Size = new System.Drawing.Size(96, 36);
             this.place8Button.TabIndex = 7;
-            this.place8Button.Tag = "8";
+            this.place8Button.Tag = "Miner";
             this.place8Button.Text = "8";
             this.place8Button.UseVisualStyleBackColor = true;
             // 
@@ -539,7 +539,7 @@
             this.place7Button.Name = "place7Button";
             this.place7Button.Size = new System.Drawing.Size(96, 36);
             this.place7Button.TabIndex = 6;
-            this.place7Button.Tag = "7";
+            this.place7Button.Tag = "Sergeant";
             this.place7Button.Text = "7";
             this.place7Button.UseVisualStyleBackColor = true;
             // 
@@ -549,7 +549,7 @@
             this.place6Button.Name = "place6Button";
             this.place6Button.Size = new System.Drawing.Size(96, 36);
             this.place6Button.TabIndex = 5;
-            this.place6Button.Tag = "6";
+            this.place6Button.Tag = "Lieutenant";
             this.place6Button.Text = "6";
             this.place6Button.UseVisualStyleBackColor = true;
             // 
@@ -559,7 +559,7 @@
             this.place5Button.Name = "place5Button";
             this.place5Button.Size = new System.Drawing.Size(96, 36);
             this.place5Button.TabIndex = 4;
-            this.place5Button.Tag = "5";
+            this.place5Button.Tag = "Captain";
             this.place5Button.Text = "5";
             this.place5Button.UseVisualStyleBackColor = true;
             // 
@@ -569,7 +569,7 @@
             this.place4Button.Name = "place4Button";
             this.place4Button.Size = new System.Drawing.Size(96, 36);
             this.place4Button.TabIndex = 3;
-            this.place4Button.Tag = "4";
+            this.place4Button.Tag = "Major";
             this.place4Button.Text = "4";
             this.place4Button.UseVisualStyleBackColor = true;
             // 
@@ -579,7 +579,7 @@
             this.place3Button.Name = "place3Button";
             this.place3Button.Size = new System.Drawing.Size(96, 36);
             this.place3Button.TabIndex = 2;
-            this.place3Button.Tag = "3";
+            this.place3Button.Tag = "Colonel";
             this.place3Button.Text = "3";
             this.place3Button.UseVisualStyleBackColor = true;
             // 
@@ -589,7 +589,7 @@
             this.place2Button.Name = "place2Button";
             this.place2Button.Size = new System.Drawing.Size(96, 36);
             this.place2Button.TabIndex = 1;
-            this.place2Button.Tag = "2";
+            this.place2Button.Tag = "General";
             this.place2Button.Text = "2";
             this.place2Button.UseVisualStyleBackColor = true;
             // 
@@ -600,7 +600,7 @@
             this.place1Button.Name = "place1Button";
             this.place1Button.Size = new System.Drawing.Size(96, 36);
             this.place1Button.TabIndex = 0;
-            this.place1Button.Tag = "1";
+            this.place1Button.Tag = "Marshall";
             this.place1Button.Text = "1";
             this.place1Button.UseVisualStyleBackColor = true;
             // 

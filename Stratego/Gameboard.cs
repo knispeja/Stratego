@@ -109,22 +109,22 @@ namespace Stratego
             return this.width;
         }
 
-        private void setPiece(BoardPosition pos, GamePiece piece)
+        public void setPiece(BoardPosition pos, GamePiece piece)
         {
             this.board[pos.getX(), pos.getY()] = piece;
         }
 
-        private GamePiece getPiece(BoardPosition pos)
+        public GamePiece getPiece(BoardPosition pos)
         {
             return this.board[pos.getX(), pos.getY()];
         }
 
-        internal void setPiece(int x, int y, GamePiece piece)
+        public void setPiece(int x, int y, GamePiece piece)
         {
             this.board[x, y] = piece;
         }
 
-        internal GamePiece getPiece(int x, int y)
+        public GamePiece getPiece(int x, int y)
         {
             return this.board[x, y];
         }

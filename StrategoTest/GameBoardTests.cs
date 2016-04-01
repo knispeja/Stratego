@@ -9,24 +9,23 @@ namespace StrategoTest
     [TestFixture()]
     class GameBoardTests
     {
-        [TestCase(2, 3, 2, 1, true)]
-        [TestCase(6, 2, 4, -1, false)]
-        [TestCase(2, 205, 5, 0, true)]
-        [TestCase(100, 30, 2, 1, true)]
-        [TestCase(6, 2, 3, 4, false)]
-        [TestCase(2, 25, 51, 0, true)]
-        public void TestSaveLoad(int gbW, int gbH, int difficulty, int turn, bool isSinglePlayer)
+        [TestCase(2, 3)]
+        [TestCase(6, 2)]
+        [TestCase(2, 205)]
+        public void TestGameBoard(int gbW, int gbH)
         {
-            SaveData saveData = new SaveData(new Gameboard(gbW, gbH), difficulty, turn, true);
+            Gameboard g = new Gameboard(gbW, gbH);
 
-            SaveLoadOperations.storeData("test." + SaveLoadOperations.SAVE_FILE_EXTENSION, saveData);
-            saveData = SaveLoadOperations.loadSaveData("test." + SaveLoadOperations.SAVE_FILE_EXTENSION);
+            Assert.AreEqual(gbW, g.getWidth());
+            Assert.AreEqual(gbH, g.getHeight());
 
-            Assert.AreEqual(gbW, saveData.boardState.getWidth());
-            Assert.AreEqual(gbH, saveData.boardState.getHeight());
-            Assert.AreEqual(difficulty, saveData.difficulty);
-            Assert.AreEqual(turn, saveData.turn);
-            Assert.AreEqual(isSinglePlayer, saveData.isSinglePlayer);
+            Assert.AreEqual(null, g.getPiece(0, 0));
+            g.setPiece(0, 0, new SpyPiece(1));
+            Assert.AreEqual(SpyPiece.SPY_RANK, g.getPiece(0, 0).getPieceRank());
+
+            g.fillRow(null, 0);
+
+            Assert.AreEqual(null, g.getPiece(0, 0));
         }
     }
 }

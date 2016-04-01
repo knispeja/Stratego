@@ -1,101 +1,64 @@
-﻿using System;
+﻿using NUnit.Framework;
 using Stratego;
-using NUnit.Framework;
-using System.Drawing;
-using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace StrategoTest
 {
     [TestFixture()]
-    class StrategoGameTest
+    class GameTest
     {
-        [TestCase(1, 100, 100, ExpectedResult = false)] //Here we test that the piece value does not 
-        [TestCase(2, 100, 100, ExpectedResult = false)] // affect whether it will be placed.
-        [TestCase(3, 100, 100, ExpectedResult = false)] //Note that these cases are all at the top-left corner of squares
-        [TestCase(4, 100, 100, ExpectedResult = false)]
-        [TestCase(5, 100, 100, ExpectedResult = false)]
-        [TestCase(6, 100, 100, ExpectedResult = false)]
-        [TestCase(7, 100, 100, ExpectedResult = false)]
-        [TestCase(8, 100, 100, ExpectedResult = false)]
-        [TestCase(9, 100, 100, ExpectedResult = false)]
-        [TestCase(10, 100, 100, ExpectedResult = false)]
-        [TestCase(11, 100, 100, ExpectedResult = false)]
-        [TestCase(12, 100, 100, ExpectedResult = false)]
-        [TestCase(-1, 100, 100, ExpectedResult = false)]
-        [TestCase(-2, 100, 100, ExpectedResult = false)]
-        [TestCase(-3, 100, 100, ExpectedResult = false)]
-        [TestCase(-4, 100, 100, ExpectedResult = false)]
-        [TestCase(-5, 100, 100, ExpectedResult = false)]
-        [TestCase(-6, 100, 100, ExpectedResult = false)]
-        [TestCase(-7, 100, 100, ExpectedResult = false)]
-        [TestCase(-8, 100, 100, ExpectedResult = false)]
-        [TestCase(-9, 100, 100, ExpectedResult = false)]
-        [TestCase(-10, 100, 100, ExpectedResult = false)]
-        [TestCase(-11, 100, 100, ExpectedResult = false)]
-
-        [TestCase(-12, 100, 100, ExpectedResult = false)] //Here we test that the function acts appropriately 
-        [TestCase(-12, 200, 200, ExpectedResult = false)] // for placing in any diagonal space.
-        [TestCase(-12, 300, 300, ExpectedResult = false)]
-        [TestCase(-12, 400, 400, ExpectedResult = false)]
-
-        [TestCase(-12, 101, 101, ExpectedResult = false)] // Here we test that the function recognizes the  
-        [TestCase(-12, 201, 201, ExpectedResult = false)] // correct square for coordinates not on the top-left corner.
-        [TestCase(-12, 301, 301, ExpectedResult = false)]
-        [TestCase(-12, 401, 401, ExpectedResult = false)]
-        // This tests that pieces will not be placed on an obstacle space on a 1000 x 1000 pixel board.
-        public bool? TestThatNothingCanBePlacedOnObstacle(GamePiece piece, int x, int y)
+        List<GamePiece> pieces = new List<GamePiece>()
         {
-            int[,] map = new int[10, 10];
-            map[x/100, y/100] = 42;
+            new MarshallPiece(1), new MarshallPiece(-1), new CaptainPiece(1),
+            new CaptainPiece(-1), new ColonelPiece(1),new ColonelPiece(-1),
+            new GeneralPiece(1),new GeneralPiece(-1),new LieutenantPiece(1),
+            new LieutenantPiece(-1),new MajorPiece(1),new MajorPiece(-1),
+            new MinerPiece(1), new MinerPiece(-1), new ScoutPiece(1),
+            new ScoutPiece(-1), new SergeantPiece(1), new SergeantPiece(-1),
+            new SpyPiece(1), new SpyPiece(-1)
+        };
 
-            StrategoGame game= new StrategoGame();
+        [TestCase(1, 1, ExpectedResult = false)] 
+        [TestCase(2, 2, ExpectedResult = false)] 
+        [TestCase(3, 3, ExpectedResult = false)]
+        [TestCase(4, 4, ExpectedResult = false)]
+        // This tests that pieces will not be placed on an obstacle space
+        public bool? TestThatNothingCanBePlacedOnObstacle(int x, int y)
+        {
+
+            StrategoGame game = new StrategoGame(new TestCallback());
             game.nextTurn();
-            return game.placePiece(piece, x, y);
+            foreach(GamePiece piece in this.pieces)
+            {
+                if(game.placePiece(piece, x, y).Value)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        [TestCase(1, 100, 100)]//Here we test that the piece value does not 
-        [TestCase(2, 100, 100)] // affect whether it will be placed.
-        [TestCase(3, 100, 100)] //Note that these cases are all at the top-left corner of squares
-        [TestCase(4, 100, 100)]
-        [TestCase(5, 100, 100)]
-        [TestCase(6, 100, 100)]
-        [TestCase(7, 100, 100)]
-        [TestCase(8, 100, 100)]
-        [TestCase(9, 100, 100)]
-        [TestCase(10, 100, 100)]
-        [TestCase(11, 100, 100)]
-        [TestCase(12, 100, 100)]
-        [TestCase(-1, 100, 100)]
-        [TestCase(-2, 100, 100)]
-        [TestCase(-3, 100, 100)]
-        [TestCase(-4, 100, 100)]
-        [TestCase(-5, 100, 100)]
-        [TestCase(-6, 100, 100)]
-        [TestCase(-7, 100, 100)]
-        [TestCase(-8, 100, 100)]
-        [TestCase(-9, 100, 100)]
-        [TestCase(-10, 100, 100)]
-        [TestCase(-11, 100, 100)]
-
-        [TestCase(-12, 100, 100)]//Here we test that the function acts appropriately 
-        [TestCase(-12, 200, 200)]// for placing in any diagonal space.
-        [TestCase(-12, 300, 300)]
-        [TestCase(-12, 400, 400)]
-
-        [TestCase(-12, 101, 101)]// Here we test that the function recognizes the  
-        [TestCase(-12, 201, 201)] // correct square for coordinates not on the top-left corner.
-        [TestCase(-12, 301, 301)]
-        [TestCase(-12, 401, 401)]
+        [TestCase(1, 1, ExpectedResult = true)]
+        [TestCase(2, 2, ExpectedResult = true)]
+        [TestCase(3, 3, ExpectedResult = true)]
+        [TestCase(4, 4, ExpectedResult = true)]
         // This tests that pieces will be placed into an empty space on a 1000 x 1000 pixel board.
-        public void TestThatPieceIsPlacedIntoEmptySpace(int piece, int x, int y)
+        public bool TestThatPieceIsPlacedIntoEmptySpace(int x, int y)
         {
-            StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
+            StrategoGame game = new StrategoGame(new TestCallback());
             game.nextTurn();
-            if (piece < 0)
-                game.nextTurn();
-            bool? result = game.placePiece(piece, x, y);
-            Assert.AreEqual(game.getPiece(x/100, y/100),piece);
-            Assert.IsTrue(result.Value); 
+            foreach(GamePiece piece in this.pieces)
+            {
+                if(!game.placePiece(piece, x, y).Value||!piece.Equals(game.boardState.getPiece(x, y), piece))
+                {
+                    return false;
+                }
+            }
+            return false;
         }
 
         [TestCase(1, 100, 100, ExpectedResult = false)]//Here we test that the piece value does not 
@@ -344,7 +307,7 @@ namespace StrategoTest
             StrategoWin game = new StrategoWin(1230, 2540, new int[10, 10]);
             game.nextTurn();
             bool? result = game.placePiece(piece, x, y);
-            Assert.AreEqual(defaults[Math.Abs(piece)]-1, game.getPiecesLeft(Math.Abs(piece)));
+            Assert.AreEqual(defaults[Math.Abs(piece)] - 1, game.getPiecesLeft(Math.Abs(piece)));
             Assert.IsTrue(result.Value);
         }
 
@@ -360,7 +323,7 @@ namespace StrategoTest
             bool? result = true;
             for (int i = 0; i <= defaults[Math.Abs(piece)]; i++)
             {
-                result = game.placePiece(piece, x, y+100*i);
+                result = game.placePiece(piece, x, y + 100 * i);
             }
             Assert.IsFalse(result.Value);
             Assert.AreEqual(0, game.getPiecesLeft(Math.Abs(piece)));
@@ -379,10 +342,10 @@ namespace StrategoTest
             if (piece < 0)
                 game.nextTurn();
             int[] defaults = StrategoWin.defaults;
-            
-            for(int p=1; p<defaults.Length; p++)
+
+            for (int p = 1; p < defaults.Length; p++)
             {
-                for(int num=0; num<defaults[p]; num++)
+                for (int num = 0; num < defaults[p]; num++)
                 {
                     int piecesLeft = game.getPiecesLeft(p);
                     game.placePiece(p, x, y);
@@ -462,7 +425,7 @@ namespace StrategoTest
                 game.nextTurn();
             game.placePiece(piece, x, y);
             Assert.True(game.SelectPiece(x, y).Value);
-            Assert.AreEqual(new Point(x/100, y/100), game.pieceSelectedCoords);
+            Assert.AreEqual(new Point(x / 100, y / 100), game.pieceSelectedCoords);
             Assert.AreEqual(piece, game.boardState[game.pieceSelectedCoords.X, game.pieceSelectedCoords.Y]);
             Assert.AreEqual(false, game.SelectPiece(x, y).Value);
         }
@@ -503,7 +466,7 @@ namespace StrategoTest
             game.preGameActive = false;
             Assert.True(game.SelectPiece(x, y).Value);
             y -= 100;
-            Assert.True(game.MovePiece(x,y));
+            Assert.True(game.MovePiece(x, y));
             Assert.AreEqual(piece, game.boardState[x / 100, y / 100]);
             Assert.False(game.pieceIsSelected);
             Assert.AreEqual(0, game.boardState[x / 100, (y + 100) / 100]);
@@ -607,7 +570,7 @@ namespace StrategoTest
                 Assert.True(game.MovePiece(x, y));
                 Assert.False(game.pieceIsSelected);
                 Assert.AreEqual(0, game.boardState[(x - 200) / 100, y / 100]);
-                Assert.AreEqual(9*turn, game.boardState[x / 100, y / 100]);
+                Assert.AreEqual(9 * turn, game.boardState[x / 100, y / 100]);
             }
         }
 
@@ -637,7 +600,7 @@ namespace StrategoTest
             y -= 100;
 
             Assert.False(game.MovePiece(x, y));
-            Assert.AreEqual(piece, game.boardState[(x-100) / 100, (y+100) / 100]);
+            Assert.AreEqual(piece, game.boardState[(x - 100) / 100, (y + 100) / 100]);
             Assert.False(game.pieceIsSelected);
             Assert.AreEqual(0, game.boardState[x / 100, y / 100]);
         }
@@ -686,9 +649,9 @@ namespace StrategoTest
             game.turn = initialTurn;
             game.preGameActive = isPregame;
             game.nextTurn();
-            Assert.AreEqual(expectedNewTurn, game.turn);     
+            Assert.AreEqual(expectedNewTurn, game.turn);
         }
-       
+
         [TestCase(0, false, true)]
         [TestCase(-1, true, false)]
         [TestCase(-1, false, false)]
@@ -707,7 +670,7 @@ namespace StrategoTest
             Assert.AreEqual(expectedFinal, game.preGameActive);
         }
 
-        
+
         [TestCase(-1, -2, true)]
         [TestCase(-1, -3, true)]
         [TestCase(-1, -4, true)]
@@ -729,7 +692,7 @@ namespace StrategoTest
             Assert.AreEqual(expectedResult, game.SelectPiece(0, 0));
         }
 
-        
+
         [TestCase(1, -5, 200, 150, false)]
         [TestCase(1, -3, 200, 250, false)]
         [TestCase(1, -4, 300, 150, false)]
@@ -964,7 +927,7 @@ namespace StrategoTest
             gameboard[5, 5] = 3;
             gameboard[6, 5] = -7;
             gameboard[7, 7] = -3;
-            gameboard[7 , 6] = 7;
+            gameboard[7, 6] = 7;
             StrategoWin game = new StrategoWin(1000, 1000, gameboard);
             game.turn = -1;
             game.SelectPiece(600, 500);
@@ -974,8 +937,8 @@ namespace StrategoTest
 
             game.SelectPiece(700, 600);
             game.MovePiece(700, 700);
-            Assert.AreEqual(new Point(7,7), game.lastFought);
-           
+            Assert.AreEqual(new Point(7, 7), game.lastFought);
+
         }
         [Test()]
         //Tests that invalid moves don't change LastFought
@@ -1078,7 +1041,7 @@ namespace StrategoTest
             //int piece = 4;
             int x = 4;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
             {0, 0, 0, 1, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
@@ -1089,7 +1052,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1111,7 +1074,7 @@ namespace StrategoTest
             //int piece = 5;
             int x = 5;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
@@ -1122,7 +1085,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 5, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1144,7 +1107,7 @@ namespace StrategoTest
             //int piece = 9;
             int x = 5;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
             {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
@@ -1155,7 +1118,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 1, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 9, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1177,7 +1140,7 @@ namespace StrategoTest
             //int piece = 9;
             int x = 6;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {1, 1, 1, 1, 1, 1, 0, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -1188,7 +1151,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 9, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1211,7 +1174,7 @@ namespace StrategoTest
             //int piece = 9;
             int x = 6;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 1, 0, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -1222,7 +1185,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, -8, 9, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1245,7 +1208,7 @@ namespace StrategoTest
             //int piece = 9;
             int x = 6;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -1256,7 +1219,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 7, 9, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1279,7 +1242,7 @@ namespace StrategoTest
             //int piece = 9;
             int x = 6;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 1, 1, 1, 0, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -1290,7 +1253,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, -8, 0, 0, 9, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1313,7 +1276,7 @@ namespace StrategoTest
             //int piece = -9;
             int x = 6;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 1, 1, 1, 0, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -1324,7 +1287,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 8, 0, 0, -9, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1346,7 +1309,7 @@ namespace StrategoTest
             //int piece = 11;
             int x = 6;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1357,7 +1320,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 11, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1379,7 +1342,7 @@ namespace StrategoTest
             //int piece = 12;
             int x = 6;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1390,7 +1353,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 12, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1412,7 +1375,7 @@ namespace StrategoTest
             //int piece = 42;
             int x = 6;
             int y = 4;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1423,7 +1386,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1445,7 +1408,7 @@ namespace StrategoTest
             //int piece = 0;
             int x = 9;
             int y = 9;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1456,7 +1419,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1478,7 +1441,7 @@ namespace StrategoTest
             //int piece = 0;
             int x = 4;
             int y = 1;
-            int[,] moveArray = new int[,] { 
+            int[,] moveArray = new int[,] {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -1489,7 +1452,7 @@ namespace StrategoTest
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
-            int[,] boardstate = new int[,] { 
+            int[,] boardstate = new int[,] {
             {0, 0, 0, 0, 5, 0, 0, 0, 0, 0},
             {0, 0, 0, 5, 5, 5, 0, 0, 0, 0},
             {0, 0, 0, 0, 8, 0, 0, 0, 0, 0},
@@ -1527,11 +1490,11 @@ namespace StrategoTest
             String expected2 = "2 4 3 8 9 1 1 0 0 42\r\n2 4 3 8 9 1 1 0 0 42\r\n2 4 3 8 9 1 1 0 0 42\r\n2 4 3 8 9 1 1 0 0 42\r\n";
 
             game.nextTurn();
-         // TODO   Assert.IsTrue(SaveLoadOperations.saveSetupData("x", game.getSetupData()));
+            // TODO   Assert.IsTrue(SaveLoadOperations.saveSetupData("x", game.getSetupData()));
             //Assert.AreEqual(expected, writer.ToString());
             game.nextTurn();
 
-       // TODO     Assert.IsTrue(SaveLoadOperations.saveSetUpData("x", game.getSetupData()));
+            // TODO     Assert.IsTrue(SaveLoadOperations.saveSetUpData("x", game.getSetupData()));
             //Assert.AreEqual(expected2, writer.ToString()); //TODO: read these from file instead of writer
             writer.Close();
 
@@ -1556,11 +1519,11 @@ namespace StrategoTest
             }
             StrategoWin game = new StrategoWin(1000, 1000, gameBoard);
 
-          // TODO  Assert.IsFalse(SaveLoadOperations.storeSetupData("x", game.getSetupData()));
+            // TODO  Assert.IsFalse(SaveLoadOperations.storeSetupData("x", game.getSetupData()));
             game.nextTurn();
             game.nextTurn();
             game.nextTurn();
-          // TODO  Assert.IsFalse(SaveLoadOperations.storeSetupData("x", game.getSetupData()));
+            // TODO  Assert.IsFalse(SaveLoadOperations.storeSetupData("x", game.getSetupData()));
 
         }
 
@@ -1587,7 +1550,7 @@ namespace StrategoTest
             game.nextTurn();
             Assert.IsFalse(SaveLoadOperations.saveSetup(game.getSetupData()));
         }
-        
+
         /*
         [Test()]
         public void TestThatSaveGameWorksForNonstandardSize()
@@ -1625,7 +1588,7 @@ namespace StrategoTest
             String input = "9 9 9 9 9 9 8 8 8 8\r\n8 7 7 7 7 6 6 6 6 5\r\n5 5 5 4 4 4 3 3 1 2\r\n10 11 11 11 11 11 11 12 9 9\r\n";
             StringReader reader = new StringReader(input);
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
-            int[,] expected =new int[,]{{0,0,0,0,0,0,9,8,5,10},
+            int[,] expected = new int[,]{{0,0,0,0,0,0,9,8,5,10},
                                         {0,0,0,0,0,0,9,7,5,11},
                                         {0,0,0,0,0,0,9,7,5,11},
                                         {0,0,0,0,0,0,9,7,4,11},
@@ -1648,14 +1611,14 @@ namespace StrategoTest
 
             game.nextTurn();
 
-           // game.loadSetup() TODO FIX
+            // game.loadSetup() TODO FIX
             Assert.AreEqual(expected, game.boardState);
-            Assert.AreEqual(new int[13],game.placements);
+            Assert.AreEqual(new int[13], game.placements);
 
             game.nextTurn();
             reader = new StringReader(input);
 
-           // TODO FIXX Assert.IsTrue(game.loadSetUp(reader));
+            // TODO FIXX Assert.IsTrue(game.loadSetUp(reader));
             Assert.AreEqual(expected2, game.boardState);
             Assert.AreEqual(new int[13], game.placements);
 
@@ -1670,14 +1633,14 @@ namespace StrategoTest
             StrategoWin game = new StrategoWin(1000, 1000, new int[10, 10]);
 
             // TODO Assert.IsFalse(game.loadSetUp(reader));
-            Assert.AreEqual(new int[10,10], game.boardState);
+            Assert.AreEqual(new int[10, 10], game.boardState);
 
             game.turn = 1;
-           // TODO Assert.IsFalse(game.loadSetUp(reader));
+            // TODO Assert.IsFalse(game.loadSetUp(reader));
             Assert.AreEqual(new int[10, 10], game.boardState);
 
             game.nextTurn();
-           // TODO Assert.IsFalse(game.loadSetUp(reader));
+            // TODO Assert.IsFalse(game.loadSetUp(reader));
             Assert.AreEqual(new int[10, 10], game.boardState);
 
         }
@@ -1870,7 +1833,4 @@ namespace StrategoTest
         }
         */
     }
-
-
-        
 }

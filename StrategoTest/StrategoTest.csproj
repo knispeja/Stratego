@@ -106,11 +106,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameBoardTests.cs" />
+    <Compile Include="GameTest.cs" />
     <Compile Include="MainTest.cs" />
     <Compile Include="MovementTest.cs" />
     <Compile Include="PieceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveLoadTests.cs" />
+    <Compile Include="TestCallback.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

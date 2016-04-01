@@ -260,6 +260,7 @@ namespace Stratego
                 if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
                 {
                     pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
+                    selectedGamePiece = this.game.boardState.getPiece(this.game.selectedPosition);
                 }
 
                 // Large loop which draws the necessary circles/images that represent pieces
@@ -288,7 +289,7 @@ namespace Stratego
                             {
                                 Image imag = piece.getPieceImage();
                                 e.Graphics.DrawImage(imag, r);
-                                if (piece.Equals(selectedGamePiece))
+                                if (piece == selectedGamePiece)
                                 {
                                     pen.Color = Color.FromArgb(10, 255, 10);
                                 }
@@ -373,20 +374,18 @@ namespace Stratego
                 //Rectangle r = new Rectangle(this.game.selectedPosition.getX() * scaleX, this.game.selectedPosition.getY() * scaleY, scaleX, scaleY);
                 //this.backPanel.Invalidate(r);
                 Rectangle r;
-                if (this.game.MovePiece(boardX, boardY))
-                {
-                    for (int x = 0; x < this.game.boardState.getWidth(); x++)
-                        for (int y = 0; y < this.game.boardState.getHeight(); y++)
-                            if (pieceMoves[x, y] == 1)
-                                this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
+                this.game.MovePiece(boardX, boardY);
+                for (int x = 0; x < this.game.boardState.getWidth(); x++)
+                    for (int y = 0; y < this.game.boardState.getHeight(); y++)
+                        if (pieceMoves[x, y] == 1)
+                            this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
 
-                    if (this.EndGamePanel.Enabled == true)
-                        return;
-                    //This makes it so it only repaints the rectangle where the piece is placed
-                    r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
-                    this.backPanel.Invalidate(r);
-                }
-                
+                if (this.EndGamePanel.Enabled == true)
+                    return;
+                //This makes it so it only repaints the rectangle where the piece is placed
+                r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
+                this.backPanel.Invalidate(r);
+
                 r = new Rectangle(this.game.selectedPosition.getX() * scaleX, this.game.selectedPosition.getY() * scaleY, scaleX, scaleY);
                 this.backPanel.Invalidate(r);
             }

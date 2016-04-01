@@ -272,19 +272,19 @@ namespace Stratego
             {
                 return false;
             }
-            if (this.selectedPosition != null && !this.selectedPosition.Equals(new BoardPosition(-1, -1)))
+            if (this.selectedPosition != null && !this.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
             {
                 return true;
             }
             GamePiece potentialSel = this.boardState.getPiece(x, y);
             if (potentialSel == null)
             {
-                this.selectedPosition = new BoardPosition(-1, -1);
+                this.selectedPosition = BoardPosition.NULL_BOARD_POSITION;
                 return false;
             }
             if ((!potentialSel.isMovable() || potentialSel.getTeamCode() != this.turn))
             {
-                this.selectedPosition = new BoardPosition(-1, -1);
+                this.selectedPosition = BoardPosition.NULL_BOARD_POSITION;
                 return false;
             }
             this.selectedPosition = new BoardPosition(x, y);
@@ -311,13 +311,18 @@ namespace Stratego
                 this.selectedPosition = BoardPosition.NULL_BOARD_POSITION;
                 return false;
             }
+            int[,] moves = this.GetPieceMoves(this.selectedPosition.getX(), this.selectedPosition.getY());
+            if (moves[x, y] != 1)
+            {
+                return false;
+            }
             Move move = new Stratego.Move(this.selectedPosition.getX(), this.selectedPosition.getY(), x, y);
             bool res = this.boardState.move(move);
             if (defender != null&&!defender.isAlive())
             {
                 updateKillFeed(attacker, defender);
             }
-            if (!attacker.isAlive())
+            if (defender != null&&!attacker.isAlive())
             {
                 updateKillFeed(defender, attacker);
             }
@@ -378,7 +383,7 @@ namespace Stratego
             int startingY = y;
             int spacesPossible = pieceInQuestion.getLimitToMovement();
             GamePiece potenPiece = null;
-            for (int k = startingX; k <= startingX + spacesPossible; k++)
+            for (int k = startingX+1; k <= startingX + spacesPossible; k++)
             {
                 if (k >= boardState.getWidth())
                 {
@@ -394,7 +399,7 @@ namespace Stratego
                     break;
                 }
             }
-            for (int i = startingX; i >= startingX - spacesPossible; i--)
+            for (int i = startingX-1; i >= startingX - spacesPossible; i--)
             {
                 if (i < 0)
                 {
@@ -410,7 +415,7 @@ namespace Stratego
                     break;
                 }
             }
-            for (int j = startingY; j <= startingY + spacesPossible; j++)
+            for (int j = startingY+1; j <= startingY + spacesPossible; j++)
             {
                 if (j >= boardState.getHeight())
                 {
@@ -426,7 +431,7 @@ namespace Stratego
                     break;
                 }
             }
-            for (int d = startingX; d >= startingY - spacesPossible; d--)
+            for (int d = startingY-1; d >= startingY - spacesPossible; d--)
             {
                 if (d < 0)
                 {

@@ -76,6 +76,65 @@ namespace Stratego
             return true;
         }
 
+        /// <summary>
+        /// Flips the board upside down
+        /// (the bottom-right piece becomes the top-left)
+        /// </summary>
+        public void flipBoard()
+        {
+            GamePiece[,] oldBoard = this.board;
+
+            for (int col = 0; col < this.width; col++)
+            {
+                for (int row = 0; row < this.height; row++)
+                {
+                    this.board[col, row] = oldBoard[this.width - 1 - col, this.height - 1 - row];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Overrides pieces of team [teamCode] with pieces from [other] if the piece in [other] is not null
+        /// </summary>
+        public void overridePiecesOfTeam(Gameboard other, int teamCode)
+        {
+            for(int col = 0; col < this.width; col++)
+            {
+                for(int row = 0; row < this.height; row++)
+                {
+                    GamePiece newPiece = other.getPiece(col, row);
+
+                    GamePiece oldPiece = getPiece(col, row);
+                    if (oldPiece == null || oldPiece.getTeamCode() == teamCode)
+                    {
+                        if (newPiece != null)
+                        {
+                            newPiece.setTeamCode(teamCode);
+                            newPiece.setXVal(col);
+                            newPiece.setYVal(row);
+                        }
+                        setPiece(col, row, newPiece);   
+                    }
+                }
+            }
+        }
+
+        public void removeAllInstances(Type pieceType)
+        {
+            for (int col = 0; col < this.width; col++)
+            {
+                for (int row = 0; row < this.height; row++)
+                {
+                    GamePiece piece = getPiece(col, row);
+                    if(piece != null)
+                    {
+                        if (piece.GetType() == pieceType)
+                            setPiece(col, row, null);
+                    }
+                }
+            }
+        }
+
         private void gameOver(int v)
         {
             this.winner = v;

@@ -20,6 +20,11 @@ namespace Stratego
         public SetupData(Gameboard boardState, Dictionary<String, int> placements, int turn)
         {
             this.boardState = boardState;
+            if (turn == StrategoGame.RED_TEAM_CODE)
+                this.boardState.flipBoard();
+
+            this.boardState.removeAllInstances(typeof(ObstaclePiece));
+
             this.turn = turn;
             this.placements = placements;
             this.placementsString = convertDictionaryToString(this.placements);

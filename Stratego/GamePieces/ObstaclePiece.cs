@@ -1,9 +1,6 @@
 ﻿using Stratego.BattleBehaviors;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Stratego
 {
@@ -21,6 +18,11 @@ namespace Stratego
             this.attackBehavior = new Impassible();
             this.defendBehavior = new Impassible();
             this.movable = false;
+        }
+
+        public override Image getPieceImage()
+        {
+            return null;
         }
     }
 }

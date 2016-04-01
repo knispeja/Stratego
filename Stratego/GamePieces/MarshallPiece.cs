@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Stratego
 {
@@ -10,11 +11,14 @@ namespace Stratego
 
         public MarshallPiece (int teamCode) : base (teamCode)
         {
-            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueMarshall : Properties.Resources.RedMarshall;
-
             this.pieceRank = MARSHALL_RANK;
             this.pieceName = MARSHALL_NAME;
             this.defendBehavior = new DiesToSpy();
+        }
+
+        public override Image getPieceImage()
+        {
+            return this.teamCode == StrategoGame.BLUE_TEAM_CODE ? Properties.Resources.BlueMarshall : Properties.Resources.RedMarshall;
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Stratego
         protected int teamCode;
         protected bool lifeStatus;
         protected Color pieceColor;
-        protected Image pieceImage;
 
         protected BattleBehavior attackBehavior;
         protected BattleBehavior defendBehavior;
@@ -41,8 +40,7 @@ namespace Stratego
             this.pieceName = "null";
             this.teamCode = teamCode;
             this.lifeStatus = true;
-            this.pieceImage = null;
-            this.pieceColor = (teamCode == StrategoGame.BLUE_TEAM_CODE) ? BLUE_TEAM_COLOR : RED_TEAM_COLOR;
+            setPieceColorToMatchTeam();
             this.attackBehavior = new DefaultComparativeFate();
             this.defendBehavior = new DefaultComparativeFate();
 
@@ -54,6 +52,8 @@ namespace Stratego
 
             this.essential = false;
         }
+
+        public abstract Image getPieceImage();
 
         public Boolean isEssential()
         {
@@ -118,14 +118,20 @@ namespace Stratego
             return teamCode;
         }
 
-        public Image getPieceImage()
+        public void setTeamCode(int teamCode)
         {
-            return this.pieceImage;
+            this.teamCode = teamCode;
+            setPieceColorToMatchTeam();
         }
 
         public Color getPieceColor()
         {
             return this.pieceColor;
+        }
+
+        private void setPieceColorToMatchTeam()
+        {
+            this.pieceColor = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? BLUE_TEAM_COLOR : RED_TEAM_COLOR;
         }
 
         public int getLimitToMovement()

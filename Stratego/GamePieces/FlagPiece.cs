@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Stratego
 {
@@ -10,14 +11,17 @@ namespace Stratego
 
         public FlagPiece (int teamCode) : base(teamCode)
         {
-            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueFlag : Properties.Resources.RedFlag;
-
             this.pieceRank = FLAG_RANK;
             this.pieceName = FLAG_NAME;
             this.attackBehavior = new DiesToAllSaveFlag();
             this.defendBehavior = new SimplyDie();
             this.movable = false;
             this.essential = true;
+        }
+
+        public override Image getPieceImage()
+        {
+            return this.teamCode == StrategoGame.BLUE_TEAM_CODE ? Properties.Resources.BlueFlag : Properties.Resources.RedFlag;
         }
     }
 }

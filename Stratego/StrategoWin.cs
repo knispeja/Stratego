@@ -961,9 +961,12 @@ namespace Stratego
 
         private void loadSetupData(SetupData data)
         {
-            // TODO: need to modify this.game.boardState to match the placements 
+            Gameboard setupBoard = data.boardState;
+            if (this.game.turn == StrategoGame.RED_TEAM_CODE)
+                setupBoard.flipBoard();
 
-            this.game.boardState = data.boardState;
+            this.game.boardState.overridePiecesOfTeam(setupBoard, this.game.turn);
+           
             this.game.placements = data.getPlacementsDictionary();
         }
 

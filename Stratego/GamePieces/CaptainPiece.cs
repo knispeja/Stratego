@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Stratego
 {
@@ -10,10 +11,13 @@ namespace Stratego
 
         public CaptainPiece(int teamCode) : base (teamCode)
         {
-            this.pieceImage = (this.teamCode == StrategoGame.BLUE_TEAM_CODE) ? Properties.Resources.BlueCaptain : Properties.Resources.RedCaptain;
-
             this.pieceRank = CAPTAIN_RANK;
             this.pieceName = CAPTAIN_NAME;
+        }
+
+        public override Image getPieceImage()
+        {
+            return this.teamCode == StrategoGame.BLUE_TEAM_CODE ? Properties.Resources.BlueCaptain : Properties.Resources.RedCaptain;
         }
     }
 }

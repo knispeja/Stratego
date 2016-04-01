@@ -23,8 +23,6 @@ namespace Stratego
             if (turn == StrategoGame.RED_TEAM_CODE)
                 this.boardState.flipBoard();
 
-            this.boardState.removeAllInstances(typeof(ObstaclePiece));
-
             this.turn = turn;
             this.placements = placements;
             this.placementsString = convertDictionaryToString(this.placements);

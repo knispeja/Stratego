@@ -120,22 +120,6 @@ namespace Stratego
             }
         }
 
-        public void removeAllInstances(Type pieceType)
-        {
-            for (int col = 0; col < this.width; col++)
-            {
-                for (int row = 0; row < this.height; row++)
-                {
-                    GamePiece piece = getPiece(col, row);
-                    if(piece != null)
-                    {
-                        if (piece.GetType() == pieceType)
-                            setPiece(col, row, null);
-                    }
-                }
-            }
-        }
-
         private void gameOver(int v)
         {
             this.winner = v;

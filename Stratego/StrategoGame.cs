@@ -99,7 +99,7 @@ namespace Stratego
 
             for(int i = 0; i < KILL_FEED_SIZE; i++)
             {
-                killFeed[i] = "debug killfeed entry " + i;
+                killFeed[i] = "";
             }
 
             boardState = new Gameboard(10, 10);
@@ -330,6 +330,10 @@ namespace Stratego
             if (!boardState.isGameOver() && res)
             {
                 this.nextTurn();
+            }
+            else if (boardState.isGameOver())
+            {
+                this.callback.gameOver(boardState.getWinner());
             }
             return res;
         }

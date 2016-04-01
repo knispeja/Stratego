@@ -382,7 +382,10 @@ namespace Stratego
                             this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
 
                 if (this.EndGamePanel.Enabled == true)
+                {
+                    backPanel.Invalidate();
                     return;
+                }
                 //This makes it so it only repaints the rectangle where the piece is placed
                 r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
                 this.backPanel.Invalidate(r);

@@ -63,7 +63,7 @@ namespace Stratego.GamePieces
 
         public GamePiece getPiece(String identifier, int teamCode)
         {
-            if (identifier.Equals(GamePiece.NULL_PIECE_NAME))
+            if (identifier.Equals(GamePiece.NULL_PIECE_NAME) || this.stringDict.ContainsKey(identifier))
             {
                 return null;
             }
@@ -76,7 +76,12 @@ namespace Stratego.GamePieces
 
         public GamePiece getPiece(int identifier, int teamCode)
         {
+            if (!this.intDict.ContainsKey(identifier))
+            {
+                return null;
+            }
             Type type = this.intDict[identifier];
+
             if (type == null) return null;
 
             var ctors = type.GetConstructors();
@@ -84,17 +89,18 @@ namespace Stratego.GamePieces
             return (GamePiece) ctors[0].Invoke(new object[] { teamCode });   
         }
 
-        public Boolean canConstructFrom(Object obj)
-        {
-            if (obj.GetType().Equals(typeof(int)) && this.intDict.ContainsKey((int)obj))
-            {
-                return true;
-            }
-            else if (obj.GetType().Equals(typeof(String)) && this.stringDict.ContainsKey((String)obj))
-            {
-                return true;
-            }
-            return false;
-        }
+        //public Boolean canConstructFrom(Object obj)
+        //{
+
+            //if (obj.GetType().Equals(typeof(int)) && this.intDict.ContainsKey((int)obj))
+            //{
+            //    return true;
+            //}
+            //else if (obj.GetType().Equals(typeof(String)) && this.stringDict.ContainsKey((String)obj))
+            //{
+            //    return true;
+            //}
+            //return false;
+        //}
     }
 }

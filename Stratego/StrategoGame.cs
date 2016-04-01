@@ -344,10 +344,10 @@ namespace Stratego
         /// <param name="pieceX">X position in the board state (not in pixels)</param>
         /// <param name="pieceY">Y position in the board state (not in pixels)</param>
         /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
-        //public int[,] GetPieceMoves(int pieceX, int pieceY)
-        //{
-        //    return GetPieceMoves(pieceX, pieceY, this.boardState);
-        //}
+        public int[,] GetPieceMoves(int pieceX, int pieceY)
+        {
+            return GetPieceMoves(pieceX, pieceY, this.boardState);
+        }
 
         internal string[] getKillFeed()
         {
@@ -385,11 +385,14 @@ namespace Stratego
                     break;
                 }
                 potenPiece = boardState.getPiece(k, startingY);
-                if (potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
+                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && pieceInQuestion.getTeamCode()!=NO_TEAM_CODE)
+                {
+                    moveArray[k, startingY] = 1;
+                }
+                else
                 {
                     break;
                 }
-                moveArray[k, startingY] = 1;
             }
             for (int i = startingX; i >= startingX - spacesPossible; i--)
             {
@@ -398,11 +401,14 @@ namespace Stratego
                     break;
                 }
                 potenPiece = boardState.getPiece(i, startingY);
-                if (potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
+                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && pieceInQuestion.getTeamCode() != NO_TEAM_CODE)
+                {
+                    moveArray[i, startingY] = 1;
+                }
+                else
                 {
                     break;
                 }
-                moveArray[i, startingY] = 1;
             }
             for (int j = startingY; j <= startingY + spacesPossible; j++)
             {
@@ -411,11 +417,14 @@ namespace Stratego
                     break;
                 }
                 potenPiece = boardState.getPiece(startingX, j);
-                if (potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
+                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && pieceInQuestion.getTeamCode() != NO_TEAM_CODE)
+                {
+                    moveArray[startingX, j] = 1;
+                }
+                else
                 {
                     break;
                 }
-                moveArray[startingX, j] = 1;
             }
             for (int d = startingX; d >= startingY - spacesPossible; d--)
             {
@@ -424,11 +433,14 @@ namespace Stratego
                     break;
                 }
                 potenPiece = boardState.getPiece(startingX, d);
-                if (potenPiece == null || potenPiece.getTeamCode() == NO_TEAM_CODE || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode())
+                if (potenPiece == null || pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && pieceInQuestion.getTeamCode() != NO_TEAM_CODE)
+                {
+                    moveArray[startingX, d] = 1;
+                }
+                else
                 {
                     break;
                 }
-                moveArray[startingX, d] = 1;
             }
             return moveArray;
         }

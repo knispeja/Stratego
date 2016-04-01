@@ -332,7 +332,7 @@ namespace Stratego
 
         private void updateKillFeed(GamePiece killer, GamePiece killed)
         {
-            for(int i = 1; i < KILL_FEED_SIZE; i++)
+            for(int i = KILL_FEED_SIZE - 1; i > 0; i--)
             {
                 killFeed[i] = killFeed[i - 1];
             }

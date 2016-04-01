@@ -125,19 +125,21 @@ namespace Stratego
 
         private void battlePieces(GamePiece attacker, GamePiece defender)
         {
+            BoardPosition defenderPos = this.getPositionOfPiece(defender);
+            BoardPosition attackerPos = this.getPositionOfPiece(attacker);
             attacker.attack(defender);
             defender.defend(attacker);
             if (!defender.isAlive())
             {
-                this.setPiece(this.getPositionOfPiece(defender), null);
+                this.setPiece(defenderPos, null);
             }
             if (!attacker.isAlive())
             {
-                this.setPiece(this.getPositionOfPiece(attacker), null);
+                this.setPiece(attackerPos, null);
             }
             else
             {
-                this.setPiece(this.getPositionOfPiece(defender), attacker);
+                this.setPiece(defenderPos, attacker);
             }
         }
 

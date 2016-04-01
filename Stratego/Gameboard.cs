@@ -83,12 +83,14 @@ namespace Stratego
         public void flipBoard()
         {
             GamePiece[,] oldBoard = this.board;
+            this.board = new GamePiece[this.width, this.height];
+            oldBoard = oldBoard;
 
-            for (int col = 0; col < this.width; col++)
+            for (int i = 0; i < this.width; ++i)
             {
-                for (int row = 0; row < this.height; row++)
+                for (int j = 0; j < this.height; ++j)
                 {
-                    this.board[col, row] = oldBoard[this.width - 1 - col, this.height - 1 - row];
+                    this.board[j, this.height - i - 1] = oldBoard[this.width - j - 1, i];
                 }
             }
         }

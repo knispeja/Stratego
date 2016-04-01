@@ -639,7 +639,11 @@ namespace Stratego
             if (!this.game.preGameActive || (this.game.boardState.getWidth() != 10) || (this.game.boardState.getHeight() != 10) || (Math.Abs(this.game.turn) == 2))
                 return;
 
-            loadSetupData(SaveLoadOperations.loadSetup());
+            SetupData data = SaveLoadOperations.loadSetup();
+            if (data == null)
+                return;
+
+            loadSetupData(data);
 
             this.backPanel.Invalidate();
 
@@ -959,8 +963,8 @@ namespace Stratego
         {
             // TODO: need to modify this.game.boardState to match the placements 
 
-            this.game.placements = data.placements;
-            this.game.turn = data.turn;
+            this.game.boardState = data.boardState;
+            this.game.placements = data.getPlacementsDictionary();
         }
 
         public void adjustTurnButtonState(string buttonText)

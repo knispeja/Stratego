@@ -49,7 +49,7 @@ namespace Stratego
                 if ((file = dialog.OpenFile()) != null)
                 {
                     file.Close();
-                    return loadSetupData(dialog.FileName); //TODO: some stuff is still not extracted into this file
+                    return loadSetupData(dialog.FileName);
                 }
             }
 

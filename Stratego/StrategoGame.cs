@@ -75,7 +75,7 @@ namespace Stratego
         /// </summary>
         public Boolean skippableLevels { get; set; }
 
-        public GamePiece selectedGamePiece;
+        public BoardPosition selectedPosition = new BoardPosition(-1, -1);
 
         public GUICallback callback;
 
@@ -101,8 +101,6 @@ namespace Stratego
             {
                 killFeed[i] = "debug killfeed entry " + i;
             }
-
-            this.selectedGamePiece = null;
 
             boardState = new Gameboard(10, 10);
             for (int row = 0; row < 6; row++) this.boardState.fillRow(new ObstaclePiece(0), row);
@@ -177,8 +175,6 @@ namespace Stratego
             if (retVal)
             {
                 this.boardState.setPiece(x, y, piece);
-                piece.setXVal(x);
-                piece.setYVal(y);
             }
             return retVal;
         }
@@ -276,22 +272,22 @@ namespace Stratego
             {
                 return false;
             }
-            if (this.selectedGamePiece != null)
+            if (this.selectedPosition != null && !this.selectedPosition.Equals(new BoardPosition(-1, -1)))
             {
                 return true;
             }
             GamePiece potentialSel = this.boardState.getPiece(x, y);
             if (potentialSel == null)
             {
-                this.selectedGamePiece = null;
+                this.selectedPosition = new BoardPosition(-1, -1);
                 return false;
             }
             if ((!potentialSel.isMovable() || potentialSel.getTeamCode() != this.turn))
             {
-                this.selectedGamePiece = null;
+                this.selectedPosition = new BoardPosition(-1, -1);
                 return false;
             }
-            this.selectedGamePiece = potentialSel;
+            this.selectedPosition = new BoardPosition(x, y);
             return true;
         }
 
@@ -304,20 +300,20 @@ namespace Stratego
         public bool MovePiece(int x, int y)
         {
             GamePiece defender = this.boardState.getPiece(x, y);
-            GamePiece attacker = this.selectedGamePiece;
+            GamePiece attacker = this.boardState.getPiece(this.selectedPosition);
             if (attacker == null)
             {
                 return false;
             }
-            else if (attacker.getXVal() == x && attacker.getYVal() == y)
+            else if (this.selectedPosition.getX() == x && this.selectedPosition.getY() == y)
             {
                 // Initialize "Selection Phase"
-                this.selectedGamePiece = null;
+                this.selectedPosition = new BoardPosition(-1, -1);
                 return false;
             }
-            Move move = new Stratego.Move(attacker.getXVal(), attacker.getYVal(), x, y);
+            Move move = new Stratego.Move(this.selectedPosition.getX(), this.selectedPosition.getY(), x, y);
             bool res = this.boardState.move(move);
-            if (!defender.isAlive())
+            if (defender != null&&!defender.isAlive())
             {
                 updateKillFeed(attacker, defender);
             }
@@ -330,7 +326,7 @@ namespace Stratego
             {
                 this.nextTurn();
             }
-            this.selectedGamePiece = null;
+            this.selectedPosition = new BoardPosition(-1, -1);
             return res;
         }
 
@@ -379,8 +375,8 @@ namespace Stratego
             {
                 return moveArray;
             }
-            int startingX = pieceInQuestion.getXVal();
-            int startingY = pieceInQuestion.getYVal();
+            int startingX = x;
+            int startingY = y;
             int spacesPossible = pieceInQuestion.getLimitToMovement();
             GamePiece potenPiece = null;
             for (int k = startingX; k <= startingX + spacesPossible; k++)

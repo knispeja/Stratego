@@ -147,15 +147,15 @@ namespace Stratego
             defender.defend(attacker);
             if (!defender.isAlive())
             {
-                this.setPiece(defender.getXVal(), defender.getYVal(), null);
+                this.setPiece(this.getPositionOfPiece(defender), null);
             }
             if (!attacker.isAlive())
             {
-                this.setPiece(attacker.getXVal(), attacker.getYVal(), null);
+                this.setPiece(this.getPositionOfPiece(attacker), null);
             }
             else
             {
-                this.setPiece(defender.getXVal(), defender.getYVal(), attacker);
+                this.setPiece(this.getPositionOfPiece(defender), attacker);
             }
         }
 
@@ -198,6 +198,21 @@ namespace Stratego
         {
             for (int x = 0; x < this.width; x++)
                 setPiece(x, row, piece);
+        }
+
+        public BoardPosition getPositionOfPiece(GamePiece piece)
+        {
+            for (int i = 0; i<this.width; i++)
+            {
+                for(int j = 0; j<this.height; j++)
+                {
+                    if (board[i,j] == piece)
+                    {
+                        return new BoardPosition(i, j);
+                    }
+                }
+            }
+            return null;
         }
 
         internal object getLastFought()

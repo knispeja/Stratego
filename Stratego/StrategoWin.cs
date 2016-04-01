@@ -352,6 +352,7 @@ namespace Stratego
                 // Only run if the placement succeeded
                 if (piecePlaced.Value)
                 {
+                    this.piecePlacing = this.factory.getPiece(this.piecePlacing.getPieceName(), this.game.turn);
                     //This makes it so it only repaints the rectangle where the piece is placed
                     Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
                     this.backPanel.Invalidate(r);

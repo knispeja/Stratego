@@ -160,7 +160,6 @@ namespace Stratego
             if (piece == null)
             {
                 // We are trying to remove
- 
                 if (pieceAtPos == null || pieceAtPos.getTeamCode() == NO_TEAM_CODE) return false;
                 if (pieceAtPos.getTeamCode() != this.turn) return false;
                 this.placements[pieceAtPos.getPieceName()]++;

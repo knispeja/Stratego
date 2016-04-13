@@ -17,8 +17,6 @@ namespace Stratego
             { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
         };
 
-        public Dictionary<int, Type> pieceTypes = new Dictionary<int, Type>();
-
         /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>

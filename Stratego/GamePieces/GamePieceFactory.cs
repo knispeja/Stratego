@@ -5,6 +5,22 @@ namespace Stratego.GamePieces
 {
     public class GamePieceFactory
     {
+        /// <summary>
+        /// The default amount of pieces for each piece. (EX: 0 0s; 1 1; 1 2; 2 3s; 4 4s; etc..)
+        /// </summary>
+        public static readonly Dictionary<String, int> defaults = new Dictionary<String, int>()
+        { { FlagPiece.FLAG_NAME, 1 }, { BombPiece.BOMB_NAME, 6 }, { SpyPiece.SPY_NAME, 1 },
+            { ScoutPiece.SCOUT_NAME, 8 }, { MinerPiece.MINER_NAME, 5 }, { SergeantPiece.SERGEANT_NAME, 4 },
+            {LieutenantPiece.LIEUTENANT_NAME, 4 }, {CaptainPiece.CAPTAIN_NAME, 4 }, { MajorPiece.MAJOR_NAME, 3}, { ColonelPiece.COLONEL_NAME, 2},
+            { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
+        };
+
+        /// <summary>
+        /// The array which holds information on how many pieces of each type can still be placed
+        /// </summary>
+        public Dictionary<String, int> placements;
+        private int minPieces = 0;
+
         private readonly Dictionary<String, Type> stringDict = new Dictionary<String, Type>();
         private readonly Dictionary<int, Type> intDict = new Dictionary<int, Type>();
         
@@ -61,6 +77,25 @@ namespace Stratego.GamePieces
             this.intDict.Add(numberRef, pieceType);
         }
 
+        public void resetPlacements()
+        {
+            this.placements = new Dictionary<string, int>();
+            foreach (string key in GamePieceFactory.defaults.Keys)
+            {
+                this.placements.Add(key, GamePieceFactory.defaults[key]);
+            }
+        }
+        /// <summary>
+        /// Retrieves the number of pieces still available for
+        /// placement of a given type
+        /// </summary>
+        /// <param name="piece">Type of the piece you want to check</param>
+        /// <returns>Number of pieces available for placement</returns>
+        public int getPiecesLeft(GamePiece piece)
+        {
+            return this.placements[piece.getPieceName()];
+        }
+
         public GamePiece getPiece(String identifier, int teamCode)
         {
             if (identifier.Equals(GamePiece.NULL_PIECE_NAME) || !this.stringDict.ContainsKey(identifier))
@@ -89,18 +124,19 @@ namespace Stratego.GamePieces
             return (GamePiece) ctors[0].Invoke(new object[] { teamCode });   
         }
 
-        //public Boolean canConstructFrom(Object obj)
-        //{
+        public void incrementPiecesLeft(String piece)
+        {
+            this.placements[piece]++;
+        }
 
-            //if (obj.GetType().Equals(typeof(int)) && this.intDict.ContainsKey((int)obj))
-            //{
-            //    return true;
-            //}
-            //else if (obj.GetType().Equals(typeof(String)) && this.stringDict.ContainsKey((String)obj))
-            //{
-            //    return true;
-            //}
-            //return false;
-        //}
+        public void decrementPiecesLeft(String piece)
+        {
+            this.placements[piece]--;
+        }
+        
+        public void setMinPieces(int min)
+        {
+            this.minPieces = min;
+        }
     }
 }

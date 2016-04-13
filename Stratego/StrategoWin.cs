@@ -270,7 +270,7 @@ namespace Stratego
                             int cornerY = y * row_inc + paddingY;
                             Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
 
-                            if (Math.Sign(this.game.turn) == Math.Sign(piece.getTeamCode()) || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
+                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
                             {
                                 Image imag = piece.getPieceImage();
                                 e.Graphics.DrawImage(imag, r);

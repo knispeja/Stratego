@@ -332,10 +332,8 @@ namespace Stratego
 
             if (this.game.preGameActive)
             {
-                bool piecePlaced = this.game.placePiece(this.piecePlacing, boardX, boardY);
-
                 // Only run if the placement succeeded
-                if (piecePlaced.Value)
+                if (this.game.placePiece(this.piecePlacing, boardX, boardY))
                 {
                     this.piecePlacing = this.factory.getPiece(this.piecePlacing.getPieceName(), this.game.turn);
                     //This makes it so it only repaints the rectangle where the piece is placed

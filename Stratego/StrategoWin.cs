@@ -243,7 +243,7 @@ namespace Stratego
                 int[,] pieceMoves = new int[num_rows, num_cols];
 
                 GamePiece selectedGamePiece = null;
-                if (BoardPosition.isNull(this.game.selectedPosition))
+                if (!BoardPosition.isNull(this.game.selectedPosition))
                 {
                     pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
                     selectedGamePiece = this.game.boardState.getPiece(this.game.selectedPosition);

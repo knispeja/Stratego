@@ -243,7 +243,7 @@ namespace Stratego
                 int[,] pieceMoves = new int[num_rows, num_cols];
 
                 GamePiece selectedGamePiece = null;
-                if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
+                if (BoardPosition.isNull(this.game.selectedPosition))
                 {
                     pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
                     selectedGamePiece = this.game.boardState.getPiece(this.game.selectedPosition);
@@ -351,7 +351,7 @@ namespace Stratego
                     this.donePlacingButton.Enabled = true;
                 }
             }
-            else if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
+            else if (!BoardPosition.isNull(this.game.selectedPosition))
             {
                 int[,] pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
 
@@ -384,7 +384,7 @@ namespace Stratego
                     for (int y = 0; y < this.game.boardState.getHeight(); y++)
                         if (pieceMoves[x, y] == 1)
                             this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
-                if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
+                if (!BoardPosition.isNull(this.game.selectedPosition))
                     pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
 
                 this.backPanel.Invalidate(new Rectangle((int) (e.X * scaleX) * scaleX, (int)(e.Y / scaleY) *scaleY, scaleX, scaleY));

@@ -29,9 +29,9 @@ namespace Stratego
             return this.y;
         }
 
-        public bool isNull()
+        public static bool isNull(BoardPosition bp)
         {
-            return this.Equals(BoardPosition.NULL_BOARD_POSITION);
+            return bp == null || bp.Equals(BoardPosition.NULL_BOARD_POSITION);
         }
 
         public override bool Equals(Object other)

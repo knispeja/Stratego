@@ -109,7 +109,7 @@
     <Compile Include="AI\AIGameboard.cs" />
     <Compile Include="AI\AIv2.cs" />
     <Compile Include="AI\GameTree.cs" />
-    <Compile Include="AI\Move.cs" />
+    <Compile Include="Move.cs" />
     <Compile Include="BattleBehaviors\BattleBehavior.cs" />
     <Compile Include="BoardPosition.cs" />
     <Compile Include="Gameboard.cs" />

@@ -347,7 +347,7 @@ namespace Stratego
 
             if (this.game.preGameActive)
             {
-                bool? piecePlaced = this.game.placePiece(this.piecePlacing, boardX, boardY);
+                bool piecePlaced = this.game.placePiece(this.piecePlacing, boardX, boardY);
 
                 // Only run if the placement succeeded
                 if (piecePlaced.Value)

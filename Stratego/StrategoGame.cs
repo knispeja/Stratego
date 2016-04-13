@@ -149,7 +149,7 @@ namespace Stratego
         /// <param name="x">x-coordinate you want to place it at</param>
         /// <param name="y">y-coordinate you want to place it at</param>
         /// <returns>Whether or not the placement was successful</returns>
-        public bool? placePiece(GamePiece piece, int x, int y)
+        public bool placePiece(GamePiece piece, int x, int y)
         {
             if (turn == 0 || Math.Abs(turn) == 2) return false;
             if (piece != null && piece.getTeamCode() != turn) return false;

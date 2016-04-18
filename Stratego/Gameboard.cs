@@ -107,11 +107,8 @@ namespace Stratego
                     if (oldPiece == null || oldPiece.getTeamCode() == teamCode)
                     {
                         if (newPiece != null)
-                        {
                             newPiece.setTeamCode(teamCode);
-                            newPiece.setXVal(col);
-                            newPiece.setYVal(row);
-                        }
+   
                         setPiece(col, row, newPiece);   
                     }
                 }

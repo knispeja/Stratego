@@ -84,20 +84,6 @@ namespace Stratego
             this.factory = new GamePieces.GamePieceFactory();
         }
 
-        /*
-
-        private static void MusicInBackground()
-        {
-            UnmanagedMemoryStream uM = Properties.Resources.BattleDramatic;
-            SoundPlayer sp = new SoundPlayer(uM);
-            while (true)
-            {
-                sp.PlaySync();
-            }
-        }
-
-        */
-
         /// <summary>
         /// Initializer for the testing framework.
         /// Excludes all GUI elements from initialization.
@@ -257,7 +243,7 @@ namespace Stratego
                 int[,] pieceMoves = new int[num_rows, num_cols];
 
                 GamePiece selectedGamePiece = null;
-                if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
+                if (!BoardPosition.isNull(this.game.selectedPosition))
                 {
                     pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
                     selectedGamePiece = this.game.boardState.getPiece(this.game.selectedPosition);
@@ -279,13 +265,12 @@ namespace Stratego
                         {
                             Brush b = new SolidBrush(piece.getPieceColor());
                             pen.Color = Color.FromArgb(200, 200, 255);
-                            // pen.Color = Color.FromArgb(255, 200, 200);
 
                             int cornerX = x * col_inc + paddingX;
                             int cornerY = y * row_inc + paddingY;
                             Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
 
-                            if (Math.Sign(this.game.turn) == Math.Sign(piece.getTeamCode()) || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
+                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
                             {
                                 Image imag = piece.getPieceImage();
                                 e.Graphics.DrawImage(imag, r);
@@ -347,10 +332,8 @@ namespace Stratego
 
             if (this.game.preGameActive)
             {
-                bool? piecePlaced = this.game.placePiece(this.piecePlacing, boardX, boardY);
-
                 // Only run if the placement succeeded
-                if (piecePlaced.Value)
+                if (this.game.placePiece(this.piecePlacing, boardX, boardY))
                 {
                     this.piecePlacing = this.factory.getPiece(this.piecePlacing.getPieceName(), this.game.turn);
                     //This makes it so it only repaints the rectangle where the piece is placed
@@ -368,7 +351,7 @@ namespace Stratego
                     this.donePlacingButton.Enabled = true;
                 }
             }
-            else if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
+            else if (!BoardPosition.isNull(this.game.selectedPosition))
             {
                 int[,] pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
 
@@ -395,14 +378,13 @@ namespace Stratego
             }
             else if (this.game.SelectPiece(boardX, boardY).Value)
             {
-                
                 //This makes it so it only repaints the rectangle where the piece is placed
                 int[,] pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
                 for (int x = 0; x < this.game.boardState.getWidth(); x++)
                     for (int y = 0; y < this.game.boardState.getHeight(); y++)
                         if (pieceMoves[x, y] == 1)
                             this.backPanel.Invalidate(new Rectangle(x * scaleX, y * scaleY, scaleX, scaleY));
-                if (this.game.selectedPosition != null && !this.game.selectedPosition.Equals(BoardPosition.NULL_BOARD_POSITION))
+                if (!BoardPosition.isNull(this.game.selectedPosition))
                     pieceMoves = this.game.GetPieceMoves(this.game.selectedPosition.getX(), this.game.selectedPosition.getY());
 
                 this.backPanel.Invalidate(new Rectangle((int) (e.X * scaleX) * scaleX, (int)(e.Y / scaleY) *scaleY, scaleX, scaleY));
@@ -417,7 +399,6 @@ namespace Stratego
         /// <param name="e"></param>
         private void backPanel_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            System.Diagnostics.Debug.Write(e.KeyCode);
             if (this.konami[this.konamiIndex] == e.KeyCode)
             {
                 konamiIndex++;
@@ -429,7 +410,6 @@ namespace Stratego
             }
             else
                 konamiIndex = 0;
-
 
             if (this.game.turn != 0 && !this.game.preGameActive)
             {
@@ -467,8 +447,6 @@ namespace Stratego
             }
             else if (this.game.preGameActive)
             {
-                KeysConverter kc = new KeysConverter();
-                string keyChar = kc.ConvertToString(e.KeyCode);
                 if (e.KeyCode == Keys.Escape)
                 {
                     //Make the escape/pause/options panel visible
@@ -476,16 +454,13 @@ namespace Stratego
                 }
                 else if (e.KeyCode == Keys.ShiftKey)
                 {
-                    // Either open or close the side panel depending on whatever
-                    if (this.SidePanel.Visible)
-                    {
-                        this.SidePanelOpenButton.Text = "Open Side";
-                    }
-                    else
-                        this.SidePanelOpenButton.Text = "Close Side";
-                    this.SidePanel.Visible = !this.SidePanel.Visible;
+                    toggleSidePanelOpen();
                 }
+
                 double num;
+                KeysConverter kc = new KeysConverter();
+                string keyChar = kc.ConvertToString(e.KeyCode);
+
                 if (double.TryParse(keyChar, out num))
                 {
                     this.piecePlacing = this.factory.getPiece((int)num, this.game.turn);
@@ -504,15 +479,12 @@ namespace Stratego
         /// <param name="e"></param>
         private void SidePanelOpenButton_MouseClick(object sender, MouseEventArgs e)
         {
-            //Makes the side panel open when the button is clicked
-            if (this.SidePanel.Visible)
-            {
-                this.SidePanelOpenButton.Text = "Open Side";
-            }
-            else
-            {
-                this.SidePanelOpenButton.Text = "Close Side";
-            }
+            toggleSidePanelOpen();
+        }
+
+        private void toggleSidePanelOpen()
+        {
+            this.SidePanelOpenButton.Text = this.SidePanel.Visible ? "Open Side" : "Close Side";
             this.SidePanel.Visible = !this.SidePanel.Visible;
         }
 

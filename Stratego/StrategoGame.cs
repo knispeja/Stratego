@@ -17,8 +17,6 @@ namespace Stratego
             { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
         };
 
-        public Dictionary<int, Type> pieceTypes = new Dictionary<int, Type>();
-
         /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>
@@ -149,7 +147,7 @@ namespace Stratego
         /// <param name="x">x-coordinate you want to place it at</param>
         /// <param name="y">y-coordinate you want to place it at</param>
         /// <returns>Whether or not the placement was successful</returns>
-        public bool? placePiece(GamePiece piece, int x, int y)
+        public bool placePiece(GamePiece piece, int x, int y)
         {
             if (turn == 0 || Math.Abs(turn) == 2) return false;
             if (piece != null && piece.getTeamCode() != turn) return false;
@@ -160,7 +158,6 @@ namespace Stratego
             if (piece == null)
             {
                 // We are trying to remove
- 
                 if (pieceAtPos == null || pieceAtPos.getTeamCode() == NO_TEAM_CODE) return false;
                 if (pieceAtPos.getTeamCode() != this.turn) return false;
                 this.placements[pieceAtPos.getPieceName()]++;

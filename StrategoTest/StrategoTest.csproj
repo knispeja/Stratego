@@ -106,8 +106,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameBoardTests.cs" />
-    <Compile Include="GameTest.cs" />
-    <Compile Include="MainTest.cs" />
     <Compile Include="MovementTest.cs" />
     <Compile Include="PieceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

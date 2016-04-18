@@ -168,5 +168,15 @@ namespace Stratego
         {
             this.yVal = newY;
         }
+
+        public void setAttackBehavior(BattleBehavior newBB)
+        {
+            this.attackBehavior = newBB;
+        }
+
+        public void setDefendBehavior(BattleBehavior newBB)
+        {
+            this.defendBehavior = newBB;
+        }
     }
 }

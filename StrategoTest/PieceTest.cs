@@ -2,6 +2,8 @@
 using Stratego;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Stratego.GamePieces;
+using Stratego.BattleBehaviors;
 
 namespace StrategoTest
 {
@@ -208,6 +210,30 @@ namespace StrategoTest
             GamePiece a2 = new SergeantPiece(0);
             GamePiece d2 = new MinerPiece(1);
             Assert.AreEqual(SergeantPiece.SERGEANT_RANK, returnExpectedOnAttack(a2, d2));
+        }
+
+        [TestCase()]
+        public void TestBondVersusBond()
+        {
+            GamePiece a1 = new BondTierSpyPiece(0);
+            GamePiece d1 = new BondTierSpyPiece(1);
+            Assert.AreEqual(BOTH_DEAD, returnExpectedOnAttack(a1, d1));
+            GamePiece a2 = new BondTierSpyPiece(0);
+            GamePiece d2 = new BondTierSpyPiece(1);
+            Assert.AreEqual(BOTH_DEAD, returnExpectedOnAttack(a2, d2));
+        }
+
+        [TestCase()]
+        public void TestBondVersusMarshall()
+        {
+            GamePiece a1 = new BondTierSpyPiece(0);
+            GamePiece d1 = new MarshallPiece(1);
+            d1.setDefendBehavior(new DiesToSpyNotBond());
+            Assert.AreEqual(MarshallPiece.MARSHALL_RANK, returnExpectedOnAttack(a1, d1));
+            GamePiece a2 = new MarshallPiece(0);
+            GamePiece d2 = new BondTierSpyPiece(1);
+            a2.setDefendBehavior(new DiesToSpyNotBond());
+            Assert.AreEqual(MarshallPiece.MARSHALL_RANK, returnExpectedOnAttack(a2, d2));
         }
 
         public int returnExpectedOnAttack(GamePiece a, GamePiece b)

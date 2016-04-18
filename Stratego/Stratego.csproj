@@ -109,6 +109,9 @@
     <Compile Include="AI\AIGameboard.cs" />
     <Compile Include="AI\AIv2.cs" />
     <Compile Include="AI\GameTree.cs" />
+    <Compile Include="BattleBehaviors\DiesToBondAndMarshall.cs" />
+    <Compile Include="BattleBehaviors\DiesToSpyNotBond.cs" />
+    <Compile Include="GamePieces\BondTierSpyPiece.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="BattleBehaviors\BattleBehavior.cs" />
     <Compile Include="BoardPosition.cs" />
@@ -357,6 +360,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlueBond.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RedBond.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

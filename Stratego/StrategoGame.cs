@@ -475,6 +475,7 @@ namespace Stratego
             }
             return moveArray;
         }
+
         public Boolean checkMoves()
         {
             for (int x1 = 0; x1 < this.boardState.getWidth(); x1++)

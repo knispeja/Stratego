@@ -82,6 +82,12 @@ namespace Stratego.GamePieces
             this.intDict.Add(numberRef, pieceType);
         }
 
+        public void addPieceForPlacements(String identifier, int numberRef, Type pieceType, int numAllowed)
+        {
+            this.addPieceToFactory(identifier, numberRef, pieceType);
+            this.setMinPieces(this.minPieces + numAllowed);
+        }
+
         public void resetPlacements()
         {
             this.placements = new Dictionary<string, int>();

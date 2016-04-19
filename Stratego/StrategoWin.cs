@@ -270,13 +270,12 @@ namespace Stratego
                                 {
                                     pen.Color = Color.FromArgb(10, 255, 10);
                                 }
-                                g.DrawRectangle(pen, r);
                             }
                             else
                             {
-                                g.DrawRectangle(pen, r);
                                 g.FillRectangle(b, r);
                             }
+                            g.DrawRectangle(pen, r);
                             b.Dispose();
                             
                         }

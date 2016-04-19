@@ -20,7 +20,7 @@ namespace Stratego.GamePieces
             this.pieceName = BOND_NAME;
             this.attackBehavior = new DiesToBondAndMarshall();
             this.defendBehavior = new DiesToBondAndMarshall();
-            this.limitToMovement = 0;
+            this.limitToMovement = 2;
             this.movable = false;
         }
 

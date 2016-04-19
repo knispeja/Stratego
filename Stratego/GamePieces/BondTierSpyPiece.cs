@@ -21,7 +21,7 @@ namespace Stratego.GamePieces
             this.attackBehavior = new DiesToBondAndMarshall();
             this.defendBehavior = new DiesToBondAndMarshall();
             this.limitToMovement = 2;
-            this.movable = false;
+            this.movable = true;
         }
 
         public override Image getPieceImage()

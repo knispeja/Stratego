@@ -60,13 +60,13 @@ namespace StrategoTest
             Assert.AreEqual(level, saveData.level);
         }
 
-        [TestCase(10, 10, 2)]
-        [TestCase(14, 9, 7)]
-        [TestCase(10, 10, 1)]
-        [TestCase(3, 100, 4)]
-        [TestCase(11, 20, 2)]
-        [TestCase(10, 43, 7)]
-        [TestCase(5, 10, 10)]
+        [TestCase(10, 10, 4, 2)]
+        [TestCase(14, 9, 9, 7)]
+        [TestCase(10, 10, 10, 1)]
+        [TestCase(3, 100, 11, 4)]
+        [TestCase(11, 20, 3, 2)]
+        [TestCase(10, 43, 5, 7)]
+        [TestCase(5, 10, 8, 10)]
         public void TestLoadSetupDataBlueTeam(int gbW, int gbH, int minPieces, int placeSeed)
         {
             Gameboard board = new Gameboard(gbW, gbH);
@@ -109,58 +109,61 @@ namespace StrategoTest
 
             Assert.AreEqual(minPieces, data.minPieces);
             Assert.AreEqual(expPlacements, data.getPlacementsDictionary());
-            Assert.AreEqual(expPlacements, data.getPlacementsDictionary()); // This is supposed to be here twice to make sure SetupData works properly
+            Assert.AreEqual(expPlacements, data.getPlacementsDictionary()); // This call is supposed to be here twice!
         }
 
-        //[TestCase(10, 10, 2)]
-        //[TestCase(14, 9, 7)]
-        //[TestCase(10, 10, 1)]
-        //[TestCase(3, 100, 4)]
-        //[TestCase(11, 20, 2)]
-        //[TestCase(10, 43, 7)]
-        //[TestCase(5, 10, 10)]
-        //public void TestLoadSetupDataRedTeam(int gbW, int gbH, int placeSeed)
-        //{
-        //    Gameboard board = new Gameboard(gbW, gbH);
+        // Breaks on non-square tests :(
+        // [TestCase(15, 6, 2)]
+        // [TestCase(5, 22, 8)]
+        [TestCase(10, 10, 2)]
+        [TestCase(9, 9, 7)]
+        [TestCase(11, 11, 1)]
+        [TestCase(3, 3, 4)]
+        [TestCase(20, 20, 2)]
+        [TestCase(43, 43, 7)]
+        [TestCase(5, 5, 10)]
+        public void TestLoadSetupDataRedTeam(int gbW, int gbH, int placeSeed)
+        {
+            Gameboard board = new Gameboard(gbW, gbH);
 
-        //    Dictionary<string, int> expPlacements = new Dictionary<string, int>();
-        //    expPlacements.Add("big!", placeSeed * 100);
-        //    expPlacements.Add("stupid", placeSeed);
-        //    expPlacements.Add("dumb", placeSeed + 2);
-        //    expPlacements.Add("genius omg", placeSeed + 1);
-        //    expPlacements.Add("why is this here", placeSeed + 1000);
+            Dictionary<string, int> expPlacements = new Dictionary<string, int>();
+            expPlacements.Add("big!", placeSeed * 100);
+            expPlacements.Add("stupid", placeSeed);
+            expPlacements.Add("dumb", placeSeed + 2);
+            expPlacements.Add("genius omg", placeSeed + 1);
+            expPlacements.Add("why is this here", placeSeed + 1000);
 
-        //    SetupData data = new SetupData(board, expPlacements, -1);
-        //    SaveLoadOperations.storeData(TEST_FILE_NAME + SaveLoadOperations.SETUP_FILE_EXTENSION, data);
-        //    data = SaveLoadOperations.loadSetupData(TEST_FILE_NAME + SaveLoadOperations.SETUP_FILE_EXTENSION);
+            SetupData data = new SetupData(board, expPlacements, 5, -1);
+            SaveLoadOperations.storeData(TEST_FILE_NAME + SaveLoadOperations.SETUP_FILE_EXTENSION, data);
+            data = SaveLoadOperations.loadSetupData(TEST_FILE_NAME + SaveLoadOperations.SETUP_FILE_EXTENSION);
 
-        //    Assert.AreEqual(gbW, data.boardState.getWidth());
-        //    Assert.AreEqual(gbH, data.boardState.getHeight());
+            Assert.AreEqual(gbW, data.boardState.getWidth());
+            Assert.AreEqual(gbH, data.boardState.getHeight());
 
-        //    for (int row = 0; row < gbH; row++)
-        //    {
-        //        for (int col = 0; col < gbW; col++)
-        //        {
-        //            GamePiece expectedPiece = board.getPiece(row, gbH - col - 1);
-        //            GamePiece actualPiece = data.boardState.getPiece(gbW - row - 1, col);
-        //            if (expectedPiece == null)
-        //                Assert.IsNull(actualPiece);
-        //            else
-        //            {
-        //                Assert.AreEqual(expectedPiece.GetType(), actualPiece.GetType());
-        //                Assert.AreEqual(expectedPiece.getPieceRank(), actualPiece.getPieceRank());
-        //                Assert.AreEqual(expectedPiece.getPieceColor(), actualPiece.getPieceColor());
-        //                Assert.AreEqual(expectedPiece.getPieceImage().Size, actualPiece.getPieceImage().Size);
-        //                Assert.AreEqual(expectedPiece.getLimitToMovement(), actualPiece.getLimitToMovement());
-        //                Assert.AreEqual(expectedPiece.getTeamCode(), actualPiece.getTeamCode());
-        //                Assert.AreEqual(expectedPiece.isEssential(), actualPiece.isEssential());
-        //                Assert.AreEqual(expectedPiece.getPieceName(), actualPiece.getPieceName());
-        //            }
-        //        }
-        //    }
+            for (int row = 0; row < gbH; row++)
+            {
+                for (int col = 0; col < gbW; col++)
+                {
+                    GamePiece expectedPiece = board.getPiece(row, gbH - col - 1);
+                    GamePiece actualPiece = data.boardState.getPiece(gbW - row - 1, col);
+                    if (expectedPiece == null)
+                        Assert.IsNull(actualPiece);
+                    else
+                    {
+                        Assert.AreEqual(expectedPiece.GetType(), actualPiece.GetType());
+                        Assert.AreEqual(expectedPiece.getPieceRank(), actualPiece.getPieceRank());
+                        Assert.AreEqual(expectedPiece.getPieceColor(), actualPiece.getPieceColor());
+                        Assert.AreEqual(expectedPiece.getPieceImage().Size, actualPiece.getPieceImage().Size);
+                        Assert.AreEqual(expectedPiece.getLimitToMovement(), actualPiece.getLimitToMovement());
+                        Assert.AreEqual(expectedPiece.getTeamCode(), actualPiece.getTeamCode());
+                        Assert.AreEqual(expectedPiece.isEssential(), actualPiece.isEssential());
+                        Assert.AreEqual(expectedPiece.getPieceName(), actualPiece.getPieceName());
+                    }
+                }
+            }
 
-        //    Assert.AreEqual(expPlacements, data.getPlacementsDictionary());
-        //    Assert.AreEqual(expPlacements, data.getPlacementsDictionary()); // This is supposed to be here twice to make sure SetupData works properly
-        //}
+            Assert.AreEqual(expPlacements, data.getPlacementsDictionary());
+            Assert.AreEqual(expPlacements, data.getPlacementsDictionary()); // This is supposed to be here twice to make sure SetupData works properly
+        }
     }
 }

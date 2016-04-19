@@ -76,6 +76,7 @@ namespace Stratego
 
         /// <summary>
         /// Flips the board upside down
+        /// TODO: doesn't work on non-square boards
         /// (the bottom-right piece becomes the top-left)
         /// </summary>
         public void flipBoard()
@@ -83,9 +84,9 @@ namespace Stratego
             GamePiece[,] oldBoard = this.board;
             this.board = new GamePiece[this.width, this.height];
 
-            for (int x = 0; x < this.height; ++x)
+            for (int x = 0; x < this.width; ++x)
             {
-                for (int y = 0; y < this.width; ++y)
+                for (int y = 0; y < this.height; ++y)
                 {
                     this.board[y, this.height - x - 1] = oldBoard[this.width - y - 1, x];
                 }

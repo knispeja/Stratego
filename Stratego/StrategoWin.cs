@@ -771,7 +771,9 @@ namespace Stratego
             List<String> strList = new List<String>();
             strList.Add(BondTierSpyPiece.BOND_NAME);
             strList.Add("O");
-            
+            strList.Add("o");
+            this.game.factory.addNamesForPiece(strList, typeof(BondTierSpyPiece));
+            this.game.factory.addPieceToPlacements(BondTierSpyPiece.BOND_NAME, typeof(BondTierSpyPiece), 2);
         }
 
         /// <summary>

@@ -569,7 +569,7 @@ namespace Stratego
             else
             {
                 this.game.boardState = new Gameboard(this.game.boardState.getWidth(), this.game.boardState.getHeight());
-                for (int row = 0; row < 6; row++) this.game.boardState.fillRow(null, row);
+
                 this.game.turn = 0;
                 this.game.preGameActive = true;
                 this.game.resetPlacements();

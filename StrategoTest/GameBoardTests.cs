@@ -22,10 +22,6 @@ namespace StrategoTest
             Assert.AreEqual(null, g.getPiece(0, 0));
             g.setPiece(0, 0, new SpyPiece(1));
             Assert.AreEqual(SpyPiece.SPY_RANK, g.getPiece(0, 0).getPieceRank());
-
-            g.fillRow(null, 0);
-
-            Assert.AreEqual(null, g.getPiece(0, 0));
         }
     }
 }

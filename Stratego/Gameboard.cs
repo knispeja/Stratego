@@ -171,17 +171,6 @@ namespace Stratego
             return this.board[x, y];
         }
 
-        /// <summary>
-        /// Fills the given row in the board state with the given value
-        /// </summary>
-        /// <param name="piece"></param>
-        /// <param name="row"></param>
-        public void fillRow(GamePiece piece, int row)
-        {
-            for (int x = 0; x < this.width; x++)
-                setPiece(x, row, piece);
-        }
-
         public BoardPosition getPositionOfPiece(GamePiece piece)
         {
             for (int i = 0; i<this.width; i++)

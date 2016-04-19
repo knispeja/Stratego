@@ -83,7 +83,11 @@ namespace Stratego
             }
 
             boardState = new Gameboard(10, 10);
-            for (int row = 0; row < 6; row++) this.boardState.fillRow(new ObstaclePiece(0), row);
+            for (int row = 0; row < 6; row++)
+            {
+                for (int col = 0; col < 10; col++)
+                    this.boardState.setPiece(col, row, new ObstaclePiece(0));
+            }
 
             //      this.ai = new AI_Old(this, -1);
 

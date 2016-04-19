@@ -6,6 +6,7 @@ using System.Media;
 using System.IO;
 using System.Drawing.Drawing2D;
 using Stratego.GamePieces;
+using System.Collections.Generic;
 
 namespace Stratego
 {
@@ -767,8 +768,12 @@ namespace Stratego
             this.movableBombCB.Enabled = true;
             this.movableFlagCB.Enabled = true;
             this.game.skippableLevels = true;
-            this.game.factory.addPieceToFactory(BondTierSpyPiece.BOND_NAME, BondTierSpyPiece.BOND_RANK, typeof(BondTierSpyPiece));
-            this.game.factory.addPieceToFactory("O", BondTierSpyPiece.BOND_RANK, typeof(BondTierSpyPiece));
+            List<String> strList = new List<String>();
+            strList.Add(BondTierSpyPiece.BOND_NAME);
+            strList.Add("O");
+            strList.Add("o");
+            this.game.factory.addNamesForPiece(strList, typeof(BondTierSpyPiece));
+            this.game.factory.addPieceToPlacements(BondTierSpyPiece.BOND_NAME, typeof(BondTierSpyPiece), 2);
         }
 
         /// <summary>

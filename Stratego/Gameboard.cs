@@ -83,9 +83,9 @@ namespace Stratego
             GamePiece[,] oldBoard = this.board;
             this.board = new GamePiece[this.width, this.height];
 
-            for (int x = 0; x < this.width; ++x)
+            for (int x = 0; x < this.height; ++x)
             {
-                for (int y = 0; y < this.height; ++y)
+                for (int y = 0; y < this.width; ++y)
                 {
                     this.board[y, this.height - x - 1] = oldBoard[this.width - y - 1, x];
                 }

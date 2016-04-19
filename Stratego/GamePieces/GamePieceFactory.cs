@@ -19,7 +19,8 @@ namespace Stratego.GamePieces
         /// The array which holds information on how many pieces of each type can still be placed
         /// </summary>
         public Dictionary<String, int> placements;
-        private int minPieces = 0;
+        public int minPieces = 0;
+        private Dictionary<String, int> addedPieces;
 
         private readonly Dictionary<String, Type> stringDict = new Dictionary<String, Type>();
         private readonly Dictionary<int, Type> intDict = new Dictionary<int, Type>();
@@ -73,6 +74,7 @@ namespace Stratego.GamePieces
 
             this.intDict.Add(0, null);
 
+            this.addedPieces = new Dictionary<String, int>();
             this.resetPlacements();
         }
 
@@ -80,17 +82,30 @@ namespace Stratego.GamePieces
         {
             foreach (String iden in names)
             {
-                this.stringDict.Add(iden, pieceType);
+                if (!this.stringDict.ContainsKey(iden))
+                {
+                    this.stringDict.Add(iden, pieceType);
+                }
             }
         }
         public void addNumForPiece(int numberRef, Type pieceType)
         {
-            this.intDict.Add(numberRef, pieceType);
+            if (!this.intDict.ContainsKey(numberRef))
+            {
+                this.intDict.Add(numberRef, pieceType);
+            }
         }
         public void addPieceToPlacements(String name, Type pieceType, int numAllowed)
         {
-            this.stringDict.Add(name, pieceType);
+            if(!this.stringDict.ContainsKey(name))
+            {
+                this.stringDict.Add(name, pieceType);
+            }
             this.placements.Add(name, numAllowed);
+            if (!this.addedPieces.ContainsKey(name))
+            {
+                this.addedPieces.Add(name, numAllowed);
+            }
             this.setMinPieces(this.minPieces + numAllowed);
         }
 
@@ -100,6 +115,11 @@ namespace Stratego.GamePieces
             foreach (string key in GamePieceFactory.defaults.Keys)
             {
                 this.placements.Add(key, GamePieceFactory.defaults[key]);
+            }
+            this.setMinPieces(0);
+            foreach (string key in this.addedPieces.Keys)
+            {
+                this.addPieceToPlacements(key, null, this.addedPieces[key]);
             }
         }
         /// <summary>

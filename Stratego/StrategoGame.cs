@@ -356,89 +356,47 @@ namespace Stratego
             int spacesPossible = pieceInQuestion.getLimitToMovement();
             if (spacesPossible == int.MaxValue)
                 spacesPossible = Math.Max(this.boardState.getHeight(), this.boardState.getWidth());
+            moveArray = moveArrayAdjust(startingX + 1, boardState.getWidth(), 1, startingY, true, pieceInQuestion, moveArray, startingX + spacesPossible);
+            moveArray = moveArrayAdjust(startingX - 1, 0, -1, startingY, false, pieceInQuestion, moveArray, startingX - spacesPossible);
+            moveArray = moveArrayAdjust(startingY + 1, boardState.getHeight(), 1, startingX, false, pieceInQuestion, moveArray, startingY + spacesPossible);
+            moveArray = moveArrayAdjust(startingY - 1, 0, -1, startingX, true, pieceInQuestion, moveArray, startingY - spacesPossible);
+            return moveArray;
+        }
+
+        private int[,] moveArrayAdjust(int starting, int ending, int sign, int invariable, Boolean right, GamePiece pieceInQuestion, int[,] moveArray, int stopNum)
+        {
+            int posX;
+            int posY;
             GamePiece potenPiece = null;
-            for (int k = startingX+1; k < boardState.getWidth(); k++)
+            for (int i = starting; (i * sign) < (sign * ending); i += sign)
             {
-                if ( k > startingX + spacesPossible)
+                if ((sign * i) > (sign *stopNum))
                 {
-                    break;
+                    return moveArray;
                 }
-                potenPiece = boardState.getPiece(k, startingY);
+                if (right)
+                {
+                    posX = i;
+                    posY = invariable;
+                }
+                else
+                {
+                    posX = invariable;
+                    posY = i;
+                }
+                potenPiece = boardState.getPiece(posX, posY);
                 if (potenPiece == null)
                 {
-                    moveArray[k, startingY] = 1;
+                    moveArray[posX, posY] = 1;
                 }
                 else if (pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
                 {
-                    moveArray[k, startingY] = 1;
-                    break;
+                    moveArray[posX, posY] = 1;
+                    return moveArray;
                 }
                 else
                 {
-                    break;
-                }
-            }
-            for (int i = startingX-1; i>=0; i--)
-            {
-                if (i < startingX - spacesPossible)
-                {
-                    break;
-                }
-                potenPiece = boardState.getPiece(i, startingY);
-                if (potenPiece == null )
-                {
-                    moveArray[i, startingY] = 1;
-                }
-                else if (pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
-                {
-                    moveArray[i, startingY] = 1;
-                    break;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            for (int j = startingY+1; j< boardState.getHeight(); j++)
-            {
-                if (j > startingY + spacesPossible)
-                {
-                    break;
-                }
-                potenPiece = boardState.getPiece(startingX, j);
-                if (potenPiece == null )
-                {
-                    moveArray[startingX, j] = 1;
-                }
-                else if (pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
-                {
-                    moveArray[startingX, j] = 1;
-                    break;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            for (int d = startingY-1; d >= 0; d--)
-            {
-                if (d < startingY - spacesPossible)
-                {
-                    break;
-                }
-                potenPiece = boardState.getPiece(startingX, d);
-                if (potenPiece == null)
-                {
-                    moveArray[startingX, d] = 1;
-                }
-                else if (pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
-                {
-                    moveArray[startingX, d] = 1;
-                    break;
-                }
-                else
-                {
-                    break;
+                    return moveArray;
                 }
             }
             return moveArray;

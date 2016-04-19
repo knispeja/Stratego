@@ -919,6 +919,7 @@ namespace Stratego
             return new SetupData(
                 this.game.boardState,
                 this.game.getPlacements(),
+                this.game.factory.minPieces,
                 this.game.turn
                 );
         }
@@ -928,6 +929,8 @@ namespace Stratego
             Gameboard setupBoard = data.boardState;
             if (this.game.turn == StrategoGame.RED_TEAM_CODE)
                 setupBoard.flipBoard();
+
+            this.game.factory.setMinPieces(data.minPieces);
 
             this.game.boardState.overridePiecesOfTeam(setupBoard, this.game.turn);
            

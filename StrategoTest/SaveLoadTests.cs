@@ -67,7 +67,7 @@ namespace StrategoTest
         [TestCase(11, 20, 2)]
         [TestCase(10, 43, 7)]
         [TestCase(5, 10, 10)]
-        public void TestLoadSetupDataBlueTeam(int gbW, int gbH, int placeSeed)
+        public void TestLoadSetupDataBlueTeam(int gbW, int gbH, int minPieces, int placeSeed)
         {
             Gameboard board = new Gameboard(gbW, gbH);
 
@@ -78,7 +78,7 @@ namespace StrategoTest
             expPlacements.Add("genius omg", placeSeed + 1);
             expPlacements.Add("why is this here", placeSeed + 1000);
 
-            SetupData data = new SetupData(board, expPlacements, 1);
+            SetupData data = new SetupData(board, expPlacements, minPieces, 1);
             SaveLoadOperations.storeData(TEST_FILE_NAME + SaveLoadOperations.SETUP_FILE_EXTENSION, data);
             data = SaveLoadOperations.loadSetupData(TEST_FILE_NAME + SaveLoadOperations.SETUP_FILE_EXTENSION);
 
@@ -107,6 +107,7 @@ namespace StrategoTest
                 }
             }
 
+            Assert.AreEqual(minPieces, data.minPieces);
             Assert.AreEqual(expPlacements, data.getPlacementsDictionary());
             Assert.AreEqual(expPlacements, data.getPlacementsDictionary()); // This is supposed to be here twice to make sure SetupData works properly
         }

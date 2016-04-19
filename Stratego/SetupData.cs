@@ -15,14 +15,16 @@ namespace Stratego
         private string placementsString;
 
         public Gameboard boardState { get; private set; }
+        public int minPieces { get; private set; }
         public int turn { get; private set; }
 
-        public SetupData(Gameboard boardState, Dictionary<String, int> placements, int turn)
+        public SetupData(Gameboard boardState, Dictionary<String, int> placements, int minPieces, int turn)
         {
             this.boardState = boardState;
             if (turn == StrategoGame.RED_TEAM_CODE)
                 this.boardState.flipBoard();
 
+            this.minPieces = minPieces;
             this.turn = turn;
             this.placements = placements;
             this.placementsString = convertDictionaryToString(this.placements);

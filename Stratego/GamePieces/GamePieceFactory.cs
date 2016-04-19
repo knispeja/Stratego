@@ -76,15 +76,21 @@ namespace Stratego.GamePieces
             this.resetPlacements();
         }
 
-        public void addPieceToFactory(String identifier, int numberRef, Type pieceType)
+        public void addNamesForPiece(List<String> names, Type pieceType)
         {
-            this.stringDict.Add(identifier, pieceType);
+            foreach (String iden in names)
+            {
+                this.stringDict.Add(iden, pieceType);
+            }
+        }
+        public void addNumForPiece(int numberRef, Type pieceType)
+        {
             this.intDict.Add(numberRef, pieceType);
         }
-
-        public void addPieceForPlacements(String identifier, int numberRef, Type pieceType, int numAllowed)
+        public void addPieceToPlacements(String name, Type pieceType, int numAllowed)
         {
-            this.addPieceToFactory(identifier, numberRef, pieceType);
+            this.stringDict.Add(name, pieceType);
+            this.placements.Add(name, numAllowed);
             this.setMinPieces(this.minPieces + numAllowed);
         }
 

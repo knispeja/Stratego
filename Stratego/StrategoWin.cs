@@ -25,11 +25,17 @@ namespace Stratego
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>
         public int level { get; set; }
+
         /// <summary>
         /// List of all images for campaign levels
         /// </summary>
-        private readonly Bitmap[] levelImages = new Bitmap[] { Properties.Resources.Level1Map, Properties.Resources.Level2Map, Properties.Resources.Level3Map,
-            Properties.Resources.Level4Map, Properties.Resources.Level5Map};
+        private readonly Bitmap[] levelImages = new Bitmap[] { 
+            Properties.Resources.Level1Map, 
+            Properties.Resources.Level2Map, 
+            Properties.Resources.Level3Map,
+            Properties.Resources.Level4Map, 
+            Properties.Resources.Level5Map
+        };
 
         /// <summary>
         /// Placeholder for which button on the placement side panel is being used
@@ -109,9 +115,9 @@ namespace Stratego
             this.FireBox.Dispose();
             
             this.game.resetPlacements();
-            this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
-
             this.game.nextTurn();
+            updateBackgroundImage();
+
             this.LoadButton.Visible = false;
             this.LoadButton.Enabled = false;
             this.ExitMainButton.Visible = false;
@@ -789,7 +795,6 @@ namespace Stratego
 
             this.game.preGameActive = false;
 
-            this.backPanel.BackgroundImage = this.levelImages[level - 1];
             if (this.game.turn == -2) this.NextTurnButton.Text = "Player 1's Turn";
             else this.NextTurnButton.Text = "AI's Turn";
             this.NextTurnButton.Visible = true;
@@ -802,7 +807,7 @@ namespace Stratego
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
-            this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
+            updateBackgroundImage();
             this.LoadButton.Visible = false;
             this.LoadButton.Enabled = false;
             this.ExitMainButton.Visible = false;
@@ -818,7 +823,7 @@ namespace Stratego
         }
 
         /// <summary>
-        /// A trigger that activates when the SaveButton in the main menu is pressed
+        /// A trigger that activates when the on in the main menu is pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -826,7 +831,6 @@ namespace Stratego
         {
             // if ((this.game.turn == 0) || (this.game.preGameActive) || (Math.Abs(this.game.turn) == 2)) return; // TODO: this line may be necessary?
             SaveLoadOperations.saveGame(getSaveData());
-            //SaveLoadOperations.updateOldSavefile();
         }
 
         /// <summary>
@@ -842,7 +846,7 @@ namespace Stratego
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
-            this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
+            updateBackgroundImage();
             this.LoadButton.Visible = false;
             this.LoadButton.Enabled = false;
             this.ExitMainButton.Visible = false;
@@ -878,7 +882,8 @@ namespace Stratego
                 //this.game.ai.difficulty,
                 0,
                 this.game.turn,
-                this.game.isSinglePlayer
+                this.game.isSinglePlayer,
+                this.level
                 );
         }
 
@@ -890,6 +895,8 @@ namespace Stratego
             this.game.boardState = data.boardState;
             this.game.turn = data.turn;
             this.game.isSinglePlayer = data.isSinglePlayer;
+            this.level = data.level;
+            updateBackgroundImage();
 
             return true;
 
@@ -935,6 +942,14 @@ namespace Stratego
         {
             this.SidePanelOpenButton.Visible = visible;
             this.SidePanel.Visible = visible;
+        }
+
+        public void updateBackgroundImage()
+        {
+            if (this.level > 0)
+                this.backPanel.BackgroundImage = this.levelImages[this.level - 1];
+            else
+                this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
         }
     }
 }

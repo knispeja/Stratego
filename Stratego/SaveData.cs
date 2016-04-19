@@ -13,13 +13,15 @@ namespace Stratego
         public int difficulty { get; private set; }
         public int turn { get; private set; }
         public bool isSinglePlayer { get; private set; }
+        public int level { get; private set; }
 
-        public SaveData(Gameboard boardState, int difficulty, int turn, bool isSinglePlayer)
+        public SaveData(Gameboard boardState, int difficulty, int turn, bool isSinglePlayer, int level)
         {
             this.boardState = boardState;
             this.difficulty = difficulty;
             this.turn = turn;
             this.isSinglePlayer = isSinglePlayer;
+            this.level = level;
         }
     }
 }

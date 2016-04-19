@@ -7,12 +7,6 @@ namespace Stratego
 {
     public class StrategoGame
     {
-
-        /// <summary>
-        /// Current level of the game. Equals -1 if not in campaign mode
-        /// </summary>
-        public int level { get; set; }
-
         /// <summary>
         /// The 2DArray full of all pieces on the board
         /// </summary>
@@ -81,7 +75,6 @@ namespace Stratego
             this.lastFought = new Point(-1, -1);
             this.movableBombs = false;
             this.movableFlags = false;
-            this.level = -1;
             this.callback = callback;
 
             for(int i = 0; i < KILL_FEED_SIZE; i++)

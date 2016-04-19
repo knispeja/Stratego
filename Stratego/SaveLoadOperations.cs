@@ -150,7 +150,11 @@ namespace Stratego
 
                 file.Close();
 
-                storeData(dialog.FileName + "_new", new SaveData(board, 5, 1, true));
+                throw new NotImplementedException(); 
+                /* Hi there! Before using this method, replace 0 in the below method call with
+                 * the level number of the file that you are converting. If it is just a normal
+                 * preset level file, make the level -1 (I think, unless we change that...) */
+                storeData(dialog.FileName + "_new", new SaveData(board, 5, 1, true, 0));
             }
         }
 

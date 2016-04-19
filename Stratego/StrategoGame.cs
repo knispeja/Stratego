@@ -356,32 +356,36 @@ namespace Stratego
             int spacesPossible = pieceInQuestion.getLimitToMovement();
             if (spacesPossible == int.MaxValue)
                 spacesPossible = Math.Max(this.boardState.getHeight(), this.boardState.getWidth());
-            moveArray = moveArrayAdjust(startingX + 1, boardState.getWidth(), 1, startingY, true, pieceInQuestion, moveArray, startingX + spacesPossible);
-            moveArray = moveArrayAdjust(startingX - 1, 0, -1, startingY, false, pieceInQuestion, moveArray, startingX - spacesPossible);
-            moveArray = moveArrayAdjust(startingY + 1, boardState.getHeight(), 1, startingX, false, pieceInQuestion, moveArray, startingY + spacesPossible);
-            moveArray = moveArrayAdjust(startingY - 1, 0, -1, startingX, true, pieceInQuestion, moveArray, startingY - spacesPossible);
+            MovementGrouping rightForward = new MovementGrouping(startingX + 1, boardState.getWidth(), startingY, true, startingX + spacesPossible);
+            MovementGrouping rightBackward = new MovementGrouping(startingX - 1, 0, startingY, true, startingX - spacesPossible);
+            MovementGrouping leftForward = new MovementGrouping(startingY + 1, boardState.getHeight(), startingX, false, startingY + spacesPossible);
+            MovementGrouping leftBackward = new MovementGrouping(startingY - 1, 0, startingX, false, startingY - spacesPossible);
+            moveArray = moveArrayAdjust(rightForward, 1, pieceInQuestion, moveArray);
+            moveArray = moveArrayAdjust(rightForward, -1, pieceInQuestion, moveArray);
+            moveArray = moveArrayAdjust(leftForward, 1, pieceInQuestion, moveArray);
+            moveArray = moveArrayAdjust(leftBackward, -1, pieceInQuestion, moveArray);
             return moveArray;
         }
 
-        private int[,] moveArrayAdjust(int starting, int ending, int sign, int invariable, Boolean right, GamePiece pieceInQuestion, int[,] moveArray, int stopNum)
+        private int[,] moveArrayAdjust(MovementGrouping mvmtGroup, int sign, GamePiece pieceInQuestion, int[,] moveArray)
         {
             int posX;
             int posY;
             GamePiece potenPiece = null;
-            for (int i = starting; (i * sign) < (sign * ending); i += sign)
+            for (int i = mvmtGroup.getStarting(); (i * sign) < (sign * mvmtGroup.getEnding()); i += sign)
             {
-                if ((sign * i) > (sign *stopNum))
+                if ((sign * i) > (sign * mvmtGroup.getStopNum()))
                 {
                     return moveArray;
                 }
-                if (right)
+                if (mvmtGroup.isRight())
                 {
                     posX = i;
-                    posY = invariable;
+                    posY = mvmtGroup.getInvariable();
                 }
                 else
                 {
-                    posX = invariable;
+                    posX = mvmtGroup.getInvariable();
                     posY = i;
                 }
                 potenPiece = boardState.getPiece(posX, posY);
@@ -400,6 +404,49 @@ namespace Stratego
                 }
             }
             return moveArray;
+        }
+
+        public class MovementGrouping {
+
+            private int starting;
+            private int ending;
+            private int invariable;
+            private Boolean right;
+            private int stopNum;
+
+            public MovementGrouping(int starting, int ending, int invariable, Boolean right, int stopNum)
+            {
+                this.starting = starting;
+                this.ending = ending;
+                this.invariable = invariable;
+                this.right = right;
+                this.stopNum = stopNum;
+            }
+
+            public int getStarting()
+            {
+                return this.starting;
+            }
+
+            public int getEnding()
+            {
+                return this.ending;
+            }
+
+            public int getInvariable()
+            {
+                return this.invariable;
+            }
+
+            public Boolean isRight()
+            {
+                return this.right;
+            }
+
+            public int getStopNum()
+            {
+                return this.stopNum;
+            }
         }
 
         public void resetPiecePlacing()

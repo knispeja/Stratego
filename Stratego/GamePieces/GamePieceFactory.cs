@@ -56,19 +56,24 @@ namespace Stratego.GamePieces
             this.stringDict.Add(SpyPiece.SPY_NAME, typeof(SpyPiece));
             this.stringDict.Add("S", typeof(SpyPiece));
             this.stringDict.Add("s", typeof(SpyPiece));
+            this.intDict.Add(10, typeof(SpyPiece));
 
             this.stringDict.Add(BombPiece.BOMB_NAME, typeof(BombPiece));
             this.stringDict.Add("B", typeof(BombPiece));
-            this.stringDict.Add("b", typeof(SpyPiece));
+            this.stringDict.Add("b", typeof(BombPiece));
+            this.intDict.Add(11, typeof(BombPiece));
 
             this.stringDict.Add(FlagPiece.FLAG_NAME, typeof(FlagPiece));
             this.stringDict.Add("F", typeof(FlagPiece));
-            this.stringDict.Add("f", typeof(SpyPiece));
+            this.stringDict.Add("f", typeof(FlagPiece));
+            this.intDict.Add(12, typeof(FlagPiece));
 
             this.stringDict.Add(ObstaclePiece.OBSTACLE_NAME, typeof(ObstaclePiece));
             this.intDict.Add(42, typeof(ObstaclePiece));
 
             this.intDict.Add(0, null);
+
+            this.resetPlacements();
         }
 
         public void addPieceToFactory(String identifier, int numberRef, Type pieceType)

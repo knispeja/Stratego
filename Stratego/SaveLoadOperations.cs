@@ -121,6 +121,7 @@ namespace Stratego
         public static void updateOldSavefile()
         {
             FileDialog dialog = new SaveFileDialog();
+            GamePieces.GamePieceFactory fact = new GamePieces.GamePieceFactory();
 
             if (displayFileDialog(dialog, SAVE_FILE_EXTENSION) == DialogResult.OK)
             {
@@ -130,22 +131,26 @@ namespace Stratego
                 //string[] firstLine = line.Split(new char[] { ' ' });
                 Gameboard board = null;
 
+                int row = 0;
                 while ((line = file.ReadLine()) != null)
                 {
                     string[] splitLine = line.Split(new char[] { ' ' });
                     if (board == null)
                         board = new Gameboard(splitLine.Length, splitLine.Length);
 
+                    int col = 0;
                     foreach (string s in splitLine)
                     {
                         int pieceNum = Int32.Parse(s);
-                        
+                        board.setPiece(col, row, fact.getPiece(Math.Abs(pieceNum), Math.Sign(pieceNum)));
+                        col++;
                     }
+                    row++;
                 }
 
                 file.Close();
 
-               // storeData(dialog.FileName, data);
+                storeData(dialog.FileName + "_new", new SaveData(board, 5, 1, true));
             }
         }
 

@@ -930,6 +930,7 @@ namespace Stratego
             if (this.game.turn == StrategoGame.RED_TEAM_CODE)
                 setupBoard.flipBoard();
 
+            // TODO Find some way to make sure setup loads with appropriate placement and minpieces
             this.game.factory.setMinPieces(data.minPieces);
 
             this.game.boardState.overridePiecesOfTeam(setupBoard, this.game.turn);

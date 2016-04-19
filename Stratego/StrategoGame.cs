@@ -64,7 +64,7 @@ namespace Stratego
         public static readonly int BLUE_TEAM_CODE = 1;
         public static readonly int KILL_FEED_SIZE = 5;
         private string[] killFeed = new string[KILL_FEED_SIZE];
-        private GamePiece piecePlacing;
+        private GamePiece selectedPiece;
 
         public StrategoGame(GUICallback callback)
         {
@@ -115,7 +115,7 @@ namespace Stratego
         /// <returns>Whether or not the placement was successful</returns>
         public bool placePiece(int x, int y)
         {
-            GamePiece piece = this.piecePlacing;
+            GamePiece piece = this.selectedPiece;
             if (turn == 0 || Math.Abs(turn) == 2) return false;
             if (piece != null && piece.getTeamCode() != turn) return false;
             Boolean retVal = true;
@@ -449,7 +449,8 @@ namespace Stratego
 
         public void resetPiecePlacing()
         {
-            this.piecePlacing = this.factory.getPiece(this.piecePlacing.getPieceName(), this.turn);
+            if(this.selectedPiece!=null)
+                this.selectedPiece = this.factory.getPiece(this.selectedPiece.getPieceName(), this.turn);
         }
 
         public Boolean checkMoves()
@@ -499,12 +500,12 @@ namespace Stratego
 
         public void setPiecePlacing(int num)
         {
-            this.piecePlacing = this.factory.getPiece(num, this.turn);
+            this.selectedPiece = this.factory.getPiece(num, this.turn);
         }
 
         public void setPiecePlacing(string name)
         {
-            this.piecePlacing = this.factory.getPiece(name, this.turn);
+            this.selectedPiece = this.factory.getPiece(name, this.turn);
         }
     }
 }

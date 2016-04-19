@@ -12,7 +12,7 @@ namespace Stratego.BattleBehaviors
 
         public override bool decideFate(GamePiece affectedPiece, GamePiece affectingPiece)
         {
-            if (affectedPiece.getPieceRank() == BondTierSpyPiece.BOND_RANK || affectedPiece.getPieceRank() == MarshallPiece.MARSHALL_RANK)
+            if (affectingPiece.getPieceName().Equals(BombPiece.BOMB_NAME) || affectingPiece.getPieceName().Equals(MarshallPiece.MARSHALL_NAME) || affectingPiece.getPieceName().Equals(BondTierSpyPiece.BOND_NAME))
             {
                 return true;
             }

@@ -18,7 +18,7 @@ namespace Stratego.GamePieces
         {
             this.pieceRank = BOND_RANK;
             this.pieceName = BOND_NAME;
-            this.attackBehavior = new DiesToBondAndMarshall();
+            this.attackBehavior = new BondLevelLiving();
             this.defendBehavior = new DiesToBondAndMarshall();
             this.limitToMovement = 2;
             this.movable = true;

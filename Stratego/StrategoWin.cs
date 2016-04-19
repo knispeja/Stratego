@@ -22,11 +22,6 @@ namespace Stratego
         private int konamiIndex = 0;
 
         /// <summary>
-        /// The piece currently being placed by the user
-        /// </summary>
-        public GamePiece piecePlacing { get; set; }
-
-        /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>
         public int level { get; set; }
@@ -56,8 +51,6 @@ namespace Stratego
         /// </summary>
         public int panelHeight { get; set; }
 
-        private GamePieces.GamePieceFactory factory;
-
         private StrategoGame game;
 
         /// <summary>
@@ -81,7 +74,6 @@ namespace Stratego
 
             this.backPanel.LostFocus += onBackPanelLostFocus;
             this.backPanel.Focus();
-            this.factory = new GamePieces.GamePieceFactory();
         }
 
         /// <summary>
@@ -95,7 +87,6 @@ namespace Stratego
         {
             this.panelWidth = windowWidth;
             this.panelHeight = windowHeight;
-            this.factory = new GamePieces.GamePieceFactory();
             // Image imag = Properties.Resources.cursor.Tag;
             //System.Windows.Forms.Cursor.Current = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("sword"));
             //System.Windows.Forms.Cursor.Current = new Cursor(GetType(), "sword.cur");
@@ -116,6 +107,7 @@ namespace Stratego
             SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
             sound.Play();
             this.FireBox.Dispose();
+            
             this.game.resetPlacements();
             this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
 
@@ -147,7 +139,7 @@ namespace Stratego
             {
                 foreach (var button in this.SidePanel.Controls.OfType<Button>())
                     button.UseVisualStyleBackColor = true;
-                this.piecePlacing = this.factory.getPiece(((Button)sender).Tag.ToString(), this.game.turn);
+                this.game.setPiecePlacing(((Button)sender).Tag.ToString());
                 ((Button)sender).UseVisualStyleBackColor = false;
             }
         }
@@ -333,22 +325,14 @@ namespace Stratego
             if (this.game.preGameActive)
             {
                 // Only run if the placement succeeded
-                if (this.game.placePiece(this.piecePlacing, boardX, boardY))
+                if (this.game.placePiece(boardX, boardY))
                 {
-                    this.piecePlacing = this.factory.getPiece(this.piecePlacing.getPieceName(), this.game.turn);
+                    this.game.resetPiecePlacing();
                     //This makes it so it only repaints the rectangle where the piece is placed
                     Rectangle r = new Rectangle((int)(e.X / scaleX) * scaleX, (int)(e.Y / scaleY) * scaleY, scaleX, scaleY);
                     this.backPanel.Invalidate(r);
 
-                    foreach (String key in this.game.placements.Keys)
-                    {
-                        if (this.game.placements[key] != 0)
-                        {
-                            this.donePlacingButton.Enabled = false;
-                            return;
-                        }
-                    }
-                    this.donePlacingButton.Enabled = true;
+                    this.donePlacingButton.Enabled = this.game.isDonePlacing();
                 }
             }
             else if (!BoardPosition.isNull(this.game.selectedPosition))
@@ -463,11 +447,11 @@ namespace Stratego
 
                 if (double.TryParse(keyChar, out num))
                 {
-                    this.piecePlacing = this.factory.getPiece((int)num, this.game.turn);
+                    this.game.setPiecePlacing((int) num);
                 }
                 else
                 {
-                    this.piecePlacing = this.factory.getPiece(keyChar, this.game.turn);
+                    this.game.setPiecePlacing(keyChar);
                 }
             }
         }
@@ -524,12 +508,8 @@ namespace Stratego
             {
                 //this.activeSidePanelButton = this.piecePlacing;
                 this.activeSidePanelButton = 0;
-                this.piecePlacing = this.factory.getPiece(0, this.game.turn);
             }
-            else
-            {
-                this.piecePlacing = this.factory.getPiece(this.activeSidePanelButton, this.game.turn);
-            }
+            this.game.setPiecePlacing(this.activeSidePanelButton);
         }
 
         /// <summary>
@@ -629,15 +609,7 @@ namespace Stratego
 
             this.backPanel.Invalidate();
 
-            foreach (String key in this.game.placements.Keys)
-            {
-                if (this.game.placements[key] != 0)
-                {
-                    this.donePlacingButton.Enabled = false;
-                    return;
-                }
-            }
-            this.donePlacingButton.Enabled = true;
+            this.donePlacingButton.Enabled = this.game.isDonePlacing();
 
             return;
         }
@@ -936,7 +908,7 @@ namespace Stratego
         {
             return new SetupData(
                 this.game.boardState,
-                this.game.placements,
+                this.game.getPlacements(),
                 this.game.turn
                 );
         }
@@ -949,7 +921,7 @@ namespace Stratego
 
             this.game.boardState.overridePiecesOfTeam(setupBoard, this.game.turn);
            
-            this.game.placements = data.getPlacementsDictionary();
+            this.game.setPlacements(data.getPlacementsDictionary());
         }
 
         public void adjustTurnButtonState(string buttonText)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stratego.GamePieces;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -6,16 +7,6 @@ namespace Stratego
 {
     public class StrategoGame
     {
-
-        /// <summary>
-        /// The default amount of pieces for each piece. (EX: 0 0s; 1 1; 1 2; 2 3s; 4 4s; etc..)
-        /// </summary>
-        public static readonly Dictionary<String, int> defaults = new Dictionary<String, int>()
-        { { FlagPiece.FLAG_NAME, 1 }, { BombPiece.BOMB_NAME, 6 }, { SpyPiece.SPY_NAME, 1 },
-            { ScoutPiece.SCOUT_NAME, 8 }, { MinerPiece.MINER_NAME, 5 }, { SergeantPiece.SERGEANT_NAME, 4 },
-            {LieutenantPiece.LIEUTENANT_NAME, 4 }, {CaptainPiece.CAPTAIN_NAME, 4 }, { MajorPiece.MAJOR_NAME, 3}, { ColonelPiece.COLONEL_NAME, 2},
-            { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
-        };
 
         /// <summary>
         /// Current level of the game. Equals -1 if not in campaign mode
@@ -26,11 +17,6 @@ namespace Stratego
         /// The 2DArray full of all pieces on the board
         /// </summary>
         public Gameboard boardState { get; set; }
-
-        /// <summary>
-        /// The array which holds information on how many pieces of each type can still be placed
-        /// </summary>
-        public Dictionary<String, int> placements;
 
         /// <summary>
         /// Whether or not the pre game has begun
@@ -75,6 +61,8 @@ namespace Stratego
 
         public BoardPosition selectedPosition = new BoardPosition(-1, -1);
 
+        public GamePieceFactory factory = new GamePieceFactory();
+
         public GUICallback callback;
 
         public static readonly int NO_TEAM_CODE = 0;
@@ -82,6 +70,7 @@ namespace Stratego
         public static readonly int BLUE_TEAM_CODE = 1;
         public static readonly int KILL_FEED_SIZE = 5;
         private string[] killFeed = new string[KILL_FEED_SIZE];
+        private GamePiece piecePlacing;
 
         public StrategoGame(GUICallback callback)
         {
@@ -117,27 +106,7 @@ namespace Stratego
             this.movableFlags = false;
             this.callback = callback;
             //      this.ai = new AI(this, -1);
-            this.resetPlacements();
-        }
-        
-
-        public void resetPlacements()
-        {
-            this.placements = new Dictionary<string, int>();
-            foreach (string key in StrategoGame.defaults.Keys)
-            {
-                this.placements.Add(key, StrategoGame.defaults[key]);
-            }
-        }
-        /// <summary>
-        /// Retrieves the number of pieces still available for
-        /// placement of a given type
-        /// </summary>
-        /// <param name="piece">Type of the piece you want to check</param>
-        /// <returns>Number of pieces available for placement</returns>
-        public int getPiecesLeft(GamePiece piece)
-        {
-            return this.placements[piece.getPieceName()];
+            this.factory.resetPlacements();
         }
 
         /// <summary>
@@ -147,8 +116,9 @@ namespace Stratego
         /// <param name="x">x-coordinate you want to place it at</param>
         /// <param name="y">y-coordinate you want to place it at</param>
         /// <returns>Whether or not the placement was successful</returns>
-        public bool placePiece(GamePiece piece, int x, int y)
+        public bool placePiece(int x, int y)
         {
+            GamePiece piece = this.piecePlacing;
             if (turn == 0 || Math.Abs(turn) == 2) return false;
             if (piece != null && piece.getTeamCode() != turn) return false;
             Boolean retVal = true;
@@ -160,12 +130,12 @@ namespace Stratego
                 // We are trying to remove
                 if (pieceAtPos == null || pieceAtPos.getTeamCode() == NO_TEAM_CODE) return false;
                 if (pieceAtPos.getTeamCode() != this.turn) return false;
-                this.placements[pieceAtPos.getPieceName()]++;
+                this.factory.incrementPiecesLeft(pieceAtPos.getPieceName());
             }
-            else if (pieceAtPos == null && piece!=null && this.placements[piece.getPieceName()] > 0)
+            else if (pieceAtPos == null && piece!=null && this.factory.placements[piece.getPieceName()] > 0)
             {
                 // We are trying to add
-                this.placements[piece.getPieceName()] -= 1;
+                this.factory.decrementPiecesLeft(piece.getPieceName());
             }
             else retVal = false;
 
@@ -196,7 +166,7 @@ namespace Stratego
                 if (this.preGameActive)
                 {
                     this.turn = -1;
-                    this.resetPlacements();
+                    this.factory.resetPlacements();
                 }
                 else
                 {
@@ -253,6 +223,7 @@ namespace Stratego
             //        this.ai.takeTurn();
             //}
         }
+
         /// <summary>
         /// Selects a piece if no piece is selected.
         /// </summary>
@@ -473,6 +444,11 @@ namespace Stratego
             return moveArray;
         }
 
+        public void resetPiecePlacing()
+        {
+            this.piecePlacing = this.factory.getPiece(this.piecePlacing.getPieceName(), this.turn);
+        }
+
         public Boolean checkMoves()
         {
             for (int x1 = 0; x1 < this.boardState.getWidth(); x1++)
@@ -496,6 +472,36 @@ namespace Stratego
             }
 
             return false;
+        }
+
+        public void resetPlacements()
+        {
+            this.factory.resetPlacements();
+        }
+
+        public bool isDonePlacing()
+        {
+            return this.factory.donePlacing();
+        }
+
+        public void setPlacements(Dictionary<string, int> dictionary)
+        {
+            this.factory.setPlacements(dictionary);
+        }
+
+        public Dictionary<string, int> getPlacements()
+        {
+            return this.factory.getPlacements();
+        }
+
+        public void setPiecePlacing(int num)
+        {
+            this.piecePlacing = this.factory.getPiece(num, this.turn);
+        }
+
+        public void setPiecePlacing(string name)
+        {
+            this.piecePlacing = this.factory.getPiece(name, this.turn);
         }
     }
 }

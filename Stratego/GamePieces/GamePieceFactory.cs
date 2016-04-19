@@ -138,5 +138,29 @@ namespace Stratego.GamePieces
         {
             this.minPieces = min;
         }
+
+        public bool donePlacing()
+        {
+            if (this.placements[FlagPiece.FLAG_NAME] != 0)
+            {
+                return false;
+            }
+            int sum = 0;
+            foreach(String key in this.placements.Keys)
+            {
+                sum += this.placements[key];
+            }
+            return (sum==this.minPieces);
+        }
+
+        public void setPlacements(Dictionary<string, int> dictionary)
+        {
+            this.placements = dictionary;
+        }
+
+        public Dictionary<string, int> getPlacements()
+        {
+            return this.placements;
+        }
     }
 }

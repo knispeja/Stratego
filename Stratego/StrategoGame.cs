@@ -337,6 +337,7 @@ namespace Stratego
             {
                 boardState = this.boardState;
             }
+
             int[,] moveArray = new int[boardState.getHeight(), boardState.getWidth()];
 
             GamePiece pieceInQuestion = boardState.getPiece(x, y);
@@ -354,7 +355,7 @@ namespace Stratego
             MovementGrouping leftForward = new MovementGrouping(startingY + 1, boardState.getHeight(), startingX, false, startingY + spacesPossible);
             MovementGrouping leftBackward = new MovementGrouping(startingY - 1, 0, startingX, false, startingY - spacesPossible);
             moveArray = moveArrayAdjust(rightForward, 1, pieceInQuestion, moveArray);
-            moveArray = moveArrayAdjust(rightForward, -1, pieceInQuestion, moveArray);
+            moveArray = moveArrayAdjust(rightBackward, -1, pieceInQuestion, moveArray);
             moveArray = moveArrayAdjust(leftForward, 1, pieceInQuestion, moveArray);
             moveArray = moveArrayAdjust(leftBackward, -1, pieceInQuestion, moveArray);
             return moveArray;

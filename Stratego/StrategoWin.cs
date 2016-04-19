@@ -785,7 +785,8 @@ namespace Stratego
             }
             path += @"\Resources\SaveGames\Levels\Level" + this.level + ".strat";
 
-            loadSaveData(SaveLoadOperations.loadSaveData(path));
+            if (!loadSaveData(SaveLoadOperations.loadSaveData(path)))
+                return;
 
             this.game.preGameActive = false;
 
@@ -795,7 +796,6 @@ namespace Stratego
             this.NextTurnButton.Visible = true;
             this.NextTurnButton.Enabled = true;
             this.backPanel.Invalidate();
-
         }
 
         private void CampaignButton_Click(object sender, EventArgs e)
@@ -827,6 +827,7 @@ namespace Stratego
         {
             // if ((this.game.turn == 0) || (this.game.preGameActive) || (Math.Abs(this.game.turn) == 2)) return; // TODO: this line may be necessary?
             SaveLoadOperations.saveGame(getSaveData());
+            //SaveLoadOperations.updateOldSavefile();
         }
 
         /// <summary>
@@ -836,49 +837,38 @@ namespace Stratego
         /// <param name="e"></param>
         private void LoadButton_Click(object sender, EventArgs e)
         {
-            SaveData saveData = SaveLoadOperations.loadGame();
+            if (!loadSaveData(SaveLoadOperations.loadGame()))
+                return;
 
-            if (saveData != null)
+            SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
+            sound.Play();
+            this.FireBox.Dispose();
+            this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
+            this.LoadButton.Visible = false;
+            this.LoadButton.Enabled = false;
+            this.ExitMainButton.Visible = false;
+            this.ExitMainButton.Enabled = false;
+            this.CampaignButton.Visible = false;
+            this.CampaignButton.Enabled = false;
+            this.SinglePlayerButton.Visible = false;
+            this.SinglePlayerButton.Enabled = false;
+            this.SidePanelOpenButton.Visible = false;
+            if (this.game.turn == 2 && this.game.isSinglePlayer)
+                this.NextTurnButton.Text = "AI's Turn";
+            else if (this.game.turn == 2)
+                this.NextTurnButton.Text = "Player 2's Turn";
+            if (this.game.isSinglePlayer)
             {
-                loadSaveData(saveData ?? default(SaveData));
-
-                try
-                {
-                    SoundPlayer sound = new SoundPlayer(Properties.Resources.no);
-                    sound.Play();
-                    this.FireBox.Dispose();
-                    this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
-                    this.LoadButton.Visible = false;
-                    this.LoadButton.Enabled = false;
-                    this.ExitMainButton.Visible = false;
-                    this.ExitMainButton.Enabled = false;
-                    this.CampaignButton.Visible = false;
-                    this.CampaignButton.Enabled = false;
-                    this.SinglePlayerButton.Visible = false;
-                    this.SinglePlayerButton.Enabled = false;
-                    this.SidePanelOpenButton.Visible = false;
-                    if (this.game.turn == 2 && this.game.isSinglePlayer)
-                        this.NextTurnButton.Text = "AI's Turn";
-                    else if (this.game.turn == 2)
-                        this.NextTurnButton.Text = "Player 2's Turn";
-                    if (this.game.isSinglePlayer)
-                    {
-                        //this.AIDifficultyChanger.Text = this.game.ai.difficulty.ToString();
-                    }
-                    this.NextTurnButton.Visible = true;
-                    this.NextTurnButton.Enabled = true;
-                    this.game.preGameActive = false;
-
-                    foreach (var button in this.SidePanel.Controls.OfType<Button>())
-                        if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
-                            button.Click += SidePanelButtonClick;
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading file: " + ex.Message);
-                }
+                //this.AIDifficultyChanger.Text = this.game.ai.difficulty.ToString();
             }
+            this.NextTurnButton.Visible = true;
+            this.NextTurnButton.Enabled = true;
+            this.game.preGameActive = false;
+
+            foreach (var button in this.SidePanel.Controls.OfType<Button>())
+                if (button.Name != donePlacingButton.Name && button.Name != saveSetUpButton.Name && button.Name != loadSetUpButton.Name)
+                    button.Click += SidePanelButtonClick;
+
             backPanel.Focus();
         }
 
@@ -893,11 +883,17 @@ namespace Stratego
                 );
         }
 
-        private void loadSaveData(SaveData data)
+        private bool loadSaveData(SaveData data)
         {
+            if (data == null)
+                return false;
+
             this.game.boardState = data.boardState;
             this.game.turn = data.turn;
             this.game.isSinglePlayer = data.isSinglePlayer;
+
+            return true;
+
             //this.game.ai.difficulty = data.difficulty;
 
             //if (this.game.isSinglePlayer)

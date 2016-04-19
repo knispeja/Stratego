@@ -94,11 +94,19 @@ namespace Stratego
 
         public static SaveData loadSaveData(string fileName)
         {
-            IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-            SaveData data = (SaveData)formatter.Deserialize(stream);
-            stream.Close();
-            return data;
+            try
+            {
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                SaveData data = (SaveData)formatter.Deserialize(stream);
+                stream.Close();
+                return data;
+            }
+            catch
+            {
+                MessageBox.Show("WARNING: Save file at '" + fileName + "' is corrupt or missing");
+                return null;
+            }
         }
 
         public static SetupData loadSetupData(string fileName)
@@ -109,5 +117,37 @@ namespace Stratego
             stream.Close();
             return data;
         }
+
+        public static void updateOldSavefile()
+        {
+            FileDialog dialog = new SaveFileDialog();
+
+            if (displayFileDialog(dialog, SAVE_FILE_EXTENSION) == DialogResult.OK)
+            {
+                System.IO.StreamReader file = new System.IO.StreamReader(dialog.FileName);
+
+                string line = file.ReadLine();
+                //string[] firstLine = line.Split(new char[] { ' ' });
+                Gameboard board = null;
+
+                while ((line = file.ReadLine()) != null)
+                {
+                    string[] splitLine = line.Split(new char[] { ' ' });
+                    if (board == null)
+                        board = new Gameboard(splitLine.Length, splitLine.Length);
+
+                    foreach (string s in splitLine)
+                    {
+                        int pieceNum = Int32.Parse(s);
+                        
+                    }
+                }
+
+                file.Close();
+
+               // storeData(dialog.FileName, data);
+            }
+        }
+
     }
 }

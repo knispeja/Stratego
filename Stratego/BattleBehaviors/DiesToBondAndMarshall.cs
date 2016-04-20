@@ -10,9 +10,9 @@ namespace Stratego.BattleBehaviors
         {
         }
 
-        public override bool decideFate(GamePiece affectedPiece, GamePiece affectingPiece)
+        public override bool decideFate(GamePiece defendingPiece, GamePiece attackingPiece)
         {
-            if (affectingPiece.getPieceName().Equals(BombPiece.BOMB_NAME) || affectingPiece.getPieceName().Equals(MarshallPiece.MARSHALL_NAME) || affectingPiece.getPieceName().Equals(BondTierSpyPiece.BOND_NAME))
+            if (attackingPiece.getPieceName().Equals(BombPiece.BOMB_NAME) || attackingPiece.getPieceName().Equals(MarshallPiece.MARSHALL_NAME) || attackingPiece.getPieceName().Equals(BondTierSpyPiece.BOND_NAME))
             {
                 return true;
             }

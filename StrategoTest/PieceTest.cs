@@ -232,7 +232,7 @@ namespace StrategoTest
             Assert.AreEqual(MarshallPiece.MARSHALL_RANK, returnExpectedOnAttack(a1, d1));
             GamePiece a2 = new MarshallPiece(0);
             GamePiece d2 = new BondTierSpyPiece(1);
-            a2.setDefendBehavior(new DiesToSpyNotBond());
+            a2.setAttackBehavior(new MarshallBeatsBond());
             Assert.AreEqual(MarshallPiece.MARSHALL_RANK, returnExpectedOnAttack(a2, d2));
         }
 

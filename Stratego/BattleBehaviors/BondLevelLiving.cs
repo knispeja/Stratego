@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stratego.GamePieces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,12 @@ namespace Stratego.BattleBehaviors
         {
         }
 
-        public override bool decideFate(GamePiece affectedPiece, GamePiece affectingPiece)
+        public override bool decideFate(GamePiece attackingPiece, GamePiece defendingPiece)
         {
+            if (defendingPiece.GetType().Equals(typeof(BondTierSpyPiece)) || defendingPiece.GetType().Equals(typeof(MarshallPiece)))
+            {
+                return true;
+            }
             return false;
         }
     }

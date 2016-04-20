@@ -381,7 +381,7 @@ namespace Stratego
             int posX;
             int posY;
             GamePiece potenPiece = null;
-            for (int i = mvmtGroup.getStarting(); (i * sign) < (sign * mvmtGroup.getEnding()); i += sign)
+            for (int i = mvmtGroup.getStarting(); (i * sign) < (sign * mvmtGroup.getEnding() + 1); i += sign)
             {
                 if ((sign * i) > (sign * mvmtGroup.getStopNum()))
                 {

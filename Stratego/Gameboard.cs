@@ -18,6 +18,7 @@ namespace Stratego
         public Gameboard(int width, int height)
         {
             resetBoard(width, height);
+            this.lastFought = BoardPosition.NULL_BOARD_POSITION;
         }
 
         public void resetBoard()

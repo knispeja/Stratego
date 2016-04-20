@@ -257,10 +257,19 @@ namespace Stratego.GamePieces
             }
             this.defendDict.Add(pieceType, behavType);
         }
-
+        
         public Dictionary<String, int> getAddedPieces()
         {
             return this.addedPieces;
+        }
+        public ISet<Type> getPossiblePieceTypes()
+        {
+            ISet<Type> types = new HashSet<Type>();
+            foreach (Type t in this.intDict.Values)
+                types.Add(t);
+            foreach (Type t in this.stringDict.Values)
+                types.Add(t);
+            return types;
         }
     }
 }

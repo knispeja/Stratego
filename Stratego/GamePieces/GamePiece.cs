@@ -75,17 +75,11 @@ namespace Stratego
         {
             int otherRank = otherPiece.getPieceRank();
             if (otherRank == this.pieceRank)
-            {
-                return 0;   
-            }
+                return 0;
             else if (otherRank > this.pieceRank)
-            {
                 return -1;
-            }
             else
-            {
                 return 1;
-            }
         }
 
         public Boolean isAlive()

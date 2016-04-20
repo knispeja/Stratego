@@ -573,7 +573,7 @@ namespace Stratego
                 this.game.turn = 0;
                 this.game.preGameActive = true;
                 this.game.resetPlacements();
-                //this.game.ai = new AI_Old(this, -1);
+                this.game.ai = new AIv2(this.game.boardState, 5);
                 this.game.nextTurn();
                 this.SidePanel.Visible = false;
                 this.SidePanelOpenButton.Visible = true;
@@ -672,8 +672,9 @@ namespace Stratego
         /// <param name="e"></param>
         private void AIDifficultyChanger_SelectedItemChanged(object sender, EventArgs e)
         {
+            throw new NotImplementedException();
             //if (this.game.ai != null)
-            //    this.game.ai.difficulty = Convert.ToInt32(this.AIDifficultyChanger.SelectedItem);
+                //this.game.ai.setDifficulty(Convert.ToInt32(this.AIDifficultyChanger.SelectedItem));
         }
 
         /// <summary>
@@ -902,12 +903,10 @@ namespace Stratego
             this.level = data.level;
             updateBackgroundImage();
 
+            if (this.game.isSinglePlayer)
+                this.game.ai = new AIv2(this.game.boardState, data.difficulty);
+
             return true;
-
-            //this.game.ai.difficulty = data.difficulty;
-
-            //if (this.game.isSinglePlayer)
-            //    this.game.ai = new AI_Old(this, -1, data.difficulty);
         }
 
         public SetupData getSetupData()

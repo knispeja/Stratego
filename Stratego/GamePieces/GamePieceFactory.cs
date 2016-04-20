@@ -231,7 +231,17 @@ namespace Stratego.GamePieces
 
         public void setPlacements(Dictionary<string, int> dictionary)
         {
-            this.placements = dictionary;
+            foreach(string key in dictionary.Keys)
+            {
+                if (this.placements.ContainsKey(key))
+                {
+                    this.placements[key] = dictionary[key];
+                }
+                else
+                {
+                    this.placements.Add(key, dictionary[key]);
+                }
+            }
         }
 
         public Dictionary<string, int> getPlacements()

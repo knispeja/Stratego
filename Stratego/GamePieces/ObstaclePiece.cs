@@ -5,7 +5,7 @@ using System.Drawing;
 namespace Stratego
 {
     [Serializable]
-    class ObstaclePiece : GamePiece
+    public class ObstaclePiece : GamePiece
     {
         public static readonly String OBSTACLE_NAME = "Obstacle";
         public static readonly int OBSTACLE_RANK = -1;

@@ -277,6 +277,7 @@ namespace Stratego
         public bool MovePiece(int x, int y)
         {
             GamePiece defender = this.boardState.getPiece(x, y);
+            System.Diagnostics.Debug.WriteLine(this.selectedPosition.getX().ToString() + " " + this.selectedPosition.getY().ToString());
             GamePiece attacker = this.boardState.getPiece(this.selectedPosition);
             if (attacker == null)
             {

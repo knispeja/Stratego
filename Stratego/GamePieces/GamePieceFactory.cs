@@ -260,7 +260,6 @@ namespace Stratego.GamePieces
 
         public void changeDefendBehav(Type pieceType, Type behavType)
         {
-            System.Diagnostics.Debug.WriteLine("Changing Defense Behavior");
             if (this.defendDict.ContainsKey(pieceType))
             {
                 this.defendDict.Remove(pieceType);

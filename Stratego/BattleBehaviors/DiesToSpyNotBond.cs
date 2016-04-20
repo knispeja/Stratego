@@ -23,6 +23,7 @@ namespace Stratego.BattleBehaviors
             }
             else if (attackPiece.getPieceName().Equals(BondTierSpyPiece.BOND_NAME))
             {
+                System.Diagnostics.Debug.WriteLine("Hello, Bond");
                 return false;
             }
             else

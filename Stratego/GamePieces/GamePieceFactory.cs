@@ -146,6 +146,10 @@ namespace Stratego.GamePieces
             {
                 this.stringDict.Add(name, pieceType);
             }
+            if (this.placements.ContainsKey(name))
+            {
+                this.placements.Remove(name);
+            }
             this.placements.Add(name, numAllowed);
             if (!this.addedPieces.ContainsKey(name))
             {
@@ -275,6 +279,7 @@ namespace Stratego.GamePieces
 
         public void changeDefendBehav(Type pieceType, Type behavType)
         {
+            System.Diagnostics.Debug.WriteLine("Changing Defense Behavior");
             if (this.defendDict.ContainsKey(pieceType))
             {
                 this.defendDict.Remove(pieceType);

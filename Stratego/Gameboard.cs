@@ -123,8 +123,9 @@ namespace Stratego
 
         public void changePieceTypeBehavior(Type typeToChange, BattleBehavior attackBehav, BattleBehavior defendBehav)
         {
+            System.Diagnostics.Debug.WriteLine("in changePieceBehavior");
             foreach (GamePiece piece in this.board) {
-                System.Diagnostics.Debug.Write(piece.GetType().ToString());
+                System.Diagnostics.Debug.WriteLine(piece.GetType().ToString());
                 if (piece != null && piece.GetType().Equals(typeToChange)) {
                     piece.setAttackBehavior(attackBehav);
                     piece.setDefendBehavior(defendBehav);

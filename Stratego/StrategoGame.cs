@@ -331,7 +331,7 @@ namespace Stratego
         /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
         public int[,] GetPieceMoves(int pieceX, int pieceY)
         {
-            return GetPieceMoves(pieceX, pieceY, this.boardState);
+            return this.boardState.getPieceMoves(pieceX, pieceY);
         }
 
         internal string[] getKillFeed()
@@ -339,124 +339,6 @@ namespace Stratego
             return this.killFeed;
         }
 
-        /// <summary>
-        /// Finds all of the possible moves for a piece with the given X and Y coordinates using the board state passed in.
-        /// </summary>
-        /// <param name="x">>X position in the board state (not in pixels)</param>
-        /// <param name="y">Y position in the board state (not in pixels)</param>
-        /// <param name="boardState">A 2D array representing the state of the board.</param>
-        /// <returns>A 2D array containing 1 in every space where the deisgnated piece can move and 0 otherwise</returns>
-        public int[,] GetPieceMoves(int x, int y, Gameboard boardState=null)
-        {
-            if (this.boardState == null)
-            {
-                boardState = this.boardState;
-            }
-
-            int[,] moveArray = new int[boardState.getHeight(), boardState.getWidth()];
-
-            GamePiece pieceInQuestion = boardState.getPiece(x, y);
-            if (pieceInQuestion==null||!pieceInQuestion.isMovable() || pieceInQuestion.getLimitToMovement() == 0)
-            {
-                return moveArray;
-            }
-            int startingX = x;
-            int startingY = y;
-            int spacesPossible = pieceInQuestion.getLimitToMovement();
-            if (spacesPossible == int.MaxValue)
-                spacesPossible = Math.Max(this.boardState.getHeight(), this.boardState.getWidth());
-            MovementGrouping rightForward = new MovementGrouping(startingX + 1, boardState.getWidth(), startingY, true, startingX + spacesPossible);
-            MovementGrouping rightBackward = new MovementGrouping(startingX - 1, -1, startingY, true, startingX - spacesPossible);
-            MovementGrouping leftForward = new MovementGrouping(startingY + 1, boardState.getHeight(), startingX, false, startingY + spacesPossible);
-            MovementGrouping leftBackward = new MovementGrouping(startingY - 1, -1, startingX, false, startingY - spacesPossible);
-            moveArray = moveArrayAdjust(rightForward, 1, pieceInQuestion, moveArray);
-            moveArray = moveArrayAdjust(rightBackward, -1, pieceInQuestion, moveArray);
-            moveArray = moveArrayAdjust(leftForward, 1, pieceInQuestion, moveArray);
-            moveArray = moveArrayAdjust(leftBackward, -1, pieceInQuestion, moveArray);
-            return moveArray;
-        }
-
-        private int[,] moveArrayAdjust(MovementGrouping mvmtGroup, int sign, GamePiece pieceInQuestion, int[,] moveArray)
-        {
-            int posX;
-            int posY;
-            GamePiece potenPiece = null;
-            for (int i = mvmtGroup.getStarting(); (i * sign) < (sign * mvmtGroup.getEnding()); i += sign)
-            {
-                if ((sign * i) > (sign * mvmtGroup.getStopNum()))
-                {
-                    return moveArray;
-                }
-                if (mvmtGroup.isRight())
-                {
-                    posX = i;
-                    posY = mvmtGroup.getInvariable();
-                }
-                else
-                {
-                    posX = mvmtGroup.getInvariable();
-                    posY = i;
-                }
-                potenPiece = boardState.getPiece(posX, posY);
-                if (potenPiece == null)
-                {
-                    moveArray[posX, posY] = 1;
-                }
-                else if (pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
-                {
-                    moveArray[posX, posY] = 1;
-                    return moveArray;
-                }
-                else
-                {
-                    return moveArray;
-                }
-            }
-            return moveArray;
-        }
-
-        public class MovementGrouping {
-
-            private int starting;
-            private int ending;
-            private int invariable;
-            private Boolean right;
-            private int stopNum;
-
-            public MovementGrouping(int starting, int ending, int invariable, Boolean right, int stopNum)
-            {
-                this.starting = starting;
-                this.ending = ending;
-                this.invariable = invariable;
-                this.right = right;
-                this.stopNum = stopNum;
-            }
-
-            public int getStarting()
-            {
-                return this.starting;
-            }
-
-            public int getEnding()
-            {
-                return this.ending;
-            }
-
-            public int getInvariable()
-            {
-                return this.invariable;
-            }
-
-            public Boolean isRight()
-            {
-                return this.right;
-            }
-
-            public int getStopNum()
-            {
-                return this.stopNum;
-            }
-        }
 
         public void resetPiecePlacing()
         {
@@ -473,7 +355,7 @@ namespace Stratego
                     GamePiece piece = this.boardState.getPiece(x1, y1);
                     if (piece!=null && Math.Sign(piece.getTeamCode()) == Math.Sign(this.turn))
                     {
-                        int[,] validPlaces = GetPieceMoves(x1, y1, this.boardState);
+                        int[,] validPlaces = GetPieceMoves(x1, y1);
                         for (int x2 = 0; x2 < this.boardState.getWidth(); x2++)
                         {
                             for (int y2 = 0; y2 < this.boardState.getHeight(); y2++)

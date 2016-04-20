@@ -21,7 +21,9 @@ namespace Stratego
         }
 
         public Move chooseMove()
-        {
+        {   
+            return 
+            /*
             // TODO: thread this so length depends on difficulty
             Move move = Move.NULL_MOVE;
             for (int i = 0; i < 999999; i++)
@@ -30,7 +32,7 @@ namespace Stratego
                 move = getMostPromisingMove();
             }
             this.gameTree.setRoot(this.gameTree.getRoot().getChildFromMove(move));
-            return move;
+            return move;*/
         }
 
         public bool runMTCS(AIGameboard internalBoard, GameNode node)
@@ -46,9 +48,9 @@ namespace Stratego
                 return false;
             }
             Move move = selectMove();
-            bool won = runMTCS(internalBoard.move(move), node.getChildFromMove(move));
+            //bool won = runMTCS(internalBoard.move(move), node.getChildFromMove(move));
 
-            return won;
+            return false;//return won;
         }
 
         private Move selectMove()

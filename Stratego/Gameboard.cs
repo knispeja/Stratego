@@ -49,7 +49,7 @@ namespace Stratego
             }
             else
             {
-                if (attacker.getTeamCode() == defender.getTeamCode()||defender.getTeamCode()==StrategoGame.NO_TEAM_CODE)
+                if (attacker.getTeamCode() == defender.getTeamCode() || defender.getTeamCode() == StrategoGame.NO_TEAM_CODE)
                 {
                     return false;
                 }
@@ -98,9 +98,9 @@ namespace Stratego
         /// </summary>
         public void overridePiecesOfTeam(Gameboard other, int teamCode)
         {
-            for(int col = 0; col < this.width; col++)
+            for (int col = 0; col < this.width; col++)
             {
-                for(int row = 0; row < this.height; row++)
+                for (int row = 0; row < this.height; row++)
                 {
                     GamePiece newPiece = other.getPiece(col, row);
 
@@ -109,8 +109,8 @@ namespace Stratego
                     {
                         if (newPiece != null)
                             newPiece.setTeamCode(teamCode);
-   
-                        setPiece(col, row, newPiece);   
+
+                        setPiece(col, row, newPiece);
                     }
                 }
             }
@@ -124,9 +124,11 @@ namespace Stratego
         public void changePieceTypeBehavior(Type typeToChange, BattleBehavior attackBehav, BattleBehavior defendBehav)
         {
             System.Diagnostics.Debug.WriteLine("in changePieceBehavior");
-            foreach (GamePiece piece in this.board) {
+            foreach (GamePiece piece in this.board)
+            {
                 System.Diagnostics.Debug.WriteLine(piece.GetType().ToString());
-                if (piece != null && piece.GetType().Equals(typeToChange)) {
+                if (piece != null && piece.GetType().Equals(typeToChange))
+                {
                     piece.setAttackBehavior(attackBehav);
                     piece.setDefendBehavior(defendBehav);
                 }
@@ -186,11 +188,11 @@ namespace Stratego
 
         public BoardPosition getPositionOfPiece(GamePiece piece)
         {
-            for (int i = 0; i<this.width; i++)
+            for (int i = 0; i < this.width; i++)
             {
-                for(int j = 0; j<this.height; j++)
+                for (int j = 0; j < this.height; j++)
                 {
-                    if (board[i,j] == piece)
+                    if (board[i, j] == piece)
                     {
                         return new BoardPosition(i, j);
                     }
@@ -212,6 +214,115 @@ namespace Stratego
         internal int getWinner()
         {
             return this.winner;
+        }
+
+        public int[,] getPieceMoves(int x, int y)
+        {
+            int[,] moveArray = new int[this.getHeight(), this.getWidth()];
+
+            GamePiece pieceInQuestion = this.getPiece(x, y);
+            if (pieceInQuestion == null || !pieceInQuestion.isMovable() || pieceInQuestion.getLimitToMovement() == 0)
+            {
+                return moveArray;
+            }
+            int startingX = x;
+            int startingY = y;
+            int spacesPossible = pieceInQuestion.getLimitToMovement();
+            if (spacesPossible == int.MaxValue)
+                spacesPossible = Math.Max(this.getHeight(), this.getWidth());
+            MovementGrouping rightForward = new MovementGrouping(startingX + 1, this.getWidth(), startingY, true, startingX + spacesPossible);
+            MovementGrouping rightBackward = new MovementGrouping(startingX - 1, 0, startingY, true, startingX - spacesPossible);
+            MovementGrouping leftForward = new MovementGrouping(startingY + 1, this.getHeight(), startingX, false, startingY + spacesPossible);
+            MovementGrouping leftBackward = new MovementGrouping(startingY - 1, 0, startingX, false, startingY - spacesPossible);
+            moveArray = moveArrayAdjust(rightForward, 1, pieceInQuestion, moveArray);
+            moveArray = moveArrayAdjust(rightBackward, -1, pieceInQuestion, moveArray);
+            moveArray = moveArrayAdjust(leftForward, 1, pieceInQuestion, moveArray);
+            moveArray = moveArrayAdjust(leftBackward, -1, pieceInQuestion, moveArray);
+            return moveArray;
+        }
+
+
+        private int[,] moveArrayAdjust(MovementGrouping mvmtGroup, int sign, GamePiece pieceInQuestion, int[,] moveArray)
+        {
+            int posX;
+            int posY;
+            GamePiece potenPiece = null;
+            for (int i = mvmtGroup.getStarting(); (i * sign) < (sign * mvmtGroup.getEnding()); i += sign)
+            {
+                if ((sign * i) > (sign * mvmtGroup.getStopNum()))
+                {
+                    return moveArray;
+                }
+                if (mvmtGroup.isRight())
+                {
+                    posX = i;
+                    posY = mvmtGroup.getInvariable();
+                }
+                else
+                {
+                    posX = mvmtGroup.getInvariable();
+                    posY = i;
+                }
+                potenPiece = this.getPiece(posX, posY);
+                if (potenPiece == null)
+                {
+                    moveArray[posX, posY] = 1;
+                }
+                else if (pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
+                {
+                    moveArray[posX, posY] = 1;
+                    return moveArray;
+                }
+                else
+                {
+                    return moveArray;
+                }
+            }
+            return moveArray;
+        }
+
+        public class MovementGrouping
+        {
+
+            private int starting;
+            private int ending;
+            private int invariable;
+            private Boolean right;
+            private int stopNum;
+
+            public MovementGrouping(int starting, int ending, int invariable, Boolean right, int stopNum)
+            {
+                this.starting = starting;
+                this.ending = ending;
+                this.invariable = invariable;
+                this.right = right;
+                this.stopNum = stopNum;
+            }
+
+            public int getStarting()
+            {
+                return this.starting;
+            }
+
+            public int getEnding()
+            {
+                return this.ending;
+            }
+
+            public int getInvariable()
+            {
+                return this.invariable;
+            }
+
+            public Boolean isRight()
+            {
+                return this.right;
+            }
+
+            public int getStopNum()
+            {
+                return this.stopNum;
+            }
         }
     }
 }

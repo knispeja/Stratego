@@ -6,21 +6,15 @@ using System.Threading.Tasks;
 
 namespace Stratego.AI
 {
-    public class AIGameboard
+    public class AIGameboard : Gameboard
     {
-        public bool isGameOver()
+        public AIGameboard(Gameboard g) : base(g.getWidth(), g.getHeight())
         {
-            throw new NotImplementedException();
         }
 
         public bool isWin()
         {
-            throw new NotImplementedException();
-        }
-
-        public AIGameboard move(Move move)
-        {
-            throw new NotImplementedException();
+            return base.getWinner() == 2;
         }
     }
 }

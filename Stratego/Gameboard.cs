@@ -126,9 +126,9 @@ namespace Stratego
             System.Diagnostics.Debug.WriteLine("in changePieceBehavior");
             foreach (GamePiece piece in this.board)
             {
-                System.Diagnostics.Debug.WriteLine(piece.GetType().ToString());
                 if (piece != null && piece.GetType().Equals(typeToChange))
                 {
+                    System.Diagnostics.Debug.WriteLine(piece.GetType().ToString());
                     piece.setAttackBehavior(attackBehav);
                     piece.setDefendBehavior(defendBehav);
                 }

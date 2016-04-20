@@ -82,7 +82,8 @@ namespace Stratego.GamePieces
             if(!this.stringDict.ContainsKey(name))
             {
                 this.stringDict.Add(name, pieceType);
-                GamePiece piece = materializePiece(pieceType, StrategoGame.RED_TEAM_CODE);
+                var ctors = pieceType.GetConstructors();
+                GamePiece piece = (GamePiece)ctors[0].Invoke(new object[] { StrategoGame.RED_TEAM_CODE });
                 this.attackDict.Add(pieceType, piece.getAttackBehavior().GetType());
                 this.defendDict.Add(pieceType, piece.getDefendBehavior().GetType());
             }

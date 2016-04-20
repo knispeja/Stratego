@@ -268,7 +268,7 @@ namespace Stratego
                 {
                     moveArray[posX, posY] = 1;
                 }
-                else if (pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != NO_TEAM_CODE)
+                else if (pieceInQuestion.getTeamCode() != potenPiece.getTeamCode() && potenPiece.getTeamCode() != 0)
                 {
                     moveArray[posX, posY] = 1;
                     return moveArray;

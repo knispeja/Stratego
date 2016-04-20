@@ -21,8 +21,31 @@ namespace Stratego
         }
 
         public Move chooseMove()
-        {   
-            return 
+        {
+            BoardPosition start;
+            BoardPosition end;
+            for (int i = 0; i < board.getWidth(); i++)
+            {
+                for (int j = 0; j < board.getHeight(); j++)
+                {
+                    start = new BoardPosition(i, j);
+                    GamePiece piece = board.getPiece(start);
+                    if (piece != null)
+                    {
+                        int[,] moves = board.getPieceMoves(i, j);
+                        for (int k = 0; k < board.getWidth(); k++)
+                        {
+                            for (int l = 0; l < board.getHeight(); l++)
+                            {
+                                end = new BoardPosition(k, l);
+                                if (moves[k, l] == 1)
+                                    return new Move(start, end);
+                            }
+                        }
+                    }
+                }
+            }
+            return Move.NULL_MOVE;
             /*
             // TODO: thread this so length depends on difficulty
             Move move = Move.NULL_MOVE;

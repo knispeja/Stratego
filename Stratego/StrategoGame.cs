@@ -118,7 +118,6 @@ namespace Stratego
             GamePiece piece = this.selectedPiece;
             if (turn == 0 || Math.Abs(turn) == 2) return false;
             if (piece != null && piece.getTeamCode() != turn) return false;
-            Boolean retVal = true;
 
             GamePiece pieceAtPos = this.boardState.getPiece(x, y);
 
@@ -134,13 +133,10 @@ namespace Stratego
                 // We are trying to add
                 this.factory.decrementPiecesLeft(piece.getPieceName());
             }
-            else retVal = false;
+            else return false;
 
-            if (retVal)
-            {
-                this.boardState.setPiece(x, y, piece);
-            }
-            return retVal;
+            this.boardState.setPiece(x, y, piece);
+            return true;
         }
 
         public void behavioralChange(Type gamePieceType, Type attackBehav, Type defendBehav)

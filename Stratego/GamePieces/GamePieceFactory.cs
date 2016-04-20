@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stratego.BattleBehaviors;
+using System;
 using System.Collections.Generic;
 
 namespace Stratego.GamePieces
@@ -24,6 +25,8 @@ namespace Stratego.GamePieces
 
         private readonly Dictionary<String, Type> stringDict = new Dictionary<String, Type>();
         private readonly Dictionary<int, Type> intDict = new Dictionary<int, Type>();
+        private readonly Dictionary<Type, Type> attackDict = new Dictionary<Type, Type>();
+        private readonly Dictionary<Type, Type> defendDict = new Dictionary<Type, Type>();
         
         public GamePieceFactory()
         {
@@ -76,6 +79,48 @@ namespace Stratego.GamePieces
 
             this.addedPieces = new Dictionary<String, int>();
             this.resetPlacements();
+
+            this.attackDict.Add(typeof(BombPiece), typeof(DiestoMinerandBomb));
+            this.defendDict.Add(typeof(BombPiece), typeof(DiestoMinerandBomb));
+
+            this.attackDict.Add(typeof(BondTierSpyPiece), typeof(BondLevelLiving));
+            this.defendDict.Add(typeof(BondTierSpyPiece), typeof(DiesToBondAndMarshall));
+
+            this.attackDict.Add(typeof(CaptainPiece), typeof(DefaultComparativeFate));
+            this.defendDict.Add(typeof(CaptainPiece), typeof(DefaultComparativeFate));
+
+            this.attackDict.Add(typeof(ColonelPiece), typeof(DefaultComparativeFate));
+            this.defendDict.Add(typeof(ColonelPiece), typeof(DefaultComparativeFate));
+
+            this.attackDict.Add(typeof(FlagPiece), typeof(DiesToAllSaveFlag));
+            this.defendDict.Add(typeof(FlagPiece), typeof(SimplyDie));
+
+            this.attackDict.Add(typeof(GeneralPiece), typeof(DefaultComparativeFate));
+            this.defendDict.Add(typeof(GeneralPiece), typeof(DefaultComparativeFate));
+
+            this.attackDict.Add(typeof(LieutenantPiece), typeof(DefaultComparativeFate));
+            this.defendDict.Add(typeof(LieutenantPiece), typeof(DefaultComparativeFate));
+
+            this.attackDict.Add(typeof(MajorPiece), typeof(DefaultComparativeFate));
+            this.defendDict.Add(typeof(MajorPiece), typeof(DefaultComparativeFate));
+
+            this.attackDict.Add(typeof(MarshallPiece), typeof(DefaultComparativeFate));
+            this.defendDict.Add(typeof(MarshallPiece), typeof(DiesToSpy));
+
+            this.attackDict.Add(typeof(MinerPiece), typeof(ImperviousToBombs));
+            this.defendDict.Add(typeof(MinerPiece), typeof(ImperviousToBombs));
+
+            this.attackDict.Add(typeof(ObstaclePiece), typeof(Impassible));
+            this.defendDict.Add(typeof(ObstaclePiece), typeof(Impassible));
+
+            this.attackDict.Add(typeof(ScoutPiece), typeof(DefaultComparativeFate));
+            this.defendDict.Add(typeof(ScoutPiece), typeof(DefaultComparativeFate));
+
+            this.attackDict.Add(typeof(SergeantPiece), typeof(DefaultComparativeFate));
+            this.defendDict.Add(typeof(SergeantPiece), typeof(DefaultComparativeFate));
+
+            this.attackDict.Add(typeof(SpyPiece), typeof(ImperviousToMarshall));
+            this.defendDict.Add(typeof(SpyPiece), typeof(SimplyDie));
         }
 
         public void addNamesForPiece(List<String> names, Type pieceType)
@@ -141,9 +186,7 @@ namespace Stratego.GamePieces
             }
             Type type = this.stringDict[identifier];
 
-            var ctors = type.GetConstructors();
-
-            return (GamePiece)ctors[0].Invoke(new object[] { teamCode });
+            return materializePiece(type, teamCode);
         }
 
         public GamePiece getPiece(int identifier, int teamCode)
@@ -154,11 +197,32 @@ namespace Stratego.GamePieces
             }
             Type type = this.intDict[identifier];
 
-            if (type == null) return null;
+            return materializePiece(type, teamCode);  
+        }
 
+        private GamePiece materializePiece(Type type, int teamCode)
+        {
             var ctors = type.GetConstructors();
 
-            return (GamePiece) ctors[0].Invoke(new object[] { teamCode });   
+            GamePiece toReturn = (GamePiece)ctors[0].Invoke(new object[] { teamCode });
+
+            Type attack = this.attackDict[type];
+
+            Type defend = this.defendDict[type];
+
+            var attackConst = attack.GetConstructors();
+
+            var defendConst = defend.GetConstructors();
+
+            BattleBehavior attackBehav = (BattleBehavior)attackConst[0].Invoke(new object[] { });
+
+            BattleBehavior defendBehav = (BattleBehavior)defendConst[0].Invoke(new object[] { });
+
+            toReturn.setAttackBehavior(attackBehav);
+
+            toReturn.setDefendBehavior(defendBehav);
+
+            return toReturn;
         }
 
         public void incrementPiecesLeft(String piece)
@@ -198,6 +262,24 @@ namespace Stratego.GamePieces
         public Dictionary<string, int> getPlacements()
         {
             return this.placements;
+        }
+
+        public void changeAttackBehav(Type pieceType, Type behavType)
+        {
+            if (this.attackDict.ContainsKey(pieceType))
+            {
+                this.attackDict.Remove(pieceType);
+            }
+            this.attackDict.Add(pieceType, behavType);
+        }
+
+        public void changeDefendBehav(Type pieceType, Type behavType)
+        {
+            if (this.defendDict.ContainsKey(pieceType))
+            {
+                this.defendDict.Remove(pieceType);
+            }
+            this.defendDict.Add(pieceType, behavType);
         }
     }
 }

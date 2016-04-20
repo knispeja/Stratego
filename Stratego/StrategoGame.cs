@@ -143,6 +143,21 @@ namespace Stratego
             return retVal;
         }
 
+        public void behavioralChange(Type gamePieceType, Type attackBehav, Type defendBehav)
+        {
+            var attackConst = attackBehav.GetConstructors();
+
+            var defendConst = defendBehav.GetConstructors();
+
+            BattleBehavior newAttackObj = (BattleBehavior)attackConst[0].Invoke(new object[] { });
+
+            BattleBehavior newDefendObj = (BattleBehavior)defendConst[0].Invoke(new object[] { });
+
+            this.boardState.changePieceTypeBehavior(typeof(MarshallPiece), newAttackObj, newDefendObj);
+            this.factory.changeAttackBehav(gamePieceType, attackBehav);
+            this.factory.changeDefendBehav(gamePieceType, defendBehav);
+        }
+
         /// <summary>
         /// Looks at the current turn, and changes it to whatever the next turn should be.
         /// Handles global game variables like the stage of the game and so on.

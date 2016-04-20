@@ -17,11 +17,11 @@ namespace Stratego.BattleBehaviors
         public override bool decideFate(GamePiece defendPiece, GamePiece attackPiece)
         {
             int otherRank = defendPiece.getPieceRank();
-            if (otherRank == SpyPiece.SPY_RANK)
+            if (attackPiece.getPieceName().Equals(SpyPiece.SPY_NAME))
             {
                 return true;
             }
-            else if (attackPiece.getPieceName() == BondTierSpyPiece.BOND_NAME)
+            else if (attackPiece.getPieceName().Equals(BondTierSpyPiece.BOND_NAME))
             {
                 return false;
             }

@@ -121,6 +121,17 @@ namespace Stratego
             this.winner = v;
         }
 
+        public void changePieceTypeBehavior(Type typeToChange, BattleBehavior attackBehav, BattleBehavior defendBehav)
+        {
+            foreach (GamePiece piece in this.board) {
+                System.Diagnostics.Debug.Write(piece.GetType().ToString());
+                if (piece != null && piece.GetType().Equals(typeToChange)) {
+                    piece.setAttackBehavior(attackBehav);
+                    piece.setDefendBehavior(defendBehav);
+                }
+            }
+        }
+
         private void battlePieces(GamePiece attacker, GamePiece defender)
         {
             BoardPosition defenderPos = this.getPositionOfPiece(defender);

@@ -15,7 +15,7 @@ namespace Stratego
             this.pieceName = BOMB_NAME;
             this.attackBehavior = new DiestoMinerandBomb();
             this.defendBehavior = new DiestoMinerandBomb();
-            this.limitToMovement = 0;
+            this.limitToMovement = 1;
             this.movable = false;
         }
 

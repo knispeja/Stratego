@@ -7,6 +7,7 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using Stratego.GamePieces;
 using System.Collections.Generic;
+using Stratego.BattleBehaviors;
 
 namespace Stratego
 {
@@ -774,6 +775,7 @@ namespace Stratego
             strList.Add("o");
             this.game.factory.addNamesForPiece(strList, typeof(BondTierSpyPiece));
             this.game.factory.addPieceToPlacements(BondTierSpyPiece.BOND_NAME, typeof(BondTierSpyPiece), 2);
+            this.game.behavioralChange(typeof(MarshallPiece), typeof(MarshallBeatsBond), typeof(DiesToSpyNotBond));
         }
 
         /// <summary>

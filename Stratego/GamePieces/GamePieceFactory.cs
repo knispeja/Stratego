@@ -12,8 +12,8 @@ namespace Stratego.GamePieces
         public static readonly Dictionary<String, int> defaults = new Dictionary<String, int>()
         { { FlagPiece.FLAG_NAME, 1 }, { BombPiece.BOMB_NAME, 6 }, { SpyPiece.SPY_NAME, 1 },
             { ScoutPiece.SCOUT_NAME, 8 }, { MinerPiece.MINER_NAME, 5 }, { SergeantPiece.SERGEANT_NAME, 4 },
-            {LieutenantPiece.LIEUTENANT_NAME, 4 }, {CaptainPiece.CAPTAIN_NAME, 4 }, { MajorPiece.MAJOR_NAME, 3}, { ColonelPiece.COLONEL_NAME, 2},
-            { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
+            { LieutenantPiece.LIEUTENANT_NAME, 4 }, { CaptainPiece.CAPTAIN_NAME, 4 }, { MajorPiece.MAJOR_NAME, 3},
+            { ColonelPiece.COLONEL_NAME, 2}, { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
         };
 
         /// <summary>
@@ -63,12 +63,33 @@ namespace Stratego.GamePieces
             this.resetPlacements();
         }
 
+        public int getMinPieces()
+        {
+            return this.minPieces;
+        }
+
         public void addNameForPiece(String name, Type pieceType)
         {
             if (!this.stringDict.ContainsKey(name))
             {
                 this.stringDict.Add(name, pieceType);
+                var ctors = pieceType.GetConstructors();
+                GamePiece piece = (GamePiece)ctors[0].Invoke(new object[] { StrategoGame.RED_TEAM_CODE });
+                if (!this.attackDict.ContainsKey(pieceType))
+                {
+                    this.attackDict.Add(pieceType, piece.getAttackBehavior().GetType());
+                }
+                if (!this.defendDict.ContainsKey(pieceType))
+                {
+                    this.defendDict.Add(pieceType, piece.getDefendBehavior().GetType());
+                }
             }
+        }
+        public Type getPieceFromName(String name)
+        {
+            if(this.stringDict.ContainsKey(name))
+                return this.stringDict[name];
+            return null;
         }
         public void addNumForPiece(int numberRef, Type pieceType)
         {
@@ -77,22 +98,29 @@ namespace Stratego.GamePieces
                 this.intDict.Add(numberRef, pieceType);
             }
         }
+        public Type getPieceFromInt(int numberRef)
+        {
+            if (this.intDict.ContainsKey(numberRef))
+                return this.intDict[numberRef];
+            return null;
+        }
         public void addPieceToPlacements(String name, Type pieceType, int numAllowed)
         {
-            if(!this.stringDict.ContainsKey(name))
-            {
-                this.stringDict.Add(name, pieceType);
-                var ctors = pieceType.GetConstructors();
-                GamePiece piece = (GamePiece)ctors[0].Invoke(new object[] { StrategoGame.RED_TEAM_CODE });
-                this.attackDict.Add(pieceType, piece.getAttackBehavior().GetType());
-                this.defendDict.Add(pieceType, piece.getDefendBehavior().GetType());
-            }
+            this.addNameForPiece(name, pieceType);
             if (this.placements.ContainsKey(name))
             {
+                this.setMinPieces(this.minPieces - this.placements[name]);
                 this.placements.Remove(name);
             }
             this.placements.Add(name, numAllowed);
-            if (!this.addedPieces.ContainsKey(name))
+
+            if (this.addedPieces.ContainsKey(name)&&!numAllowed.Equals(this.addedPieces[name]))
+            {
+                this.setMinPieces(this.minPieces - this.addedPieces[name]);
+                this.addedPieces.Remove(name);
+                this.addedPieces.Add(name, numAllowed);
+            }
+            else if(!this.addedPieces.ContainsKey(name))
             {
                 this.addedPieces.Add(name, numAllowed);
             }
@@ -118,9 +146,9 @@ namespace Stratego.GamePieces
         /// </summary>
         /// <param name="piece">Type of the piece you want to check</param>
         /// <returns>Number of pieces available for placement</returns>
-        public int getPiecesLeft(GamePiece piece)
+        public int getPiecesLeft(String name)
         {
-            return this.placements[piece.getPieceName()];
+            return this.placements[name];
         }
 
         public GamePiece getPiece(String identifier, int teamCode)
@@ -141,6 +169,8 @@ namespace Stratego.GamePieces
                 return null;
             }
             Type type = this.intDict[identifier];
+
+            if (type == null) return null;
 
             return materializePiece(type, teamCode);  
         }
@@ -226,6 +256,11 @@ namespace Stratego.GamePieces
                 this.defendDict.Remove(pieceType);
             }
             this.defendDict.Add(pieceType, behavType);
+        }
+
+        public Dictionary<String, int> getAddedPieces()
+        {
+            return this.addedPieces;
         }
     }
 }

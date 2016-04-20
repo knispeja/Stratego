@@ -46,7 +46,7 @@ namespace Stratego
         /// <summary>
         /// The AI that the player will play against, if they choose single player.
         /// </summary>
-  //      public AI_Old ai;
+        public AIv2 ai;
 
         /// <summary>
         /// If levels can be skipped using keypresses
@@ -89,7 +89,7 @@ namespace Stratego
                     this.boardState.setPiece(col, row, new ObstaclePiece(0));
             }
 
-            //      this.ai = new AI_Old(this, -1);
+            //this.ai = new AIv2(boardState, 5);
 
         }
         public StrategoGame(Gameboard boardState, GUICallback callback)
@@ -102,7 +102,7 @@ namespace Stratego
             this.movableBombs = false;
             this.movableFlags = false;
             this.callback = callback;
-            //      this.ai = new AI(this, -1);
+            //this.ai = new AIv2(boardState, -1);
             this.factory.resetPlacements();
         }
 
@@ -223,13 +223,14 @@ namespace Stratego
                 turn = RED_TEAM_CODE;
             }
 
-            //if (this.isSinglePlayer && this.turn == this.ai.team)
-            //{
-            //    if (this.preGameActive)
-            //        this.ai.placePieces();
-            //    else
-            //        this.ai.takeTurn();
-            //}
+            if (this.isSinglePlayer && this.turn == RED_TEAM_CODE)
+            {
+                throw new NotImplementedException();
+                //if (this.preGameActive)
+                //    this.ai.isKill;
+                //else
+                //    this.ai.takeTurn();
+            }
         }
 
         /// <summary>
@@ -339,10 +340,9 @@ namespace Stratego
             return this.killFeed;
         }
 
-
         public void resetPiecePlacing()
         {
-            if(this.selectedPiece!=null)
+            if(this.selectedPiece != null)
                 this.selectedPiece = this.factory.getPiece(this.selectedPiece.getPieceName(), this.turn);
         }
 

@@ -153,5 +153,15 @@ namespace Stratego
         {
             this.defendBehavior = newBB;
         }
+
+        public BattleBehavior getAttackBehavior()
+        {
+            return this.attackBehavior;
+        }
+
+        public BattleBehavior getDefendBehavior()
+        {
+            return this.defendBehavior;
+        }
     }
 }

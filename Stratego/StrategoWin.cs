@@ -767,11 +767,7 @@ namespace Stratego
             this.movableBombCB.Enabled = true;
             this.movableFlagCB.Enabled = true;
             this.game.skippableLevels = true;
-            List<String> strList = new List<String>();
-            strList.Add(BondTierSpyPiece.BOND_NAME);
-            strList.Add("O");
-            strList.Add("o");
-            this.game.factory.addNamesForPiece(strList, typeof(BondTierSpyPiece));
+            this.game.factory.addNameForPiece("O", typeof(BondTierSpyPiece));
             this.game.factory.addPieceToPlacements(BondTierSpyPiece.BOND_NAME, typeof(BondTierSpyPiece), 2);
             this.game.behavioralChange(typeof(MarshallPiece), typeof(MarshallBeatsBond), typeof(DiesToSpyNotBond));
         }

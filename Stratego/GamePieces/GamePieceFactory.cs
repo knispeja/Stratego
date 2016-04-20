@@ -21,116 +21,53 @@ namespace Stratego.GamePieces
         /// </summary>
         public Dictionary<String, int> placements;
         public int minPieces = 0;
-        private Dictionary<String, int> addedPieces;
+        private Dictionary<String, int> addedPieces = new Dictionary<String, int>();
 
         private readonly Dictionary<String, Type> stringDict = new Dictionary<String, Type>();
         private readonly Dictionary<int, Type> intDict = new Dictionary<int, Type>();
         private readonly Dictionary<Type, Type> attackDict = new Dictionary<Type, Type>();
         private readonly Dictionary<Type, Type> defendDict = new Dictionary<Type, Type>();
-        
+
         public GamePieceFactory()
         {
-            this.stringDict.Add(MarshallPiece.MARSHALL_NAME, typeof(MarshallPiece));
-            this.intDict.Add(1, typeof(MarshallPiece));
+            this.stringDict = new Dictionary<String, Type>() { { MarshallPiece.MARSHALL_NAME, typeof(MarshallPiece) },
+                {GeneralPiece.GENERAL_NAME, typeof(GeneralPiece) }, {ColonelPiece.COLONEL_NAME, typeof(ColonelPiece) },
+                { MajorPiece.MAJOR_NAME, typeof(MajorPiece)}, {CaptainPiece.CAPTAIN_NAME, typeof(CaptainPiece) },
+                {LieutenantPiece.LIEUTENANT_NAME, typeof(LieutenantPiece) }, {SergeantPiece.SERGEANT_NAME, typeof(SergeantPiece) },
+                {MinerPiece.MINER_NAME, typeof(MinerPiece) }, {ScoutPiece.SCOUT_NAME, typeof(ScoutPiece) }, {SpyPiece.SPY_NAME, typeof(SpyPiece) },
+                {"S", typeof(SpyPiece) }, {BombPiece.BOMB_NAME, typeof(BombPiece)}, {"B", typeof(BombPiece) }, {FlagPiece.FLAG_NAME, typeof(FlagPiece) },
+                {"F", typeof(FlagPiece) }, {ObstaclePiece.OBSTACLE_NAME, typeof(ObstaclePiece)} };
 
-            this.stringDict.Add(GeneralPiece.GENERAL_NAME, typeof(GeneralPiece));
-            this.intDict.Add(2, typeof(GeneralPiece));
+            this.intDict = new Dictionary<int, Type>() { { 1, typeof(MarshallPiece) }, { 2, typeof(GeneralPiece) }, { 3, typeof(ColonelPiece) },
+                {4, typeof(MajorPiece) }, {5, typeof(CaptainPiece) }, {6, typeof(LieutenantPiece) }, {7, typeof(SergeantPiece) }, {8, typeof(MinerPiece) },
+                {9, typeof(ScoutPiece) }, {10, typeof(SpyPiece) }, {11, typeof(BombPiece) }, {12, typeof(FlagPiece) }, {42, typeof(ObstaclePiece) },
+                {0, null }
+            };
 
-            this.stringDict.Add(ColonelPiece.COLONEL_NAME, typeof(ColonelPiece));
-            this.intDict.Add(3, typeof(ColonelPiece));
+            this.attackDict = new Dictionary<Type, Type>() { { typeof(BombPiece), typeof(DiestoMinerandBomb) },
+                {typeof(CaptainPiece), typeof(DefaultComparativeFate) }, {typeof(ColonelPiece), typeof(DefaultComparativeFate) },
+                {typeof(FlagPiece), typeof(DiesToAllSaveFlag) }, {typeof(GeneralPiece), typeof(DefaultComparativeFate) },
+                {typeof(LieutenantPiece), typeof(DefaultComparativeFate) }, {typeof(MajorPiece), typeof(DefaultComparativeFate) },
+                {typeof(MarshallPiece), typeof(DefaultComparativeFate) }, {typeof(MinerPiece), typeof(ImperviousToBombs) },
+                {typeof(ObstaclePiece), typeof(Impassible) }, {typeof(ScoutPiece), typeof(DefaultComparativeFate) },
+                {typeof(SergeantPiece), typeof(DefaultComparativeFate) }, {typeof(SpyPiece), typeof(ImperviousToMarshall) } };
 
-            this.stringDict.Add(MajorPiece.MAJOR_NAME, typeof(MajorPiece));
-            this.intDict.Add(4, typeof(MajorPiece));
-
-            this.stringDict.Add(CaptainPiece.CAPTAIN_NAME, typeof(CaptainPiece));
-            this.intDict.Add(5, typeof(CaptainPiece));
-
-            this.stringDict.Add(LieutenantPiece.LIEUTENANT_NAME, typeof(LieutenantPiece));
-            this.intDict.Add(6, typeof(LieutenantPiece));
-
-            this.stringDict.Add(SergeantPiece.SERGEANT_NAME, typeof(SergeantPiece));
-            this.intDict.Add(7, typeof(SergeantPiece));
-
-            this.stringDict.Add(MinerPiece.MINER_NAME, typeof(MinerPiece));
-            this.intDict.Add(8, typeof(MinerPiece));
-
-            this.stringDict.Add(ScoutPiece.SCOUT_NAME, typeof(ScoutPiece));
-            this.intDict.Add(9, typeof(ScoutPiece));
-           
-            this.stringDict.Add(SpyPiece.SPY_NAME, typeof(SpyPiece));
-            this.stringDict.Add("S", typeof(SpyPiece));
-            this.stringDict.Add("s", typeof(SpyPiece));
-            this.intDict.Add(10, typeof(SpyPiece));
-
-            this.stringDict.Add(BombPiece.BOMB_NAME, typeof(BombPiece));
-            this.stringDict.Add("B", typeof(BombPiece));
-            this.stringDict.Add("b", typeof(BombPiece));
-            this.intDict.Add(11, typeof(BombPiece));
-
-            this.stringDict.Add(FlagPiece.FLAG_NAME, typeof(FlagPiece));
-            this.stringDict.Add("F", typeof(FlagPiece));
-            this.stringDict.Add("f", typeof(FlagPiece));
-            this.intDict.Add(12, typeof(FlagPiece));
-
-            this.stringDict.Add(ObstaclePiece.OBSTACLE_NAME, typeof(ObstaclePiece));
-            this.intDict.Add(42, typeof(ObstaclePiece));
-
-            this.intDict.Add(0, null);
-
-            this.addedPieces = new Dictionary<String, int>();
+            this.defendDict = new Dictionary<Type, Type>() { { typeof(BombPiece), typeof(DiestoMinerandBomb) }, 
+                {typeof(CaptainPiece), typeof(DefaultComparativeFate) }, {typeof(ColonelPiece), typeof(DefaultComparativeFate) },
+                {typeof(FlagPiece), typeof(SimplyDie) }, {typeof(GeneralPiece), typeof(DefaultComparativeFate) },
+                {typeof(LieutenantPiece), typeof(DefaultComparativeFate) }, {typeof(MajorPiece), typeof(DefaultComparativeFate) },
+                {typeof(MarshallPiece), typeof(DiesToSpy) }, {typeof(MinerPiece), typeof(ImperviousToBombs) },
+                {typeof(ObstaclePiece), typeof(Impassible) }, {typeof(ScoutPiece), typeof(DefaultComparativeFate) },
+                {typeof(SergeantPiece), typeof(DefaultComparativeFate) }, {typeof(SpyPiece), typeof(SimplyDie) } };
+            
             this.resetPlacements();
-
-            this.attackDict.Add(typeof(BombPiece), typeof(DiestoMinerandBomb));
-            this.defendDict.Add(typeof(BombPiece), typeof(DiestoMinerandBomb));
-
-            this.attackDict.Add(typeof(BondTierSpyPiece), typeof(BondLevelLiving));
-            this.defendDict.Add(typeof(BondTierSpyPiece), typeof(DiesToBondAndMarshall));
-
-            this.attackDict.Add(typeof(CaptainPiece), typeof(DefaultComparativeFate));
-            this.defendDict.Add(typeof(CaptainPiece), typeof(DefaultComparativeFate));
-
-            this.attackDict.Add(typeof(ColonelPiece), typeof(DefaultComparativeFate));
-            this.defendDict.Add(typeof(ColonelPiece), typeof(DefaultComparativeFate));
-
-            this.attackDict.Add(typeof(FlagPiece), typeof(DiesToAllSaveFlag));
-            this.defendDict.Add(typeof(FlagPiece), typeof(SimplyDie));
-
-            this.attackDict.Add(typeof(GeneralPiece), typeof(DefaultComparativeFate));
-            this.defendDict.Add(typeof(GeneralPiece), typeof(DefaultComparativeFate));
-
-            this.attackDict.Add(typeof(LieutenantPiece), typeof(DefaultComparativeFate));
-            this.defendDict.Add(typeof(LieutenantPiece), typeof(DefaultComparativeFate));
-
-            this.attackDict.Add(typeof(MajorPiece), typeof(DefaultComparativeFate));
-            this.defendDict.Add(typeof(MajorPiece), typeof(DefaultComparativeFate));
-
-            this.attackDict.Add(typeof(MarshallPiece), typeof(DefaultComparativeFate));
-            this.defendDict.Add(typeof(MarshallPiece), typeof(DiesToSpy));
-
-            this.attackDict.Add(typeof(MinerPiece), typeof(ImperviousToBombs));
-            this.defendDict.Add(typeof(MinerPiece), typeof(ImperviousToBombs));
-
-            this.attackDict.Add(typeof(ObstaclePiece), typeof(Impassible));
-            this.defendDict.Add(typeof(ObstaclePiece), typeof(Impassible));
-
-            this.attackDict.Add(typeof(ScoutPiece), typeof(DefaultComparativeFate));
-            this.defendDict.Add(typeof(ScoutPiece), typeof(DefaultComparativeFate));
-
-            this.attackDict.Add(typeof(SergeantPiece), typeof(DefaultComparativeFate));
-            this.defendDict.Add(typeof(SergeantPiece), typeof(DefaultComparativeFate));
-
-            this.attackDict.Add(typeof(SpyPiece), typeof(ImperviousToMarshall));
-            this.defendDict.Add(typeof(SpyPiece), typeof(SimplyDie));
         }
 
-        public void addNamesForPiece(List<String> names, Type pieceType)
+        public void addNameForPiece(String name, Type pieceType)
         {
-            foreach (String iden in names)
+            if (!this.stringDict.ContainsKey(name))
             {
-                if (!this.stringDict.ContainsKey(iden))
-                {
-                    this.stringDict.Add(iden, pieceType);
-                }
+                this.stringDict.Add(name, pieceType);
             }
         }
         public void addNumForPiece(int numberRef, Type pieceType)
@@ -145,6 +82,9 @@ namespace Stratego.GamePieces
             if(!this.stringDict.ContainsKey(name))
             {
                 this.stringDict.Add(name, pieceType);
+                GamePiece piece = materializePiece(pieceType, StrategoGame.RED_TEAM_CODE);
+                this.attackDict.Add(pieceType, piece.getAttackBehavior().GetType());
+                this.defendDict.Add(pieceType, piece.getDefendBehavior().GetType());
             }
             if (this.placements.ContainsKey(name))
             {

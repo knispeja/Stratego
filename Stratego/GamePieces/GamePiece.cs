@@ -31,9 +31,6 @@ namespace Stratego
 
         protected bool movable;
 
-        private int xVal;
-        private int yVal;
-
         public GamePiece(int teamCode)
         {
             this.pieceRank = 42;
@@ -47,8 +44,6 @@ namespace Stratego
             this.limitToMovement = 1;
 
             this.movable = true;
-            this.xVal = -1;
-            this.yVal = -1;
 
             this.essential = false;
         }
@@ -147,26 +142,6 @@ namespace Stratego
         public void setMovable(Boolean movability)
         {
             this.movable = movability;
-        }
-
-        public int getXVal()
-        {
-            return this.xVal;
-        }
-
-        public int getYVal()
-        {
-            return this.yVal;
-        }
-
-        public void setXVal(int newX)
-        {
-            this.xVal = newX;
-        }
-
-        public void setYVal(int newY)
-        {
-            this.yVal = newY;
         }
 
         public void setAttackBehavior(BattleBehavior newBB)

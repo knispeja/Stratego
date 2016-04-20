@@ -13,6 +13,16 @@ namespace Stratego
 {
     public partial class StrategoWin : Form, GUICallback
     {
+        /// <summary>
+        /// List of all images for campaign levels
+        /// </summary>
+        private readonly Bitmap[] levelImages = new Bitmap[] { 
+            Properties.Resources.Level1Map, 
+            Properties.Resources.Level2Map, 
+            Properties.Resources.Level3Map,
+            Properties.Resources.Level4Map, 
+            Properties.Resources.Level5Map
+        };
 
         /// <summary>
         /// An array that holds the different keys for the Konami code cheat activation
@@ -28,17 +38,6 @@ namespace Stratego
         /// Current level of the game. Equals -1 if not in campaign mode
         /// </summary>
         public int level { get; set; }
-
-        /// <summary>
-        /// List of all images for campaign levels
-        /// </summary>
-        private readonly Bitmap[] levelImages = new Bitmap[] { 
-            Properties.Resources.Level1Map, 
-            Properties.Resources.Level2Map, 
-            Properties.Resources.Level3Map,
-            Properties.Resources.Level4Map, 
-            Properties.Resources.Level5Map
-        };
 
         /// <summary>
         /// Placeholder for which button on the placement side panel is being used
@@ -262,13 +261,12 @@ namespace Stratego
                     for (int y = 0; y < boardState.getHeight(); y++)
                     {
                         GamePiece piece = boardState.getPiece(x, y);
+
                         if (piece != null && piece.getTeamCode() != StrategoGame.NO_TEAM_CODE)
                         {
                             Brush b = new SolidBrush(piece.getPieceColor());
                             pen.Color = Color.FromArgb(200, 200, 255);
 
-                            int cornerX = x * col_inc + paddingX;
-                            int cornerY = y * row_inc + paddingY;
                             Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
 
                             if (this.game.turn == piece.getTeamCode() || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))

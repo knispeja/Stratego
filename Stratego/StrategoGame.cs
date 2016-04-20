@@ -366,9 +366,9 @@ namespace Stratego
             if (spacesPossible == int.MaxValue)
                 spacesPossible = Math.Max(this.boardState.getHeight(), this.boardState.getWidth());
             MovementGrouping rightForward = new MovementGrouping(startingX + 1, boardState.getWidth(), startingY, true, startingX + spacesPossible);
-            MovementGrouping rightBackward = new MovementGrouping(startingX - 1, 0, startingY, true, startingX - spacesPossible);
+            MovementGrouping rightBackward = new MovementGrouping(startingX - 1, -1, startingY, true, startingX - spacesPossible);
             MovementGrouping leftForward = new MovementGrouping(startingY + 1, boardState.getHeight(), startingX, false, startingY + spacesPossible);
-            MovementGrouping leftBackward = new MovementGrouping(startingY - 1, 0, startingX, false, startingY - spacesPossible);
+            MovementGrouping leftBackward = new MovementGrouping(startingY - 1, -1, startingX, false, startingY - spacesPossible);
             moveArray = moveArrayAdjust(rightForward, 1, pieceInQuestion, moveArray);
             moveArray = moveArrayAdjust(rightBackward, -1, pieceInQuestion, moveArray);
             moveArray = moveArrayAdjust(leftForward, 1, pieceInQuestion, moveArray);
@@ -381,7 +381,7 @@ namespace Stratego
             int posX;
             int posY;
             GamePiece potenPiece = null;
-            for (int i = mvmtGroup.getStarting(); (i * sign) < (sign * mvmtGroup.getEnding() + 1); i += sign)
+            for (int i = mvmtGroup.getStarting(); (i * sign) < (sign * mvmtGroup.getEnding()); i += sign)
             {
                 if ((sign * i) > (sign * mvmtGroup.getStopNum()))
                 {

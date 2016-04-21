@@ -105,8 +105,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyStrategoWin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FactoryTest.cs" />
     <Compile Include="GameBoardTests.cs" />
+    <Compile Include="GUITest.cs" />
     <Compile Include="MovementTest.cs" />
     <Compile Include="PieceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

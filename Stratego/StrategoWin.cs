@@ -13,6 +13,9 @@ namespace Stratego
 {
     public partial class StrategoWin : Form, GUICallback
     {
+        public static readonly string OPEN_SIDE_PANEL_TEXT = "Open Side Panel";
+        public static readonly string CLOSE_SIDE_PANEL_TEXT = "Close Side Panel";
+
         /// <summary>
         /// List of all images for campaign levels
         /// </summary>
@@ -422,11 +425,7 @@ namespace Stratego
                 }
                 else if (e.KeyCode == Keys.ShiftKey && this.game.preGameActive)
                 {
-                    if (this.SidePanel.Visible)
-                        this.SidePanelOpenButton.Text = "Open Side";
-                    else
-                        this.SidePanelOpenButton.Text = "Close Side";
-                    this.SidePanel.Visible = !this.SidePanel.Visible;
+                    toggleSidePanelOpen();
                 }
                 else if (e.KeyCode == Keys.Enter && Math.Abs(this.game.turn) == 2)
                 {
@@ -472,9 +471,9 @@ namespace Stratego
             toggleSidePanelOpen();
         }
 
-        private void toggleSidePanelOpen()
+        protected void toggleSidePanelOpen()
         {
-            this.SidePanelOpenButton.Text = this.SidePanel.Visible ? "Open Side" : "Close Side";
+            this.SidePanelOpenButton.Text = this.SidePanel.Visible ? OPEN_SIDE_PANEL_TEXT : CLOSE_SIDE_PANEL_TEXT;
             this.SidePanel.Visible = !this.SidePanel.Visible;
         }
 
@@ -957,6 +956,16 @@ namespace Stratego
                 this.backPanel.BackgroundImage = this.levelImages[this.level - 1];
             else
                 this.backPanel.BackgroundImage = Properties.Resources.BoardUpdate;
+        }
+
+        protected bool isSidePanelVisible()
+        {
+            return this.SidePanel.Visible;
+        }
+
+        protected string getSidePanelButtonText()
+        {
+            return this.SidePanelOpenButton.Text;
         }
     }
 }

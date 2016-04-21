@@ -4,6 +4,7 @@ using Stratego.GamePieces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -133,5 +134,133 @@ namespace StrategoTest
                 factory.decrementPiecesLeft(name);
             }
         }
+
+        [TestCase()]
+        public void TestResetPlacementsDefault()
+        {
+            GamePieceFactory factory = new GamePieceFactory();
+            Dictionary<String, int> defaults = new Dictionary<String, int>(){
+                { FlagPiece.FLAG_NAME, 1 }, { BombPiece.BOMB_NAME, 6 }, { SpyPiece.SPY_NAME, 1 },
+                { ScoutPiece.SCOUT_NAME, 8 }, { MinerPiece.MINER_NAME, 5 }, { SergeantPiece.SERGEANT_NAME, 4 },
+                { LieutenantPiece.LIEUTENANT_NAME, 4 }, { CaptainPiece.CAPTAIN_NAME, 4 }, { MajorPiece.MAJOR_NAME, 3},
+                { ColonelPiece.COLONEL_NAME, 2}, { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 }
+            };
+            Dictionary<String, int> zeroed = new Dictionary<String, int>(){
+                { FlagPiece.FLAG_NAME, 0 }, { BombPiece.BOMB_NAME, 0 }, { SpyPiece.SPY_NAME, 0 },
+                { ScoutPiece.SCOUT_NAME, 0}, { MinerPiece.MINER_NAME, 0 }, { SergeantPiece.SERGEANT_NAME, 0 },
+                { LieutenantPiece.LIEUTENANT_NAME, 0 }, { CaptainPiece.CAPTAIN_NAME, 0 }, { MajorPiece.MAJOR_NAME, 0},
+                { ColonelPiece.COLONEL_NAME, 0}, { GeneralPiece.GENERAL_NAME, 0}, { MarshallPiece.MARSHALL_NAME, 0 }
+            };
+            factory.setPlacements(zeroed);
+
+            Assert.AreEqual(zeroed, factory.placements);
+            Assert.AreEqual(0, factory.getMinPieces());
+
+            factory.resetPlacements();
+
+            Assert.AreEqual(defaults, factory.placements);
+            Assert.AreEqual(0, factory.getMinPieces());
+        }
+
+        [TestCase()]
+        public void TestResetPlacementsWithAdded()
+        {
+            GamePieceFactory factory = new GamePieceFactory();
+            Dictionary<String, int> defaults = new Dictionary<String, int>(){
+                { FlagPiece.FLAG_NAME, 1 }, { BombPiece.BOMB_NAME, 6 }, { SpyPiece.SPY_NAME, 1 },
+                { ScoutPiece.SCOUT_NAME, 8 }, { MinerPiece.MINER_NAME, 5 }, { SergeantPiece.SERGEANT_NAME, 4 },
+                { LieutenantPiece.LIEUTENANT_NAME, 4 }, { CaptainPiece.CAPTAIN_NAME, 4 }, { MajorPiece.MAJOR_NAME, 3},
+                { ColonelPiece.COLONEL_NAME, 2}, { GeneralPiece.GENERAL_NAME, 1}, { MarshallPiece.MARSHALL_NAME, 1 },
+                { BondTierSpyPiece.BOND_NAME, 5 }
+            };
+            factory.addPieceToPlacements(BondTierSpyPiece.BOND_NAME, typeof(BondTierSpyPiece), 5);
+            Dictionary<String, int> zeroed = new Dictionary<String, int>(){
+                { FlagPiece.FLAG_NAME, 0 }, { BombPiece.BOMB_NAME, 0 }, { SpyPiece.SPY_NAME, 0 },
+                { ScoutPiece.SCOUT_NAME, 0}, { MinerPiece.MINER_NAME, 0 }, { SergeantPiece.SERGEANT_NAME, 0 },
+                { LieutenantPiece.LIEUTENANT_NAME, 0 }, { CaptainPiece.CAPTAIN_NAME, 0 }, { MajorPiece.MAJOR_NAME, 0},
+                { ColonelPiece.COLONEL_NAME, 0}, { GeneralPiece.GENERAL_NAME, 0}, { MarshallPiece.MARSHALL_NAME, 0 }
+            };
+            factory.setPlacements(zeroed);
+
+            zeroed.Add(BondTierSpyPiece.BOND_NAME, 5);
+            Assert.AreEqual(zeroed, factory.placements);
+            Assert.AreEqual(5, factory.getMinPieces());
+
+            factory.resetPlacements();
+
+            Assert.AreEqual(defaults, factory.placements);
+            Assert.AreEqual(5, factory.getMinPieces());
+        }
+
+        public GamePiece reflectMaterialize(GamePieceFactory factory, Type type, int teamCode)
+        {
+            Type factoryType = typeof(GamePieceFactory);
+            
+            MethodInfo factoryMethod =factoryType.GetMethod("materializePiece", BindingFlags.NonPublic |BindingFlags.Instance);
+
+            return (GamePiece)factoryMethod.Invoke(factory, new object[] { type, teamCode });
+        }
+
+        [TestCase(typeof(BombPiece), -1)]
+        [TestCase(typeof(BombPiece), 1)]
+        [TestCase(typeof(CaptainPiece), -1)]
+        [TestCase(typeof(CaptainPiece), 1)]
+        [TestCase(typeof(ColonelPiece), -1)]
+        [TestCase(typeof(ColonelPiece), 1)]
+        [TestCase(typeof(FlagPiece), -1)]
+        [TestCase(typeof(FlagPiece), 1)]
+        [TestCase(typeof(GeneralPiece), -1)]
+        [TestCase(typeof(GeneralPiece), 1)]
+        [TestCase(typeof(LieutenantPiece), -1)]
+        [TestCase(typeof(LieutenantPiece), 1)]
+        [TestCase(typeof(MajorPiece), -1)]
+        [TestCase(typeof(MajorPiece), 1)]
+        [TestCase(typeof(MinerPiece), -1)]
+        [TestCase(typeof(MinerPiece), 1)]
+        [TestCase(typeof(ObstaclePiece), 0)]
+        [TestCase(typeof(ScoutPiece), -1)]
+        [TestCase(typeof(ScoutPiece), 1)]
+        [TestCase(typeof(SergeantPiece), -1)]
+        [TestCase(typeof(SergeantPiece), 1)]
+        [TestCase(typeof(SpyPiece), -1)]
+        [TestCase(typeof(SpyPiece), 1)]
+        public void TestMaterializePiece(Type type, int teamCode)
+        {
+            GamePieceFactory factory = new GamePieceFactory();
+            GamePiece piece = this.reflectMaterialize(factory, type, teamCode);
+
+            Assert.AreEqual(type, piece.GetType());
+            Assert.AreEqual(teamCode, piece.getTeamCode());
+        }
+
+        [TestCase()]
+        public void TestDonePlacing()
+        {
+            GamePieceFactory factory = new GamePieceFactory();
+
+            Assert.IsFalse(factory.donePlacing());
+
+            Dictionary<String, int> zeroed = new Dictionary<String, int>(){
+                { FlagPiece.FLAG_NAME, 0 }, { BombPiece.BOMB_NAME, 0 }, { SpyPiece.SPY_NAME, 0 },
+                { ScoutPiece.SCOUT_NAME, 0}, { MinerPiece.MINER_NAME, 0 }, { SergeantPiece.SERGEANT_NAME, 0 },
+                { LieutenantPiece.LIEUTENANT_NAME, 0 }, { CaptainPiece.CAPTAIN_NAME, 0 }, { MajorPiece.MAJOR_NAME, 0},
+                { ColonelPiece.COLONEL_NAME, 0}, { GeneralPiece.GENERAL_NAME, 0}, { MarshallPiece.MARSHALL_NAME, 0 }
+            };
+
+            factory.setPlacements(zeroed);
+
+            Assert.IsTrue(factory.donePlacing());
+
+            zeroed[FlagPiece.FLAG_NAME] = 1;
+            factory.setMinPieces(1);
+            factory.setPlacements(zeroed);
+            Assert.IsFalse(factory.donePlacing());
+
+            zeroed[FlagPiece.FLAG_NAME] = 0;
+            zeroed[MinerPiece.MINER_NAME] = 1;
+            factory.setPlacements(zeroed);
+            Assert.IsTrue(factory.donePlacing());
+        }
+
     }
 }

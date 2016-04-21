@@ -179,6 +179,7 @@ namespace Stratego
                 else
                 {
                     this.turn = 2;
+
                     if (!this.checkMoves())
                         this.callback.gameOver(StrategoGame.BLUE_TEAM_CODE);
                     else
@@ -207,11 +208,14 @@ namespace Stratego
                     }
                     this.preGameActive = false;
                 }
-                if (!this.isSinglePlayer || !this.boardState.getLastFought().Equals(BoardPosition.NULL_BOARD_POSITION)) this.turn = -2;
-                else this.turn = BLUE_TEAM_CODE;
+                if (!this.isSinglePlayer)
+                    this.turn = -2;
+                else
+                    this.turn = BLUE_TEAM_CODE;
+
                 if (!this.checkMoves())
                     this.callback.gameOver(RED_TEAM_CODE);
-                else
+                else if (!this.isSinglePlayer)
                     this.callback.adjustTurnButtonState("Player 1's Turn");
             }
             else if (this.turn == -2)
@@ -225,11 +229,15 @@ namespace Stratego
 
             if (this.isSinglePlayer && this.turn == RED_TEAM_CODE)
             {
-                throw new NotImplementedException();
-                //if (this.preGameActive)
-                //    this.ai.isKill;
-                //else
-                //    this.ai.takeTurn();
+                if (!this.preGameActive)
+                {
+                    if (this.ai == null)
+                        this.ai = new AIv2(this.boardState, 5);
+                    this.ai.takeTurn();
+                    this.callback.onNextTurnButtonClick();
+                }
+                // else
+                // this.ai.placePieces();
             }
         }
 

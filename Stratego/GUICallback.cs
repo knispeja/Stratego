@@ -12,5 +12,6 @@ namespace Stratego
         void invalidateBackpanel();
         void gameOver(int teamCode);
         void setSidePanelVisibility(Boolean visible);
+        void onNextTurnButtonClick();
     }
 }

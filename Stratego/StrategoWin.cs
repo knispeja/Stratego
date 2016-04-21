@@ -572,7 +572,6 @@ namespace Stratego
                 this.game.turn = 0;
                 this.game.preGameActive = true;
                 this.game.resetPlacements();
-                this.game.ai = new AIv2(this.game.boardState, 5);
                 this.game.nextTurn();
                 this.SidePanel.Visible = false;
                 this.SidePanelOpenButton.Visible = true;
@@ -626,8 +625,14 @@ namespace Stratego
         /// <param name="e"></param>
         private void NextTurnButton_Click(object sender, EventArgs e)
         {
+            onNextTurnButtonClick();
+        }
+
+        public void onNextTurnButtonClick()
+        {
             NextTurnButton.Visible = false;
             this.NextTurnButton.Enabled = false;
+
             this.game.nextTurn();
         }
 

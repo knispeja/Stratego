@@ -60,6 +60,8 @@ namespace StrategoTest
             public void invalidateBackpanel() { }
 
             public void setSidePanelVisibility(bool visible) { }
+
+            public void onNextTurnButtonClick() { }
         }
 
         [TestCase()]

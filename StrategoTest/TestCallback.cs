@@ -28,5 +28,10 @@ namespace StrategoTest
         {
             return;
         }
+
+        public void onNextTurnButtonClick()
+        {
+            return;
+        }
     }
 }

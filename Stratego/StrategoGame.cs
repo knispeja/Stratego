@@ -128,7 +128,7 @@ namespace Stratego
                 if (pieceAtPos.getTeamCode() != this.turn) return false;
                 this.factory.incrementPiecesLeft(pieceAtPos.getPieceName());
             }
-            else if (pieceAtPos == null && piece!=null && this.factory.placements[piece.getPieceName()] > 0)
+            else if (pieceAtPos == null && piece!=null && this.factory.getPiecesLeft(piece.getPieceName()) > 0)
             {
                 // We are trying to add
                 this.factory.decrementPiecesLeft(piece.getPieceName());

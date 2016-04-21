@@ -19,7 +19,7 @@ namespace Stratego.GamePieces
         /// <summary>
         /// The array which holds information on how many pieces of each type can still be placed
         /// </summary>
-        public Dictionary<String, int> placements;
+        private Dictionary<String, int> placements;
         public int minPieces = 0;
         private Dictionary<String, int> addedPieces = new Dictionary<String, int>();
 

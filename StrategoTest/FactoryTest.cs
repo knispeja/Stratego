@@ -115,7 +115,7 @@ namespace StrategoTest
         {
             GamePieceFactory factory = new GamePieceFactory();
             String name = ScoutPiece.SCOUT_NAME;
-            factory.placements[name] = 0;
+            factory.getPlacements()[name] = 0;
             for (int i = 0; i < 8; i++)
             {
                 Assert.AreEqual(i, factory.getPiecesLeft(name));
@@ -153,12 +153,12 @@ namespace StrategoTest
             };
             factory.setPlacements(zeroed);
 
-            Assert.AreEqual(zeroed, factory.placements);
+            Assert.AreEqual(zeroed, factory.getPlacements());
             Assert.AreEqual(0, factory.getMinPieces());
 
             factory.resetPlacements();
 
-            Assert.AreEqual(defaults, factory.placements);
+            Assert.AreEqual(defaults, factory.getPlacements());
             Assert.AreEqual(0, factory.getMinPieces());
         }
 
@@ -183,12 +183,12 @@ namespace StrategoTest
             factory.setPlacements(zeroed);
 
             zeroed.Add(BondTierSpyPiece.BOND_NAME, 5);
-            Assert.AreEqual(zeroed, factory.placements);
+            Assert.AreEqual(zeroed, factory.getPlacements());
             Assert.AreEqual(5, factory.getMinPieces());
 
             factory.resetPlacements();
 
-            Assert.AreEqual(defaults, factory.placements);
+            Assert.AreEqual(defaults, factory.getPlacements());
             Assert.AreEqual(5, factory.getMinPieces());
         }
 

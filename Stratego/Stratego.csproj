@@ -113,6 +113,7 @@
     <Compile Include="BattleBehaviors\DiesToBondAndMarshall.cs" />
     <Compile Include="BattleBehaviors\DiesToSpyNotBond.cs" />
     <Compile Include="BattleBehaviors\MarshallBeatsBond.cs" />
+    <Compile Include="GameBoardTest.cs" />
     <Compile Include="GamePieces\BondTierSpyPiece.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="BattleBehaviors\BattleBehavior.cs" />

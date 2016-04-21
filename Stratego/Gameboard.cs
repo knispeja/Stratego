@@ -232,9 +232,9 @@ namespace Stratego
             if (spacesPossible == int.MaxValue)
                 spacesPossible = Math.Max(this.getHeight(), this.getWidth());
             MovementGrouping rightForward = new MovementGrouping(startingX + 1, this.getWidth(), startingY, true, startingX + spacesPossible);
-            MovementGrouping rightBackward = new MovementGrouping(startingX - 1, 0, startingY, true, startingX - spacesPossible);
+            MovementGrouping rightBackward = new MovementGrouping(startingX - 1, -1, startingY, true, startingX - spacesPossible);
             MovementGrouping leftForward = new MovementGrouping(startingY + 1, this.getHeight(), startingX, false, startingY + spacesPossible);
-            MovementGrouping leftBackward = new MovementGrouping(startingY - 1, 0, startingX, false, startingY - spacesPossible);
+            MovementGrouping leftBackward = new MovementGrouping(startingY - 1, -1, startingX, false, startingY - spacesPossible);
             moveArray = moveArrayAdjust(rightForward, 1, pieceInQuestion, moveArray);
             moveArray = moveArrayAdjust(rightBackward, -1, pieceInQuestion, moveArray);
             moveArray = moveArrayAdjust(leftForward, 1, pieceInQuestion, moveArray);

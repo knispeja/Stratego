@@ -7,22 +7,19 @@ using System.Threading.Tasks;
 
 namespace StrategoTest
 {
+    [TestFixture()]
     class GUITest
     {
-        [TestFixture()]
-        class SaveLoadTests
+        [TestCase()]
+        public void TestToggleSidePanel()
         {
-            [TestCase()]
-            public void TestToggleSidePanel()
-            {
-                DummyStrategoWin dummy = new DummyStrategoWin();
+            DummyStrategoWin dummy = new DummyStrategoWin();
 
-                Assert.AreEqual(Stratego.StrategoWin.OPEN_SIDE_PANEL_TEXT, dummy.getButtonText());
+            Assert.AreEqual(Stratego.StrategoWin.OPEN_SIDE_PANEL_TEXT, dummy.getButtonText());
 
-                dummy.toggleSidePanelVisiblity();
+            dummy.toggleSidePanelVisiblity();
 
-                Assert.AreEqual(Stratego.StrategoWin.CLOSE_SIDE_PANEL_TEXT, dummy.getButtonText());
-            }
+            Assert.AreEqual(Stratego.StrategoWin.CLOSE_SIDE_PANEL_TEXT, dummy.getButtonText());
         }
     }
 }

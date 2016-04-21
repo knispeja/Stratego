@@ -8,6 +8,7 @@ namespace Stratego
         private AIGameboard internalBoard;
         private int difficulty;
         private GameTree gameTree;
+        private Move moveToMake;
 
         public AIv2(Gameboard initBoard, int difficulty)
         {
@@ -17,20 +18,27 @@ namespace Stratego
 
         public void takeTurn()
         {
-            this.board.move(this.chooseMove());
+            this.findMove();
+            this.board.move(this.getMoveToMake());
         }
 
-        public Move chooseMove()
+        public Move getMoveToMake()
+        {
+            return this.moveToMake;
+        }
+
+        private void findMove()
         {
             BoardPosition start;
             BoardPosition end;
+            this.moveToMake = Move.NULL_MOVE;
             for (int i = 0; i < board.getWidth(); i++)
             {
                 for (int j = 0; j < board.getHeight(); j++)
                 {
                     start = new BoardPosition(i, j);
                     GamePiece piece = board.getPiece(start);
-                    if (piece != null)
+                    if (piece != null && piece.getTeamCode() == -1)
                     {
                         int[,] moves = board.getPieceMoves(i, j);
                         for (int k = 0; k < board.getWidth(); k++)
@@ -39,13 +47,12 @@ namespace Stratego
                             {
                                 end = new BoardPosition(k, l);
                                 if (moves[k, l] == 1)
-                                    return new Move(start, end);
+                                    this.moveToMake = new Move(start, end);
                             }
                         }
                     }
                 }
             }
-            return Move.NULL_MOVE;
             /*
             // TODO: thread this so length depends on difficulty
             Move move = Move.NULL_MOVE;

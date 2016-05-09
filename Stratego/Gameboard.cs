@@ -325,5 +325,17 @@ namespace Stratego
                 return this.stopNum;
             }
         }
+
+        public List<GamePiece> getPiecesByName(String name)
+        {
+            List<GamePiece> pieces = new List<GamePiece>();
+            foreach ( GamePiece p in this.board) {
+                if (p!=null&&p.getPieceName().Equals(name))
+                {
+                    pieces.Add(p);
+                }
+            }
+            return pieces;
+        }
     }
 }

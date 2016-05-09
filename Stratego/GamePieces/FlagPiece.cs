@@ -16,6 +16,7 @@ namespace Stratego
             this.attackBehavior = new DiesToAllSaveFlag();
             this.defendBehavior = new SimplyDie();
             this.movable = false;
+            this.limitToMovement = 1;
             this.essential = true;
         }
 

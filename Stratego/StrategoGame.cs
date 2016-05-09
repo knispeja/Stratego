@@ -409,5 +409,24 @@ namespace Stratego
         {
             this.selectedPiece = this.factory.getPiece(name, this.turn);
         }
+
+        public void toggleBombMovability()
+        {
+            this.movableBombs = !this.movableBombs;
+            foreach (GamePiece b in this.boardState.getPiecesByName(BombPiece.BOMB_NAME))
+            {
+                b.setMovable(this.movableBombs);
+            }
+
+        }
+
+        public void toggleFlagMovability()
+        {
+            this.movableFlags = !this.movableFlags;
+            foreach (GamePiece f in this.boardState.getPiecesByName(FlagPiece.FLAG_NAME))
+            {
+                f.setMovable(this.movableFlags);
+            }
+        }
     }
 }

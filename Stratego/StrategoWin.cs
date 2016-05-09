@@ -751,7 +751,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void movableBombCB_CheckedChanged(object sender, EventArgs e)
         {
-            this.game.movableBombs = !this.game.movableBombs;
+            this.game.toggleBombMovability();
         }
 
         /// <summary>
@@ -761,7 +761,7 @@ namespace Stratego
         /// <param name="e"></param>
         private void movableFlagCB_CheckedChanged(object sender, EventArgs e)
         {
-            this.game.movableFlags = !this.game.movableFlags;
+            this.game.toggleFlagMovability();
         }
 
         /// <summary>

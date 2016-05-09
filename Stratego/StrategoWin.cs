@@ -268,18 +268,20 @@ namespace Stratego
                         if (piece != null && piece.getTeamCode() != StrategoGame.NO_TEAM_CODE)
                         {
                             Brush b = new SolidBrush(piece.getPieceColor());
-                            pen.Color = Color.FromArgb(200, 200, 255);
+                            pen.Color = Color.FromArgb(200, 200, 255); //White
 
                             Rectangle r = new Rectangle(x * scaleX + (scaleX - (int)(scaleY * .55)) / 2, y * scaleY + 5, (int)(scaleY * .55), scaleY - 10);
 
-                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought() != null && boardState.getLastFought().Equals(new Point(x, y)))
+                            if (this.game.turn == piece.getTeamCode() || boardState.getLastFought() != null && boardState.getLastFought().Equals(new BoardPosition(x, y)))
                             {
                                 Image imag = piece.getPieceImage();
                                 e.Graphics.DrawImage(imag, r);
-                                if (piece == selectedGamePiece)
-                                {
-                                    pen.Color = Color.FromArgb(10, 255, 10);
-                                }
+                                //if (piece == selectedGamePiece)
+                                //{
+                                //    pen = new Pen(Color.FromArgb(10, 255, 10), 1);
+                                //    //pen.Color = Color.FromArgb(10, 255, 10); //Green
+                                //}
+
                             }
                             else
                             {

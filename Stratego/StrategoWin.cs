@@ -404,7 +404,7 @@ namespace Stratego
             else
                 konamiIndex = 0;
 
-            if (this.game.turn != 0 && !this.game.preGameActive)
+            if (this.game.turn != 0 && !this.game.preGameActive && !this.EndGamePanel.Visible)
             {
                 if (e.KeyCode == Keys.PageUp && this.game.skippableLevels && this.level > 0)
                 {
@@ -413,7 +413,7 @@ namespace Stratego
                     else
                         this.gameOver(1);
                 }
-                else if (e.KeyCode == Keys.PageDown && this.game.skippableLevels && this.level > 1 && this.EndGamePanel.Visible)
+                else if (e.KeyCode == Keys.PageDown && this.game.skippableLevels && this.level > 1 && !this.EndGamePanel.Visible)
                 {
                     this.level -= 2;
                     this.loadNextLevel();

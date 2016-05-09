@@ -175,7 +175,7 @@
             this.victoryLabel.Name = "victoryLabel";
             this.victoryLabel.Size = new System.Drawing.Size(447, 250);
             this.victoryLabel.TabIndex = 3;
-            this.victoryLabel.Text = "This should never display.";
+            this.victoryLabel.Text = "This text should never display.";
             this.victoryLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // EndGameExitButton

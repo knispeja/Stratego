@@ -136,18 +136,6 @@ namespace Stratego
             }
         }
 
-        public void changeMovementBehavior(Type type, bool behavior, int numMovesPer)
-        {
-            foreach (GamePiece piece in this.board)
-            {
-                if (piece != null && type.Equals(piece.GetType()))
-                {
-                    piece.setMovable(behavior);
-                    piece.setMoveCount(numMovesPer);
-                }
-            }
-        }
-
         private void battlePieces(GamePiece attacker, GamePiece defender)
         {
             BoardPosition defenderPos = this.getPositionOfPiece(defender);

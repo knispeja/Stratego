@@ -31,17 +31,17 @@ namespace Stratego
         /// <summary>
         /// If bombs can be moved
         /// </summary>
-        private Boolean movableBombs { get; set; }
+        public Boolean movableBombs { get; set; }
 
         /// <summary>
         /// If flags can be moved
         /// </summary>
-        private Boolean movableFlags { get; set; }
+        public Boolean movableFlags { get; set; }
 
         /// <summary>
         /// Coordinates of the last piece to win a battle
         /// </summary>
-        private Point lastFought { get; set; }
+        public Point lastFought { get; set; }
 
         /// <summary>
         /// The AI that the player will play against, if they choose single player.
@@ -247,7 +247,7 @@ namespace Stratego
         /// <param name="x">x coords of the click in pixels</param>
         /// <param name="y">y coord of the click in pixels</param>
         /// <returns></returns>
-        public bool SelectPiece(int x, int y)
+        public bool? SelectPiece(int x, int y)
         {
             /*
                 The if-block immediate below is NOT what we want, but haven't changed it yet to remind us

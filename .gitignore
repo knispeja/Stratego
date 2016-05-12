@@ -11,6 +11,7 @@ $RECYCLE.BIN/
 # Windows Installer files
 *.cab
 *.msi
+!StrategoSetup.msi
 *.msm
 *.msp
 
@@ -46,17 +47,17 @@ Temporary Items
 *.suo
 *.user
 _ReSharper.*
-Stratego\bin
-Stratego\obj
+SRC\Stratego\bin
+SRC\Stratego\obj
 bin
 obj
-StrategoTest\bin
-StrategoTest\obj
+SRC\StrategoTest\bin
+SRC\StrategoTest\obj
 Stratego150521.vsp
 Stratego150521(1).vsp
-Stratego1.psess
-Stratego1.psess
-Stratego1.psess
-Stratego1.psess
-*.csproj
-Stratego/Stratego.csproj
+SRC\Stratego1.psess
+SRC\Stratego1.psess
+SRC\Stratego1.psess
+SRC\Stratego1.psess
+#*.csproj
+#Stratego/Stratego.csproj

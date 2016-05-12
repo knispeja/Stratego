@@ -128,6 +128,11 @@ namespace Stratego
             return limitToMovement;
         }
 
+        public void setMoveCount(int moveCount)
+        {
+            this.limitToMovement = moveCount;
+        }
+
         public Boolean isMovable()
         {
             return this.movable;

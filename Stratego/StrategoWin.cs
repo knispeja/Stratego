@@ -676,7 +676,8 @@ namespace Stratego
         /// <param name="e"></param>
         private void AIDifficultyChanger_SelectedItemChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            // Decided this was not a priority - did not have time, would be great for future milestones.
+            // throw new NotImplementedException();
             //if (this.game.ai != null)
                 //this.game.ai.setDifficulty(Convert.ToInt32(this.AIDifficultyChanger.SelectedItem));
         }
@@ -752,6 +753,7 @@ namespace Stratego
         private void movableBombCB_CheckedChanged(object sender, EventArgs e)
         {
             this.game.movableBombs = !this.game.movableBombs;
+            this.game.boardState.changeMovementBehavior(typeof(BombPiece), this.game.movableBombs, 1);
         }
 
         /// <summary>
@@ -762,6 +764,7 @@ namespace Stratego
         private void movableFlagCB_CheckedChanged(object sender, EventArgs e)
         {
             this.game.movableFlags = !this.game.movableFlags;
+            this.game.boardState.changeMovementBehavior(typeof(FlagPiece), this.game.movableFlags, 1);
         }
 
         /// <summary>

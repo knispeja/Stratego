@@ -1,0 +1,8 @@
+language: csharp
+solution: Stratego.sln
+install:
+  - nuget restore Stratego.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release Stratego.sln
+  - mono ./nunit.exe nunit.StrategoTest.csproj
